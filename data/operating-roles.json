@@ -6,7 +6,7 @@
     {
       "id": "role-01",
       "index": "01",
-      "role": "Guardian",
+      "role": "Systems Steward",
       "function": "Access control and open standards",
       "figure": "Grace Hopper",
       "symbol": "gate",
@@ -19,7 +19,7 @@
     {
       "id": "role-02",
       "index": "02",
-      "role": "Sage",
+      "role": "Strategist",
       "function": "Applied judgment for practitioners",
       "figure": "Peter Drucker",
       "symbol": "frame",
@@ -33,7 +33,7 @@
     {
       "id": "role-03",
       "index": "03",
-      "role": "Herald",
+      "role": "Communicator",
       "function": "Reporting from inside the room",
       "figure": "Barbara Walters",
       "symbol": "doorway",
@@ -46,7 +46,7 @@
     {
       "id": "role-04",
       "index": "04",
-      "role": "Contemplative",
+      "role": "Reflective Practitioner",
       "function": "Reflection before output",
       "figure": "Maya Angelou",
       "symbol": "stillwater",
@@ -59,7 +59,7 @@
     {
       "id": "role-05",
       "index": "05",
-      "role": "Watchman",
+      "role": "Signal Analyst",
       "function": "Verification and plain situation reporting",
       "figure": "Katherine Johnson",
       "symbol": "crosshair",
@@ -72,7 +72,7 @@
     {
       "id": "role-06",
       "index": "06",
-      "role": "Intercessor",
+      "role": "Advocate",
       "function": "Representing parties who are not in the room",
       "figure": "Eleanor Roosevelt",
       "symbol": "bridge",
@@ -85,7 +85,7 @@
     {
       "id": "role-07",
       "index": "07",
-      "role": "Shepherd",
+      "role": "Long-Horizon Steward",
       "function": "Long-horizon stewardship and cost discipline",
       "figure": "Jack Bogle",
       "symbol": "stair",
@@ -98,7 +98,7 @@
     {
       "id": "role-08",
       "index": "08",
-      "role": "Joker",
+      "role": "Morale Builder",
       "function": "Morale under sustained load",
       "figure": "Robin Williams",
       "symbol": "lift",
@@ -111,7 +111,7 @@
     {
       "id": "role-09",
       "index": "09",
-      "role": "Voice in the Wilderness",
+      "role": "Early Warning Sentinel",
       "function": "Early warning ahead of consensus",
       "figure": "Rachel Carson",
       "symbol": "beam",

@@ -4,7 +4,7 @@
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import * as cheerio from 'cheerio';
@@ -19,15 +19,15 @@ const $ = cheerio.load(html);
 
 /** Expected roster, in order. */
 const EXPECTED_ROLES = [
-  ['01', 'Guardian', 'Grace Hopper'],
-  ['02', 'Sage', 'Peter Drucker'],
-  ['03', 'Herald', 'Barbara Walters'],
-  ['04', 'Contemplative', 'Maya Angelou'],
-  ['05', 'Watchman', 'Katherine Johnson'],
-  ['06', 'Intercessor', 'Eleanor Roosevelt'],
-  ['07', 'Shepherd', 'Jack Bogle'],
-  ['08', 'Joker', 'Robin Williams'],
-  ['09', 'Voice in the Wilderness', 'Rachel Carson'],
+  ['01', 'Systems Steward', 'Grace Hopper'],
+  ['02', 'Strategist', 'Peter Drucker'],
+  ['03', 'Communicator', 'Barbara Walters'],
+  ['04', 'Reflective Practitioner', 'Maya Angelou'],
+  ['05', 'Signal Analyst', 'Katherine Johnson'],
+  ['06', 'Advocate', 'Eleanor Roosevelt'],
+  ['07', 'Long-Horizon Steward', 'Jack Bogle'],
+  ['08', 'Morale Builder', 'Robin Williams'],
+  ['09', 'Early Warning Sentinel', 'Rachel Carson'],
 ];
 
 const EXPECTED_QUOTE_IDS = Array.from({ length: 20 }, (_, i) => `A${i + 1}`);
@@ -66,6 +66,18 @@ const FORBIDDEN_TERMS = [
   'holy',
   'sacred',
   'divine',
+  // Ecclesiastical / scriptural role register retired at Gatekeeper correction.
+  'guardian',
+  'sage',
+  'herald',
+  'contemplative',
+  'watchman',
+  'watchmen',
+  'intercessor',
+  'intercession',
+  'shepherd',
+  'joker',
+  'wilderness',
 ];
 
 /**
@@ -326,4 +338,67 @@ test('dom: status label identifies this surface as a preview', () => {
   assert.ok(chip.includes('content integration preview'), 'honest status label present');
   const brand = $('.brand').text().replace(/\s+/g, ' ');
   assert.ok(/Lime Signalworks/i.test(brand) && /Enterprise/i.test(brand), 'Site 2 header identity');
+});
+
+test('dom: the page makes no external requests of its own', () => {
+  // Only anchors to sourced material may point off-origin, and those load solely
+  // when a visitor clicks them. Every asset the page fetches must be same-origin.
+  const assetAttrs = ['src', 'srcset', 'poster', 'data'];
+  $('*').each((_, el) => {
+    for (const attr of assetAttrs) {
+      const value = $(el).attr(attr);
+      if (value) {
+        assert.ok(
+          !/^(https?:)?\/\//i.test(value.trim()),
+          `off-origin asset reference in @${attr}: ${value}`,
+        );
+      }
+    }
+  });
+  $('link[href]').each((_, el) => {
+    const href = $(el).attr('href').trim();
+    assert.ok(
+      !/^(https?:)?\/\//i.test(href),
+      `off-origin <link> in the document head: ${href}`,
+    );
+  });
+  assert.equal($('link[rel="preconnect"], link[rel="dns-prefetch"]').length, 0, 'no preconnects');
+  assert.ok(!/@import\s+url\(\s*['"]?https?:/i.test(html), 'no remote @import in inline css');
+  const offOriginAnchors = $('a[href^="http"]')
+    .map((_, el) => $(el).attr('href'))
+    .get();
+  assert.ok(offOriginAnchors.length > 0, 'source links are present');
+  for (const href of offOriginAnchors) {
+    assert.ok(href.startsWith('https://'), `source link must be https: ${href}`);
+  }
+});
+
+test('css: stylesheets reference only vendored, self-hosted font files', () => {
+  const cssFiles = ['assets/css/fonts.css', 'assets/css/base.css', 'assets/css/site.css'];
+  for (const file of cssFiles) {
+    const css = readFileSync(path.join(root, file), 'utf8');
+    const urls = [...css.matchAll(/url\(\s*['"]?([^'")]+)['"]?\s*\)/g)].map((m) => m[1].trim());
+    for (const url of urls) {
+      assert.ok(
+        !/^(https?:)?\/\//i.test(url) && !url.startsWith('//'),
+        `remote asset url in ${file}: ${url}`,
+      );
+    }
+    assert.ok(!/fonts\.googleapis|gstatic|fontshare|typekit|cdn/i.test(css), `cdn reference in ${file}`);
+  }
+  const fonts = readFileSync(path.join(root, 'assets/css/fonts.css'), 'utf8');
+  assert.equal((fonts.match(/@font-face/g) || []).length, 6, 'six vendored subsets declared');
+  for (const file of [
+    'assets/fonts/inter-latin.woff2',
+    'assets/fonts/inter-latin-ext.woff2',
+    'assets/fonts/archivo-latin.woff2',
+    'assets/fonts/archivo-latin-ext.woff2',
+    'assets/fonts/jetbrains-mono-latin.woff2',
+    'assets/fonts/jetbrains-mono-latin-ext.woff2',
+    'assets/fonts/LICENSE-inter.txt',
+    'assets/fonts/LICENSE-archivo.txt',
+    'assets/fonts/LICENSE-jetbrains-mono.txt',
+  ]) {
+    assert.ok(existsSync(path.join(root, file)), `missing vendored font asset: ${file}`);
+  }
 });

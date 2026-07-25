@@ -67,9 +67,10 @@
   --content-default: 900px;
   --content-wide: 1180px;
 
-  --font-display: 'Cabinet Grotesk', 'Satoshi', 'Helvetica Neue', sans-serif;
-  --font-body: 'Satoshi', 'Helvetica Neue', sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  /* Self-hosted OFL 1.1 families — see assets/css/fonts.css. No network egress. */
+  --font-display: 'Archivo', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
 }
 
 [data-theme='dark'] {

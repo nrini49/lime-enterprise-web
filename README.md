@@ -18,11 +18,14 @@ Zero-framework static build. No bundler, no CSS preprocessor, no client framewor
 - `data/principles.json` — 7 themes + 20 principle records A1–A20 (source of truth)
 - `src/template.html` — page skeleton with `{{TOKEN}}` placeholders
 - `src/render.mjs` — build script: JSON + template → `index.html`, inlines Lucide SVG icons
+- `assets/css/fonts.css` — `@font-face` rules for the three self-hosted OFL 1.1 families
+- `assets/fonts/` — vendored woff2 subsets plus the OFL licence text for each family
 - `assets/css/base.css` — shared reset, focus-visible, reduced-motion, `.sr-only`
 - `assets/css/site.css` — "Harbor Station" design tokens and all component styles
 - `assets/js/app.js` — theme toggle + library filtering only (progressive enhancement)
 - `tests/content-invariants.test.mjs` — `node:test` + cheerio content and invariant checks
 - `scripts/serve.mjs` — local static server
+- `scripts/fetch-fonts.mjs` — one-off vendoring helper; regenerates `assets/fonts/` (never run by the site)
 - `index.html` — **generated artifact**, committed so the site works with no build step
 
 ## Commands
@@ -48,6 +51,10 @@ npm run serve        # serve the repo root on http://localhost:4173
    only narrow what is already present. The page must remain complete and readable with JS disabled.
 5. **Design tokens live in `assets/css/site.css`.** Use existing tokens; do not introduce raw hex
    values in component rules. Both light and dark palettes must stay WCAG-AA for body text.
+6. **No network egress.** The page must never reference a third-party host for fonts, styles,
+   scripts, or images. Only source-attribution anchors may point off-origin, and only on click.
+   Fonts are Archivo (display), Inter (body), and JetBrains Mono (labels), all SIL OFL 1.1 and
+   vendored into `assets/fonts/` with their licence files. `npm test` enforces this.
 
 ## Invariants (do not break)
 
@@ -59,6 +66,9 @@ npm run serve        # serve the repo root on http://localhost:4173
 - Quotes stay visually and structurally separated from any call to action, price, or metric, and the
   standing "attribution is not endorsement" notice must remain on the page.
 - Exactly 9 role records and exactly 20 principle records (A1–A20). No additions from other sets.
+- Role labels stay in plain occupational English (Systems Steward, Strategist, Communicator,
+  Reflective Practitioner, Signal Analyst, Advocate, Long-Horizon Steward, Morale Builder, Early
+  Warning Sentinel). The retired ecclesiastical register is in the forbidden-term test list.
 - No contact form, no transactional CTA. A single non-transactional in-page anchor is the only CTA.
 
 ## Accessibility baseline
