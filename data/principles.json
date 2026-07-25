@@ -1,0 +1,218 @@
+{
+  "sectionId": "principles",
+  "sectionTitle": "Lighthouse Principles",
+  "libraryRevision": "Group A, revision 2, July 25, 2026",
+  "standingDisclaimer": "Quotations are reproduced for commentary and educational purposes with attribution to their authors and sources. Attribution does not imply endorsement, affiliation, review, or approval of LIME Enterprise, its software, or its services by the persons quoted or their estates, employers, or publishers.",
+  "themes": [
+    { "id": "risk-survival", "name": "Risk & Survival" },
+    { "id": "patience-timing", "name": "Patience & Timing" },
+    { "id": "process-discipline", "name": "Process & Discipline" },
+    { "id": "uncertainty-humility", "name": "Uncertainty & Humility" },
+    { "id": "signal-judgment", "name": "Signal & Independent Judgment" },
+    { "id": "stewardship-compounding", "name": "Stewardship & Long-Term Compounding" },
+    { "id": "learning-adaptation", "name": "Learning & Adaptation" }
+  ],
+  "records": [
+    {
+      "id": "A1",
+      "theme": "risk-survival",
+      "quote": "A small chance of distress or disgrace cannot, in our view, be offset by a large chance of extra returns.",
+      "attribution": "Warren Buffett, Berkshire Hathaway shareholder letter, 1989",
+      "speaker": "Warren Buffett",
+      "source": "Berkshire Hathaway shareholder letter",
+      "year": "1989",
+      "url": "https://www.berkshirehathaway.com/letters/1989.html"
+    },
+    {
+      "id": "A2",
+      "theme": "risk-survival",
+      "quote": "When bills come due, only cash is legal tender.",
+      "attribution": "Warren Buffett, Berkshire Hathaway shareholder letter, 2014",
+      "speaker": "Warren Buffett",
+      "source": "Berkshire Hathaway shareholder letter",
+      "year": "2014",
+      "url": "https://www.berkshirehathaway.com/letters/2014ltr.pdf"
+    },
+    {
+      "id": "A3",
+      "theme": "risk-survival",
+      "quote": "In general, survival is the only road to riches.",
+      "attribution": "Peter L. Bernstein, MONEY Magazine interview, Oct 11, 2004",
+      "speaker": "Peter L. Bernstein",
+      "source": "MONEY Magazine interview",
+      "year": "2004",
+      "url": "https://money.cnn.com/2004/10/11/markets/benstein_bonus_0411/index.htm"
+    },
+    {
+      "id": "A4",
+      "theme": "patience-timing",
+      "quote": "Time is the friend of the wonderful business, the enemy of the mediocre.",
+      "attribution": "Warren Buffett, Berkshire Hathaway shareholder letter, 1989",
+      "speaker": "Warren Buffett",
+      "source": "Berkshire Hathaway shareholder letter",
+      "year": "1989",
+      "url": "https://www.berkshirehathaway.com/letters/1989.html"
+    },
+    {
+      "id": "A5",
+      "theme": "patience-timing",
+      "quote": "And, finally, even when Berkshire was getting much better opportunities than most others, Buffett often displayed almost inhuman patience and seldom bought.",
+      "attribution": "Charlie Munger, \"Vice Chairman's Thoughts,\" Berkshire Hathaway 2014 letter",
+      "speaker": "Charlie Munger",
+      "source": "\"Vice Chairman's Thoughts,\" Berkshire Hathaway letter",
+      "year": "2014",
+      "url": "https://www.berkshirehathaway.com/letters/2014ltr.pdf"
+    },
+    {
+      "id": "A6",
+      "theme": "patience-timing",
+      "quote": "Time is on your side in the stock market.",
+      "attribution": "Peter Lynch, PBS *Frontline*, \"Betting on the Market\"",
+      "speaker": "Peter Lynch",
+      "source": "PBS *Frontline*, \"Betting on the Market\"",
+      "year": "n.d.",
+      "url": "https://www.pbs.org/wgbh/pages/frontline/shows/betting/pros/lynch.html"
+    },
+    {
+      "id": "A7",
+      "theme": "process-discipline",
+      "quote": "It never had the equivalent of a 'department of acquisitions' under pressure to buy.",
+      "attribution": "Charlie Munger, \"Vice Chairman's Thoughts,\" Berkshire Hathaway 2014 letter",
+      "speaker": "Charlie Munger",
+      "source": "\"Vice Chairman's Thoughts,\" Berkshire Hathaway letter",
+      "year": "2014",
+      "url": "https://www.berkshirehathaway.com/letters/2014ltr.pdf"
+    },
+    {
+      "id": "A8",
+      "theme": "process-discipline",
+      "quote": "Overall, however, we've done better by avoiding dragons than by slaying them.",
+      "attribution": "Warren Buffett, Berkshire Hathaway shareholder letter, 1989",
+      "speaker": "Warren Buffett",
+      "source": "Berkshire Hathaway shareholder letter",
+      "year": "1989",
+      "url": "https://www.berkshirehathaway.com/letters/1989.html"
+    },
+    {
+      "id": "A9",
+      "theme": "process-discipline",
+      "quote": "Principles are ways of successfully dealing with reality to get what you want out of life.",
+      "attribution": "Ray Dalio, Principles (principles.com)",
+      "speaker": "Ray Dalio",
+      "source": "Principles (principles.com)",
+      "year": "n.d.",
+      "url": "https://www.principles.com/"
+    },
+    {
+      "id": "A10",
+      "theme": "uncertainty-humility",
+      "quote": "An investor who has all the answers doesn't even understand all the questions",
+      "attribution": "Sir John Templeton, \"16 Rules for Investment Success,\" 1993 (Franklin Templeton / John Templeton Foundation)",
+      "speaker": "Sir John Templeton",
+      "source": "\"16 Rules for Investment Success\" (Franklin Templeton / John Templeton Foundation)",
+      "year": "1993",
+      "url": "https://www.franklintempleton.com/forms-literature/download/TL-R16"
+    },
+    {
+      "id": "A11",
+      "theme": "uncertainty-humility",
+      "quote": "I've been wrong before. I'll be wrong again on things.",
+      "attribution": "Stanley Druckenmiller, The Economic Club of New York, May 12, 2020",
+      "speaker": "Stanley Druckenmiller",
+      "source": "The Economic Club of New York transcript",
+      "year": "2020",
+      "url": "https://www.econclubny.org/documents/10184/109144/2020DruckenmillerTranscript.pdf"
+    },
+    {
+      "id": "A12",
+      "theme": "uncertainty-humility",
+      "quote": "That's what diversification is for. It's an explicit recognition of ignorance.",
+      "attribution": "Peter L. Bernstein, MONEY Magazine interview, Oct 11, 2004",
+      "speaker": "Peter L. Bernstein",
+      "source": "MONEY Magazine interview",
+      "year": "2004",
+      "url": "https://money.cnn.com/2004/10/11/markets/benstein_bonus_0411/index.htm"
+    },
+    {
+      "id": "A13",
+      "theme": "signal-judgment",
+      "quote": "I deal in facts, not forecasting the future.",
+      "attribution": "Peter Lynch, PBS *Frontline*, \"Betting on the Market\"",
+      "speaker": "Peter Lynch",
+      "source": "PBS *Frontline*, \"Betting on the Market\"",
+      "year": "n.d.",
+      "url": "https://www.pbs.org/wgbh/pages/frontline/shows/betting/pros/lynch.html"
+    },
+    {
+      "id": "A14",
+      "theme": "signal-judgment",
+      "quote": "And it never relied on advice from 'helpers' sure to be prejudiced in favor of transactions.",
+      "attribution": "Charlie Munger, \"Vice Chairman's Thoughts,\" Berkshire Hathaway 2014 letter",
+      "speaker": "Charlie Munger",
+      "source": "\"Vice Chairman's Thoughts,\" Berkshire Hathaway letter",
+      "year": "2014",
+      "url": "https://www.berkshirehathaway.com/letters/2014ltr.pdf"
+    },
+    {
+      "id": "A15",
+      "theme": "signal-judgment",
+      "quote": "we simply attempt to be fearful when others are greedy and to be greedy only when others are fearful",
+      "attribution": "Warren Buffett, Berkshire Hathaway shareholder letter, 1986",
+      "speaker": "Warren Buffett",
+      "source": "Berkshire Hathaway shareholder letter",
+      "year": "1986",
+      "url": "https://www.berkshirehathaway.com/letters/1986.html",
+      "note": "Reproduced in the letter's own wording. The widely circulated imperative form is a paraphrase and is not used here."
+    },
+    {
+      "id": "A16",
+      "theme": "stewardship-compounding",
+      "quote": "Broad diversification, low cost, minimal portfolio turnover, and tax-efficiency conquer all.",
+      "attribution": "John C. Bogle, \"Success In Investment Management: What Can We Learn From Indexing?\", Oct 26, 2000",
+      "speaker": "John C. Bogle",
+      "source": "\"Success In Investment Management: What Can We Learn From Indexing?\", Investment Analysts Society of Chicago",
+      "year": "2000",
+      "url": "https://boglecenter.net/wp-content/uploads/Success-In-Investment-Management_-What-Can-We-Learn-From-Indexing_.pdf"
+    },
+    {
+      "id": "A17",
+      "theme": "stewardship-compounding",
+      "quote": "When you invest, it's not your wealth today, but it's your future that you're really managing.",
+      "attribution": "Peter L. Bernstein, MONEY Magazine interview, Oct 11, 2004",
+      "speaker": "Peter L. Bernstein",
+      "source": "MONEY Magazine interview",
+      "year": "2004",
+      "url": "https://money.cnn.com/2004/10/11/markets/benstein_bonus_0411/index.htm"
+    },
+    {
+      "id": "A18",
+      "theme": "learning-adaptation",
+      "quote": "The only way to avoid mistakes is not to invest—which is the biggest mistake of all.",
+      "attribution": "Sir John Templeton, \"16 Rules for Investment Success,\" 1993",
+      "speaker": "Sir John Templeton",
+      "source": "\"16 Rules for Investment Success\" (Franklin Templeton / John Templeton Foundation)",
+      "year": "1993",
+      "url": "https://www.franklintempleton.com/forms-literature/download/TL-R16"
+    },
+    {
+      "id": "A19",
+      "theme": "learning-adaptation",
+      "quote": "You have to understand that being wrong is part of the process.",
+      "attribution": "Peter L. Bernstein, MONEY Magazine interview, Oct 11, 2004",
+      "speaker": "Peter L. Bernstein",
+      "source": "MONEY Magazine interview",
+      "year": "2004",
+      "url": "https://money.cnn.com/2004/10/11/markets/benstein_bonus_0411/index.htm"
+    },
+    {
+      "id": "A20",
+      "theme": "learning-adaptation",
+      "quote": "Go to the pain rather than avoid it.",
+      "attribution": "Ray Dalio, Principles (principles.com)",
+      "speaker": "Ray Dalio",
+      "source": "Principles (principles.com)",
+      "year": "n.d.",
+      "url": "https://www.principles.com/principles/7e57c357-74bb-4e5b-ab4a-598f54b36f54/"
+    }
+  ]
+}

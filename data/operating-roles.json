@@ -1,0 +1,126 @@
+{
+  "sectionId": "operating-roles",
+  "sectionTitle": "American Operating Roles",
+  "sectionStanding": "Nine operating roles, each illustrated by one American figure from the public record. The figures are historical references for a design vocabulary. They are not users, customers, advisers, reviewers, or endorsers of Lime Signalworks or any Lime Signalworks product.",
+  "roles": [
+    {
+      "id": "role-01",
+      "index": "01",
+      "role": "Guardian",
+      "function": "Access control and open standards",
+      "figure": "Grace Hopper",
+      "symbol": "gate",
+      "fit": "Held the keys to the machine and gave them away as a standard.",
+      "detail": "She built the first compiler in 1952 and pushed COBOL out through a committee so that anyone could operate the machine rather than a closed circle. She was recalled to active duty and served a further 19 years.",
+      "sources": [
+        { "label": "Office of the President, Yale University", "url": "https://president.yale.edu/biography-grace-murray-hopper" }
+      ]
+    },
+    {
+      "id": "role-02",
+      "index": "02",
+      "role": "Sage",
+      "function": "Applied judgment for practitioners",
+      "figure": "Peter Drucker",
+      "symbol": "frame",
+      "fit": "Made judgment practical and legible for the people doing the work.",
+      "detail": "Thirty-nine books, and he named knowledge work in 1959 before the category existed in common use. After September 11, 2001 he wrote to friends telling them not to abandon daily participation in civil society.",
+      "sources": [
+        { "label": "Drucker Institute", "url": "https://www.drucker.institute/perspective/about-peter-drucker/" },
+        { "label": "White House archive, 2002", "url": "https://georgewbush-whitehouse.archives.gov/news/releases/2002/07/20020709-8.html" }
+      ]
+    },
+    {
+      "id": "role-03",
+      "index": "03",
+      "role": "Herald",
+      "function": "Reporting from inside the room",
+      "figure": "Barbara Walters",
+      "symbol": "doorway",
+      "fit": "Walked through doors that were closed to her and reported from inside them.",
+      "detail": "First woman to co-host Today in 1974, and first woman to co-anchor a network evening newscast in 1976. Doubted first, then treated as the standard.",
+      "sources": [
+        { "label": "Television Academy", "url": "https://www.emmys.com/bios/barbara-walters" }
+      ]
+    },
+    {
+      "id": "role-04",
+      "index": "04",
+      "role": "Contemplative",
+      "function": "Reflection before output",
+      "figure": "Maya Angelou",
+      "symbol": "stillwater",
+      "fit": "Years of silence first, then the most quoted voice in the room.",
+      "detail": "About five years of silence in childhood following an assault, then I Know Why the Caged Bird Sings in 1969, then the 1993 presidential inauguration. She did not force the moment; the moment came to her.",
+      "sources": [
+        { "label": "Poetry Foundation", "url": "https://www.poetryfoundation.org/poets/maya-angelou" }
+      ]
+    },
+    {
+      "id": "role-05",
+      "index": "05",
+      "role": "Watchman",
+      "function": "Verification and plain situation reporting",
+      "figure": "Katherine Johnson",
+      "symbol": "crosshair",
+      "fit": "Checked the numbers a person's life rode on, and reported them plainly.",
+      "detail": "She verified orbital trajectory calculations at NASA. John Glenn's condition before flight was recorded as: if she says they're good, then I'm ready to go. No hedging, and no unstated margin.",
+      "sources": [
+        { "label": "NASA History", "url": "https://www.nasa.gov/history/katherine-johnson-biography/" }
+      ]
+    },
+    {
+      "id": "role-06",
+      "index": "06",
+      "role": "Intercessor",
+      "function": "Representing parties who are not in the room",
+      "figure": "Eleanor Roosevelt",
+      "symbol": "bridge",
+      "fit": "Had the room, and spent it on people who did not.",
+      "detail": "First presidential spouse to run her own press conferences, beginning in 1933, and later chaired the commission that produced the Universal Declaration of Human Rights, adopted December 10, 1948. Terms presented at the moment they could be accepted.",
+      "sources": [
+        { "label": "Franklin D. Roosevelt Presidential Library", "url": "https://www.fdrlibrary.org/er-biography" }
+      ]
+    },
+    {
+      "id": "role-07",
+      "index": "07",
+      "role": "Shepherd",
+      "function": "Long-horizon stewardship and cost discipline",
+      "figure": "Jack Bogle",
+      "symbol": "stair",
+      "fit": "Stayed with the unexciting position until it worked.",
+      "detail": "Vanguard was formed in September 1974 and began operating in May 1975. The first index fund available to individual investors followed in 1976, with funds run at cost. Loyalty to the holder, priced in basis points.",
+      "sources": [
+        { "label": "Vanguard Australia media centre", "url": "https://www.vanguard.com.au/corporate/media-centre/2019/announcement-passing-of-founder-john-bogle" }
+      ]
+    },
+    {
+      "id": "role-08",
+      "index": "08",
+      "role": "Joker",
+      "function": "Morale under sustained load",
+      "figure": "Robin Williams",
+      "symbol": "lift",
+      "fit": "Carried relief into places that had none, at his own cost.",
+      "detail": "Six USO tours between 2002 and 2013, reaching more than 89,000 service members, including time backstage with troops in recovery. He died in 2014; the record here is his service work, and it is cited rather than dramatised.",
+      "sources": [
+        { "label": "USO", "url": "https://www.uso.org/stories/29-he-brought-them-light-how-robin-williams-turned-his-uso-tours-into-personal-experiences-for-troops" }
+      ]
+    },
+    {
+      "id": "role-09",
+      "index": "09",
+      "role": "Voice in the Wilderness",
+      "function": "Early warning ahead of consensus",
+      "figure": "Rachel Carson",
+      "symbol": "beam",
+      "fit": "Told the country what was coming, was attacked for it, and was later proved right.",
+      "detail": "She wrote Silent Spring over four years while seriously ill. A presidential science advisory committee substantially backed her findings in 1963, and DDT was banned in 1972, after her death. She pointed past herself and did not see the outcome.",
+      "sources": [
+        { "label": "US Environmental Protection Agency archive", "url": "https://www.epa.gov/archive/epa/aboutepa/rachel-carson.html" },
+        { "label": "NOAA NCEI", "url": "https://www.ncei.noaa.gov/news/rachel-carson" }
+      ]
+    }
+  ]
+}

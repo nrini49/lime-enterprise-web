@@ -1,0 +1,16 @@
+{
+  "name": "lime-enterprise-web",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Lime Signalworks Enterprise (Site 2) — content integration preview. Static site generated from reviewed content data.",
+  "type": "module",
+  "scripts": {
+    "build": "node src/render.mjs",
+    "test": "npm run build && node --test tests/",
+    "serve": "node scripts/serve.mjs"
+  },
+  "devDependencies": {
+    "cheerio": "^1.2.0",
+    "lucide-static": "^1.26.0"
+  }
+}
