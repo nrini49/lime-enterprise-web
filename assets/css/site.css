@@ -119,6 +119,32 @@
   }
 }
 
+/* ---------- Theme painting ----------
+ * Every full-width surface paints its own background from the active palette.
+ * The visible canvas must not depend on body-background propagation, because an
+ * embedding page or host stylesheet that paints <html> stops that propagation and
+ * leaves wide viewports showing a foreign background beside and below the content.
+ */
+
+html {
+  background-color: var(--color-bg);
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+  }
+}
+
+main {
+  background-color: var(--color-bg);
+}
+
 /* ---------- Primitives ---------- */
 
 .shell {
@@ -314,7 +340,8 @@ a:hover {
 .hero {
   padding-block: clamp(var(--space-12), 8vw, var(--space-24));
   border-bottom: 1px solid var(--color-divider);
-  background:
+  background-color: var(--color-bg);
+  background-image:
     linear-gradient(to bottom, var(--color-surface-offset), var(--color-bg) 70%);
 }
 
@@ -404,6 +431,7 @@ a:hover {
 .section {
   padding-block: clamp(var(--space-12), 7vw, var(--space-24));
   border-bottom: 1px solid var(--color-divider);
+  background-color: var(--color-bg);
 }
 
 .section--tight {
