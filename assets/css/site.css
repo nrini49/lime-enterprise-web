@@ -98,26 +98,9 @@
   --shadow-md: 0 4px 14px oklch(0 0 0 / 0.45);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) {
-    --color-bg: #0b1416;
-    --color-surface: #101b1d;
-    --color-surface-2: #152224;
-    --color-surface-offset: #121e20;
-    --color-divider: #1f2c2e;
-    --color-border: #2c3b3e;
-    --color-text: #dbe5e5;
-    --color-text-muted: #9aafb1;
-    --color-text-faint: #8a9fa1;
-    --color-text-inverse: #0b1416;
-    --color-primary: #64bcc5;
-    --color-primary-hover: #86d0d8;
-    --color-primary-active: #a5dee4;
-    --color-primary-highlight: #223437;
-    --color-signal: #e0a561;
-    --color-signal-surface: #241d13;
-  }
-}
+/* The dark palette is opt-in through the toggle only. This surface has no
+ * prefers-color-scheme rule, so an operating system set to dark still receives
+ * the light palette on first paint. */
 
 /* ---------- Theme painting ----------
  * Every full-width surface paints its own background from the active palette.
@@ -133,12 +116,6 @@ html {
 
 [data-theme='dark'] {
   color-scheme: dark;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) {
-    color-scheme: dark;
-  }
 }
 
 main {
@@ -654,8 +631,7 @@ a:hover {
   border-color: var(--color-primary);
 }
 
-[data-theme='dark'] .chip[aria-pressed='true'],
-:root:not([data-theme]) .chip[aria-pressed='true'] {
+[data-theme='dark'] .chip[aria-pressed='true'] {
   color: var(--color-bg);
 }
 
@@ -852,6 +828,28 @@ a:hover {
 .foot li {
   font-size: var(--text-sm);
   color: var(--color-text-muted);
+}
+
+/* Reciprocal link to the leadership surface. Sized to the 44px target baseline and
+   styled from palette tokens so it stays AA in both themes. */
+.sibling-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-primary);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.sibling-link:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary-hover);
+  text-decoration: underline;
 }
 
 .state-list {

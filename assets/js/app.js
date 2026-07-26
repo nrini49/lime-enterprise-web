@@ -12,10 +12,11 @@
   var MOON =
     '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
 
-  var mode =
-    window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light';
+  /* Light is the unconditional default for this surface: the operating system
+     preference is deliberately not consulted, and the choice is never persisted to any
+     browser storage. Every load starts light; the toggle changes the palette for the
+     current page view only. */
+  var mode = root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
 
   function applyTheme(next) {
     mode = next;
