@@ -1,15 +1,20 @@
 <!doctype html>
-<html lang="en">
+<!-- data-theme is set in the markup so the light palette is the default even with
+     JavaScript disabled and even when the operating system prefers dark. -->
+<html lang="en" data-theme="light">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Lime Signalworks Enterprise — Operating Roles and Lighthouse Principles</title>
+    <title>LIME Enterprise — Lime Signalworks Operating Roles and Lighthouse Principles</title>
     <meta
       name="description"
-      content="Site 2 content integration preview for Lime Signalworks Enterprise: nine American operating roles and a twenty-record library of sourced operating principles, with methodology and attribution notes."
+      content="Site 2 content integration preview for LIME Enterprise, the Lime Signalworks enterprise track: nine American operating roles and a twenty-record library of sourced operating principles, with methodology and attribution notes."
     />
     <meta name="robots" content="noindex, nofollow" />
-    <meta name="color-scheme" content="light dark" />
+    <!-- Declares light as the default rendering scheme so a dark operating system does
+         not paint the canvas or form controls dark before the stylesheet applies. The
+         dark palette is reached only through the toggle, via the color-scheme property. -->
+    <meta name="color-scheme" content="light" />
     <link
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a5a63'/%3E%3Cg stroke='%23f2f5f5' stroke-width='2.5' fill='none' stroke-linecap='square'%3E%3Cpath d='M16 7v18'/%3E%3Cpath d='M8 25h16'/%3E%3Cpath d='M6 12h4M22 12h4'/%3E%3C/g%3E%3C/svg%3E"
@@ -56,7 +61,9 @@
             <path d="M6 16h3M23 16h3" />
           </svg>
           <span class="brand__name"
-            >Lime Signalworks<span class="brand__unit">Enterprise · Site 2</span></span
+            >Lime Signalworks<span class="brand__unit" data-site-unit
+              >LIME Enterprise · Site 2</span
+            ></span
           >
         </a>
 
@@ -283,10 +290,19 @@
     <footer class="foot">
       <div class="shell foot__grid">
         <div>
-          <p class="label">Lime Signalworks Enterprise · Site 2</p>
+          <p class="label">LIME Enterprise · Site 2 · Lime Signalworks</p>
           <p style="margin-top: var(--space-4)">
             Enterprise track content preview. The leadership site is a separate surface with its own
             repository and deployment, and is unaffected by this page.
+          </p>
+          <p style="margin-top: var(--space-4)">
+            <a
+              class="sibling-link"
+              href="https://limesignalworks.com"
+              rel="noopener noreferrer"
+              data-sibling-site
+              >LIME Leadership<span class="ext" aria-hidden="true">&#8599;</span></a
+            >
           </p>
         </div>
         <div>

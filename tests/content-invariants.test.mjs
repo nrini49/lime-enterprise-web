@@ -340,6 +340,65 @@ test('dom: status label identifies this surface as a preview', () => {
   assert.ok(/Lime Signalworks/i.test(brand) && /Enterprise/i.test(brand), 'Site 2 header identity');
 });
 
+test('dom: the masthead names this unit "LIME Enterprise" and keeps the wordmark', () => {
+  const brand = $('.brand').text().replace(/\s+/g, ' ').trim();
+  assert.ok(brand.includes('Lime Signalworks'), 'the Lime Signalworks wordmark must remain');
+  const unit = $('[data-site-unit]');
+  assert.equal(unit.length, 1, 'exactly one unit label');
+  assert.ok(
+    unit.text().replace(/\s+/g, ' ').includes('LIME Enterprise'),
+    `unit label must read "LIME Enterprise", got: ${unit.text().trim()}`,
+  );
+  assert.ok(
+    $('title').text().includes('LIME Enterprise'),
+    'the document title must identify LIME Enterprise',
+  );
+});
+
+test('dom: a single reciprocal link points to the LIME Leadership site', () => {
+  const link = $('[data-sibling-site]');
+  assert.equal(link.length, 1, 'exactly one reciprocal link — no alternate paths');
+  assert.equal(link.attr('href'), 'https://limesignalworks.com');
+  assert.equal(link.get(0).tagName, 'a', 'the reciprocal link is a real anchor');
+  const label = link.text().replace(/\s+/g, ' ').replace(/[↗\s]+$/, '').trim();
+  assert.equal(label, 'LIME Leadership', 'reciprocal link label');
+  assert.equal(link.attr('rel'), 'noopener noreferrer');
+  assert.equal(link.attr('hidden'), undefined, 'the reciprocal link is not hidden');
+  assert.equal(link.attr('aria-hidden'), undefined, 'the reciprocal link is exposed to AT');
+  assert.equal(link.closest('.sr-only').length, 0, 'the reciprocal link is visible, not sr-only');
+  // The protected anchor-link invariant must be untouched by this addition.
+  assert.ok(!link.hasClass('anchor-link'), 'must not reuse the protected anchor-link class');
+  assert.equal($('.anchor-link').length, 1, 'anchor-link count unchanged');
+});
+
+test('dom: light is the default theme in the served markup', () => {
+  // Belt-and-braces alongside the rendered browser checks: the attribute must ship in
+  // the static HTML so the light palette applies with JavaScript disabled.
+  assert.equal($('html').attr('data-theme'), 'light', 'root ships data-theme="light"');
+  assert.equal($('meta[name="color-scheme"]').attr('content'), 'light');
+});
+
+test('css: no prefers-color-scheme rule can force this surface dark', () => {
+  const css = ['assets/css/base.css', 'assets/css/site.css', 'assets/css/fonts.css']
+    .map((file) => readFileSync(path.join(root, file), 'utf8'))
+    .join('\n');
+  assert.ok(
+    !/@media[^{]*prefers-color-scheme\s*:\s*dark/i.test(css),
+    'a prefers-color-scheme: dark block would defeat the light default',
+  );
+});
+
+test('js: the theme choice is never written to persistent browser storage', () => {
+  const js = readFileSync(path.join(root, 'assets/js/app.js'), 'utf8');
+  for (const api of ['localStorage', 'sessionStorage', 'document.cookie', 'indexedDB', 'caches']) {
+    assert.ok(!js.includes(api), `theme state must not use ${api}`);
+  }
+  assert.ok(
+    !/matchMedia\s*\(\s*['"]\(prefers-color-scheme/i.test(js),
+    'the OS colour preference must not seed the initial theme',
+  );
+});
+
 test('dom: the page makes no external requests of its own', () => {
   // Only anchors to sourced material may point off-origin, and those load solely
   // when a visitor clicks them. Every asset the page fetches must be same-origin.
