@@ -26,6 +26,7 @@ const WIDTHS = [
   { width: 1920, height: 1080, label: 'wide desktop' },
   { width: 1440, height: 900, label: 'desktop 1440' },
   { width: 1280, height: 900, label: 'desktop' },
+  { width: 414, height: 896, label: 'mobile 414' },
   { width: 375, height: 812, label: 'mobile 375' },
   { width: 320, height: 640, label: 'mobile 320' },
 ];
@@ -37,9 +38,12 @@ const SURFACES = [
   ['main#main', 'main'],
   ['.masthead', 'masthead'],
   ['.hero', 'hero'],
-  ['#operating-roles', 'operating roles section'],
-  ['#principles', 'principles section'],
-  ['#methodology', 'methodology section'],
+  ['#what-we-do', 'what we do section'],
+  ['#market-report', 'market report section'],
+  ['#evaluation', 'evaluation section'],
+  ['#pricing', 'pricing section'],
+  ['#spy-pipeline', 'SPY Pipeline section'],
+  ['#how-to-begin', 'how to begin section'],
   ['.foot', 'footer'],
 ];
 
@@ -130,7 +134,7 @@ const samplePoints = (width, height) => [
   ['bottom edge', width - 6, height - 6],
 ];
 
-test('rendered theme: every surface follows the palette at 1920, 1440, 1280, 375 and 320', async (t) => {
+test('rendered theme: every surface follows the palette at 1920, 1440, 1280, 414, 375 and 320', async (t) => {
   const server = await startServer();
   const browser = await chromium.launch();
   try {
@@ -380,6 +384,7 @@ test('rendered theme: the reciprocal LIME Leadership link is visible and focusab
   try {
     for (const { width, height, label } of [
       { width: 1440, height: 900, label: 'desktop 1440' },
+      { width: 414, height: 896, label: 'mobile 414' },
       { width: 375, height: 812, label: 'mobile 375' },
       { width: 320, height: 640, label: 'mobile 320' },
     ]) {
@@ -426,6 +431,95 @@ test('rendered theme: the reciprocal LIME Leadership link is visible and focusab
   }
 });
 
+test('rendered: the contact channels are visible, sized and keyboard reachable', async (t) => {
+  const server = await startServer();
+  const browser = await chromium.launch();
+  try {
+    for (const { width, height, label } of [
+      { width: 1440, height: 900, label: 'desktop 1440' },
+      { width: 1280, height: 900, label: 'desktop 1280' },
+      { width: 414, height: 896, label: 'mobile 414' },
+      { width: 375, height: 812, label: 'mobile 375' },
+      { width: 320, height: 640, label: 'mobile 320' },
+    ]) {
+      await t.test(`${label} (${width}px)`, async () => {
+        const context = await browser.newContext({
+          viewport: { width, height },
+          colorScheme: 'dark',
+        });
+        const page = await context.newPage();
+        await page.goto(ORIGIN, { waitUntil: 'networkidle' });
+        await page.evaluate(() => document.fonts.ready);
+
+        const block = page.locator('[data-contact]');
+        await block.scrollIntoViewIfNeeded();
+        assert.equal(await block.count(), 1, 'exactly one contact block');
+        assert.ok(await block.isVisible(), `contact block must be visible at ${width}px`);
+        const blockText = await block.innerText();
+        assert.ok(
+          blockText.includes('2722 Erie Ave, Suite 219, Cincinnati, OH 45208'),
+          'the office address is on screen',
+        );
+        assert.ok(blockText.includes('By appointment'), 'availability is on screen');
+
+        for (const [selector, href, text] of [
+          ['[data-contact-email]', 'mailto:contact@limesignalworks.com', 'contact@limesignalworks.com'],
+          ['[data-contact-phone]', 'tel:+13802000288', '+1 380-200-0288'],
+        ]) {
+          const link = page.locator(selector);
+          assert.equal(await link.count(), 1, `${selector} appears once`);
+          assert.ok(await link.isVisible(), `${selector} visible at ${width}px`);
+          assert.equal(await link.getAttribute('href'), href, `${selector} href`);
+          assert.equal((await link.innerText()).trim(), text, `${selector} label`);
+
+          const box = await link.boundingBox();
+          assert.ok(box.height >= 44, `${selector} target height ${box.height}px at ${width}px`);
+          assert.ok(
+            box.x >= 0 && box.x + box.width <= width + 1,
+            `${selector} stays inside the viewport at ${width}px`,
+          );
+
+          await link.focus();
+          const focus = await page.evaluate((sel) => {
+            const el = document.querySelector(sel);
+            const s = getComputedStyle(el);
+            return {
+              focused: document.activeElement === el,
+              outlineStyle: s.outlineStyle,
+              outlineWidth: parseFloat(s.outlineWidth),
+            };
+          }, selector);
+          assert.ok(focus.focused, `${selector} is keyboard focusable`);
+          assert.notEqual(focus.outlineStyle, 'none', `${selector} draws a focus ring`);
+          assert.ok(focus.outlineWidth >= 2, `${selector} focus ring is at least 2px`);
+        }
+
+        // The in-page route from "How to begin" to the contact block resolves.
+        await page.click('section#how-to-begin a[href="#contact"]');
+        assert.equal(new URL(page.url()).hash, '#contact', 'the contact anchor sets the fragment');
+        await page
+          .waitForFunction(() => {
+            const top = document.querySelector('[data-contact]').getBoundingClientRect().top;
+            const atEnd =
+              window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+            return (top > -1 && top < window.innerHeight) || atEnd;
+          })
+          .catch(() => {
+            throw new Error('the contact anchor never arrived');
+          });
+
+        // No form or field was introduced alongside the contact path.
+        assert.equal(await page.locator('form, input, textarea, select').count(), 0, 'no capture');
+
+        await context.close();
+      });
+    }
+  } finally {
+    await browser.close();
+    server.kill();
+  }
+});
+
 test('rendered theme: the toggle does not rely on background propagation', async () => {
   // A host page or embedding wrapper may paint <html> itself. The site must still
   // paint its own canvas, so <html> carries an explicit themed background and
@@ -453,6 +547,343 @@ test('rendered theme: the toggle does not rely on background propagation', async
     });
     assert.equal(dark.bg, 'rgb(11, 20, 22)', 'root element paints the dark surface');
     assert.equal(dark.scheme, 'dark', 'color-scheme follows the chosen theme');
+    await context.close();
+  } finally {
+    await browser.close();
+    server.kill();
+  }
+});
+
+test('rendered: nothing overflows horizontally in either palette', async (t) => {
+  const server = await startServer();
+  const browser = await chromium.launch();
+  try {
+    for (const { width, height, label } of WIDTHS) {
+      await t.test(`${label} (${width}px)`, async () => {
+        const context = await browser.newContext({
+          viewport: { width, height },
+          colorScheme: 'dark',
+        });
+        const page = await context.newPage();
+        await page.goto(ORIGIN, { waitUntil: 'networkidle' });
+        await page.evaluate(() => document.fonts.ready);
+
+        const measure = () =>
+          page.evaluate(() => {
+            const doc = document.documentElement.scrollWidth - window.innerWidth;
+            const wide = [...document.querySelectorAll('body *')]
+              .filter((el) => {
+                const r = el.getBoundingClientRect();
+                if (r.width === 0 && r.height === 0) return false;
+                // Scroll containers are permitted to hold wider content.
+                if (el.closest('.table-wrap')) return false;
+                return r.right > window.innerWidth + 1 || r.left < -1;
+              })
+              .map((el) => `${el.tagName.toLowerCase()}.${el.className}`)
+              .slice(0, 5);
+            return { doc, wide };
+          });
+
+        let m = await measure();
+        assert.ok(m.doc <= 1, `light: horizontal overflow of ${m.doc}px at ${width}px`);
+        assert.deepEqual(m.wide, [], `light: elements outside the viewport at ${width}px`);
+
+        await page.click('[data-theme-toggle]');
+        await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
+        m = await measure();
+        assert.ok(m.doc <= 1, `dark: horizontal overflow of ${m.doc}px at ${width}px`);
+        assert.deepEqual(m.wide, [], `dark: elements outside the viewport at ${width}px`);
+
+        await context.close();
+      });
+    }
+  } finally {
+    await browser.close();
+    server.kill();
+  }
+});
+
+test('rendered: the demo disclosure is visible next to the call to action before any click', async (t) => {
+  const server = await startServer();
+  const browser = await chromium.launch();
+  try {
+    for (const { width, height, label } of WIDTHS) {
+      await t.test(`${label} (${width}px)`, async () => {
+        const context = await browser.newContext({
+          viewport: { width, height },
+          colorScheme: 'dark',
+        });
+        const page = await context.newPage();
+        await page.goto(ORIGIN, { waitUntil: 'networkidle' });
+        await page.evaluate(() => document.fonts.ready);
+
+        const cta = page.locator('a.cta');
+        const disclosure = page.locator('[data-demo-disclosure]');
+        await cta.scrollIntoViewIfNeeded();
+
+        assert.equal(await cta.count(), 1, 'exactly one call to action');
+        assert.ok(await cta.isVisible(), 'the call to action is visible');
+        assert.ok(await disclosure.isVisible(), 'the disclosure is visible without interaction');
+
+        const ctaBox = await cta.boundingBox();
+        const discBox = await disclosure.boundingBox();
+        assert.ok(ctaBox.height >= 44, `call to action height ${ctaBox.height}px`);
+        assert.ok(
+          discBox.y >= ctaBox.y + ctaBox.height - 1,
+          'the disclosure sits after the call to action',
+        );
+        assert.ok(
+          discBox.y - (ctaBox.y + ctaBox.height) < 40,
+          `the disclosure must be adjacent, gap was ${discBox.y - (ctaBox.y + ctaBox.height)}px`,
+        );
+
+        // Not hidden by any means the computed style could express.
+        const style = await disclosure.evaluate((el) => {
+          const s = getComputedStyle(el);
+          return {
+            display: s.display,
+            visibility: s.visibility,
+            opacity: s.opacity,
+            height: el.getBoundingClientRect().height,
+          };
+        });
+        assert.notEqual(style.display, 'none');
+        assert.equal(style.visibility, 'visible');
+        assert.ok(Number(style.opacity) > 0.95, 'the disclosure is fully opaque');
+        assert.ok(style.height > 10, 'the disclosure has real height');
+
+        assert.equal(await cta.getAttribute('href'), 'https://limesignalworks.pplx.app/');
+        assert.equal(await cta.getAttribute('target'), '_blank');
+
+        // The sixth fact — the access precondition — is held to the same standard: on
+        // screen, adjacent, and before any click.
+        const signin = page.locator('[data-demo-signin]');
+        assert.equal(await signin.count(), 1, 'exactly one sign-in statement');
+        assert.ok(await signin.isVisible(), 'the sign-in fact is visible without interaction');
+        assert.equal(
+          await signin.innerText(),
+          'Perplexity sign-in may be required.',
+          'the sign-in wording is served, not scripted',
+        );
+        const signinBox = await signin.boundingBox();
+        assert.ok(
+          signinBox.y >= discBox.y + discBox.height - 1,
+          'the sign-in fact follows the disclosure',
+        );
+        assert.ok(
+          signinBox.y - (discBox.y + discBox.height) < 40,
+          `the sign-in fact must be adjacent, gap was ${signinBox.y - (discBox.y + discBox.height)}px`,
+        );
+        assert.ok(
+          signinBox.y < ctaBox.y + ctaBox.height + 260,
+          'the sign-in fact stays within the call-to-action block',
+        );
+
+        await context.close();
+      });
+    }
+  } finally {
+    await browser.close();
+    server.kill();
+  }
+});
+
+test('rendered: anchor navigation moves to each target section', async () => {
+  const server = await startServer();
+  const browser = await chromium.launch();
+  try {
+    const context = await browser.newContext({
+      viewport: { width: 1440, height: 900 },
+      colorScheme: 'dark',
+    });
+    const page = await context.newPage();
+    await page.goto(ORIGIN, { waitUntil: 'networkidle' });
+
+    const navTargets = await page.$$eval('.masthead__nav a', (els) =>
+      els.map((el) => el.getAttribute('href')),
+    );
+    assert.ok(navTargets.length >= 5, 'the nav reflects the section order');
+    for (const target of navTargets) {
+      await page.click(`.masthead__nav a[href="${target}"]`);
+      assert.equal(new URL(page.url()).hash, target, `nav to ${target} sets the fragment`);
+      // Smooth scrolling is enabled, so poll until the section has actually arrived.
+      // Either it lands clear of the sticky masthead, or the document is already at its
+      // end and cannot scroll further.
+      await page
+        .waitForFunction((sel) => {
+          const top = document.querySelector(sel).getBoundingClientRect().top;
+          const header = document.querySelector('.masthead').getBoundingClientRect().height;
+          const atEnd =
+            window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+          return (top >= header - 8 && top < header + 120) || (atEnd && top < window.innerHeight);
+        }, target)
+        .catch(() => {
+          throw new Error(`nav to ${target} never arrived`);
+        });
+    }
+
+    // In-page anchors inside the body behave the same way.
+    for (const href of await page.$$eval('main a[href^="#"]', (els) =>
+      els.map((el) => el.getAttribute('href')),
+    )) {
+      const exists = await page.evaluate((sel) => Boolean(document.querySelector(sel)), href);
+      assert.ok(exists, `in-page anchor ${href} resolves`);
+    }
+
+    await context.close();
+  } finally {
+    await browser.close();
+    server.kill();
+  }
+});
+
+test('rendered: keyboard order reaches every control, each with a visible focus ring', async () => {
+  const server = await startServer();
+  const browser = await chromium.launch();
+  try {
+    const context = await browser.newContext({
+      viewport: { width: 1440, height: 900 },
+      colorScheme: 'dark',
+    });
+    const page = await context.newPage();
+    await page.goto(ORIGIN, { waitUntil: 'networkidle' });
+
+    const expected = await page.$$eval('a[href], button', (els) =>
+      els.map((el) => el.tagName.toLowerCase() + (el.className ? `.${el.className}` : '')),
+    );
+
+    const seen = [];
+    for (let i = 0; i < expected.length; i += 1) {
+      await page.keyboard.press('Tab');
+      const state = await page.evaluate(() => {
+        const el = document.activeElement;
+        if (!el || el === document.body) return null;
+        const s = getComputedStyle(el);
+        return {
+          id: el.tagName.toLowerCase() + (el.className ? `.${el.className}` : ''),
+          outlineStyle: s.outlineStyle,
+          outlineWidth: parseFloat(s.outlineWidth),
+        };
+      });
+      assert.ok(state, `focus left the document after ${i} tabs`);
+      assert.notEqual(state.outlineStyle, 'none', `no focus ring on ${state.id}`);
+      assert.ok(state.outlineWidth >= 2, `focus ring on ${state.id} is thinner than 2px`);
+      seen.push(state.id);
+    }
+
+    // Tab order must follow document order, with nothing skipped and nothing added.
+    assert.deepEqual(seen, expected, 'tab order must equal document order');
+
+    // The first stop is the skip link, and it moves focus into main content.
+    assert.ok(seen[0].includes('skip-link'), 'the skip link is the first tab stop');
+
+    // The toggle is operable from the keyboard, not the mouse alone.
+    await page.focus('[data-theme-toggle]');
+    await page.keyboard.press('Enter');
+    await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
+    await page.keyboard.press(' ');
+    await page.waitForFunction(() => document.documentElement.dataset.theme === 'light');
+
+    await context.close();
+  } finally {
+    await browser.close();
+    server.kill();
+  }
+});
+
+test('rendered: reduced motion is honoured and the toggle still works', async () => {
+  const server = await startServer();
+  const browser = await chromium.launch();
+  try {
+    const context = await browser.newContext({
+      viewport: { width: 1440, height: 900 },
+      colorScheme: 'dark',
+      reducedMotion: 'reduce',
+    });
+    const page = await context.newPage();
+    await page.goto(ORIGIN, { waitUntil: 'networkidle' });
+    assert.equal(
+      await page.evaluate(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches),
+      true,
+      'reduced motion must be emulated for this test to mean anything',
+    );
+
+    const durations = await page.evaluate(() =>
+      [...document.querySelectorAll('body *')]
+        .map((el) => {
+          const s = getComputedStyle(el);
+          return [
+            ...s.transitionDuration.split(','),
+            ...s.animationDuration.split(','),
+          ].map((v) => parseFloat(v) || 0);
+        })
+        .flat()
+        .filter((v) => v > 0.001),
+    );
+    assert.deepEqual(durations, [], 'no motion may run under prefers-reduced-motion');
+
+    assert.equal(
+      await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior),
+      'auto',
+      'smooth scrolling must be disabled under reduced motion',
+    );
+
+    await page.click('[data-theme-toggle]');
+    await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
+    await context.close();
+  } finally {
+    await browser.close();
+    server.kill();
+  }
+});
+
+test('rendered: the page is complete and usable with JavaScript disabled', async () => {
+  const server = await startServer();
+  const browser = await chromium.launch();
+  try {
+    const context = await browser.newContext({
+      viewport: { width: 1440, height: 900 },
+      colorScheme: 'dark',
+      javaScriptEnabled: false,
+    });
+    const page = await context.newPage();
+    await page.goto(ORIGIN, { waitUntil: 'load' });
+
+    // Every section, the call to action, its disclosure and the reciprocal link are
+    // present in the served markup, so nothing essential depends on script.
+    for (const selector of [
+      'a.cta',
+      '[data-demo-disclosure]',
+      '[data-demo-signin]',
+      '[data-contact]',
+      '[data-contact-email]',
+      '[data-contact-phone]',
+      '[data-sibling-site]',
+      '[data-securities-disclaimer]',
+      '#what-we-do',
+      '#market-report',
+      '#pricing',
+      '#spy-pipeline',
+      '#how-to-begin',
+      '[data-pricing-table]',
+    ]) {
+      assert.ok(await page.locator(selector).isVisible(), `${selector} must render without JS`);
+    }
+    // No control may be shown that cannot act: the toggle is script-created, so with
+    // script disabled the page presents no buttons at all.
+    assert.equal(await page.locator('button').count(), 0, 'no inert control without JS');
+    assert.equal(
+      await page.locator('[data-demo-disclosure]').innerText(),
+      'Demonstration environment. Simulated data. No broker connection and no real orders. ' +
+        'Not production-ready.',
+      'the disclosure wording is served, not scripted',
+    );
+    // The toggle is the only scripted control; with script off it must still be labelled.
+    assert.equal(
+      await page.locator('[data-theme-toggle]').count(),
+      0,
+      'the toggle is absent when the script that operates it has not run',
+    );
     await context.close();
   } finally {
     await browser.close();

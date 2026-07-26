@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>LIME Enterprise — Lime Signalworks Operating Roles and Lighthouse Principles</title>
+    <title>LIME Enterprise — Lime Signalworks loss-prevention-first trading assistance</title>
     <meta
       name="description"
-      content="Site 2 content integration preview for LIME Enterprise, the Lime Signalworks enterprise track: nine American operating roles and a twenty-record library of sourced operating principles, with methodology and attribution notes."
+      content="LIME Enterprise is the Lime Signalworks enterprise surface: a daily market situation report, the Rosie decision-support dashboard, and a free 33-day evaluation that runs in demo and paper mode only."
     />
     <meta name="robots" content="noindex, nofollow" />
     <!-- Declares light as the default rendering scheme so a dark operating system does
@@ -17,7 +17,7 @@
     <meta name="color-scheme" content="light" />
     <link
       rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a5a63'/%3E%3Cg stroke='%23f2f5f5' stroke-width='2.5' fill='none' stroke-linecap='square'%3E%3Cpath d='M16 7v18'/%3E%3Cpath d='M8 25h16'/%3E%3Cpath d='M6 12h4M22 12h4'/%3E%3C/g%3E%3C/svg%3E"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231f6b45'/%3E%3Cg stroke='%23f4f6f4' stroke-width='2.5' fill='none' stroke-linecap='square'%3E%3Cpath d='M6 21l7-7 5 5 8-8'/%3E%3Cpath d='M6 26h20'/%3E%3C/g%3E%3C/svg%3E"
     />
     <!-- Self-hosted OFL 1.1 typefaces. No external font service is contacted. -->
     <link
@@ -41,6 +41,7 @@
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
+    <!-- E1 — header and primary call to action -->
     <header class="masthead">
       <div class="shell masthead__inner">
         <a class="brand" href="#main">
@@ -55,47 +56,19 @@
             stroke-linecap="square"
             aria-hidden="true"
           >
-            <path d="M16 6v20" />
-            <path d="M7 26h18" />
-            <path d="M4 11h5M23 11h5" />
-            <path d="M6 16h3M23 16h3" />
+            <path d="M4 22l8-8 5 5 9-9" />
+            <path d="M4 27h24" />
           </svg>
           <span class="brand__name"
-            >Lime Signalworks<span class="brand__unit" data-site-unit
-              >LIME Enterprise · Site 2</span
-            ></span
+            >Lime Signalworks<span class="brand__unit" data-site-unit>LIME Enterprise</span></span
           >
         </a>
 
-        <p class="status-chip">Content integration preview</p>
+        <nav class="masthead__nav" aria-label="Sections">{{NAV}}</nav>
 
-        <nav class="masthead__nav" aria-label="Sections">
-          <a href="#operating-roles">Operating roles</a>
-          <a href="#principles">Principles</a>
-          <a href="#methodology">Methodology</a>
-        </nav>
-
-        <button
-          class="theme-toggle"
-          type="button"
-          data-theme-toggle
-          aria-label="Switch to dark mode"
-        >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            aria-hidden="true"
-          >
-            <circle cx="12" cy="12" r="5" />
-            <path
-              d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
-            />
-          </svg>
-        </button>
+        <!-- The theme toggle is created by assets/js/app.js, the same script that makes it
+             work. It is deliberately absent from the served markup so that a visitor with
+             JavaScript disabled is never shown a control that cannot do anything. -->
       </div>
     </header>
 
@@ -103,215 +76,381 @@
       <section class="hero">
         <div class="shell hero__grid">
           <div>
-            <p class="label beam">Enterprise track</p>
-            <h1>Operating roles and lighthouse principles</h1>
+            <p class="label rule-after">LIME Enterprise</p>
+            <h1>Loss-prevention-first AI trading assistance for households and companies</h1>
             <p class="hero__lede">
-              Site 2 is the enterprise track for Lime Signalworks. This preview integrates two
-              reviewed content sets — nine American operating roles and a twenty-record library of
-              sourced operating principles — so that language, sourcing, and attribution can be
-              examined before any platform, capability, or evaluation pages are written.
+              Lime Signalworks publishes a plain-language market report each trading day and builds
+              Rosie, a decision-support dashboard that reads market conditions and flags when they
+              change. Protecting capital is weighted ahead of pursuing gains. The decisions stay
+              yours.
             </p>
+
+            <!-- E1 call to action. Both facts below are static markup, rendered before any
+                 click, and neither is a toast, a tooltip, or collapsed content. The second
+                 states the access precondition: the destination is not anonymously
+                 reachable, so a visitor learns that before spending a click on it. -->
+            <div class="cta-block" id="demo">
+              {{DEMO_CTA}}
+              <p class="cta-block__disclosure" data-demo-disclosure>{{DEMO_DISCLOSURE}}</p>
+              <p class="cta-block__signin" data-demo-signin>{{DEMO_SIGNIN}}</p>
+            </div>
+
             <dl class="hero__meta">
               <div>
-                <dt>Surface</dt>
-                <dd>Site 2 root route, independent of the leadership site</dd>
+                <dt>Evaluation</dt>
+                <dd>Free for {{EVAL_DAYS}} days, in demo and paper mode only</dd>
               </div>
               <div>
-                <dt>Status</dt>
-                <dd>Content integration preview — content review only, not a release</dd>
+                <dt>Broker connection</dt>
+                <dd>None. No real orders are placed at any point</dd>
               </div>
               <div>
-                <dt>In this preview</dt>
-                <dd>Operating-role register, principles library, methodology and attribution</dd>
+                <dt>Signup</dt>
+                <dd>Designed, not built. There is no account to create on this site today</dd>
               </div>
               <div>
-                <dt>Not in this preview</dt>
-                <dd>
-                  Platform, product, security, pricing, and evaluation pages; no product claims are
-                  made here
-                </dd>
+                <dt>Enrollment</dt>
+                <dd>Prices published below; checkout is not built</dd>
               </div>
             </dl>
-            <a class="anchor-link" href="#principles">Review the operating principles</a>
           </div>
           <div>
             <svg
-              class="station"
-              viewBox="0 0 320 260"
+              class="figure-line"
+              viewBox="0 0 320 240"
               role="img"
-              aria-label="Diagram of a harbour light station: a tower on a base line, with a lantern and horizontal beam lines running to range marks on both sides."
+              aria-label="Abstract line diagram: an index line moving up and down above a lower threshold band, with a marked point where the line falls toward the band."
               fill="none"
               stroke="currentColor"
               stroke-width="1.25"
               stroke-linecap="square"
             >
-              <path d="M8 216h304" stroke-width="1" opacity="0.5" />
-              <path d="M8 228h304" stroke-width="1" opacity="0.25" />
-              <path d="M8 240h304" stroke-width="1" opacity="0.15" />
-              <path d="M136 216 148 92h24l12 124z" />
-              <path d="M142 154h36M139 184h42" opacity="0.65" />
-              <rect x="146" y="70" width="28" height="22" />
-              <path d="M152 70V56h16v14" />
-              <path d="M160 56V44" />
-              <path d="M120 76h-52M120 86h-30" opacity="0.75" />
-              <path d="M200 76h52M200 86h30" opacity="0.75" />
-              <path d="M56 62v28M264 62v28" opacity="0.5" />
-              <path d="M96 190v26M224 190v26" opacity="0.35" />
-              <circle cx="160" cy="81" r="3" fill="currentColor" stroke="none" />
+              <path d="M8 200h304" stroke-width="1" opacity="0.45" />
+              <path d="M8 216h304" stroke-width="1" opacity="0.2" />
+              <path d="M8 232h304" stroke-width="1" opacity="0.12" />
+              <rect
+                x="8"
+                y="150"
+                width="304"
+                height="34"
+                opacity="0.28"
+                stroke-dasharray="3 4"
+              />
+              <path d="M8 128 56 96 104 118 152 62 200 84 248 44 312 70" stroke-width="1.75" />
+              <path d="M248 44 280 128 312 156" opacity="0.55" stroke-dasharray="4 4" />
+              <circle cx="248" cy="44" r="3.5" fill="currentColor" stroke="none" />
+              <path d="M248 44v106" opacity="0.35" stroke-dasharray="2 5" />
+              <path d="M20 150h24M20 184h24" opacity="0.5" />
             </svg>
           </div>
         </div>
       </section>
 
-      <section class="section" id="operating-roles" aria-labelledby="operating-roles-title">
+      <!-- E2 — what Lime Signalworks does -->
+      <section class="section" id="what-we-do" aria-labelledby="what-we-do-title">
         <div class="shell">
           <div class="section__head">
-            <p class="label beam">Section 01</p>
-            <h2 id="operating-roles-title">{{ROLES_TITLE}}</h2>
-            <p>{{ROLES_STANDING}}</p>
+            <p class="label rule-after">Section 01</p>
+            <h2 id="what-we-do-title">What Lime Signalworks does</h2>
           </div>
-          <div class="register" data-role-register>{{ROLES}}</div>
+          <div class="prose">
+            <p>
+              Lime Signalworks provides AI-assisted trading and investing support that prioritizes
+              protecting capital before pursuing gains. Individuals and companies face the same
+              problem: making disciplined market decisions under pressure, without outsourcing
+              judgment to someone else's conviction.
+            </p>
+            <p>
+              We supply the reporting, the structure, and the decision support. We do not take
+              positions for you, and we do not tell you what to buy. The decisions remain yours.
+            </p>
+          </div>
         </div>
       </section>
 
-      <section class="section" id="principles" aria-labelledby="principles-title">
+      <!-- E3 — daily market situation report -->
+      <section class="section" id="market-report" aria-labelledby="market-report-title">
         <div class="shell">
           <div class="section__head">
-            <p class="label beam">Section 02</p>
-            <h2 id="principles-title">Lighthouse Principles</h2>
+            <p class="label rule-after">Section 02</p>
+            <h2 id="market-report-title">Daily market situation report</h2>
             <p>
-              A fixed library of {{QUOTE_COUNT}} sourced records, grouped into seven themes. Wording,
-              attribution, and source links are reproduced as recorded in the reviewed library
-              ({{LIBRARY_REVISION}}). Nothing in this library is paired with a product claim, a
-              performance figure, or a purchase step.
+              Each market day we publish a plain-language summary of conditions: index-level moves,
+              volatility, and a stated risk posture. Reports are published after the close and are
+              labelled with their as-of date.
             </p>
           </div>
 
-          <div class="library__controls">
-            <div class="field">
-              <label for="principle-search">Search wording, speaker, or source</label>
-              <input
-                id="principle-search"
-                type="search"
-                autocomplete="off"
-                placeholder="e.g. diversification, Bogle, 1989"
-                data-principle-search
-              />
+          <div class="panel">
+            <div class="panel__head">
+              <p class="label" data-report-asof>{{MARKET_AS_OF}}</p>
+              <p class="flag" data-report-caveat>Dated example — not real-time data</p>
             </div>
-            <fieldset class="filters" data-theme-filters>
-              <legend>Filter by theme</legend>
-              {{THEME_CHIPS}}
-            </fieldset>
-            <p class="result-count" role="status" data-result-count>
-              Showing all {{QUOTE_COUNT}} records
+            {{MARKET_TABLE}}
+            <p class="panel__posture">{{MARKET_POSTURE}}</p>
+            <p class="panel__note">{{MARKET_NOTICE}}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- E4 — what we commit to, and what we do not -->
+      <section class="section" id="commitments" aria-labelledby="commitments-title">
+        <div class="shell">
+          <div class="section__head">
+            <p class="label rule-after">Section 03</p>
+            <h2 id="commitments-title">What we commit to, and what we do not</h2>
+          </div>
+          <div class="prose">
+            <p class="prose__lead">
+              We do not guarantee profits and we cannot eliminate risk. No honest provider can.
+            </p>
+            <p>
+              Markets move in every direction, and your decisions and results are your own. What we
+              commit to is clear instruction, honest tooling, and a system designed to weigh capital
+              preservation ahead of gain.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- E5 — positioning statement -->
+      <section class="section" id="approach" aria-labelledby="approach-title">
+        <div class="shell">
+          <div class="section__head">
+            <p class="label rule-after">Section 04</p>
+            <h2 id="approach-title">Discipline and decision support, in one system</h2>
+          </div>
+          <div class="prose">
+            <p>
+              Lime Signalworks combines a disciplined decision process with AI assistance that reads
+              market conditions and flags when they change. The design goal is protective: reduce
+              avoidable losses and unforced errors first, and treat gains as the result of a process
+              rather than the object of a prediction.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- E6 — the 33-day evaluation -->
+      <section class="section" id="evaluation" aria-labelledby="evaluation-title">
+        <div class="shell">
+          <div class="section__head">
+            <p class="label rule-after">Section 05</p>
+            <h2 id="evaluation-title">The {{EVAL_DAYS}}-day evaluation</h2>
+            <p>
+              New users begin with a free {{EVAL_DAYS}}-day evaluation that runs in demo and paper
+              mode only — no live capital and no real orders at any point. Access ends automatically
+              on day {{EVAL_DAYS}}, and continuing afterwards is optional.
             </p>
           </div>
 
-          <div data-principle-library>{{PRINCIPLES}}</div>
+          <ol class="stages">
+            <li>
+              <p class="label">Stage one</p>
+              <h3>Setup and orientation</h3>
+              <p>
+                Learn what the report covers, how the dashboard is laid out, and what each condition
+                flag means before relying on any of it.
+              </p>
+            </li>
+            <li>
+              <p class="label">Stage two</p>
+              <h3>Daily practice</h3>
+              <p>
+                Use the reporting and decision tools against the market each day, in demo and paper
+                mode, and record what you would have done and why.
+              </p>
+            </li>
+            <li>
+              <p class="label">Stage three</p>
+              <h3>Review</h3>
+              <p>
+                Look back over the period and judge what the process did and did not change about
+                your own behaviour and results.
+              </p>
+            </li>
+          </ol>
 
-          <p class="empty-state" data-empty-state hidden>
-            No records match that search. Clear the search field or select “All themes” to see the
-            full library of {{QUOTE_COUNT}} records.
+          <p class="prose__aside">
+            The period is long enough to judge the system on your own behaviour rather than on a
+            sales claim. Nothing in the evaluation touches a real brokerage account.
           </p>
 
-          <div class="notice" data-quote-disclaimer>
-            <span class="label">Attribution is not endorsement</span>
-            <p>{{STANDING_DISCLAIMER}}</p>
+          <a class="anchor-link" href="#pricing">See pricing and how to start</a>
+        </div>
+      </section>
+
+      <!-- E7 — who this is for -->
+      <section class="section" id="who-its-for" aria-labelledby="who-its-for-title">
+        <div class="shell">
+          <div class="section__head">
+            <p class="label rule-after">Section 06</p>
+            <h2 id="who-its-for-title">Who this is for</h2>
+          </div>
+          <div class="prose">
+            <p>
+              This is built for people and firms that have lost money or confidence trading on
+              impulse, and for those who want a documented process instead of a tip service.
+            </p>
+            <p>
+              Market mechanics are often described in language that keeps them inaccessible. We
+              explain them plainly and show the reasoning behind each report. We make no claim about
+              outcomes — only about the clarity of the method.
+            </p>
           </div>
         </div>
       </section>
 
-      <section class="section section--tight" id="methodology" aria-labelledby="methodology-title">
+      <!-- E8 — where to start -->
+      <section class="section" id="where-to-start" aria-labelledby="where-to-start-title">
         <div class="shell">
           <div class="section__head">
-            <p class="label beam">Section 03</p>
-            <h2 id="methodology-title">Methodology and limits</h2>
+            <p class="label rule-after">Section 07</p>
+            <h2 id="where-to-start-title">Where to start</h2>
             <p>
-              How the two content sets were assembled, and what they do not assert.
+              The sections below cover what the system is, what it reports, what it costs, and how
+              to begin. Start wherever matches your question.
             </p>
           </div>
-          <div class="notes">
-            <article class="note">
-              <h3>How the operating roles were selected</h3>
-              <p>
-                Each role is a named operating function. One American figure from the public record
-                illustrates each function, chosen against a written rubric: a documented record, a
-                verifiable primary or institutional source, and a service or discipline story rather
-                than a wealth story.
-              </p>
-              <p>
-                Every figure named here is deceased. No portraits or likenesses are used anywhere on
-                this page; each role carries an abstract symbol instead. Explanations are limited to
-                facts that carry a source link.
-              </p>
-            </article>
-            <article class="note">
-              <h3>How the principles library was assembled</h3>
-              <p>
-                Each record was read from a primary or authoritative near-primary page: an issuer's
-                own shareholder letter, a nonprofit archive, a broadcaster transcript, an official
-                club transcript, a foundation-permissioned brochure, or the author's own site.
-                Records run 8–24 words and are reproduced in the source's own wording.
-              </p>
-              <p>
-                Where a popular paraphrase circulates more widely than the original wording, the
-                original wording is used and the paraphrase is not presented as the speaker's words.
-                Source links open the cited document directly.
-              </p>
-            </article>
-            <article class="note">
-              <h3>What this page does not claim</h3>
-              <ul>
-                <li>No person named or quoted here is a customer, endorser, adviser, affiliate, reviewer, or sponsor.</li>
-                <li>No endorsement or affiliation is claimed by any employer, estate, foundation, publisher, or agency named in a source line.</li>
-                <li>No product capability, readiness state, security certification, brokerage status, performance figure, or outcome is claimed or implied.</li>
-                <li>Nothing here is investment advice, and no quotation is presented as guidance for a decision.</li>
-              </ul>
-            </article>
-            <article class="note">
-              <h3>Status of this surface</h3>
-              <p>
-                This is an early content surface on the enterprise track. It exists so that the
-                content, sourcing, and tone can be reviewed on a real page instead of in a document.
-                It is not a claim that the enterprise architecture, product pages, or evaluation path
-                are complete.
-              </p>
-              <p>
-                Quotation permissions and publicity-rights review remain open items. Records are
-                short, attributed, and linked to their source, which is the minimum standard, not a
-                clearance.
-              </p>
-            </article>
+          <div class="cards">{{START_CARDS}}</div>
+        </div>
+      </section>
+
+      <!-- E9 — pricing and what you get -->
+      <section class="section" id="pricing" aria-labelledby="pricing-title">
+        <div class="shell">
+          <div class="section__head">
+            <p class="label rule-after">Section 08</p>
+            <h2 id="pricing-title">Pricing and what you get</h2>
+            <p>
+              The free {{EVAL_DAYS}}-day evaluation runs in demo and paper mode only. The prices
+              below are what enrollment is planned to cost once the evaluation ends.
+            </p>
           </div>
+
+          <div class="split">
+            <div class="panel">
+              <div class="panel__head">
+                <p class="label">{{PRICING_HEADING}}</p>
+              </div>
+              {{PRICING_TABLE}}
+              <p class="panel__note" data-pricing-status>{{PRICING_STATUS}}</p>
+            </div>
+
+            <div class="stack">
+              <div>
+                <h3>What each plan is planned to include</h3>
+                <ul class="ticks">{{PRICING_INCLUDES}}</ul>
+              </div>
+              <div>
+                <h3>What this is not</h3>
+                <ul class="ticks ticks--neg">{{PRICING_NOT}}</ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- E10 — SPY Pipeline eligibility -->
+      <section class="section" id="spy-pipeline" aria-labelledby="spy-pipeline-title">
+        <div class="shell">
+          <div class="section__head">
+            <p class="label rule-after">Section 09</p>
+            <h2 id="spy-pipeline-title">SPY Pipeline: eligibility</h2>
+          </div>
+          <div class="prose">
+            <p>
+              The SPY Pipeline is a separate component with its own access requirement: it requires
+              an eligible Interactive Brokers paper-trading account. Anyone may read what it is
+              designed to do; using it is a different step.
+            </p>
+            <p>
+              Eligibility verification is not yet built, so access cannot be granted or confirmed at
+              this time. Starting the {{EVAL_DAYS}}-day evaluation does not include or unlock the
+              SPY Pipeline — the two are separate. We will publish the requirements and the
+              verification path when that mechanism is complete.
+            </p>
+          </div>
+          <div class="notice">
+            <span class="label">Status</span>
+            <p>
+              No access control, verification service, or introduction link exists for this
+              component yet. Because there is nothing to click that would work, this section
+              deliberately carries no button.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- E11 — how to begin -->
+      <section class="section" id="how-to-begin" aria-labelledby="how-to-begin-title">
+        <div class="shell">
+          <div class="section__head">
+            <p class="label rule-after">Section 10</p>
+            <h2 id="how-to-begin-title">How to begin</h2>
+          </div>
+          <div class="prose">
+            <p>
+              Self-service signup and personalized instances are designed but not yet built, so
+              there is no account to create on this site today. No form on this page collects your
+              name, your email address, or your phone number, because there is no provisioning
+              pipeline yet to receive them.
+            </p>
+            <p>
+              Until that pipeline is built, the demonstration environment linked at the top of
+              this page is what there is to look at. Access to it is controlled by its host
+              rather than by us: a Perplexity sign-in may be required, so it is not anonymously
+              reachable and we cannot promise it will open for you.
+            </p>
+            <p>
+              To reach a person, use the telephone number, email address, or office address in
+              the footer. Those are the working contact paths, and contact is by appointment.
+            </p>
+          </div>
+          <p class="anchor-row">
+            <a class="anchor-link" href="#demo">Back to the demo link at the top of this page</a>
+            <a class="anchor-link" href="#contact">Contact details in the footer</a>
+          </p>
         </div>
       </section>
     </main>
 
+    <!-- E12 — footer -->
     <footer class="foot">
       <div class="shell foot__grid">
         <div>
-          <p class="label">LIME Enterprise · Site 2 · Lime Signalworks</p>
-          <p style="margin-top: var(--space-4)">
-            Enterprise track content preview. The leadership site is a separate surface with its own
-            repository and deployment, and is unaffected by this page.
+          <p class="label">Lime Signalworks LLC · LIME Enterprise</p>
+          <p class="foot__note">
+            LIME Enterprise is the enterprise surface for Lime Signalworks. The leadership site is a
+            separate surface with its own repository and deployment, and is unaffected by this page.
           </p>
-          <p style="margin-top: var(--space-4)">
-            <a
-              class="sibling-link"
-              href="https://limesignalworks.com"
-              rel="noopener noreferrer"
-              data-sibling-site
-              >LIME Leadership<span class="ext" aria-hidden="true">&#8599;</span></a
-            >
-          </p>
+          <!-- The one working contact path on this surface. Already-public Lime Signalworks
+               details, rendered as real mailto: and tel: links rather than a form, because no
+               backend exists to receive a submission. -->
+          <dl class="contact" id="contact" data-contact>
+            <div>
+              <dt>Email</dt>
+              <dd>{{CONTACT_EMAIL}}</dd>
+            </div>
+            <div>
+              <dt>Telephone</dt>
+              <dd>{{CONTACT_PHONE}}</dd>
+            </div>
+            <div>
+              <dt>Office</dt>
+              <dd>{{CONTACT_ADDRESS}}</dd>
+            </div>
+            <div>
+              <dt>Availability</dt>
+              <dd>{{CONTACT_AVAILABILITY}}</dd>
+            </div>
+          </dl>
+          <p class="foot__link-row">{{LEADERSHIP_LINK}}</p>
+          <p class="foot__copyright">{{COPYRIGHT}}</p>
         </div>
         <div>
-          <p class="label">Preview state</p>
-          <ul class="state-list" role="list" style="margin-top: var(--space-4)">
-            <li>Content sets integrated<b>{{ROLE_COUNT}} roles · {{QUOTE_COUNT}} records</b></li>
-            <li>Surface<b>Root route</b></li>
-            <li>Review stage<b>Awaiting independent review</b></li>
-          </ul>
+          <p class="label">Disclaimer</p>
+          <p class="foot__disclaimer" data-securities-disclaimer>{{SECURITIES_DISCLAIMER}}</p>
         </div>
       </div>
     </footer>
