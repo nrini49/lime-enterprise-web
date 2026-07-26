@@ -431,6 +431,95 @@ test('rendered theme: the reciprocal LIME Leadership link is visible and focusab
   }
 });
 
+test('rendered: the contact channels are visible, sized and keyboard reachable', async (t) => {
+  const server = await startServer();
+  const browser = await chromium.launch();
+  try {
+    for (const { width, height, label } of [
+      { width: 1440, height: 900, label: 'desktop 1440' },
+      { width: 1280, height: 900, label: 'desktop 1280' },
+      { width: 414, height: 896, label: 'mobile 414' },
+      { width: 375, height: 812, label: 'mobile 375' },
+      { width: 320, height: 640, label: 'mobile 320' },
+    ]) {
+      await t.test(`${label} (${width}px)`, async () => {
+        const context = await browser.newContext({
+          viewport: { width, height },
+          colorScheme: 'dark',
+        });
+        const page = await context.newPage();
+        await page.goto(ORIGIN, { waitUntil: 'networkidle' });
+        await page.evaluate(() => document.fonts.ready);
+
+        const block = page.locator('[data-contact]');
+        await block.scrollIntoViewIfNeeded();
+        assert.equal(await block.count(), 1, 'exactly one contact block');
+        assert.ok(await block.isVisible(), `contact block must be visible at ${width}px`);
+        const blockText = await block.innerText();
+        assert.ok(
+          blockText.includes('2722 Erie Ave, Suite 219, Cincinnati, OH 45208'),
+          'the office address is on screen',
+        );
+        assert.ok(blockText.includes('By appointment'), 'availability is on screen');
+
+        for (const [selector, href, text] of [
+          ['[data-contact-email]', 'mailto:contact@limesignalworks.com', 'contact@limesignalworks.com'],
+          ['[data-contact-phone]', 'tel:+13802000288', '+1 380-200-0288'],
+        ]) {
+          const link = page.locator(selector);
+          assert.equal(await link.count(), 1, `${selector} appears once`);
+          assert.ok(await link.isVisible(), `${selector} visible at ${width}px`);
+          assert.equal(await link.getAttribute('href'), href, `${selector} href`);
+          assert.equal((await link.innerText()).trim(), text, `${selector} label`);
+
+          const box = await link.boundingBox();
+          assert.ok(box.height >= 44, `${selector} target height ${box.height}px at ${width}px`);
+          assert.ok(
+            box.x >= 0 && box.x + box.width <= width + 1,
+            `${selector} stays inside the viewport at ${width}px`,
+          );
+
+          await link.focus();
+          const focus = await page.evaluate((sel) => {
+            const el = document.querySelector(sel);
+            const s = getComputedStyle(el);
+            return {
+              focused: document.activeElement === el,
+              outlineStyle: s.outlineStyle,
+              outlineWidth: parseFloat(s.outlineWidth),
+            };
+          }, selector);
+          assert.ok(focus.focused, `${selector} is keyboard focusable`);
+          assert.notEqual(focus.outlineStyle, 'none', `${selector} draws a focus ring`);
+          assert.ok(focus.outlineWidth >= 2, `${selector} focus ring is at least 2px`);
+        }
+
+        // The in-page route from "How to begin" to the contact block resolves.
+        await page.click('section#how-to-begin a[href="#contact"]');
+        assert.equal(new URL(page.url()).hash, '#contact', 'the contact anchor sets the fragment');
+        await page
+          .waitForFunction(() => {
+            const top = document.querySelector('[data-contact]').getBoundingClientRect().top;
+            const atEnd =
+              window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+            return (top > -1 && top < window.innerHeight) || atEnd;
+          })
+          .catch(() => {
+            throw new Error('the contact anchor never arrived');
+          });
+
+        // No form or field was introduced alongside the contact path.
+        assert.equal(await page.locator('form, input, textarea, select').count(), 0, 'no capture');
+
+        await context.close();
+      });
+    }
+  } finally {
+    await browser.close();
+    server.kill();
+  }
+});
+
 test('rendered theme: the toggle does not rely on background propagation', async () => {
   // A host page or embedding wrapper may paint <html> itself. The site must still
   // paint its own canvas, so <html> carries an explicit themed background and
@@ -565,6 +654,30 @@ test('rendered: the demo disclosure is visible next to the call to action before
 
         assert.equal(await cta.getAttribute('href'), 'https://limesignalworks.pplx.app/');
         assert.equal(await cta.getAttribute('target'), '_blank');
+
+        // The sixth fact — the access precondition — is held to the same standard: on
+        // screen, adjacent, and before any click.
+        const signin = page.locator('[data-demo-signin]');
+        assert.equal(await signin.count(), 1, 'exactly one sign-in statement');
+        assert.ok(await signin.isVisible(), 'the sign-in fact is visible without interaction');
+        assert.equal(
+          await signin.innerText(),
+          'Perplexity sign-in may be required.',
+          'the sign-in wording is served, not scripted',
+        );
+        const signinBox = await signin.boundingBox();
+        assert.ok(
+          signinBox.y >= discBox.y + discBox.height - 1,
+          'the sign-in fact follows the disclosure',
+        );
+        assert.ok(
+          signinBox.y - (discBox.y + discBox.height) < 40,
+          `the sign-in fact must be adjacent, gap was ${signinBox.y - (discBox.y + discBox.height)}px`,
+        );
+        assert.ok(
+          signinBox.y < ctaBox.y + ctaBox.height + 260,
+          'the sign-in fact stays within the call-to-action block',
+        );
 
         await context.close();
       });
@@ -741,6 +854,10 @@ test('rendered: the page is complete and usable with JavaScript disabled', async
     for (const selector of [
       'a.cta',
       '[data-demo-disclosure]',
+      '[data-demo-signin]',
+      '[data-contact]',
+      '[data-contact-email]',
+      '[data-contact-phone]',
       '[data-sibling-site]',
       '[data-securities-disclaimer]',
       '#what-we-do',

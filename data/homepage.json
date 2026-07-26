@@ -1,9 +1,17 @@
 {
-  "revision": "site2-plain-translation-2026-07-26",
+  "revision": "site2-plain-translation-2026-07-26b",
   "canonical": {
     "demoUrl": "https://limesignalworks.pplx.app/",
     "demoCtaLabel": "Open the Rosie Server Demo",
     "demoDisclosure": "Demonstration environment. Simulated data. No broker connection and no real orders. Not production-ready.",
+    "demoSignIn": "Perplexity sign-in may be required.",
+    "contact": {
+      "email": "contact@limesignalworks.com",
+      "phone": "+1 380-200-0288",
+      "phoneHref": "tel:+13802000288",
+      "address": "2722 Erie Ave, Suite 219, Cincinnati, OH 45208",
+      "availability": "By appointment."
+    },
     "leadershipUrl": "https://limesignalworks.com",
     "leadershipLabel": "LIME Leadership",
     "securitiesDisclaimer": "Lime Signalworks provides educational tools and analysis, not personalized investment advice. Securities trading involves risk of loss. Your decisions and results are your own. Nothing here is an offer to sell or a solicitation to buy any security.",

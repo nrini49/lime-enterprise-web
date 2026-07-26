@@ -23,6 +23,10 @@ const externalLink = (url, label, className) =>
   `${esc(label)}<span class="ext" aria-hidden="true">&#8599;</span>` +
   `<span class="sr-only"> (opens in a new tab)</span></a>`;
 
+/** A working contact channel: a real mailto:/tel: anchor, never a form. */
+const contactLink = (href, label, marker) =>
+  `<a class="contact__link" href="${esc(href)}" data-${esc(marker)}>${esc(label)}</a>`;
+
 function renderNav(sections) {
   return sections
     .filter((s) => s.nav)
@@ -146,6 +150,11 @@ async function main() {
       externalLink(canonical.demoUrl, canonical.demoCtaLabel, 'cta'),
     )
     .replaceAll('{{DEMO_DISCLOSURE}}', esc(canonical.demoDisclosure))
+    .replaceAll('{{DEMO_SIGNIN}}', esc(canonical.demoSignIn))
+    .replaceAll('{{CONTACT_EMAIL}}', contactLink(`mailto:${canonical.contact.email}`, canonical.contact.email, 'contact-email'))
+    .replaceAll('{{CONTACT_PHONE}}', contactLink(canonical.contact.phoneHref, canonical.contact.phone, 'contact-phone'))
+    .replaceAll('{{CONTACT_ADDRESS}}', esc(canonical.contact.address))
+    .replaceAll('{{CONTACT_AVAILABILITY}}', esc(canonical.contact.availability))
     .replaceAll('{{MARKET_AS_OF}}', esc(marketReport.asOfLabel))
     .replaceAll('{{MARKET_TABLE}}', renderMarketTable(marketReport))
     .replaceAll('{{MARKET_POSTURE}}', esc(marketReport.posture))

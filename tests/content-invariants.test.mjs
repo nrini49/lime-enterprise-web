@@ -23,6 +23,11 @@ const DEMO_LABEL = 'Open the Rosie Server Demo';
 const DEMO_DISCLOSURE =
   'Demonstration environment. Simulated data. No broker connection and no real orders. ' +
   'Not production-ready.';
+const DEMO_SIGNIN = 'Perplexity sign-in may be required.';
+const CONTACT_EMAIL = 'contact@limesignalworks.com';
+const CONTACT_TEL_HREF = 'tel:+13802000288';
+const CONTACT_PHONE_DISPLAY = '+1 380-200-0288';
+const CONTACT_ADDRESS = '2722 Erie Ave, Suite 219, Cincinnati, OH 45208';
 const SECURITIES_DISCLAIMER =
   'Lime Signalworks provides educational tools and analysis, not personalized investment ' +
   'advice. Securities trading involves risk of loss. Your decisions and results are your own. ' +
@@ -151,6 +156,39 @@ const FORBIDDEN_CLAIMS = [
   'interactivebrokers.com',
 ];
 
+/**
+ * Access claims that would be false about the demo destination. The host requires a
+ * Perplexity sign-in — an anonymous request is answered with HTTP 401 — so the page
+ * may not present the demo as open, anonymous, or guaranteed to work.
+ */
+const FORBIDDEN_ACCESS_CLAIMS = [
+  'open to everyone',
+  'open to anyone',
+  'open to the public',
+  'available to everyone',
+  'available to anyone',
+  'accessible to everyone',
+  'accessible to anyone',
+  'freely accessible',
+  'publicly accessible',
+  'anonymous access',
+  'anonymously accessible',
+  'no sign-in',
+  'no signin',
+  'no sign in required',
+  'no login',
+  'no account required',
+  'without signing in',
+  'without an account',
+  'anyone can open',
+  'anyone may open',
+  'anyone can use',
+  'the only way in',
+  'only way in that currently works',
+  'the only working way',
+  'is what is open',
+];
+
 /** Unsupported commercial claims and transactional controls. */
 const FORBIDDEN_COMMERCIAL = [
   'trusted by',
@@ -195,6 +233,7 @@ test('data: canonical strings are the exact approved wording', () => {
   assert.equal(canonical.demoUrl, DEMO_URL);
   assert.equal(canonical.demoCtaLabel, DEMO_LABEL);
   assert.equal(canonical.demoDisclosure, DEMO_DISCLOSURE);
+  assert.equal(canonical.demoSignIn, DEMO_SIGNIN);
   assert.equal(canonical.leadershipUrl, LEADERSHIP_URL);
   assert.equal(canonical.leadershipLabel, 'LIME Leadership');
   assert.equal(canonical.securitiesDisclaimer, SECURITIES_DISCLAIMER);
@@ -366,6 +405,54 @@ test('dom: the disclosure is static markup adjacent to the call to action', () =
   );
 });
 
+test('dom: the sign-in precondition is stated adjacent to the call to action', () => {
+  const signin = $('[data-demo-signin]');
+  assert.equal(signin.length, 1, 'exactly one sign-in statement');
+  assert.equal(norm(signin.text()), DEMO_SIGNIN, 'sign-in wording must be exact');
+
+  // It shares the call-to-action block, immediately after the five-fact disclosure,
+  // so a visitor reads it before deciding to click.
+  const block = $(`a[href="${DEMO_URL}"]`).first().parent();
+  assert.equal(block.find('[data-demo-signin]').length, 1, 'the sign-in fact shares the block');
+  assert.equal(
+    $('[data-demo-disclosure]').next().get(0),
+    signin.get(0),
+    'the sign-in fact follows the disclosure directly',
+  );
+
+  // Static, visible, unscripted — the same standard the disclosure is held to.
+  assert.equal(signin.attr('hidden'), undefined, 'the sign-in fact is not hidden');
+  assert.equal(signin.attr('aria-hidden'), undefined, 'the sign-in fact is exposed to AT');
+  assert.equal(signin.closest('.sr-only').length, 0, 'the sign-in fact is visible');
+  assert.equal(signin.closest('details, dialog, [popover]').length, 0, 'not collapsed content');
+  const js = readFileSync(path.join(root, 'assets/js/app.js'), 'utf8');
+  assert.ok(!js.includes('data-demo-signin'), 'the sign-in fact must not depend on JavaScript');
+
+  // Restated wherever the demo is discussed in prose, not only at the button.
+  const howToBegin = norm($('section#how-to-begin').text());
+  assert.ok(
+    /sign-in may be required/i.test(howToBegin),
+    'the section that discusses the demo repeats the access precondition',
+  );
+});
+
+test('dom: the demo is never presented as open, anonymous, or guaranteed to work', () => {
+  const haystack = `${visibleText()} ${metadataText()}`.toLowerCase();
+  for (const claim of FORBIDDEN_ACCESS_CLAIMS) {
+    assert.ok(!haystack.includes(claim), `false access claim about the demo: "${claim}"`);
+  }
+  // The five original facts survive verbatim alongside the sixth.
+  for (const fact of [
+    'demonstration environment',
+    'simulated data',
+    'no broker connection',
+    'no real orders',
+    'not production-ready',
+  ]) {
+    assert.ok(haystack.includes(fact), `disclosure fact lost: "${fact}"`);
+  }
+});
+
 /* ---------- evaluation, pricing, SPY boundary, signup ---------- */
 
 test('dom: the evaluation is stated as 33 days, demo and paper only', () => {
@@ -432,10 +519,49 @@ test('dom: signup is marked designed but not built, with no capture of any kind'
   assert.ok(/designed but not yet built|Designed, not built/i.test(text), 'signup status stated');
   assert.equal($('form').length, 0, 'no forms on this surface');
   assert.equal($('input, textarea, select').length, 0, 'no fields of any kind');
+  assert.equal($('[type="submit"], [type="email"]').length, 0, 'no submit or email control');
+  // A contact path exists, but it is a direct channel, never a capture: there is no
+  // backend on this surface that could receive a submission.
+  assert.ok(!/subscribe|newsletter|join the list|notify me/i.test(text), 'no list capture');
+});
+
+test('dom: the contact channels are the approved ones, rendered once each', () => {
+  const { contact } = canonical;
+  const email = $('[data-contact-email]');
+  const phone = $('[data-contact-phone]');
+
+  assert.equal(email.length, 1, 'exactly one email channel — no duplicate paths');
+  assert.equal(email.attr('href'), `mailto:${CONTACT_EMAIL}`, 'mailto is correctly encoded');
+  assert.equal(norm(email.text()), CONTACT_EMAIL, 'the address is legible, not hidden in a label');
+
+  assert.equal(phone.length, 1, 'exactly one telephone channel');
+  assert.equal(phone.attr('href'), CONTACT_TEL_HREF, 'tel: uses the dialable E.164 form');
+  assert.equal(norm(phone.text()), CONTACT_PHONE_DISPLAY, 'the number is shown in readable form');
+
+  // Every mailto:/tel: on the page is one of those two, and nothing else.
+  assert.equal($('a[href^="mailto:"]').length, 1, 'no second mailto path');
+  assert.equal($('a[href^="tel:"]').length, 1, 'no second tel path');
+
+  const block = $('[data-contact]');
+  assert.equal(block.length, 1, 'one contact block');
+  assert.equal(block.attr('id'), 'contact', 'the block is an anchor target');
+  assert.equal(block.closest('footer').length, 1, 'contact sits in the footer translation');
+  assert.equal(block.attr('hidden'), undefined, 'the contact block is not hidden');
+  assert.equal(block.closest('.sr-only').length, 0, 'the contact block is visible');
+  assert.equal(block.closest('details, dialog, [popover]').length, 0, 'not collapsed content');
+
+  const text = norm(block.text());
+  assert.ok(text.includes(CONTACT_ADDRESS), 'the office address is rendered');
+  assert.ok(text.includes('By appointment'), 'availability is stated');
+  assert.equal(contact.email, CONTACT_EMAIL);
+  assert.equal(contact.phoneHref, CONTACT_TEL_HREF);
+  assert.equal(contact.address, CONTACT_ADDRESS);
+
+  // "How to begin" must route a reader to it, or the path is not usable in practice.
   assert.equal(
-    $('a[href^="mailto:"], a[href^="tel:"]').length,
-    0,
-    'no contact path is offered, because none is approved for this surface',
+    $('section#how-to-begin a[href="#contact"]').length,
+    1,
+    'how to begin links to the contact block',
   );
 });
 

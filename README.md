@@ -80,6 +80,11 @@ npm run serve        # serve the repo root on http://localhost:4173
 - **Exactly one demo call to action**, labelled "Open the Rosie Server Demo", pointing at
   `https://limesignalworks.pplx.app/`, with its disclosure rendered as the immediately following
   static element — never a tooltip, toast, modal, or collapsed content.
+- **Six static pre-click facts accompany that call to action**: the five-fact disclosure
+  (demonstration environment, simulated data, no broker connection, no real orders, not
+  production-ready) and the access precondition, "Perplexity sign-in may be required." Access is
+  controlled by the destination's host, so the page must never describe the demo as open,
+  anonymous, or certain to work, and must not call it the only route that works.
 - **Exactly one reciprocal link**, labelled "LIME Leadership", pointing at
   `https://limesignalworks.com`. Those two URLs are the only off-origin destinations on the page.
 - The evaluation is stated as **33 days, demo and paper mode only**, with no live capital and no
@@ -90,8 +95,10 @@ npm run serve        # serve the repo root on http://localhost:4173
   real-time claim appears unnegated, and the section adds no links.
 - The SPY Pipeline section states the Interactive Brokers paper-account requirement and that
   verification is unbuilt. It carries **no button and no link**, and no affiliate URL exists anywhere.
-- The footer carries the securities disclaimer verbatim. No phone number, email address, or postal
-  address is published on this surface.
+- The footer carries the securities disclaimer verbatim, and the one working contact path: the
+  already-public Lime Signalworks email, telephone, and office address as real `mailto:` and `tel:`
+  anchors, each rendered exactly once, plus "By appointment." Contact is never a form, a capture
+  field, or a backend submission.
 - Secular enterprise vocabulary only. No religious, scriptural, metaphysical, or Site 1 metaphor
   register in rendered content **or** metadata. `Rosie` is a retained product name.
 - No endorsement, customer, current-operation, live-account, production-readiness, performance,

@@ -85,11 +85,14 @@
               yours.
             </p>
 
-            <!-- E1 call to action. The disclosure below is static markup, rendered before
-                 any click, and is not a toast, a tooltip, or collapsed content. -->
+            <!-- E1 call to action. Both facts below are static markup, rendered before any
+                 click, and neither is a toast, a tooltip, or collapsed content. The second
+                 states the access precondition: the destination is not anonymously
+                 reachable, so a visitor learns that before spending a click on it. -->
             <div class="cta-block" id="demo">
               {{DEMO_CTA}}
               <p class="cta-block__disclosure" data-demo-disclosure>{{DEMO_DISCLOSURE}}</p>
+              <p class="cta-block__signin" data-demo-signin>{{DEMO_SIGNIN}}</p>
             </div>
 
             <dl class="hero__meta">
@@ -390,16 +393,24 @@
             <p>
               Self-service signup and personalized instances are designed but not yet built, so
               there is no account to create on this site today. No form on this page collects your
-              name, your email address, or your phone number, because nothing exists yet to receive
-              them.
+              name, your email address, or your phone number, because there is no provisioning
+              pipeline yet to receive them.
             </p>
             <p>
-              Until that pipeline is built, the demonstration environment is what is open to
-              everyone. The single demo link at the top of this page is the only way in that
-              currently works.
+              Until that pipeline is built, the demonstration environment linked at the top of
+              this page is what there is to look at. Access to it is controlled by its host
+              rather than by us: a Perplexity sign-in may be required, so it is not anonymously
+              reachable and we cannot promise it will open for you.
+            </p>
+            <p>
+              To reach a person, use the telephone number, email address, or office address in
+              the footer. Those are the working contact paths, and contact is by appointment.
             </p>
           </div>
-          <a class="anchor-link" href="#demo">Back to the demo link at the top of this page</a>
+          <p class="anchor-row">
+            <a class="anchor-link" href="#demo">Back to the demo link at the top of this page</a>
+            <a class="anchor-link" href="#contact">Contact details in the footer</a>
+          </p>
         </div>
       </section>
     </main>
@@ -413,6 +424,27 @@
             LIME Enterprise is the enterprise surface for Lime Signalworks. The leadership site is a
             separate surface with its own repository and deployment, and is unaffected by this page.
           </p>
+          <!-- The one working contact path on this surface. Already-public Lime Signalworks
+               details, rendered as real mailto: and tel: links rather than a form, because no
+               backend exists to receive a submission. -->
+          <dl class="contact" id="contact" data-contact>
+            <div>
+              <dt>Email</dt>
+              <dd>{{CONTACT_EMAIL}}</dd>
+            </div>
+            <div>
+              <dt>Telephone</dt>
+              <dd>{{CONTACT_PHONE}}</dd>
+            </div>
+            <div>
+              <dt>Office</dt>
+              <dd>{{CONTACT_ADDRESS}}</dd>
+            </div>
+            <div>
+              <dt>Availability</dt>
+              <dd>{{CONTACT_AVAILABILITY}}</dd>
+            </div>
+          </dl>
           <p class="foot__link-row">{{LEADERSHIP_LINK}}</p>
           <p class="foot__copyright">{{COPYRIGHT}}</p>
         </div>

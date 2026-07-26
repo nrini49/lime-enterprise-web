@@ -467,6 +467,24 @@ a:hover {
   max-width: 56ch;
 }
 
+/* The access precondition. Weighted like the disclosure above it, because a visitor
+   who cannot sign in cannot reach the destination at all. */
+.cta-block__signin {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  max-width: 56ch;
+  padding-inline-start: var(--space-3);
+  border-inline-start: 3px solid var(--color-border);
+}
+
+.anchor-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-8);
+  margin-top: var(--space-8);
+}
+
 .anchor-link {
   display: inline-flex;
   align-items: center;
@@ -479,6 +497,10 @@ a:hover {
   padding-block: var(--space-2);
   text-decoration: none;
   min-height: 2.75rem;
+}
+
+.anchor-row .anchor-link {
+  margin-top: 0;
 }
 
 .anchor-link:hover {
@@ -812,6 +834,50 @@ a:hover {
 
 .foot__link-row {
   margin-top: var(--space-5);
+}
+
+/* Contact channels. Sized to the 44px target baseline so the mailto and tel links are
+   comfortable to hit on a phone, where they are the ones most likely to be used. */
+.contact {
+  margin-top: var(--space-6);
+  display: grid;
+  gap: var(--space-4);
+  max-width: 40rem;
+}
+
+@media (min-width: 30rem) {
+  .contact {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4) var(--space-8);
+  }
+}
+
+.contact dt {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+
+.contact dd {
+  margin-top: var(--space-1);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.contact__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  color: var(--color-primary);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+}
+
+.contact__link:hover {
+  color: var(--color-primary-hover);
 }
 
 .foot__copyright {
