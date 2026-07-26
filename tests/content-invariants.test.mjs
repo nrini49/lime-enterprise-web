@@ -1,6 +1,6 @@
 /**
- * Content invariant checks for the Site 2 preview.
- * Validates the data layer and the rendered index.html DOM.
+ * Content invariants for the Site 2 homepage.
+ * Validates data/homepage.json and the rendered index.html DOM.
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -12,29 +12,27 @@ import * as cheerio from 'cheerio';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const readJson = (p) => JSON.parse(readFileSync(path.join(root, p), 'utf8'));
 
-const rolesData = readJson('data/operating-roles.json');
-const lib = readJson('data/principles.json');
+const data = readJson('data/homepage.json');
+const { canonical, sectionOrder, marketReport, pricing, startCards } = data;
 const html = readFileSync(path.join(root, 'index.html'), 'utf8');
 const $ = cheerio.load(html);
 
-/** Expected roster, in order. */
-const EXPECTED_ROLES = [
-  ['01', 'Systems Steward', 'Grace Hopper'],
-  ['02', 'Strategist', 'Peter Drucker'],
-  ['03', 'Communicator', 'Barbara Walters'],
-  ['04', 'Reflective Practitioner', 'Maya Angelou'],
-  ['05', 'Signal Analyst', 'Katherine Johnson'],
-  ['06', 'Advocate', 'Eleanor Roosevelt'],
-  ['07', 'Long-Horizon Steward', 'Jack Bogle'],
-  ['08', 'Morale Builder', 'Robin Williams'],
-  ['09', 'Early Warning Sentinel', 'Rachel Carson'],
-];
-
-const EXPECTED_QUOTE_IDS = Array.from({ length: 20 }, (_, i) => `A${i + 1}`);
+const DEMO_URL = 'https://limesignalworks.pplx.app/';
+const LEADERSHIP_URL = 'https://limesignalworks.com';
+const DEMO_LABEL = 'Open the Rosie Server Demo';
+const DEMO_DISCLOSURE =
+  'Demonstration environment. Simulated data. No broker connection and no real orders. ' +
+  'Not production-ready.';
+const SECURITIES_DISCLAIMER =
+  'Lime Signalworks provides educational tools and analysis, not personalized investment ' +
+  'advice. Securities trading involves risk of loss. Your decisions and results are your own. ' +
+  'Nothing here is an offer to sell or a solicitation to buy any security.';
 
 /**
- * Terms that must never appear in rendered output or metadata.
- * Word-boundary matched to avoid false hits inside ordinary words.
+ * Terms that must never appear in rendered output or metadata. The first block is the
+ * religious/scriptural register retired at Gatekeeper correction; the second is the
+ * Site 1 metaphor vocabulary excluded by the one-for-one translation map.
+ * Word-boundary matched, to avoid false hits inside ordinary words.
  */
 const FORBIDDEN_TERMS = [
   'keeper',
@@ -50,8 +48,10 @@ const FORBIDDEN_TERMS = [
   'prayer',
   'pray',
   'fire spirit',
+  'fire protocol',
   'flame',
   'noah',
+  'noal',
   'ark',
   'flood',
   'jesus',
@@ -66,7 +66,6 @@ const FORBIDDEN_TERMS = [
   'holy',
   'sacred',
   'divine',
-  // Ecclesiastical / scriptural role register retired at Gatekeeper correction.
   'guardian',
   'sage',
   'herald',
@@ -78,39 +77,101 @@ const FORBIDDEN_TERMS = [
   'shepherd',
   'joker',
   'wilderness',
+  // Site 1 metaphor and metaphysical register — excluded from the plain translation.
+  'rosy way',
+  'rosy path',
+  'zero point',
+  'frequency',
+  'coherence',
+  'manifestation',
+  'manifest',
+  'harbor',
+  'harbour',
+  'wicket gate',
+  'nine doors',
+  'metaphor gate',
+  'laugh lounge',
+  'lighthouse',
+  'beacon',
+  'safety suit',
+  'inner rail',
+  'inner posture',
+  'guru',
+  'market weather',
+  'fidelity switch',
+  'sea state',
+  'amber light',
+  'renaissance',
+  'cockpit',
+  'buy rosie',
+];
+
+/** Multi-word Site 1 phrases, substring matched. */
+const FORBIDDEN_PHRASES = [
+  '3-6-9',
+  '369',
+  'ocean of resources',
+  'will fund you',
+  'state of the beggar',
+  'state of the source',
+  'you have become the shore',
+  'rest in the result',
+  'the code is active',
+  'blueprint is signed',
+  'the war is over',
+  'your presence is the command',
+  'scripture anchor rail',
+  'sage missions library',
+  "gramma's rule",
+  '4-light',
+  'four-light',
+  'not a cape',
+  '33-day fire protocol',
 ];
 
 /**
- * Predecessor pairings from the research source. Substring-matched, because the
- * bare first names collide with the names of real modern figures on this page.
+ * Non-translatable Site 1 claims (map §7 C1–C10). None may appear on Site 2.
  */
-const FORBIDDEN_PAIRINGS = [
-  'for peter',
-  'for solomon',
-  'for daniel',
-  'for esther',
-  'for ruth',
-  'for david',
-  'for mary',
-  'king solomon',
-  'mary magdalene',
-  'mary of bethany',
-  'john the baptist',
-  'substitution',
-  'substitute for',
+const FORBIDDEN_CLAIMS = [
+  '90-day',
+  '90 day',
+  'ninety days',
+  'ninety-day',
+  'no-pay',
+  'live spy tracking',
+  'rosie cockpit is live',
+  'begin your ninety',
+  'antique method',
+  'candlestick',
+  'sets a new bar',
+  'nothing armed until you say so',
+  'schwab',
+  'refer a friend',
+  'ibkr.com',
+  'interactivebrokers.com',
 ];
 
-/** Quote records that must never appear (Group B / reserve / excluded / rev.1-only). */
-const FORBIDDEN_QUOTE_FRAGMENTS = [
-  'Noah rule',
-  'predicting rain',
-  'It never was my thinking that made the big money',
-  'My position was right but my play was wrong',
-  'The market does not beat them',
-  'deadly enemies of the speculator',
-  'Be fearful when others are greedy',
-  'margin of safety',
-  'You only have to do a very few things right',
+/** Unsupported commercial claims and transactional controls. */
+const FORBIDDEN_COMMERCIAL = [
+  'trusted by',
+  'our customers',
+  'endorsed by',
+  'guaranteed',
+  'certified secure',
+  'soc 2',
+  'iso 27001',
+  'bank-grade',
+  'best-in-class',
+  'industry-leading',
+  'production-grade',
+  'enterprise-grade security',
+  'get started',
+  'sign up',
+  'book a demo',
+  'buy now',
+  'enroll now',
+  'start free trial',
+  'per month',
 ];
 
 const visibleText = () => {
@@ -126,87 +187,128 @@ const metadataText = () =>
     $('html').attr('lang') || '',
   ].join(' ');
 
-test('data: exactly 9 operating roles, in the expected order', () => {
-  assert.equal(rolesData.roles.length, 9);
+const norm = (s) => s.replace(/\s+/g, ' ').trim();
+
+/* ---------- data layer ---------- */
+
+test('data: canonical strings are the exact approved wording', () => {
+  assert.equal(canonical.demoUrl, DEMO_URL);
+  assert.equal(canonical.demoCtaLabel, DEMO_LABEL);
+  assert.equal(canonical.demoDisclosure, DEMO_DISCLOSURE);
+  assert.equal(canonical.leadershipUrl, LEADERSHIP_URL);
+  assert.equal(canonical.leadershipLabel, 'LIME Leadership');
+  assert.equal(canonical.securitiesDisclaimer, SECURITIES_DISCLAIMER);
+  assert.equal(canonical.evaluationDays, 33);
+});
+
+test('data: the section order is the translated Site 1 order, with unique ids', () => {
   assert.deepEqual(
-    rolesData.roles.map((r) => [r.index, r.role, r.figure]),
-    EXPECTED_ROLES,
+    sectionOrder.map((s) => s.id),
+    [
+      'what-we-do',
+      'market-report',
+      'commitments',
+      'approach',
+      'evaluation',
+      'who-its-for',
+      'where-to-start',
+      'pricing',
+      'spy-pipeline',
+      'how-to-begin',
+    ],
+  );
+  const ids = sectionOrder.map((s) => s.id);
+  assert.equal(new Set(ids).size, ids.length, 'section ids must be unique');
+});
+
+test('data: planned prices are the locked figures', () => {
+  assert.deepEqual(
+    pricing.rows.map((r) => [r.term, r.price]),
+    [
+      ['Weekly', '$20'],
+      ['Monthly', '$85'],
+      ['Quarterly', '$245'],
+      ['Annually', '$925'],
+    ],
   );
 });
 
-test('data: exactly 20 principle records with ids A1–A20 and no duplicates', () => {
-  assert.equal(lib.records.length, 20);
-  const ids = lib.records.map((r) => r.id);
-  assert.deepEqual([...ids].sort(), [...EXPECTED_QUOTE_IDS].sort());
-  assert.equal(new Set(ids).size, 20);
-});
-
-test('data: seven themes, every record mapped, every theme populated', () => {
-  assert.equal(lib.themes.length, 7);
-  const themeIds = new Set(lib.themes.map((t) => t.id));
-  for (const record of lib.records) assert.ok(themeIds.has(record.theme), `bad theme ${record.id}`);
-  for (const theme of lib.themes) {
-    assert.ok(
-      lib.records.some((r) => r.theme === theme.id),
-      `empty theme ${theme.id}`,
-    );
-  }
-});
-
-test('data: every record carries wording, attribution, source, year and an https url', () => {
-  for (const record of lib.records) {
-    for (const field of ['quote', 'attribution', 'speaker', 'source', 'year', 'url']) {
-      assert.ok(record[field] && String(record[field]).trim().length > 0, `${record.id}.${field}`);
+test('data: the market example carries figures and a dated as-of label', () => {
+  assert.match(marketReport.asOfLabel, /2026/, 'the example must be dated');
+  assert.equal(marketReport.rows.length, 5);
+  for (const row of marketReport.rows) {
+    for (const field of ['symbol', 'name', 'last', 'change']) {
+      assert.ok(norm(String(row[field])).length > 0, `${row.symbol}.${field}`);
     }
-    assert.match(record.url, /^https:\/\//, `${record.id} url must be https`);
-    const words = record.quote.trim().split(/\s+/).length;
-    assert.ok(words >= 8 && words <= 24, `${record.id} word count out of range: ${words}`);
+    assert.match(row.change, /^[+-]/, `${row.symbol} change must be signed`);
   }
 });
 
-test('data: no worker-facing risk or permission labels leak into the data layer', () => {
-  const serialised = JSON.stringify(lib).toLowerCase();
-  for (const term of ['orange', 'yellow (medium)', 'permission-risk', 'group b', 'blocker']) {
-    assert.ok(!serialised.includes(term), `risk label leaked: ${term}`);
+test('data: preserved role and principle sources remain intact but unrendered', () => {
+  // Kept in source per the task ("preserve reusable role/quote data"), and deliberately
+  // not surfaced on the homepage, where they would distract from the offer.
+  const roles = readJson('data/operating-roles.json');
+  const lib = readJson('data/principles.json');
+  assert.equal(roles.roles.length, 9, 'role source preserved');
+  assert.equal(lib.records.length, 20, 'principle source preserved');
+  assert.equal($('[data-role-id]').length, 0, 'roles must not render on the homepage');
+  assert.equal($('[data-quote-id]').length, 0, 'quotations must not render on the homepage');
+  const haystack = visibleText();
+  for (const record of lib.records) {
+    assert.ok(!haystack.includes(record.quote), `quotation leaked into the page: ${record.id}`);
+  }
+  for (const role of roles.roles) {
+    assert.ok(!haystack.includes(role.figure), `role figure leaked into the page: ${role.figure}`);
   }
 });
 
-test('dom: exactly 9 role entries rendered with unique ids', () => {
-  const roles = $('[data-role-id]');
-  assert.equal(roles.length, 9);
-  const ids = roles.map((_, el) => $(el).attr('data-role-id')).get();
-  assert.equal(new Set(ids).size, 9);
-  EXPECTED_ROLES.forEach(([index, role, figure], i) => {
-    const text = $(roles[i]).text().replace(/\s+/g, ' ');
-    assert.ok(text.includes(index), `role ${index} index missing`);
-    assert.ok(text.includes(role), `role ${role} title missing`);
-    assert.ok(text.includes(figure), `role figure ${figure} missing`);
+/* ---------- section order and structure ---------- */
+
+test('dom: rendered sections appear in exactly the recorded order', () => {
+  const rendered = $('main section')
+    .map((_, el) => $(el).attr('id'))
+    .get();
+  // The hero is the first section and carries no id in the section order list.
+  assert.ok($('main section').first().hasClass('hero'), 'the hero opens the page');
+  assert.deepEqual(
+    rendered.filter(Boolean),
+    sectionOrder.map((s) => s.id),
+  );
+});
+
+test('dom: every section in the order is rendered and labelled', () => {
+  for (const section of sectionOrder) {
+    const el = $(`section#${section.id}`);
+    assert.equal(el.length, 1, `section ${section.id} must render exactly once`);
+    const labelledBy = el.attr('aria-labelledby');
+    assert.ok(labelledBy, `section ${section.id} must be labelled`);
+    assert.equal($(`#${labelledBy}`).length, 1, `${section.id} label target must exist`);
+  }
+});
+
+test('dom: navigation links match the recorded nav labels and all resolve', () => {
+  const navLinks = $('.masthead__nav a');
+  const expected = sectionOrder.filter((s) => s.nav);
+  assert.equal(navLinks.length, expected.length);
+  navLinks.each((i, el) => {
+    assert.equal($(el).attr('href'), `#${expected[i].id}`);
+    assert.equal(norm($(el).text()), expected[i].nav);
   });
 });
 
-test('dom: exactly 20 quote records rendered with unique ids and exact wording', () => {
-  const rendered = $('[data-quote-id]');
-  assert.equal(rendered.length, 20);
-  const ids = rendered.map((_, el) => $(el).attr('data-quote-id')).get();
-  assert.equal(new Set(ids).size, 20);
-  assert.deepEqual([...ids].sort(), [...EXPECTED_QUOTE_IDS].sort());
-
-  for (const record of lib.records) {
-    const node = $(`[data-quote-id="${record.id}"]`);
-    assert.equal(node.length, 1, `${record.id} must render once`);
-    assert.equal(
-      node.find('blockquote').text().trim(),
-      record.quote,
-      `${record.id} wording must match the library exactly`,
-    );
-    assert.equal(node.find('blockquote').attr('cite'), record.url);
-    const caption = node.find('figcaption').text().replace(/\s+/g, ' ').trim();
-    const expectedCaption = record.attribution.replaceAll('*', '');
-    assert.equal(caption, expectedCaption, `${record.id} attribution must match`);
-    const link = node.find('a[href]');
-    assert.equal(link.attr('href'), record.url, `${record.id} source link`);
-    assert.equal(link.attr('target'), '_blank');
-    assert.equal(link.attr('rel'), 'noopener noreferrer');
+test('dom: every in-page anchor resolves to an element that exists', () => {
+  const ids = new Set(
+    $('[id]')
+      .map((_, el) => $(el).attr('id'))
+      .get(),
+  );
+  const targets = $('a[href^="#"]')
+    .map((_, el) => $(el).attr('href').slice(1))
+    .get();
+  assert.ok(targets.length > 0, 'the page uses in-page anchors');
+  for (const target of targets) {
+    assert.ok(target.length > 0, 'no empty fragment hrefs');
+    assert.ok(ids.has(target), `in-page anchor with no target: #${target}`);
   }
 });
 
@@ -218,98 +320,251 @@ test('dom: html element ids are unique across the document', () => {
   assert.deepEqual(duplicates, [], `duplicate element ids: ${duplicates.join(', ')}`);
 });
 
-test('dom: the exact standing attribution disclaimer is present', () => {
-  const notice = $('[data-quote-disclaimer]').text().replace(/\s+/g, ' ');
-  assert.ok(notice.includes(lib.standingDisclaimer), 'standing disclaimer wording must be exact');
+/* ---------- the demo call to action and its disclosure ---------- */
+
+test('dom: exactly one demo call to action, with the approved label and target', () => {
+  const demoLinks = $(`a[href="${DEMO_URL}"]`);
+  assert.equal(demoLinks.length, 1, 'exactly one link to the demo environment');
+  const link = demoLinks.first();
+  assert.ok(link.hasClass('cta'), 'the demo link is the page call to action');
+  const label = norm(link.clone().find('.sr-only, .ext').remove().end().text());
+  assert.equal(label, DEMO_LABEL);
+  assert.equal(link.attr('target'), '_blank');
+  assert.equal(link.attr('rel'), 'noopener noreferrer');
+  assert.ok(
+    norm(link.find('.sr-only').text()).includes('opens in a new tab'),
+    'new-tab behaviour is announced',
+  );
 });
 
-test('dom: no forbidden terms in rendered output or metadata', () => {
+test('dom: the disclosure is static markup adjacent to the call to action', () => {
+  const disclosure = $('[data-demo-disclosure]');
+  assert.equal(disclosure.length, 1, 'exactly one disclosure');
+  assert.equal(norm(disclosure.text()), DEMO_DISCLOSURE, 'disclosure wording must be exact');
+
+  // Immediately adjacent: same block, and the very next element after the link.
+  const link = $(`a[href="${DEMO_URL}"]`).first();
+  const block = link.parent();
+  assert.ok(block.hasClass('cta-block'), 'the call to action sits in the disclosure block');
+  assert.equal(block.find('[data-demo-disclosure]').length, 1, 'the disclosure shares the block');
+  assert.equal(
+    link.next().get(0),
+    disclosure.get(0),
+    'the disclosure is the element immediately after the call to action',
+  );
+
+  // Never hidden, collapsed, deferred, or delivered by script.
+  assert.equal(disclosure.attr('hidden'), undefined, 'the disclosure is not hidden');
+  assert.equal(disclosure.attr('aria-hidden'), undefined, 'the disclosure is exposed to AT');
+  assert.equal(disclosure.closest('.sr-only').length, 0, 'the disclosure is visible, not sr-only');
+  assert.equal(disclosure.closest('details, dialog, [popover]').length, 0, 'not collapsed content');
+  assert.equal(link.attr('title'), undefined, 'the disclosure is not a tooltip');
+  const js = readFileSync(path.join(root, 'assets/js/app.js'), 'utf8');
+  assert.ok(
+    !js.includes('data-demo-disclosure'),
+    'the disclosure must not depend on JavaScript to appear',
+  );
+});
+
+/* ---------- evaluation, pricing, SPY boundary, signup ---------- */
+
+test('dom: the evaluation is stated as 33 days, demo and paper only', () => {
+  const text = visibleText();
+  assert.ok(/free 33-day evaluation/i.test(text), 'the 33-day term is stated plainly');
+  assert.ok(/demo and paper mode only/i.test(text), 'demo and paper mode only is stated');
+  assert.ok(
+    /no real orders/i.test(text) && /no live capital/i.test(text),
+    'the no-live-capital boundary is stated',
+  );
+  assert.ok(
+    /(ends automatically|no broker connection)/i.test(text),
+    'the end of access or the absence of a broker connection is stated',
+  );
+});
+
+test('dom: prices are labelled planned, with no purchase control', () => {
+  const table = $('[data-pricing-table]');
+  assert.equal(table.length, 1, 'exactly one pricing table');
+  const rows = table
+    .find('tbody tr')
+    .map((_, tr) => [
+      norm($(tr).find('th').text()),
+      norm($(tr).find('td').text()),
+    ])
+    .get();
+  assert.deepEqual(rows.flat(), pricing.rows.flatMap((r) => [r.term, r.price]));
+
+  const status = norm($('[data-pricing-status]').text());
+  assert.ok(/not built/i.test(status), 'the status states that checkout is not built');
+  assert.ok(/planned/i.test(status), 'the prices are labelled planned');
+  assert.ok(
+    /nothing here to buy|no payment can be taken/i.test(status),
+    'the absence of a purchase path is stated',
+  );
+
+  const purchaseWords = /\b(buy|purchase|enroll|checkout|subscribe|pay now|add to cart)\b/i;
+  $('a, button').each((_, el) => {
+    const node = $(el);
+    const label = norm(node.clone().find('.sr-only').remove().end().text());
+    assert.ok(
+      !purchaseWords.test(label),
+      `no purchase control may exist: "${label}"`,
+    );
+  });
+});
+
+test('dom: the SPY Pipeline section states the boundary and carries no access control', () => {
+  const section = $('section#spy-pipeline');
+  assert.equal(section.length, 1);
+  const text = norm(section.text());
+  assert.ok(/Interactive Brokers paper-trading account/i.test(text), 'the account requirement');
+  assert.ok(/not yet built/i.test(text), 'verification is stated as unbuilt');
+  assert.ok(
+    /does not include or unlock/i.test(text),
+    'the evaluation must not be implied to unlock the pipeline',
+  );
+  assert.equal(section.find('button').length, 0, 'no control in this section');
+  assert.equal(section.find('a[href]').length, 0, 'no access or affiliate link in this section');
+});
+
+test('dom: signup is marked designed but not built, with no capture of any kind', () => {
+  const text = visibleText();
+  assert.ok(/designed but not yet built|Designed, not built/i.test(text), 'signup status stated');
+  assert.equal($('form').length, 0, 'no forms on this surface');
+  assert.equal($('input, textarea, select').length, 0, 'no fields of any kind');
+  assert.equal(
+    $('a[href^="mailto:"], a[href^="tel:"]').length,
+    0,
+    'no contact path is offered, because none is approved for this surface',
+  );
+});
+
+/* ---------- market report freshness ---------- */
+
+test('dom: the market example is dated and carries a freshness caveat', () => {
+  assert.equal(norm($('[data-report-asof]').text()), marketReport.asOfLabel);
+  const caveat = norm($('[data-report-caveat]').text());
+  assert.ok(/example/i.test(caveat) && /not real-time/i.test(caveat), 'prominent dated caveat');
+  const notice = norm($('.panel__note').first().text());
+  assert.ok(/not current market data/i.test(notice), 'the example is not presented as current');
+  const section = $('section#market-report');
+  assert.equal(section.find('a[href]').length, 0, 'the report section adds no links');
+});
+
+test('dom: every mention of real-time data is negated', () => {
+  const text = visibleText();
+  for (const match of text.matchAll(/real[- ]time/gi)) {
+    const before = text.slice(Math.max(0, match.index - 60), match.index);
+    assert.ok(
+      /\b(not|never|no|nor)\b[^.]*$/i.test(before),
+      `unqualified real-time claim near: "${text.slice(Math.max(0, match.index - 60), match.index + 30)}"`,
+    );
+  }
+});
+
+/* ---------- links off this surface ---------- */
+
+test('dom: exactly two off-origin destinations exist — the demo and LIME Leadership', () => {
+  const hrefs = $('a[href^="http"]')
+    .map((_, el) => $(el).attr('href'))
+    .get();
+  assert.deepEqual([...new Set(hrefs)].sort(), [LEADERSHIP_URL, DEMO_URL].sort());
+  assert.equal(hrefs.length, 2, 'no duplicate off-origin links');
+});
+
+test('dom: a single reciprocal link points to the LIME Leadership site', () => {
+  const link = $('[data-sibling-site]');
+  assert.equal(link.length, 1, 'exactly one reciprocal link — no alternate paths');
+  assert.equal(link.attr('href'), LEADERSHIP_URL);
+  assert.equal(link.get(0).tagName, 'a', 'the reciprocal link is a real anchor');
+  const label = norm(link.text()).replace(/[↗\s]+$/, '').trim();
+  assert.equal(label, 'LIME Leadership', 'reciprocal link label');
+  assert.equal(link.attr('rel'), 'noopener noreferrer');
+  assert.equal(link.attr('hidden'), undefined, 'the reciprocal link is not hidden');
+  assert.equal(link.attr('aria-hidden'), undefined, 'the reciprocal link is exposed to AT');
+  assert.equal(link.closest('.sr-only').length, 0, 'the reciprocal link is visible, not sr-only');
+  assert.ok(!link.hasClass('anchor-link'), 'must not reuse the protected anchor-link class');
+  assert.equal($(`a[href^="${LEADERSHIP_URL}"]`).length, 1, 'no second path into Site 1');
+});
+
+/* ---------- footer ---------- */
+
+test('dom: the footer carries the exact securities disclaimer', () => {
+  const disclaimer = $('[data-securities-disclaimer]');
+  assert.equal(disclaimer.length, 1);
+  assert.equal(norm(disclaimer.text()), SECURITIES_DISCLAIMER);
+  assert.equal(disclaimer.closest('footer').length, 1, 'the disclaimer sits in the footer');
+});
+
+/* ---------- language and claims ---------- */
+
+test('dom: no forbidden Site 1 or scriptural terminology in rendered text or metadata', () => {
   const haystack = `${visibleText()} ${metadataText()}`.toLowerCase();
   for (const term of FORBIDDEN_TERMS) {
     const pattern = new RegExp(`\\b${term.replace(/ /g, '\\s+')}\\b`, 'i');
     assert.ok(!pattern.test(haystack), `forbidden term appears in rendered output: "${term}"`);
   }
-  for (const pairing of FORBIDDEN_PAIRINGS) {
-    assert.ok(!haystack.includes(pairing), `predecessor pairing appears: "${pairing}"`);
+  for (const phrase of FORBIDDEN_PHRASES) {
+    assert.ok(!haystack.includes(phrase), `forbidden phrase appears: "${phrase}"`);
   }
 });
 
-test('dom: no quote from the rejected, reserve, group B or excluded sets', () => {
-  // Case-sensitive: "Be fearful…" is the rejected paraphrase, while A15 legitimately
-  // contains the lower-case clause "…to be fearful when others are greedy…" as written
-  // in the 1986 letter.
-  const haystack = visibleText();
-  for (const fragment of FORBIDDEN_QUOTE_FRAGMENTS) {
-    assert.ok(
-      !haystack.includes(fragment),
-      `non-Group-A quotation fragment appears: "${fragment}"`,
-    );
+test('dom: no non-translatable Site 1 claim appears', () => {
+  const haystack = `${visibleText()} ${metadataText()}`.toLowerCase();
+  for (const claim of FORBIDDEN_CLAIMS) {
+    assert.ok(!haystack.includes(claim), `non-translatable claim appears: "${claim}"`);
   }
-  const a15 = $('[data-quote-id="A15"] blockquote').text().trim();
-  assert.ok(a15.startsWith('we simply attempt'), 'A15 must keep the letter\u2019s own wording');
 });
 
-test('dom: no unsupported commercial claims or transactional controls', () => {
-  const haystack = visibleText().toLowerCase();
-  for (const phrase of [
-    'trusted by',
-    'our customers',
-    'endorsed by',
-    'guaranteed',
-    'certified secure',
-    'soc 2',
-    'best-in-class',
-    'industry-leading',
-    'get started',
-    'sign up',
-    'book a demo',
-    'buy now',
-    'start free trial',
-    'per month',
-  ]) {
+test('dom: no unsupported commercial, security or superiority claim', () => {
+  const haystack = `${visibleText()} ${metadataText()}`.toLowerCase();
+  for (const phrase of FORBIDDEN_COMMERCIAL) {
     assert.ok(!haystack.includes(phrase), `unsupported or transactional copy: "${phrase}"`);
   }
-  assert.equal($('form').length, 0, 'no forms on this surface');
-  assert.equal($('input[type="email"], input[type="tel"]').length, 0, 'no contact capture');
-});
-
-test('dom: no portrait or likeness imagery is embedded', () => {
-  assert.equal($('img').length, 0, 'no raster imagery is used on this surface');
-  const figureNames = rolesData.roles.map((r) => r.figure.toLowerCase());
-  const svgLabels = $('svg[aria-label]')
-    .map((_, el) => ($(el).attr('aria-label') || '').toLowerCase())
-    .get()
-    .join(' ');
-  for (const name of figureNames) {
-    assert.ok(!svgLabels.includes(name), `figure name used as image label: ${name}`);
-  }
-});
-
-test('dom: quote records are visually separated from the page anchor', () => {
-  const anchor = $('.anchor-link');
-  assert.equal(anchor.length, 1, 'exactly one non-transactional anchor');
-  const anchorSection = anchor.closest('section');
-  assert.equal(
-    anchorSection.find('[data-quote-id]').length,
-    0,
-    'the anchor section must contain no quotations',
+  // Production readiness may only appear as the demo disclosure's own negation.
+  const productionMentions = [...visibleText().matchAll(/production[- ]ready/gi)];
+  assert.equal(productionMentions.length, 1, 'production-ready is mentioned only once');
+  assert.ok(
+    DEMO_DISCLOSURE.includes('Not production-ready'),
+    'and only inside the negated disclosure',
   );
-  const quoteSection = $('#principles');
-  assert.equal(quoteSection.find('.anchor-link').length, 0, 'no anchor inside the quote section');
-  assert.equal(quoteSection.find('button[data-theme-chip]').length, 8, 'filters only, no CTAs');
-  $('[data-quote-id]').each((_, el) => {
-    const links = $(el).find('a[href]');
-    assert.equal(links.length, 1, 'each record links only to its own source');
-  });
 });
+
+test('dom: the limits of the offer are stated, not softened', () => {
+  const text = visibleText();
+  assert.ok(/do not guarantee profits/i.test(text), 'the no-guarantee statement is present');
+  assert.ok(/cannot eliminate risk/i.test(text), 'the risk statement is present');
+  assert.ok(/decisions/i.test(text) && /yours/i.test(text), 'decision ownership is stated');
+});
+
+/* ---------- no inert controls ---------- */
+
+test('dom: every interactive control does something', () => {
+  $('a').each((_, el) => {
+    const href = ($(el).attr('href') || '').trim();
+    assert.ok(href.length > 0, 'every anchor has an href');
+    assert.notEqual(href, '#', 'no placeholder anchor');
+    assert.ok(!/^javascript:/i.test(href), 'no javascript: anchors');
+    assert.equal($(el).attr('aria-disabled'), undefined, 'no disabled-looking links');
+  });
+  // The theme toggle is the only control on this surface, and it is created by the
+  // script that operates it, so the served markup ships no button at all. Nothing
+  // visible without JavaScript can therefore be inert.
+  assert.equal($('button').length, 0, 'no button ships in the static markup');
+  assert.equal($('[role="button"]').length, 0, 'no faux buttons');
+  const js = readFileSync(path.join(root, 'assets/js/app.js'), 'utf8');
+  assert.ok(js.includes("createElement('button')"), 'the toggle is created by its own script');
+  assert.ok(js.includes('addEventListener'), 'and it is wired to a handler');
+});
+
+/* ---------- accessibility scaffolding ---------- */
 
 test('dom: accessibility scaffolding is present', () => {
   assert.equal($('h1').length, 1, 'exactly one h1');
-  assert.ok($('a.skip-link').attr('href') === '#main', 'skip link targets main');
+  assert.equal($('a.skip-link').attr('href'), '#main', 'skip link targets main');
   assert.equal($('main#main').length, 1);
   assert.ok($('html').attr('lang'), 'lang attribute set');
-  assert.ok($('[data-theme-toggle]').attr('aria-label'), 'theme toggle labelled');
-  assert.equal($('[data-result-count]').attr('role'), 'status', 'result count is a live region');
+  assert.equal($('img').length, 0, 'no raster imagery is used on this surface');
   $('svg').each((_, el) => {
     const svg = $(el);
     const labelled = svg.attr('aria-label') || svg.attr('role') === 'img';
@@ -318,36 +573,46 @@ test('dom: accessibility scaffolding is present', () => {
   });
   $('button').each((_, el) => {
     const button = $(el);
-    const text = button.text().replace(/\s+/g, ' ').trim();
-    assert.ok(text.length > 0 || button.attr('aria-label'), 'every button has an accessible name');
+    assert.ok(
+      norm(button.text()).length > 0 || button.attr('aria-label'),
+      'every button has an accessible name',
+    );
   });
-  assert.equal(
-    $('[data-theme-chip][aria-pressed="true"]').length,
-    1,
-    'exactly one theme filter is pressed by default',
-  );
+  $('table').each((_, el) => {
+    assert.equal($(el).find('caption').length, 1, 'every data table has a caption');
+    assert.ok($(el).find('thead th[scope="col"]').length > 0, 'column headers are scoped');
+  });
+  // Heading order: no level is skipped.
+  const levels = $('h1, h2, h3, h4, h5, h6')
+    .map((_, el) => Number(el.tagName[1]))
+    .get();
+  levels.reduce((prev, level) => {
+    assert.ok(level <= prev + 1, `heading level jumps from h${prev} to h${level}`);
+    return level;
+  }, levels[0]);
 });
 
-test('dom: library filtering is progressive — all records exist without javascript', () => {
-  assert.equal($('[data-quote-id][hidden]').length, 0, 'no record ships hidden');
-  assert.equal($('[data-theme-group]').length, lib.themes.length);
+test('dom: start cards are working in-page anchors, one per destination', () => {
+  const cards = $('.card');
+  assert.equal(cards.length, startCards.length);
+  const hrefs = cards.map((_, el) => $(el).attr('href')).get();
+  assert.deepEqual(hrefs, startCards.map((c) => c.href));
+  assert.equal(new Set(hrefs).size, hrefs.length, 'no duplicate card destinations');
+  cards.each((_, el) => {
+    assert.equal($(el).find('h3').length, 1, 'each card has one heading');
+  });
 });
 
-test('dom: status label identifies this surface as a preview', () => {
-  const chip = $('.status-chip').text().toLowerCase();
-  assert.ok(chip.includes('content integration preview'), 'honest status label present');
-  const brand = $('.brand').text().replace(/\s+/g, ' ');
-  assert.ok(/Lime Signalworks/i.test(brand) && /Enterprise/i.test(brand), 'Site 2 header identity');
-});
+/* ---------- identity ---------- */
 
 test('dom: the masthead names this unit "LIME Enterprise" and keeps the wordmark', () => {
-  const brand = $('.brand').text().replace(/\s+/g, ' ').trim();
+  const brand = norm($('.brand').text());
   assert.ok(brand.includes('Lime Signalworks'), 'the Lime Signalworks wordmark must remain');
   const unit = $('[data-site-unit]');
   assert.equal(unit.length, 1, 'exactly one unit label');
   assert.ok(
-    unit.text().replace(/\s+/g, ' ').includes('LIME Enterprise'),
-    `unit label must read "LIME Enterprise", got: ${unit.text().trim()}`,
+    norm(unit.text()).includes('LIME Enterprise'),
+    `unit label must read "LIME Enterprise", got: ${norm(unit.text())}`,
   );
   assert.ok(
     $('title').text().includes('LIME Enterprise'),
@@ -355,25 +620,9 @@ test('dom: the masthead names this unit "LIME Enterprise" and keeps the wordmark
   );
 });
 
-test('dom: a single reciprocal link points to the LIME Leadership site', () => {
-  const link = $('[data-sibling-site]');
-  assert.equal(link.length, 1, 'exactly one reciprocal link — no alternate paths');
-  assert.equal(link.attr('href'), 'https://limesignalworks.com');
-  assert.equal(link.get(0).tagName, 'a', 'the reciprocal link is a real anchor');
-  const label = link.text().replace(/\s+/g, ' ').replace(/[↗\s]+$/, '').trim();
-  assert.equal(label, 'LIME Leadership', 'reciprocal link label');
-  assert.equal(link.attr('rel'), 'noopener noreferrer');
-  assert.equal(link.attr('hidden'), undefined, 'the reciprocal link is not hidden');
-  assert.equal(link.attr('aria-hidden'), undefined, 'the reciprocal link is exposed to AT');
-  assert.equal(link.closest('.sr-only').length, 0, 'the reciprocal link is visible, not sr-only');
-  // The protected anchor-link invariant must be untouched by this addition.
-  assert.ok(!link.hasClass('anchor-link'), 'must not reuse the protected anchor-link class');
-  assert.equal($('.anchor-link').length, 1, 'anchor-link count unchanged');
-});
+/* ---------- light default and no persistence ---------- */
 
 test('dom: light is the default theme in the served markup', () => {
-  // Belt-and-braces alongside the rendered browser checks: the attribute must ship in
-  // the static HTML so the light palette applies with JavaScript disabled.
   assert.equal($('html').attr('data-theme'), 'light', 'root ships data-theme="light"');
   assert.equal($('meta[name="color-scheme"]').attr('content'), 'light');
 });
@@ -399,9 +648,17 @@ test('js: the theme choice is never written to persistent browser storage', () =
   );
 });
 
+/* ---------- no alternate render paths, no network egress ---------- */
+
+test('repo: index.html is the only rendered surface', () => {
+  const strays = ['index.htm', 'home.html', 'preview.html', 'roles.html', 'principles.html', 'old'];
+  for (const stray of strays) {
+    assert.ok(!existsSync(path.join(root, stray)), `stray alternate render path: ${stray}`);
+  }
+  assert.ok(existsSync(path.join(root, 'index.html')));
+});
+
 test('dom: the page makes no external requests of its own', () => {
-  // Only anchors to sourced material may point off-origin, and those load solely
-  // when a visitor clicks them. Every asset the page fetches must be same-origin.
   const assetAttrs = ['src', 'srcset', 'poster', 'data'];
   $('*').each((_, el) => {
     for (const attr of assetAttrs) {
@@ -416,19 +673,14 @@ test('dom: the page makes no external requests of its own', () => {
   });
   $('link[href]').each((_, el) => {
     const href = $(el).attr('href').trim();
-    assert.ok(
-      !/^(https?:)?\/\//i.test(href),
-      `off-origin <link> in the document head: ${href}`,
-    );
+    assert.ok(!/^(https?:)?\/\//i.test(href), `off-origin <link> in the document head: ${href}`);
   });
   assert.equal($('link[rel="preconnect"], link[rel="dns-prefetch"]').length, 0, 'no preconnects');
   assert.ok(!/@import\s+url\(\s*['"]?https?:/i.test(html), 'no remote @import in inline css');
-  const offOriginAnchors = $('a[href^="http"]')
+  for (const href of $('a[href^="http"]')
     .map((_, el) => $(el).attr('href'))
-    .get();
-  assert.ok(offOriginAnchors.length > 0, 'source links are present');
-  for (const href of offOriginAnchors) {
-    assert.ok(href.startsWith('https://'), `source link must be https: ${href}`);
+    .get()) {
+    assert.ok(href.startsWith('https://'), `off-origin link must be https: ${href}`);
   }
 });
 
@@ -443,7 +695,10 @@ test('css: stylesheets reference only vendored, self-hosted font files', () => {
         `remote asset url in ${file}: ${url}`,
       );
     }
-    assert.ok(!/fonts\.googleapis|gstatic|fontshare|typekit|cdn/i.test(css), `cdn reference in ${file}`);
+    assert.ok(
+      !/fonts\.googleapis|gstatic|fontshare|typekit|cdn/i.test(css),
+      `cdn reference in ${file}`,
+    );
   }
   const fonts = readFileSync(path.join(root, 'assets/css/fonts.css'), 'utf8');
   assert.equal((fonts.match(/@font-face/g) || []).length, 6, 'six vendored subsets declared');

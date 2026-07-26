@@ -1,0 +1,90 @@
+{
+  "revision": "site2-plain-translation-2026-07-26",
+  "canonical": {
+    "demoUrl": "https://limesignalworks.pplx.app/",
+    "demoCtaLabel": "Open the Rosie Server Demo",
+    "demoDisclosure": "Demonstration environment. Simulated data. No broker connection and no real orders. Not production-ready.",
+    "leadershipUrl": "https://limesignalworks.com",
+    "leadershipLabel": "LIME Leadership",
+    "securitiesDisclaimer": "Lime Signalworks provides educational tools and analysis, not personalized investment advice. Securities trading involves risk of loss. Your decisions and results are your own. Nothing here is an offer to sell or a solicitation to buy any security.",
+    "evaluationDays": 33,
+    "copyright": "© 2026 Lime Signalworks LLC."
+  },
+  "sectionOrder": [
+    { "id": "what-we-do", "eyebrow": "Section 01", "nav": "What we do" },
+    { "id": "market-report", "eyebrow": "Section 02", "nav": "Market report" },
+    { "id": "commitments", "eyebrow": "Section 03", "nav": "Commitments" },
+    { "id": "approach", "eyebrow": "Section 04", "nav": null },
+    { "id": "evaluation", "eyebrow": "Section 05", "nav": "Evaluation" },
+    { "id": "who-its-for", "eyebrow": "Section 06", "nav": null },
+    { "id": "where-to-start", "eyebrow": "Section 07", "nav": null },
+    { "id": "pricing", "eyebrow": "Section 08", "nav": "Pricing" },
+    { "id": "spy-pipeline", "eyebrow": "Section 09", "nav": "SPY Pipeline" },
+    { "id": "how-to-begin", "eyebrow": "Section 10", "nav": "How to begin" }
+  ],
+  "marketReport": {
+    "asOfLabel": "As of the close of Thursday, July 23, 2026",
+    "exampleNotice": "This is a worked example of the report format, not current market data. The figures shown are the last completed report carried over from the reporting archive and are dated. Reports are published after the close, never in real time, and live market data may be newer than any published report.",
+    "posture": "Conditions read bearish. Stated posture: protect first.",
+    "rows": [
+      { "symbol": "SPY", "name": "S&P 500 ETF", "last": "738.18", "change": "-1.23%" },
+      { "symbol": "QQQ", "name": "Nasdaq 100 ETF", "last": "691.96", "change": "-1.90%" },
+      { "symbol": "DIA", "name": "Dow 30 ETF", "last": "516.26", "change": "-1.00%" },
+      { "symbol": "IWM", "name": "Russell 2000 ETF", "last": "292.09", "change": "-0.58%" },
+      { "symbol": "VIX", "name": "Volatility index", "last": "18.70", "change": "+12.38%" }
+    ]
+  },
+  "pricing": {
+    "heading": "Planned post-evaluation enrollment options",
+    "status": "Checkout and billing are not built. These are the planned enrollment prices, published so the cost is known before anyone starts an evaluation. No payment can be taken on this site today, and there is nothing here to buy.",
+    "rows": [
+      { "term": "Weekly", "price": "$20" },
+      { "term": "Monthly", "price": "$85" },
+      { "term": "Quarterly", "price": "$245" },
+      { "term": "Annually", "price": "$925" }
+    ],
+    "includes": [
+      "The daily market situation report.",
+      "The Rosie decision-support dashboard.",
+      "Alerts that flag when conditions change."
+    ],
+    "notThis": [
+      "Not a signal service to copy.",
+      "Not a promise of profit.",
+      "Not personalized investment advice.",
+      "Alerts indicate changed conditions; the decision is yours."
+    ]
+  },
+  "startCards": [
+    {
+      "title": "What the system is",
+      "body": "The problem it addresses, in plain language, and what it actually does.",
+      "href": "#what-we-do"
+    },
+    {
+      "title": "Daily market report",
+      "body": "The report format, an as-of-close example, and how freshness is labelled.",
+      "href": "#market-report"
+    },
+    {
+      "title": "The 33-day evaluation",
+      "body": "How the free evaluation is structured, and why it is demo and paper only.",
+      "href": "#evaluation"
+    },
+    {
+      "title": "Pricing and what you get",
+      "body": "Planned enrollment prices, what each plan includes, and what it is not.",
+      "href": "#pricing"
+    },
+    {
+      "title": "SPY Pipeline eligibility",
+      "body": "What the component is and the account requirement that governs its use.",
+      "href": "#spy-pipeline"
+    },
+    {
+      "title": "Account access",
+      "body": "What exists today, what does not, and where that leaves you.",
+      "href": "#how-to-begin"
+    }
+  ]
+}
