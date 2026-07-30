@@ -168,7 +168,13 @@ async function main() {
     .replaceAll(
       '{{LEADERSHIP_LINK}}',
       `<a class="sibling-link" href="${esc(canonical.leadershipUrl)}" rel="noopener noreferrer" ` +
-        `data-sibling-site>${esc(canonical.leadershipLabel)}` +
+        `data-sibling-site="leadership">${esc(canonical.leadershipLabel)}` +
+        `<span class="ext" aria-hidden="true">&#8599;</span></a>`,
+    )
+    .replaceAll(
+      '{{LIBRARY_LINK}}',
+      `<a class="sibling-link" href="${esc(canonical.libraryUrl)}" rel="noopener noreferrer" ` +
+        `data-sibling-site="library">${esc(canonical.libraryLabel)}` +
         `<span class="ext" aria-hidden="true">&#8599;</span></a>`,
     )
     .replaceAll('{{SECURITIES_DISCLAIMER}}', esc(canonical.securitiesDisclaimer))
