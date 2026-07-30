@@ -378,7 +378,7 @@ test('rendered theme: toggling light→dark→light writes no browser storage', 
   }
 });
 
-test('rendered theme: the reciprocal LIME Leadership link is visible and focusable', async (t) => {
+test('rendered theme: the reciprocal Lime Signalworks link is visible and focusable', async (t) => {
   const server = await startServer();
   const browser = await chromium.launch();
   try {
@@ -400,7 +400,7 @@ test('rendered theme: the reciprocal LIME Leadership link is visible and focusab
         await link.scrollIntoViewIfNeeded();
         assert.equal(await link.count(), 1, 'exactly one reciprocal link');
         assert.ok(await link.isVisible(), `reciprocal link must be visible at ${width}px`);
-        assert.equal((await link.innerText()).replace(/[↗\s]+$/, '').trim(), 'LIME Leadership');
+        assert.equal((await link.innerText()).replace(/[↗\s]+$/, '').trim(), 'Lime Signalworks');
         assert.equal(await link.getAttribute('href'), 'https://limesignalworks.com');
 
         const box = await link.boundingBox();
