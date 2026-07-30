@@ -235,7 +235,7 @@ test('data: canonical strings are the exact approved wording', () => {
   assert.equal(canonical.demoDisclosure, DEMO_DISCLOSURE);
   assert.equal(canonical.demoSignIn, DEMO_SIGNIN);
   assert.equal(canonical.leadershipUrl, LEADERSHIP_URL);
-  assert.equal(canonical.leadershipLabel, 'LIME Leadership');
+  assert.equal(canonical.leadershipLabel, 'Lime Signalworks');
   assert.equal(canonical.securitiesDisclaimer, SECURITIES_DISCLAIMER);
   assert.equal(canonical.evaluationDays, 33);
 });
@@ -590,7 +590,7 @@ test('dom: every mention of real-time data is negated', () => {
 
 /* ---------- links off this surface ---------- */
 
-test('dom: exactly two off-origin destinations exist — the demo and LIME Leadership', () => {
+test('dom: exactly two off-origin destinations exist — the demo and Lime Signalworks', () => {
   const hrefs = $('a[href^="http"]')
     .map((_, el) => $(el).attr('href'))
     .get();
@@ -598,13 +598,13 @@ test('dom: exactly two off-origin destinations exist — the demo and LIME Leade
   assert.equal(hrefs.length, 2, 'no duplicate off-origin links');
 });
 
-test('dom: a single reciprocal link points to the LIME Leadership site', () => {
+test('dom: a single reciprocal link points to the Lime Signalworks site', () => {
   const link = $('[data-sibling-site]');
   assert.equal(link.length, 1, 'exactly one reciprocal link — no alternate paths');
   assert.equal(link.attr('href'), LEADERSHIP_URL);
   assert.equal(link.get(0).tagName, 'a', 'the reciprocal link is a real anchor');
   const label = norm(link.text()).replace(/[↗\s]+$/, '').trim();
-  assert.equal(label, 'LIME Leadership', 'reciprocal link label');
+  assert.equal(label, 'Lime Signalworks', 'reciprocal link label');
   assert.equal(link.attr('rel'), 'noopener noreferrer');
   assert.equal(link.attr('hidden'), undefined, 'the reciprocal link is not hidden');
   assert.equal(link.attr('aria-hidden'), undefined, 'the reciprocal link is exposed to AT');
