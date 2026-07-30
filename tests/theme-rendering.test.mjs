@@ -378,7 +378,7 @@ test('rendered theme: toggling light→dark→light writes no browser storage', 
   }
 });
 
-test('rendered theme: the reciprocal Lime Signalworks link is visible and focusable', async (t) => {
+test('rendered theme: the reciprocal Site 1 and Leadership library links are visible and focusable', async (t) => {
   const server = await startServer();
   const browser = await chromium.launch();
   try {
@@ -395,13 +395,19 @@ test('rendered theme: the reciprocal Lime Signalworks link is visible and focusa
         });
         const page = await context.newPage();
         await page.goto(ORIGIN, { waitUntil: 'networkidle' });
-        const link = page.locator('[data-sibling-site]');
+        const link = page.locator('[data-sibling-site="leadership"]');
 
         await link.scrollIntoViewIfNeeded();
-        assert.equal(await link.count(), 1, 'exactly one reciprocal link');
+        assert.equal(await link.count(), 1, 'exactly one Site 1 reciprocal link');
         assert.ok(await link.isVisible(), `reciprocal link must be visible at ${width}px`);
         assert.equal((await link.innerText()).replace(/[↗\s]+$/, '').trim(), 'Lime Signalworks');
         assert.equal(await link.getAttribute('href'), 'https://limesignalworks.com');
+
+        const libraryLink = page.locator('[data-sibling-site="library"]');
+        assert.equal(await libraryLink.count(), 1, 'exactly one Leadership library link');
+        assert.ok(await libraryLink.isVisible(), `library link must be visible at ${width}px`);
+        assert.equal((await libraryLink.innerText()).replace(/[↗\s]+$/, '').trim(), 'LIME Leadership');
+        assert.equal(await libraryLink.getAttribute('href'), 'https://leadership.limesignalworks.com');
 
         const box = await link.boundingBox();
         assert.ok(box.height >= 44, `target height ${box.height}px must be at least 44px`);

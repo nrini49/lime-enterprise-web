@@ -19,6 +19,7 @@ const $ = cheerio.load(html);
 
 const DEMO_URL = 'https://limesignalworks.pplx.app/';
 const LEADERSHIP_URL = 'https://limesignalworks.com';
+const LIBRARY_URL = 'https://leadership.limesignalworks.com';
 const DEMO_LABEL = 'Open the Rosie Server Demo';
 const DEMO_DISCLOSURE =
   'Demonstration environment. Simulated data. No broker connection and no real orders. ' +
@@ -236,6 +237,8 @@ test('data: canonical strings are the exact approved wording', () => {
   assert.equal(canonical.demoSignIn, DEMO_SIGNIN);
   assert.equal(canonical.leadershipUrl, LEADERSHIP_URL);
   assert.equal(canonical.leadershipLabel, 'Lime Signalworks');
+  assert.equal(canonical.libraryUrl, LIBRARY_URL);
+  assert.equal(canonical.libraryLabel, 'LIME Leadership');
   assert.equal(canonical.securitiesDisclaimer, SECURITIES_DISCLAIMER);
   assert.equal(canonical.evaluationDays, 33);
 });
@@ -590,27 +593,42 @@ test('dom: every mention of real-time data is negated', () => {
 
 /* ---------- links off this surface ---------- */
 
-test('dom: exactly two off-origin destinations exist — the demo and Lime Signalworks', () => {
+test('dom: exactly three off-origin destinations exist — the demo, Site 1, and the Leadership library', () => {
   const hrefs = $('a[href^="http"]')
     .map((_, el) => $(el).attr('href'))
     .get();
-  assert.deepEqual([...new Set(hrefs)].sort(), [LEADERSHIP_URL, DEMO_URL].sort());
-  assert.equal(hrefs.length, 2, 'no duplicate off-origin links');
+  assert.deepEqual([...new Set(hrefs)].sort(), [LEADERSHIP_URL, LIBRARY_URL, DEMO_URL].sort());
+  assert.equal(hrefs.length, 3, 'no duplicate off-origin links');
 });
 
-test('dom: a single reciprocal link points to the Lime Signalworks site', () => {
-  const link = $('[data-sibling-site]');
-  assert.equal(link.length, 1, 'exactly one reciprocal link — no alternate paths');
-  assert.equal(link.attr('href'), LEADERSHIP_URL);
-  assert.equal(link.get(0).tagName, 'a', 'the reciprocal link is a real anchor');
-  const label = norm(link.text()).replace(/[↗\s]+$/, '').trim();
-  assert.equal(label, 'Lime Signalworks', 'reciprocal link label');
-  assert.equal(link.attr('rel'), 'noopener noreferrer');
-  assert.equal(link.attr('hidden'), undefined, 'the reciprocal link is not hidden');
-  assert.equal(link.attr('aria-hidden'), undefined, 'the reciprocal link is exposed to AT');
-  assert.equal(link.closest('.sr-only').length, 0, 'the reciprocal link is visible, not sr-only');
-  assert.ok(!link.hasClass('anchor-link'), 'must not reuse the protected anchor-link class');
+test('dom: exactly two reciprocal links exist — Site 1 and the Leadership library, each singular', () => {
+  const links = $('[data-sibling-site]');
+  assert.equal(links.length, 2, 'exactly two reciprocal links — no alternate paths');
+
+  const leadership = $('[data-sibling-site="leadership"]');
+  assert.equal(leadership.length, 1, 'exactly one link to Site 1');
+  assert.equal(leadership.attr('href'), LEADERSHIP_URL);
+  assert.equal(leadership.get(0).tagName, 'a', 'the reciprocal link is a real anchor');
+  const leadershipLabel = norm(leadership.text()).replace(/[↗\s]+$/, '').trim();
+  assert.equal(leadershipLabel, 'Lime Signalworks', 'Site 1 reciprocal link label');
+  assert.equal(leadership.attr('rel'), 'noopener noreferrer');
+
+  const library = $('[data-sibling-site="library"]');
+  assert.equal(library.length, 1, 'exactly one link to the Leadership library');
+  assert.equal(library.attr('href'), LIBRARY_URL);
+  assert.equal(library.get(0).tagName, 'a', 'the library link is a real anchor');
+  const libraryLabel = norm(library.text()).replace(/[↗\s]+$/, '').trim();
+  assert.equal(libraryLabel, 'LIME Leadership', 'library reciprocal link label');
+  assert.equal(library.attr('rel'), 'noopener noreferrer');
+
+  for (const link of [leadership, library]) {
+    assert.equal(link.attr('hidden'), undefined, 'the reciprocal link is not hidden');
+    assert.equal(link.attr('aria-hidden'), undefined, 'the reciprocal link is exposed to AT');
+    assert.equal(link.closest('.sr-only').length, 0, 'the reciprocal link is visible, not sr-only');
+    assert.ok(!link.hasClass('anchor-link'), 'must not reuse the protected anchor-link class');
+  }
   assert.equal($(`a[href^="${LEADERSHIP_URL}"]`).length, 1, 'no second path into Site 1');
+  assert.equal($(`a[href^="${LIBRARY_URL}"]`).length, 1, 'no second path into the library');
 });
 
 /* ---------- footer ---------- */
