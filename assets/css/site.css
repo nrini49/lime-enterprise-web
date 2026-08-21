@@ -415,6 +415,49 @@ a:hover {
   display: block;
 }
 
+/* ---------- Section media grid (prose + real product image) ---------- */
+
+.section__grid {
+  display: grid;
+  gap: var(--space-8);
+  align-items: center;
+}
+
+@media (min-width: 60rem) {
+  .section__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: var(--space-12);
+  }
+}
+
+.product-shot {
+  /* Fixed dark frame, deliberately theme-independent: the screenshot inside is a
+     dark-mode capture of the real product, so the frame does not swap with the
+     page's light/dark toggle — it would clash with the image itself if it did. */
+  margin: 0;
+  border: 1px solid #1f2937;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  background-color: #0b1120;
+}
+
+.product-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.product-shot figcaption {
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+  color: #9aa5b1;
+  background-color: #0b1120;
+  border-top: 1px solid #1f2937;
+}
+
 /* ---------- Call to action and its disclosure ----------
  * The disclosure is static, adjacent, and always rendered. It is never a toast,
  * a tooltip, or collapsed content, because the destination is a demonstration

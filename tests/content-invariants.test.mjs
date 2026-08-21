@@ -708,7 +708,18 @@ test('dom: accessibility scaffolding is present', () => {
   assert.equal($('a.skip-link').attr('href'), '#main', 'skip link targets main');
   assert.equal($('main#main').length, 1);
   assert.ok($('html').attr('lang'), 'lang attribute set');
-  assert.equal($('img').length, 0, 'no raster imagery is used on this surface');
+  // 2026-08-21: one real product screenshot was deliberately added (the Rosie
+  // Interactive mock-preview dashboard) so the homepage shows the actual product
+  // instead of describing it in prose alone. This is an intentional, approved
+  // change to the original vector-only rule — not a regression. Every <img> on
+  // the surface must still be real product imagery with a real, descriptive alt
+  // attribute; this guards against silently proliferating raster images later.
+  const images = $('img');
+  assert.equal(images.length, 1, 'exactly one deliberate product screenshot is used on this surface');
+  images.each((_, el) => {
+    const alt = $(el).attr('alt');
+    assert.ok(alt && alt.length > 20, 'every raster image has a real, descriptive alt attribute');
+  });
   $('svg').each((_, el) => {
     const svg = $(el);
     const labelled = svg.attr('aria-label') || svg.attr('role') === 'img';
