@@ -267,10 +267,8 @@ test('data: planned prices are the locked figures', () => {
   assert.deepEqual(
     pricing.rows.map((r) => [r.term, r.price]),
     [
-      ['Weekly', '$20'],
-      ['Monthly', '$85'],
-      ['Quarterly', '$245'],
-      ['Annually', '$925'],
+      ['Monthly', '$200'],
+      ['Annually', '$1,000'],
     ],
   );
 });

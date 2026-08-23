@@ -48,10 +48,8 @@
     "heading": "Planned post-evaluation enrollment options",
     "status": "Checkout and billing are not built. These are the planned enrollment prices, published so the cost is known before anyone starts an evaluation. No payment can be taken on this site today, and there is nothing here to buy.",
     "rows": [
-      { "term": "Weekly", "price": "$20" },
-      { "term": "Monthly", "price": "$85" },
-      { "term": "Quarterly", "price": "$245" },
-      { "term": "Annually", "price": "$925" }
+      { "term": "Monthly", "price": "$200" },
+      { "term": "Annually", "price": "$1,000" }
     ],
     "includes": [
       "The daily market situation report.",
