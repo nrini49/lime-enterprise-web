@@ -18,7 +18,7 @@ const html = readFileSync(path.join(root, 'index.html'), 'utf8');
 const $ = cheerio.load(html);
 
 const DEMO_URL = 'https://limesignalworks.pplx.app/';
-const LEADERSHIP_URL = 'https://limesignalworks.com';
+const LEADERSHIP_URL = 'https://signals.limesignalworks.com';
 const LIBRARY_URL = 'https://leadership.limesignalworks.com';
 const DEMO_LABEL = 'Open the Rosie Server Demo';
 const DEMO_DISCLOSURE =
@@ -236,7 +236,7 @@ test('data: canonical strings are the exact approved wording', () => {
   assert.equal(canonical.demoDisclosure, DEMO_DISCLOSURE);
   assert.equal(canonical.demoSignIn, DEMO_SIGNIN);
   assert.equal(canonical.leadershipUrl, LEADERSHIP_URL);
-  assert.equal(canonical.leadershipLabel, 'Lime Signalworks');
+  assert.equal(canonical.leadershipLabel, 'Signals');
   assert.equal(canonical.libraryUrl, LIBRARY_URL);
   assert.equal(canonical.libraryLabel, 'LIME Leadership');
   assert.equal(canonical.securitiesDisclaimer, SECURITIES_DISCLAIMER);
@@ -603,12 +603,12 @@ test('dom: exactly two reciprocal links exist — Site 1 and the Leadership libr
   const links = $('[data-sibling-site]');
   assert.equal(links.length, 2, 'exactly two reciprocal links — no alternate paths');
 
-  const leadership = $('[data-sibling-site="leadership"]');
+  const leadership = $('[data-sibling-site="signals"]');
   assert.equal(leadership.length, 1, 'exactly one link to Site 1');
   assert.equal(leadership.attr('href'), LEADERSHIP_URL);
   assert.equal(leadership.get(0).tagName, 'a', 'the reciprocal link is a real anchor');
   const leadershipLabel = norm(leadership.text()).replace(/[↗\s]+$/, '').trim();
-  assert.equal(leadershipLabel, 'Lime Signalworks', 'Site 1 reciprocal link label');
+  assert.equal(leadershipLabel, 'Signals', 'Site 1 reciprocal link label');
   assert.equal(leadership.attr('rel'), 'noopener noreferrer');
 
   const library = $('[data-sibling-site="library"]');

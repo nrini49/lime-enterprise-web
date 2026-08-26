@@ -168,7 +168,7 @@ async function main() {
     .replaceAll(
       '{{LEADERSHIP_LINK}}',
       `<a class="sibling-link" href="${esc(canonical.leadershipUrl)}" rel="noopener noreferrer" ` +
-        `data-sibling-site="leadership">${esc(canonical.leadershipLabel)}` +
+        `data-sibling-site="signals">${esc(canonical.leadershipLabel)}` +
         `<span class="ext" aria-hidden="true">&#8599;</span></a>`,
     )
     .replaceAll(

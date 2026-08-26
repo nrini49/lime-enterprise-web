@@ -395,13 +395,13 @@ test('rendered theme: the reciprocal Site 1 and Leadership library links are vis
         });
         const page = await context.newPage();
         await page.goto(ORIGIN, { waitUntil: 'networkidle' });
-        const link = page.locator('[data-sibling-site="leadership"]');
+        const link = page.locator('[data-sibling-site="signals"]');
 
         await link.scrollIntoViewIfNeeded();
         assert.equal(await link.count(), 1, 'exactly one Site 1 reciprocal link');
         assert.ok(await link.isVisible(), `reciprocal link must be visible at ${width}px`);
-        assert.equal((await link.innerText()).replace(/[↗\s]+$/, '').trim(), 'Lime Signalworks');
-        assert.equal(await link.getAttribute('href'), 'https://limesignalworks.com');
+        assert.equal((await link.innerText()).replace(/[↗\s]+$/, '').trim(), 'Signals');
+        assert.equal(await link.getAttribute('href'), 'https://signals.limesignalworks.com');
 
         const libraryLink = page.locator('[data-sibling-site="library"]');
         assert.equal(await libraryLink.count(), 1, 'exactly one Leadership library link');
@@ -864,7 +864,7 @@ test('rendered: the page is complete and usable with JavaScript disabled', async
       '[data-contact]',
       '[data-contact-email]',
       '[data-contact-phone]',
-      '[data-sibling-site]',
+      '[data-sibling-site]:first-of-type',
       '[data-securities-disclaimer]',
       '#what-we-do',
       '#market-report',
