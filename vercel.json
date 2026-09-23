@@ -1,5 +1,82 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "npm run build",
-  "outputDirectory": "."
+  "outputDirectory": ".",
+  "redirects": [
+    {
+      "source": "/home",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/about-lime",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/how-lime-works",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/blank",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/life-changes",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/lime-hammers-brain",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/privacy-policy",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/unique-high-performance",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/preparing-to-be-wealthy",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/daily-alerts",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/not-a-black-box",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/technical-indicator-specs",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/testimony-parade",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/m/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/harbor-now",
+      "destination": "https://signals.limesignalworks.com/harbor-now/",
+      "permanent": true
+    }
+  ]
 }
