@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="robots" content="noindex"><title>Demo — Rosie IB — Operator Workstation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet"/>
+  <style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #0b1020;
+  --bg-2:      #0e1426;
+  --surface:   #121934;   /* panel */
+  --surface2:  #172046;   /* nested surface / header bar */
+  --border:    #2a356b;
+  --accent:    #00FF7F;
+  --accent-2:  #7ca6dc;
+  --lime:      #00FF7F;
+  --fire:      #FF4500;
+  --good:      #00FF7F;
+  --warn:      #fbbf24;
+  --bad:       #FF4500;
+  --text:      #e8ecff;
+  --muted:     #9aa6d1;
+  --font:      Arial, Helvetica, sans-serif;
+  --mono:      ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  --lime-glow:    rgba(0,255,127,0.50);
+  --fire-glow:    rgba(255,69,0,0.45);
+  --glow-accent:  rgba(0,255,127,0.14);
+  --glow-accent2: rgba(124,166,220,0.14);
+  --glow-good:    rgba(0,255,127,0.14);
+  --glow-warn:    rgba(251,191,36,0.14);
+  --glow-bad:     rgba(255,69,0,0.14);
+  --glow-white:   rgba(255,255,255,0.05);
+}
+
+html, body { height: 100%; }
+body {
+  background:
+    radial-gradient(1100px 520px at 85% -8%, rgba(0,255,127,0.10), transparent 60%),
+    linear-gradient(180deg, #0b1020 0%, #111833 100%);
+  background-attachment: fixed;
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 14px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 1480px; margin: 0 auto; padding: 18px 22px 60px; }
+
+/* ── HEADER ─────────────────────────────────────────────────────────────── */
+/* Two cells side by side: identity left, operator controls right. The lime
+   identity band that used to sit above this header was folded in on 2026-09-19,
+   reclaiming its entire height. align-items:flex-start so a tall right cell does
+   not drag the logo down with it. */
+header.topbar {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 16px 28px; flex-wrap: wrap; row-gap: 12px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 14px; margin-bottom: 18px;
+}
+.topbar-id { display: flex; align-items: center; gap: 12px; flex: 0 0 auto; }
+.topbar-mark {
+  flex: 0 0 auto; width: 46px; aspect-ratio: 1 / 1; border-radius: 10px;
+  object-fit: cover; background: var(--surface);
+}
+.topbar-id-word {
+  font-size: 17px; color: var(--text); text-decoration: none; white-space: nowrap;
+  letter-spacing: .01em;
+}
+.topbar-id-word b { color: var(--lime); text-shadow: 0 0 10px var(--lime-glow); }
+.topbar-id-word:hover { color: #fff; }
+/* Row 1 right side: the Rosie IB title block, pushed right by auto margin so
+   identity and title sit at opposite ends of one row. */
+header.topbar > .brand { margin-left: auto; justify-content: flex-end; flex: 0 1 auto; }
+/* Row 2: the control cluster takes the FULL header width and centres its pills,
+   rather than hanging off the right edge under the title. flex-basis:100% forces
+   the wrap onto its own row without adding height, because these controls
+   occupied a second line either way. Centred at the operator's request
+   (2026-09-19): the pills read as a deliberate instrument row instead of a
+   right-aligned overflow.
+   .op-cluster stays ONE element with that class -- refreshData() replaces its
+   innerHTML every 30s. */
+header.topbar > .op-cluster { flex: 1 0 100%; justify-content: center; }
+header.topbar > .op-cluster .op-grid { justify-content: center; }
+/* Rosie's portrait spans both header rows on wide screens (2026-09-29, Noal):
+   at 40px she could not be seen clearly. The header reserves room on the right
+   so no control slides underneath her. Narrow screens keep the 40px inline tile. */
+header.topbar { position: relative; }
+@media (min-width: 901px) {
+  header.topbar { padding-right: 104px; }
+  header.topbar #rosie-portrait { position: absolute; right: 0; top: 0; width: 88px; height: 88px; border-radius: 14px; }
+}
+/* Narrow viewports: stack and left-align so nothing is pushed off screen. */
+@media (max-width: 900px) {
+  header.topbar { flex-direction: column; align-items: stretch; }
+  header.topbar > .brand { margin-left: 0; justify-content: flex-start; }
+  header.topbar > .op-cluster .op-grid { justify-content: flex-start; }
+}
+.brand { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; row-gap: 6px; }
+.brand h1 {
+  font-size: 24px; margin: 0; color: #fff; letter-spacing: .02em;
+  text-shadow: 0 0 18px var(--lime-glow);
+}
+.brand .sub {
+  color: var(--lime); font-size: 12px; font-weight: 700; letter-spacing: .16em;
+  text-transform: uppercase; text-shadow: 0 0 10px var(--lime-glow);
+}
+/* Keeper portrait slot — reserved, empty placeholder. This surface (IB) has
+   no Keeper assignment yet, so it is intentionally left blank (no guessed
+   portrait). Fixed 1:1 aspect so it holds shape at any width. */
+.keeper-portrait-slot {
+  flex: 0 0 auto; align-self: center;
+  width: 40px; aspect-ratio: 1 / 1; border-radius: 10px;
+  border: 1px solid var(--border); background-color: #fff;
+  object-fit: cover; display: block;
+}
+/* Rosie's portrait (2026-09-29): cropped from the GoDaddy home-page line art. */
+.op-cluster { display: flex; align-items: center; }
+/* Flex, not a fixed 5-column grid. The previous rule was
+   grid-template-columns: repeat(2, auto) 18px repeat(2, auto), so column 3 was a
+   hard 18px lane. Item positions were coupled to the number of children: adding
+   the QUOTES chip on 2026-09-17 shifted ZERO NOISE into that 18px lane and
+   crushed its pill to one character wide while its text overflowed. Flex wrap
+   with non-shrinking children keeps every control at its own content width no
+   matter how many chips the cluster holds. */
+.op-grid {
+  display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center;
+}
+.op-grid > * { flex: 0 0 auto; }
+/* A POST form wraps any control that changes server state. display:contents
+   removes the form's own box so the button remains a direct flex item of
+   .op-grid, preserving the header geometry fixed on 2026-09-17. The second
+   rule restates flex:0 0 auto because `.op-grid > *` still matches the form
+   element, not the promoted button. */
+.op-form { display: contents; }
+/* A <button> does not inherit line-height the way an <a> does, which is why
+   the GUARD pill measured 25px beside 29px link pills (logged 2026-09-20).
+   Stating it explicitly makes every pill the same box regardless of element,
+   so the discrepancy cannot come back as more controls become forms. */
+.op-btn { line-height: 1.5; }
+/* Same treatment for the small chips. display:contents removes the form's own
+   box so the button stays where the link was, and the three properties below
+   are the UA button defaults that an <a> never had. */
+.chip-form { display: contents; }
+button.status-chip {
+  font: inherit; font-size: 12px; line-height: 1.5;
+  cursor: pointer; appearance: none;
+}
+.op-grid > .op-form > .op-btn { flex: 0 0 auto; }
+.op-spacer { width: 18px; }
+.op-btn {
+  display: inline-block; min-width: max-content;
+  font-family: var(--font);
+  font-size: 10px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+  padding: 6px 11px; border-radius: 6px; cursor: pointer; border: 1px solid;
+  transition: filter .15s; white-space: nowrap; text-decoration: none; text-align: center;
+}
+.op-btn:hover { filter: brightness(1.25); }
+.op-btn.state-on  { background: #10331d; color: #43e08a; border-color: #43e08a; box-shadow: 0 0 8px rgba(0,255,127,0.22); }
+.op-btn.state-off { background: #2f1512; color: #ff7a4d; border-color: #ff7a4d; }
+.op-btn.state-kill { background: #7a0d0d; color: #ffffff; border-color: #ff2d2d; font-weight: 700; }
+.status-chip {
+  display: inline-flex; align-items: center; gap: 7px; white-space: nowrap;
+  background: var(--surface); border: 1px solid var(--border);
+  padding: 5px 11px; border-radius: 999px; font-size: 12px; color: var(--muted);
+  text-decoration: none;
+}
+.status-chip.link:hover { border-color: var(--accent); color: var(--text); }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--muted); flex-shrink: 0; }
+.dot.live { background: var(--lime); box-shadow: 0 0 8px var(--lime-glow); animation: pulse 1.4s infinite; }
+.dot.warn { background: var(--warn); }
+.dot.bad  { background: var(--fire); box-shadow: 0 0 8px var(--fire-glow); }
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:.45;} }
+
+/* ── HERO (account overview — always visible) ───────────────────────────── */
+.hero {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 22px 24px; display: block; margin-bottom: 16px;
+}
+.hero-eyebrow {
+  font-size: 10px; text-transform: uppercase; letter-spacing: .12em;
+  color: var(--lime); background: var(--glow-accent);
+  padding: 2px 8px; border-radius: 3px; display: inline-block; margin-bottom: 8px;
+}
+.hero h1 { font-size: 26px; font-weight: 700; margin-bottom: 4px; color: #fff; }
+.hero-sub { color: var(--muted); font-size: 13px; margin-bottom: 18px; }
+.stats { display: flex; gap: 22px; flex-wrap: wrap; }
+.stat { display: flex; flex-direction: column; gap: 4px; }
+.stat-label {
+  font-size: 10px; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--muted); background: var(--glow-white); padding: 2px 6px; border-radius: 3px;
+}
+.stat-value { font-family: var(--mono); font-size: 18px; font-weight: 600; padding: 1px 4px; border-radius: 3px; font-variant-numeric: tabular-nums; }
+.stat-value.good    { color: var(--good);     background: var(--glow-good); }
+.stat-value.bad     { color: var(--bad);      background: var(--glow-bad); }
+.stat-value.accent  { color: var(--accent);   background: var(--glow-accent); text-shadow: 0 0 12px var(--lime-glow); }
+.stat-value.accent2 { color: var(--accent-2); background: var(--glow-accent2); }
+.ladder { display: flex; flex-direction: column; gap: 5px; }
+.ladder-title {
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--muted); background: var(--glow-white); padding: 2px 6px; border-radius: 3px; margin-bottom: 6px;
+}
+.ladder-row {
+  display: grid; grid-template-columns: 56px 1fr auto auto; gap: 8px; align-items: center;
+  padding: 6px 8px; border-radius: 5px; background: var(--surface2); border: 1px solid var(--border);
+}
+.ladder-row strong {
+  font-family: var(--mono); font-size: 12px; font-weight: 600;
+  background: var(--glow-white); padding: 1px 4px; border-radius: 2px;
+}
+.lr-price { font-family: var(--mono); font-size: 12px; }
+.lr-chg   { font-family: var(--mono); font-size: 11px; font-weight: 600; padding: 1px 5px; border-radius: 3px; }
+.lr-chg.good { color: var(--good); background: var(--glow-good); }
+.lr-chg.bad  { color: var(--bad);  background: var(--glow-bad); }
+.hero-fold > summary.hero-summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: flex-start; }
+.hero-fold > summary.hero-summary::-webkit-details-marker { display: none; }
+.hero-fold > summary .hero-eyebrow { display: inline-block; }
+.hero-fold > summary .chev { color: var(--muted); transition: transform .15s; }
+.hero-fold[open] > summary .chev { transform: rotate(180deg); }
+.hero-fold:not([open]) h1 { margin-bottom: 0; }
+.overview-body .stats { display: flex; flex-wrap: wrap; gap: 10px 14px; margin-top: 10px; }
+.overview-body .hero-sub { margin: 0 0 4px; }
+.stop-cell { white-space: normal; text-align: left; line-height: 1.5; }
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
+.table-scroll > table { min-width: 100%; }
+.approval-banner { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+  padding:12px 16px; margin-bottom:14px; border-radius:8px; border:1px solid var(--warn);
+  background: var(--glow-warn); color: var(--text); font-size:14px; }
+.approval-banner-link { font-weight:700; color: var(--warn); text-decoration:none; border:1px solid var(--warn);
+  padding:6px 14px; border-radius:6px; white-space:nowrap; }
+.tag { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 3px; text-transform: uppercase; letter-spacing: .06em; }
+.tag.enter { background: var(--glow-good); color: var(--good); border: 1px solid var(--good); }
+.tag.watch { background: var(--glow-warn); color: var(--warn); border: 1px solid var(--warn); }
+.tag.avoid { background: var(--glow-bad);  color: var(--bad);  border: 1px solid var(--bad); }
+/* No price arrived, so no classification exists. Deliberately muted and
+   deliberately NOT one of the three signal colours: an operator must be able to
+   tell "no reading" from "a reading of neutral" at a glance. (2026-09-19) */
+.tag.nodata { background: var(--glow-white); color: var(--muted); border: 1px dashed var(--border); }
+
+/* ── PANEL GRID ─────────────────────────────────────────────────────────── */
+/* align-items:start is required — otherwise a collapsed <details> leaves dead
+   space, because grid's default `stretch` forces every cell in a row to match
+   the tallest neighbor. */
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+.grid > .wide { grid-column: 1 / -1; }
+@media (max-width: 1000px) { .grid { grid-template-columns: 1fr; } }
+.group-label {
+  grid-column: 1 / -1; margin: 10px 0 0;
+  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em;
+  color: var(--lime); text-shadow: 0 0 10px var(--lime-glow);
+}
+
+/* ── COLLAPSIBLE PANELS ─────────────────────────────────────────────────── */
+details.panel {
+  display: block; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; overflow: hidden;
+}
+summary.panel-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 10px 14px; background: var(--surface2); border-bottom: 1px solid var(--border);
+  cursor: pointer; list-style: none;
+}
+summary.panel-head::-webkit-details-marker { display: none; }
+summary.panel-head::marker { content: ""; }
+.panel-head-main { display: flex; align-items: center; gap: 10px; min-width: 0; flex-wrap: wrap; row-gap: 4px; }
+.panel-head h2 {
+  margin: 0; font-size: 14px; color: var(--accent); letter-spacing: .06em;
+  text-transform: uppercase; white-space: nowrap;
+}
+.panel-head .meta { font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.panel-head .chev { flex-shrink: 0; color: var(--muted); transition: transform .2s ease; }
+details.panel[open] > summary.panel-head .chev { transform: rotate(180deg); }
+summary.panel-head:hover h2 { color: #fff; }
+.panel-body { padding: 8px 0; }
+.panel-inner { padding: 14px; }
+
+/* ── CARD (placeholder / misc) ──────────────────────────────────────────── */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.card-title {
+  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+  padding: 10px 14px; border-bottom: 1px solid var(--border); background: var(--surface2); color: var(--accent);
+}
+
+/* ── TABLES ─────────────────────────────────────────────────────────────── */
+table { width: 100%; border-collapse: collapse; font-size: 13px; font-family: var(--mono); }
+th {
+  text-align: right; padding: 7px 10px;
+  font-size: 10px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted);
+  border-bottom: 1px solid var(--border); white-space: nowrap;
+}
+td { text-align: right; padding: 7px 10px; border-bottom: 1px solid rgba(42,53,107,0.4); vertical-align: middle; white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; padding-left: 14px; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(0,255,127,0.06); }
+.num { font-variant-numeric: tabular-nums; }
+.sym  { color: var(--accent);   font-weight: 600; background: var(--glow-accent);  border-radius: 3px; padding: 1px 5px; }
+.sym2 { color: var(--accent-2); font-weight: 600; background: var(--glow-accent2); border-radius: 3px; padding: 1px 5px; }
+.good-val  { color: var(--good); background: var(--glow-good); border-radius: 3px; padding: 1px 4px; }
+.bad-val   { color: var(--bad);  background: var(--glow-bad);  border-radius: 3px; padding: 1px 4px; }
+.muted-val { color: var(--muted); }
+
+/* ── DIAGNOSTICS ────────────────────────────────────────────────────────── */
+.diag-row  { display: flex; gap: 10px; flex-wrap: wrap; padding: 4px 0; }
+.diag-chip {
+  display: flex; gap: 6px; align-items: center;
+  background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px;
+}
+.diag-k { color: var(--muted); background: var(--glow-white); padding: 1px 5px; border-radius: 3px; font-size: 11px; }
+.diag-v { font-family: var(--mono); font-weight: 600; padding: 1px 5px; border-radius: 3px; font-size: 12px; }
+.diag-v.good  { color: var(--good); background: var(--glow-good); }
+.diag-v.bad   { color: var(--bad);  background: var(--glow-bad); }
+.diag-v.warn  { color: var(--warn); background: var(--glow-warn); }
+.diag-v.plain { color: var(--text); background: var(--glow-white); }
+
+/* ── ORDER ROUTE (safety control) ───────────────────────────────────────── */
+.route-box { background: var(--surface2); border: 2px solid var(--border); border-radius: 10px; padding: 16px; }
+.route-box.armed-on  { border-color: var(--lime); box-shadow: 0 0 16px rgba(0,255,127,0.22); }
+.route-box.armed-off { border-color: var(--fire); }
+.route-state {
+  font-size: 24px; font-weight: 700; letter-spacing: .03em;
+  margin-bottom: 12px; padding: 4px 10px; border-radius: 5px; display: inline-block;
+}
+.route-state.armed  { color: var(--lime); background: var(--glow-accent); text-shadow: 0 0 12px var(--lime-glow); }
+.route-state.disarm { color: var(--fire); background: var(--glow-bad); }
+.checklist { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.checklist li { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+.check-label { color: var(--muted); background: var(--glow-white); padding: 1px 5px; border-radius: 3px; }
+.big-btn {
+  display: block; width: 100%; padding: 12px; border: none; border-radius: 8px;
+  font-family: var(--font); font-size: 14px; font-weight: 700; letter-spacing: .05em;
+  cursor: pointer; text-transform: uppercase; transition: opacity .15s, transform .1s;
+  text-decoration: none; text-align: center;
+}
+.big-btn:hover  { opacity: .85; }
+.big-btn:active { transform: scale(.98); }
+.big-btn.arm-btn    { background: var(--lime); color: #04140c; box-shadow: 0 0 14px rgba(0,255,127,0.30); }
+.big-btn.disarm-btn { background: var(--fire); color: #fff; box-shadow: 0 0 14px rgba(255,69,0,0.30); }
+
+/* ── NOTES / TIMELINE ───────────────────────────────────────────────────── */
+.note-box { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; }
+.note-box + .note-box { margin-top: 12px; }
+.note-title {
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--muted); background: var(--glow-white); padding: 2px 6px; border-radius: 3px; margin-bottom: 8px; display: inline-block;
+}
+.note-body { font-size: 12px; color: var(--text); line-height: 1.6; }
+.timeline  { display: flex; flex-direction: column; gap: 8px; max-height: 260px; overflow-y: auto; }
+.tl-item   { display: flex; gap: 10px; align-items: flex-start; font-size: 12px; flex-wrap: wrap; row-gap: 4px; }
+.tl-dot    { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); flex-shrink: 0; margin-top: 3px; box-shadow: 0 0 5px var(--lime-glow); }
+.tl-dot.warn { background: var(--warn); box-shadow: none; }
+.tl-dot.bad  { background: var(--fire); box-shadow: 0 0 5px var(--fire-glow); }
+.tl-time   { color: var(--muted); font-family: var(--mono); white-space: nowrap; background: var(--glow-white); padding: 1px 5px; border-radius: 3px; }
+.tl-msg    { color: var(--text); }
+.error-bar {
+  background: var(--glow-bad); border: 1px solid var(--fire);
+  border-radius: 6px; padding: 8px 14px; color: var(--fire); font-size: 12px; margin-bottom: 12px;
+}
+
+/* ── REFRESH PULSE ──────────────────────────────────────────────────────── */
+#refresh-indicator {
+  position: fixed; bottom: 12px; right: 16px;
+  font-size: 10px; font-family: var(--mono); color: var(--muted);
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 20px; padding: 4px 12px; z-index: 100;
+}
+#refresh-indicator.pulsing { color: var(--lime); border-color: var(--lime); }
+
+/* ── PHASE BADGES + SORTABLE HEADERS ────────────────────────────────────── */
+/* These lived in a <style> block emitted inside _watchlist_body, so every
+   other panel that uses a phase badge or a sortable header -- Current
+   Observations, Signal Rank (removed 2026-09-21), Classification Board -- was
+   silently depending on the Watchlist being rendered. show_watchlist=False would have left their
+   badges unstyled and their headers without a pointer cursor. Moved here so a
+   panel's appearance does not depend on a different panel existing.
+   (2026-09-20) */
+.phase-badge { font-size:10px; font-weight:700; padding:2px 7px; border-radius:10px; border:1px solid currentColor; text-transform:uppercase; letter-spacing:.04em; white-space:nowrap; display:inline-block; }
+.sortable-th { cursor:pointer; user-select:none; white-space:nowrap; }
+.sortable-th:hover { color: var(--text); }
+.sort-ind { font-size:9px; opacity:.55; margin-left:2px; }
+.sort-ind.active { opacity:1; color: var(--accent); }
+</style>
+  <style>
+/* Canonical lime-web design tokens — namespaced names, no collision with the
+   operator palette above. Dark values on :root; light override via data-theme. */
+:root {
+  --lgb-text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  --lgb-text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+  --lgb-text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --lgb-text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+  --lgb-space-2: 0.5rem; --lgb-space-3: 0.75rem; --lgb-space-4: 1rem; --lgb-space-6: 1.5rem;
+  --lgb-radius-sm: 0.375rem; --lgb-radius-full: 999px;
+  --lgb-transition: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  --lgb-font-body: 'General Sans', 'Helvetica Neue', Arial, sans-serif;
+  --lgb-bg: #0a131c; --lgb-surface: #0f1c28;
+  --lgb-border: #1f3346; --lgb-divider: #1a2c3c;
+  --lgb-text-color: #e7e3dd; --lgb-text-muted: #a89f96;
+  --lgb-primary: #9ad14a; --lgb-primary-hover: #b4e06a;
+  --lgb-beam: #e8b659;
+}
+[data-theme="light"] {
+  --lgb-bg: #e7e3dd; --lgb-surface: #ffffff;
+  --lgb-border: #dbe4dd; --lgb-divider: #e4ece6;
+  --lgb-text-color: #15241c; --lgb-text-muted: #56685e;
+  --lgb-primary: #4f7a1f; --lgb-primary-hover: #3d6017;
+  --lgb-beam: #b07d1f;
+}
+
+.lime-globalbar {
+  position: sticky; top: 0; z-index: 60;
+  backdrop-filter: blur(12px);
+  background: color-mix(in oklab, var(--lgb-bg) 82%, transparent);
+  border-bottom: 1px solid var(--lgb-divider);
+  font-family: var(--lgb-font-body);
+}
+.lime-globalbar a, .lime-globalbar button {
+  transition: color var(--lgb-transition), background var(--lgb-transition),
+              border-color var(--lgb-transition), box-shadow var(--lgb-transition);
+}
+.lime-globalbar svg { display: block; max-width: 100%; height: auto; }
+.lime-globalbar :focus-visible { outline: 2px solid var(--lgb-primary); outline-offset: 3px; border-radius: var(--lgb-radius-sm); }
+.lgb-wrap { max-width: 1080px; margin: 0 auto; padding: 0 var(--lgb-space-6); }
+.lgb-wrap.hdr { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; padding-top: var(--lgb-space-4); padding-bottom: var(--lgb-space-4); gap: var(--lgb-space-4); }
+.lime-globalbar .hdr-actions { display: flex; flex-wrap: nowrap; align-items: center; gap: var(--lgb-space-4); }
+.lime-globalbar .brand { display: flex; align-items: center; gap: var(--lgb-space-3); text-decoration: none; color: var(--lgb-text-color); }
+.lime-globalbar .brand-mark { height: 114px; width: 114px; object-fit: cover; border-radius: 50%; flex-shrink: 0; border: 1px solid var(--lgb-border); }
+@media (max-width: 560px) { .lime-globalbar .brand-mark { height: 60px; width: 60px; } }
+.lime-globalbar .brand .word { font-family: var(--lgb-font-body); font-weight: 600; font-size: var(--lgb-text-lg); letter-spacing: 0.01em; }
+.lime-globalbar .brand .word b { font-weight: 700; color: var(--lgb-primary); }
+.lime-globalbar .brand:hover { color: var(--lgb-primary); text-decoration: underline; text-underline-offset: 2px; }
+.lime-globalbar .hdr-tools { display: flex; align-items: center; gap: 0; }
+.lime-globalbar .icon-btn { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: var(--lgb-radius-full); border: 1px solid var(--lgb-border); color: var(--lgb-text-muted); background: var(--lgb-surface); cursor: pointer; }
+.lime-globalbar .icon-btn:hover { color: var(--lgb-text-color); border-color: var(--lgb-primary); }
+@media (min-width: 768px) { .lime-globalbar .brand .word { margin-inline: 2ch; } .lime-globalbar .hdr-tools { margin-left: 2ch; } }
+.lime-globalbar .rosie-cta-btn { display: inline-block; background: linear-gradient(135deg, var(--lgb-primary), var(--lgb-beam)); color: #04140c; font-weight: 700; font-size: var(--lgb-text-sm); letter-spacing: 0.04em; text-transform: uppercase; padding: 0.85rem 2rem; border-radius: 999px; text-decoration: none; box-shadow: 0 0 16px color-mix(in oklab, var(--lgb-primary) 40%, transparent); transition: filter 0.2s, box-shadow 0.2s; }
+.lime-globalbar .rosie-cta-btn:hover { filter: brightness(1.1); box-shadow: 0 0 24px color-mix(in oklab, var(--lgb-primary) 60%, transparent); }
+.lime-globalbar .hdr-cta { font-size: var(--lgb-text-sm); padding: 0.45rem 1.1rem; white-space: nowrap; background: var(--lgb-beam); color: #0a1a08 !important; font-weight: 600; border-radius: 999px; text-decoration: none; letter-spacing: 0.02em; box-shadow: none; background-image: none; }
+.lime-globalbar .hdr-cta .cta-cap { font-size: var(--lgb-text-base); }
+.lime-globalbar .hdr-cta:hover { filter: brightness(1.08); }
+@media (max-width: 480px) { .lime-globalbar .hdr-cta { display: none; } }
+</style>
+</head>
+<body><div id="demo-banner" style="position:sticky;top:0;z-index:50;background:#ffd24a;color:#1a1400;font:700 13px system-ui;text-align:center;padding:8px 12px;">DEMO · test data only · no broker connected · controls are display-only</div>
+<div class="wrap">
+  <header class="topbar">
+      <div class="topbar-id">
+        <video class="topbar-mark" src="static/lighthouse-loop.mp4" autoplay muted loop playsinline aria-hidden="true"></video>
+        <a class="topbar-id-word" href="https://limesignalworks.com/" target="_blank" rel="noopener"
+           aria-label="Lime Signalworks home (opens in a new tab)">Lime&nbsp;<b>Signalworks</b> LLC</a>
+      </div>
+      <div class="brand">
+        <h1>Rosie IB</h1>
+        <span class="sub">Operator Workstation</span>
+        <span class="trading-env-badge" style="display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;background:var(--lime, #9ad14a);color:#0a1320;font-weight:700;letter-spacing:.04em;" title="IB port 7497">PAPER</span> <form class="chip-form" method="post" action="/select-lane" style="display:inline" onsubmit="var v=prompt('Restart Rosie on the LIVE account? Real money. TWS must already be logged in to live. Type LIVE to continue.'); if(v!=='LIVE'){return false;} this.confirm.value=v; return true;"><input type="hidden" name="lane" value="LIVE"><input type="hidden" name="confirm" value=""><button type="submit" class="status-chip link" id="lane-btn" style="color:#ff6b4a;border-color:#ff6b4a;" title="Restart Rosie on the live account (asks you to type LIVE)">LIVE</button></form>
+        <img class="keeper-portrait-slot" id="rosie-portrait" src="static/rosie_portrait.png" alt="Rosie" title="Rosie" width="40" height="40">
+      </div>
+      <div class="op-cluster"><div class="op-grid">
+        <form class="op-form" method="post" action="/power-off"><button type="submit" class="op-btn state-on">POWER: ON</button></form>
+        <form class="op-form" method="post" action="/rosie-off"><button type="submit" class="op-btn state-on">ROSIE: ON</button></form>
+        <span class="op-spacer"></span>
+        <span class="status-chip" title="Socket open to ?:7497"><span class="dot live"></span>DEMO FEED</span>
+        <span class="status-chip" title="16 of 16 watchlist symbols returning real prices"><span class="dot live"></span>QUOTES 16/16</span>
+        <span class="status-chip"><span class="dot live"></span>MEM DATA</span>
+        <form class="op-form" method="post" action="/arm-route" onsubmit='return confirm("Arm the order route? This enables order placement in PAPER mode. Nothing is sent yet.")'><button type="submit" class="op-btn state-off">ROUTE: OFF</button></form>
+        <form class="op-form" method="post" action="/kill-switch"><button type="submit" class="op-btn state-kill" title="Disarm, power off, cancel pending buys. Stops at IBKR stay in place.">STOP ALL</button></form>
+        <span class="op-spacer"></span>
+        <span class="status-chip">tick <span style="color:var(--lime);">—</span></span>
+        <span style="display:flex;gap:6px;">
+          <!-- Save and Reset removed 2026-09-29: Save rewrote memory unchanged; Reset wiped the
+               whole view memory, including the Journal, behind a confirm that said "panel state". -->
+          <a class="status-chip link" id="harbor-top" href="https://signals.limesignalworks.com/harbor-now/" target="_blank" rel="noopener noreferrer" title="Harbor Now on the signals site: the latest market-weather report">Harbor Now ↗</a>
+          <form class="chip-form" method="post" action="/logout" title="Log out. Logging out also disarms the order route."><button type="submit" class="status-chip link" id="logout-btn">Log out</button></form>
+        </span>
+      </div></div>
+    </header>
+  <main class="main">
+    
+    
+    <div class="grid">
+      <div class="group-label">Account</div>
+      <details class="panel" id="panel-account-overview" open><summary class="panel-head"><span class="panel-head-main"><h2>Account Overview</h2><span class="meta">Demo feed</span></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="panel-inner overview-body">
+        <p class="hero-sub">Last refresh: demo</p>
+        <p class="hero-sub" id="market-summary">Market: Demo feed — test data</p>
+        <div class="stats">
+          <div class="stat">
+            <span class="stat-label">Liquidation Value</span>
+            <span class="stat-value accent">$100,000.00</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Cash Available</span>
+            <span class="stat-value accent2">$95,680.00</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Long Market Value</span>
+            <span class="stat-value accent2">$4,320.00</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Day P&amp;L</span>
+            <span class="stat-value good">$18.40 <small style="font-size:13px;">+0.02%</small></span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Positions</span>
+            <span class="stat-value accent">4</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Account Number</span>
+            <span class="stat-value accent2">DEMO-0000</span>
+          </div>
+        </div>
+    </div></div></details>
+      <details class="panel" id="panel-positions" open><summary class="panel-head"><span class="panel-head-main"><h2>Positions</h2><span class="meta">4</span></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="table-scroll"><table><thead><tr><th>Symbol</th><th>Qty</th><th>Cost</th><th>Last</th><th>P&amp;L</th><th>P&amp;L %</th><th>Signal</th></tr></thead><tbody><tr data-sym="SPY"><td><span class="sym">SPY</span></td><td class="muted-val">4</td><td class="muted-val">$497.90</td><td class="muted-val">$500.00</td><td class="good-val">$8.40</td><td class="good-val">+0.42%</td><td><span class="tag enter" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">ENTER</span></td></tr><tr data-sym="QQQ"><td><span class="sym">QQQ</span></td><td class="muted-val">2</td><td class="muted-val">$427.60</td><td class="muted-val">$430.00</td><td class="good-val">$4.80</td><td class="good-val">+0.56%</td><td><span class="tag enter" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">ENTER</span></td></tr><tr data-sym="DIA"><td><span class="sym">DIA</span></td><td class="muted-val">2</td><td class="muted-val">$399.10</td><td class="muted-val">$400.00</td><td class="good-val">$1.80</td><td class="good-val">+0.23%</td><td><span class="tag watch" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">WATCH</span></td></tr><tr data-sym="IWM"><td><span class="sym">IWM</span></td><td class="muted-val">2</td><td class="muted-val">$211.20</td><td class="muted-val">$210.00</td><td class="bad-val">-$2.40</td><td class="bad-val">-0.57%</td><td><span class="tag avoid" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">AVOID</span></td></tr></tbody></table></div></div></details>
+      <details class="panel" id="panel-stops" open><summary class="panel-head"><span class="panel-head-main"><h2>Stops</h2></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="panel-inner"><table><thead><tr><th>Symbol</th><th>Qty</th><th>Stop Level</th></tr></thead><tbody><tr><td><span class="sym">SPY</span></td><td class="muted-val">4</td><td class="muted-val stop-cell">Held at IBKR:<br>1.60% trail x2 GTC<br>3.20% trail x2 GTC</td></tr><tr><td><span class="sym">QQQ</span></td><td class="muted-val">2</td><td class="muted-val stop-cell">Held at IBKR:<br>1.60% trail x1 GTC<br>3.20% trail x1 GTC</td></tr><tr><td><span class="sym">DIA</span></td><td class="muted-val">2</td><td class="muted-val stop-cell">Held at IBKR:<br>1.60% trail x1 GTC<br>3.20% trail x1 GTC</td></tr><tr><td><span class="sym">IWM</span></td><td class="muted-val">2</td><td class="muted-val stop-cell">Held at IBKR:<br>1.60% trail x1 GTC<br>3.20% trail x1 GTC</td></tr></tbody></table><p class="note-body" style="margin-top:10px;color:var(--muted);font-style:italic;font-size:12px;">After each buy, stop logic is required immediately.</p></div></div></details>
+      <details class="panel" id="panel-watchlist" open><summary class="panel-head"><span class="panel-head-main"><h2>Watchlist</h2><span class="meta">16/16</span></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="table-scroll"><table id="watchlist-table" class="sortable-table" data-renumber="0"><thead><tr><th class="sortable-th" data-sort-key="rank"># <span class="sort-ind" data-key="rank">⇅</span></th><th class="sortable-th" data-sort-key="symbol">Symbol <span class="sort-ind" data-key="symbol">⇅</span></th><th class="sortable-th" data-sort-key="last">Last <span class="sort-ind" data-key="last">⇅</span></th><th class="sortable-th" data-sort-key="change">Change <span class="sort-ind" data-key="change">⇅</span></th><th class="sortable-th" data-sort-key="percent">% <span class="sort-ind" data-key="percent">⇅</span></th><th class="sortable-th" data-sort-key="phaseOrd">Phase <span class="sort-ind" data-key="phaseOrd">⇅</span></th><th class="sortable-th" data-sort-key="signalOrd">Signal <span class="sort-ind" data-key="signalOrd">⇅</span></th><th class="sortable-th" data-sort-key="status">Status <span class="sort-ind" data-key="status">⇅</span></th></tr></thead><tbody><tr data-sym="SPY" data-symbol="SPY" data-last="500.0" data-change="2.1" data-percent="0.42" data-phase="Light Blue" data-rank="1" data-phase-ord="4" data-signal-ord="2"><td class="muted-val rank-cell">#1</td><td><span class="sym2">SPY</span></td><td class="muted-val">$500.00</td><td class="good-val">$2.10</td><td class="good-val">+0.42%</td><td><span class="phase-badge" style="color:#90caf9;border-color:#90caf9;background:#90caf922;">Light Blue</span></td><td><span class="tag enter" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="QQQ" data-symbol="QQQ" data-last="430.0" data-change="2.37" data-percent="0.55" data-phase="Light Blue" data-rank="2" data-phase-ord="4" data-signal-ord="2"><td class="muted-val rank-cell">#2</td><td><span class="sym2">QQQ</span></td><td class="muted-val">$430.00</td><td class="good-val">$2.37</td><td class="good-val">+0.55%</td><td><span class="phase-badge" style="color:#90caf9;border-color:#90caf9;background:#90caf922;">Light Blue</span></td><td><span class="tag enter" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="DIA" data-symbol="DIA" data-last="400.0" data-change="0.72" data-percent="0.18" data-phase="Neutral" data-rank="3" data-phase-ord="3" data-signal-ord="1"><td class="muted-val rank-cell">#3</td><td><span class="sym2">DIA</span></td><td class="muted-val">$400.00</td><td class="good-val">$0.72</td><td class="good-val">+0.18%</td><td><span class="phase-badge" style="color:#aaaaaa;border-color:#aaaaaa;background:#aaaaaa22;">Neutral</span></td><td><span class="tag watch" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">WATCH</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="IWM" data-symbol="IWM" data-last="210.0" data-change="-0.73" data-percent="-0.35" data-phase="Yellow" data-rank="4" data-phase-ord="2" data-signal-ord="0"><td class="muted-val rank-cell">#4</td><td><span class="sym2">IWM</span></td><td class="muted-val">$210.00</td><td class="bad-val">-$0.73</td><td class="bad-val">-0.35%</td><td><span class="phase-badge" style="color:#ffd54f;border-color:#ffd54f;background:#ffd54f22;">Yellow</span></td><td><span class="tag avoid" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">AVOID</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="AAPL" data-symbol="AAPL" data-last="190.0" data-change="1.8" data-percent="0.95" data-phase="Blue" data-rank="5" data-phase-ord="5" data-signal-ord="2"><td class="muted-val rank-cell">#5</td><td><span class="sym2">AAPL</span></td><td class="muted-val">$190.00</td><td class="good-val">$1.80</td><td class="good-val">+0.95%</td><td><span class="phase-badge" style="color:#2979ff;border-color:#2979ff;background:#2979ff22;">Blue</span></td><td><span class="tag enter" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="MSFT" data-symbol="MSFT" data-last="410.0" data-change="-0.49" data-percent="-0.12" data-phase="Neutral" data-rank="6" data-phase-ord="3" data-signal-ord="1"><td class="muted-val rank-cell">#6</td><td><span class="sym2">MSFT</span></td><td class="muted-val">$410.00</td><td class="bad-val">-$0.49</td><td class="bad-val">-0.12%</td><td><span class="phase-badge" style="color:#aaaaaa;border-color:#aaaaaa;background:#aaaaaa22;">Neutral</span></td><td><span class="tag watch" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">WATCH</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="NVDA" data-symbol="NVDA" data-last="120.0" data-change="1.92" data-percent="1.6" data-phase="Dark Blue" data-rank="7" data-phase-ord="6" data-signal-ord="2"><td class="muted-val rank-cell">#7</td><td><span class="sym2">NVDA</span></td><td class="muted-val">$120.00</td><td class="good-val">$1.92</td><td class="good-val">+1.60%</td><td><span class="phase-badge" style="color:#4a9eff;border-color:#4a9eff;background:#4a9eff22;">Dark Blue</span></td><td><span class="tag enter" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="AMZN" data-symbol="AMZN" data-last="180.0" data-change="0.56" data-percent="0.31" data-phase="Light Blue" data-rank="8" data-phase-ord="4" data-signal-ord="2"><td class="muted-val rank-cell">#8</td><td><span class="sym2">AMZN</span></td><td class="muted-val">$180.00</td><td class="good-val">$0.56</td><td class="good-val">+0.31%</td><td><span class="phase-badge" style="color:#90caf9;border-color:#90caf9;background:#90caf922;">Light Blue</span></td><td><span class="tag enter" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="GOOGL" data-symbol="GOOGL" data-last="160.0" data-change="-0.77" data-percent="-0.48" data-phase="Yellow" data-rank="9" data-phase-ord="2" data-signal-ord="0"><td class="muted-val rank-cell">#9</td><td><span class="sym2">GOOGL</span></td><td class="muted-val">$160.00</td><td class="bad-val">-$0.77</td><td class="bad-val">-0.48%</td><td><span class="phase-badge" style="color:#ffd54f;border-color:#ffd54f;background:#ffd54f22;">Yellow</span></td><td><span class="tag avoid" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">AVOID</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="META" data-symbol="META" data-last="500.0" data-change="0.4" data-percent="0.08" data-phase="Neutral" data-rank="10" data-phase-ord="3" data-signal-ord="1"><td class="muted-val rank-cell">#10</td><td><span class="sym2">META</span></td><td class="muted-val">$500.00</td><td class="good-val">$0.40</td><td class="good-val">+0.08%</td><td><span class="phase-badge" style="color:#aaaaaa;border-color:#aaaaaa;background:#aaaaaa22;">Neutral</span></td><td><span class="tag watch" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">WATCH</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="GLD" data-symbol="GLD" data-last="230.0" data-change="0.83" data-percent="0.36" data-phase="Light Blue" data-rank="11" data-phase-ord="4" data-signal-ord="2"><td class="muted-val rank-cell">#11</td><td><span class="sym2">GLD</span></td><td class="muted-val">$230.00</td><td class="good-val">$0.83</td><td class="good-val">+0.36%</td><td><span class="phase-badge" style="color:#90caf9;border-color:#90caf9;background:#90caf922;">Light Blue</span></td><td><span class="tag enter" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="TLT" data-symbol="TLT" data-last="95.0" data-change="-0.59" data-percent="-0.62" data-phase="Yellow" data-rank="12" data-phase-ord="2" data-signal-ord="0"><td class="muted-val rank-cell">#12</td><td><span class="sym2">TLT</span></td><td class="muted-val">$95.00</td><td class="bad-val">-$0.59</td><td class="bad-val">-0.62%</td><td><span class="phase-badge" style="color:#ffd54f;border-color:#ffd54f;background:#ffd54f22;">Yellow</span></td><td><span class="tag avoid" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">AVOID</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="XLF" data-symbol="XLF" data-last="42.0" data-change="0.09" data-percent="0.22" data-phase="Neutral" data-rank="13" data-phase-ord="3" data-signal-ord="1"><td class="muted-val rank-cell">#13</td><td><span class="sym2">XLF</span></td><td class="muted-val">$42.00</td><td class="good-val">$0.09</td><td class="good-val">+0.22%</td><td><span class="phase-badge" style="color:#aaaaaa;border-color:#aaaaaa;background:#aaaaaa22;">Neutral</span></td><td><span class="tag watch" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">WATCH</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="XLE" data-symbol="XLE" data-last="90.0" data-change="-0.99" data-percent="-1.1" data-phase="Orange" data-rank="14" data-phase-ord="1" data-signal-ord="0"><td class="muted-val rank-cell">#14</td><td><span class="sym2">XLE</span></td><td class="muted-val">$90.00</td><td class="bad-val">-$0.99</td><td class="bad-val">-1.10%</td><td><span class="phase-badge" style="color:#ff9800;border-color:#ff9800;background:#ff980022;">Orange</span></td><td><span class="tag avoid" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">AVOID</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="XLK" data-symbol="XLK" data-last="210.0" data-change="1.47" data-percent="0.7" data-phase="Light Blue" data-rank="15" data-phase-ord="4" data-signal-ord="2"><td class="muted-val rank-cell">#15</td><td><span class="sym2">XLK</span></td><td class="muted-val">$210.00</td><td class="good-val">$1.47</td><td class="good-val">+0.70%</td><td><span class="phase-badge" style="color:#90caf9;border-color:#90caf9;background:#90caf922;">Light Blue</span></td><td><span class="tag enter" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="JPM" data-symbol="JPM" data-last="200.0" data-change="-0.1" data-percent="-0.05" data-phase="Neutral" data-rank="16" data-phase-ord="3" data-signal-ord="1"><td class="muted-val rank-cell">#16</td><td><span class="sym2">JPM</span></td><td class="muted-val">$200.00</td><td class="bad-val">-$0.10</td><td class="bad-val">-0.05%</td><td><span class="phase-badge" style="color:#aaaaaa;border-color:#aaaaaa;background:#aaaaaa22;">Neutral</span></td><td><span class="tag watch" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">WATCH</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr></tbody></table></div><p class="note-body" style="margin-top:8px;color:var(--muted);font-size:11px;">Signal: ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between. A symbol with no live price reads NO DATA and is never classified.</p></div></details>
+
+      <div class="group-label">Trade</div>
+      <details class="panel" id="panel-trade-ticket" open><summary class="panel-head"><span class="panel-head-main"><h2>Trade Ticket</h2></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="panel-inner">
+<form method="get" action="/propose-trade" style="display:flex;flex-direction:column;gap:12px;max-width:360px;">
+  <label style="font-size:11px;color:var(--muted);">Symbol
+    <select name="symbol" style="width:100%;margin-top:4px;padding:8px;background:var(--surface2);
+      border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--mono);">
+      <option value="SPY">SPY</option>
+      <option value="QQQ">QQQ</option>
+      <option value="DIA">DIA</option>
+      <option value="IWM">IWM</option>
+    </select>
+  </label>
+  <label style="font-size:11px;color:var(--muted);">Action
+    <div style="display:flex;gap:8px;margin-top:4px;">
+            <label style="flex:1;"><input type="radio" name="side" value="BUY" checked/> BUY</label>
+      <label style="flex:1;"><input type="radio" name="side" value="SELL"/> SELL</label>
+    </div>
+  </label>
+  <label style="font-size:11px;color:var(--muted);">Qty
+    <input type="number" name="qty" min="1" step="1" value="1" style="width:100%;margin-top:4px;padding:8px;
+      background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);
+      font-family:var(--mono);"/>
+  </label>
+  <button type="submit" class="big-btn arm-btn" style="margin-top:4px;">PROPOSE</button>
+</form><p class="note-body" style="margin-top:10px;color:var(--muted);font-style:italic;font-size:12px;">Rosie proposes — Noal decides. Review before arming.</p></div></div></details>
+      <details class="panel" id="panel-propose" open><summary class="panel-head"><span class="panel-head-main"><h2>Propose</h2></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="panel-inner"><p class="note-body" style="color:var(--muted);">No active proposal. Run classify and rank first.</p></div></div></details>
+
+      <div class="group-label">System</div>
+      <details class="panel" id="panel-trade-record" open><summary class="panel-head"><span class="panel-head-main"><h2>Trade Record</h2></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="panel-inner"><div style="display:flex;flex-wrap:wrap;gap:20px;padding:12px 0;border-bottom:1px solid var(--border);margin-bottom:14px;align-items:center;"><div style="display:flex;flex-direction:column;gap:2px;min-width:96px;"><span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;">Signals logged</span><span style="font-family:var(--mono);font-size:15px;">0</span></div><div style="display:flex;flex-direction:column;gap:2px;min-width:96px;"><span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;">Closed trades</span><span style="font-family:var(--mono);font-size:15px;">0</span></div><div style="display:flex;flex-direction:column;gap:2px;min-width:96px;"><span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;">Win rate</span><span style="font-family:var(--mono);font-size:15px;">---</span></div><div style="display:flex;flex-direction:column;gap:2px;min-width:96px;"><span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;">Profit factor</span><span style="font-family:var(--mono);font-size:15px;">---</span></div><div style="display:flex;flex-direction:column;gap:2px;min-width:96px;"><span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;">Max drawdown</span><span style="font-family:var(--mono);font-size:15px;">---</span></div><div style="display:flex;flex-direction:column;gap:2px;min-width:96px;"><span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;">Rule compliance</span><span style="font-family:var(--mono);font-size:15px;">---</span></div><span style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:10px;border:1px solid var(--bad);color:var(--bad);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;margin-left:auto;">Gate: HOLD</span></div><p class="note-body" style="margin:0 0 14px;color:var(--muted);font-style:italic;font-size:12px;">Every signal the rolling-average-crossover loop finds is logged here automatically -- no clicking required. Use the form below only to log something by hand.</p><div style="margin-bottom:16px;"><form method="post" action="/evidence-log" style="display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;"><label style="font-size:11px;color:var(--muted);">Instrument<select name="instrument" style="display:block;margin-top:4px;padding:8px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--mono);"><option value="SPY">SPY</option><option value="QQQ">QQQ</option><option value="DIA">DIA</option><option value="IWM">IWM</option></select></label><label style="font-size:11px;color:var(--muted);">Signal<select name="signal_class" style="display:block;margin-top:4px;padding:8px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--mono);"><option value="Enter">Enter</option><option value="Watch">Watch</option><option value="Avoid">Avoid</option></select></label><label style="font-size:11px;color:var(--muted);">Entry<input type="number" step="0.01" name="entry_price" style="display:block;width:90px;margin-top:4px;padding:8px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--mono);"/></label><label style="font-size:11px;color:var(--muted);flex:1;min-width:160px;">Notes<input type="text" name="operator_notes" style="display:block;width:100%;margin-top:4px;padding:8px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--mono);"/></label><button type="submit" class="big-btn arm-btn">LOG SIGNAL</button></form></div><div style="display:flex;flex-direction:column;gap:8px;"><p class="note-body" style="color:var(--muted);">No evidence logged yet -- it appears here the moment the loop finds its first signal.</p></div></div></div></details>
+      <details class="panel" id="panel-journal" open><summary class="panel-head"><span class="panel-head-main"><h2>Journal</h2></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="panel-inner"><div style="display:flex;flex-direction:column;gap:8px;"><div class="tl-item" style="align-items:center;"><span class="tl-time">demo 09:58:12</span><span class="sym">TLT</span><span class="muted-val">PROPOSE BUY 1</span><span class="bad-val">REFUSED</span><span class="tl-msg">Refused: quote stale — entries need a fresh ask</span></div><div class="tl-item" style="align-items:center;"><span class="tl-time">demo 10:08:05</span><span class="sym">QQQ</span><span class="muted-val">BUY 2 (protected)</span><span class="bad-val">FILLED</span><span class="tl-msg">Operator approved; two broker-held trails placed</span></div><div class="tl-item" style="align-items:center;"><span class="tl-time">demo 10:09:38</span><span class="sym">DIA</span><span class="muted-val">BUY 2 (protected)</span><span class="bad-val">FILLED</span><span class="tl-msg">Operator approved; two broker-held trails placed</span></div><div class="tl-item" style="align-items:center;"><span class="tl-time">demo 10:10:47</span><span class="sym">IWM</span><span class="muted-val">BUY 2 (protected)</span><span class="bad-val">FILLED</span><span class="tl-msg">Operator approved Rosie proposal; two broker-held trails placed</span></div></div></div></div></details>
+      <details class="panel" id="panel-operator" open><summary class="panel-head"><span class="panel-head-main"><h2>Operator</h2></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="panel-inner">
+      <div class="note-box">
+        <div class="note-title">Operator Posture</div>
+        <div class="note-body">Only SPY · QQQ · DIA · IWM are gated. Confirm Power → Rosie → Arm before routing.</div>
+      </div>
+      <div class="note-box">
+        <div class="note-title">Alert Mode</div>
+        <div class="note-body" style="color:var(--good);font-size:12px;">✅ No active alerts</div>
+      </div>
+      <div class="note-box">
+        <div class="note-title">Recent Activity</div>
+        <div class="timeline"><div class="tl-item"><span class="tl-dot"></span><span class="tl-time">—</span><span class="tl-msg">last cycle</span></div><div class="tl-item"><span class="tl-dot"></span><span class="tl-time">action</span><span class="tl-msg">— → —</span></div></div>
+      </div>
+    </div></div></details>
+
+      <div class="group-label">Administrator</div>
+      <details class="panel" id="panel-administrator"><summary class="panel-head"><span class="panel-head-main"><h2>Administrator</h2></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="panel-inner">
+      <div class="note-box">
+        <div class="note-title">Route Arm File</div>
+        <div class="note-body"><span style="color:var(--bad);font-weight:700;">DISARMED</span></div>
+        <div class="note-body" style="font-size:11px;color:var(--muted);margin-top:4px;">rosie_route_arming.json &mdash; the file-level gate. ARMED means the gate is open; it does not by itself mean an order will fire.</div>
+      </div>
+      <div class="note-box">
+        <div class="note-title">Open Security Items</div>
+        <div class="note-body" style="color:var(--warn);font-weight:700;">1 open</div><div style="margin-top:8px;font-size:11px;line-height:1.5;"><div><span style="color:var(--warn);font-weight:700;">OPEN</span> &middot; <span style="color:var(--text);">Schwab OAuth credentials exposed in GitHub pull-request refs</span> &middot; <span style="color:var(--muted);">[SEC-2026-07-05-ENV]</span></div><div style="color:var(--muted);margin-top:3px;">A .env file was committed on 2026-07-05 in commit 7b5f85d, containing SCHWAB_APP_KEY, SCHWAB_APP_SECRET, SCHWAB_CALLBACK_URL and SCHWAB_TOKEN_PATH. It is NOT present on main or on any branch, and .env is correctly gitignored. It remains reachable on GitHub through refs/pull/1/head and refs/pull/2/head. Pull-request refs are not branches, so git filter-repo and force-push cannot remove them. Repository is private and secret scanning is disabled. CONFIRMED EXPOSED 2026-09-21: the operator regained developer-portal access and compared the live App Details pair against the committed pair. They are identical, so the credentials in use are the leaked ones. ROTATION IS NOT POSSIBLE. The Schwab developer portal offers no key or secret regeneration and no app deletion; deactivation is the only control, and retail individuals are limited to one app per API. Schwab support&#x27;s stated position is that app keys contain no personal information and cannot be used to reach brokerage account details, and that changing them requires their internal team to deactivate the app so a NEW developer-portal account can be registered under a DIFFERENT email address. Community-reported, not Schwab documentation -- see https://www.reddit.com/r/Schwab/comments/1pqxme7/schwab_api_cannot_delete_an_app_or_rotate/ -- but consistent with the controls visible in the portal UI. Worth one direct confirmation to TraderAPI@schwab.com before acting on it. These are OAuth app credentials, not account credentials: they cannot reach funds without a completed Schwab login and a listener on the callback URL https://127.0.0.1:8182. NO IBKR CREDENTIAL HAS EVER BEEN COMMITTED TO THIS REPOSITORY. An earlier version of this panel claimed live IB credentials were exposed; that claim was false and cost operator time on 2026-09-17.</div><div style="margin-top:3px;">Remedy: The original remedy -- rotate the key and secret, or have Schwab delete the app -- is impossible; see detail. The fix is therefore to remove the place the pair is readable rather than to change the pair. PRIMARY: ask GitHub Support to purge refs/pull/1/head and refs/pull/2/head. Targeted, free, and it preserves the app&#x27;s hard-won Ready For Use status. FALLBACK: push every branch to a fresh private repository and delete this one. PR refs die with the repository. Cost is the loss of pull-request history, which is the written record of why this code is the way it is. LAST RESORT: have Schwab deactivate the app and register a new developer-portal account under a different email. Zero residual risk, highest cost -- a new account, re-approval that has been reported to take weeks, and the loss of an app that took until 2026-09-21 to reach Ready For Use. DO NOT rewrite git history for this -- it cannot fix PR refs. HARDENING that costs nothing and applies regardless: run the callback listener only during the OAuth flow, never leave port 8182 listening. AND NOTE: once the OAuth flow is completed, the resulting token file is more sensitive than the app key, because it DOES reach the account. It must live outside the repository alongside .env, and must never be committed. No longer blocked on Schwab portal access -- that was resolved 2026-09-21, which is why this item moved from BLOCKED to OPEN. Not required for any IBKR paper work.</div><div style="margin-top:3px;color:var(--muted);">Last verified: 2026-09-21</div></div>
+      </div>
+      <div class="note-box">
+        <div class="note-title">Links</div>
+        <div class="note-body">
+          <a class="status-chip link" href="https://github.com/nrini49/interactive" target="_blank" rel="noopener">Repo &rarr;</a>
+          <a class="status-chip link" href="https://github.com/nrini49/interactive/blob/main/README.md" target="_blank" rel="noopener">README &rarr;</a>
+        </div>
+      </div>
+    </div></div></details>
+      <details class="panel" id="panel-diagnostics" open><summary class="panel-head"><span class="panel-head-main"><h2>Diagnostics</h2></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="panel-inner"><div class="diag-row"><div class="diag-chip"><span class="diag-k">ROUTE</span><span class="diag-v bad">DISARM</span></div><div class="diag-chip"><span class="diag-k">POWER</span><span class="diag-v good">ON</span></div><div class="diag-chip"><span class="diag-k">ROSIE</span><span class="diag-v good">ON</span></div><div class="diag-chip"><span class="diag-k">HB</span><span class="diag-v plain">—</span></div><div class="diag-chip"><span class="diag-k">CYCLE</span><span class="diag-v plain">—</span></div><div class="diag-chip"><span class="diag-k">DEMO</span><span class="diag-v good">OK</span></div><div class="diag-chip" style="flex:1;min-width:200px;"><span class="diag-k">NOTE</span><span class="diag-v plain" style="font-size:11px;">—</span></div></div></div></div></details>
+    </div>
+  </main>
+</div>
+<div id="action-receipt-host" data-receipt-id="0" data-receipt-boot="" hidden></div>
+<div id="refresh-indicator">⏱ live</div>
+
+<script>
+const REFRESH_MS      = 30000;
+const ENTER_THRESHOLD = 0.3;
+const AVOID_THRESHOLD = -0.3;
+
+// ── SYMBOL SEARCH FILTER ──────────────────────────────────────────────────────
+// The symbol filter input was removed on 2026-09-19 along with its listener and
+// its re-apply-after-refresh call. It filtered rows carrying data-sym, which only
+// _watchlist_body emits, so it reached Watchlist and Current Observations while
+// Signal Rank (removed 2026-09-21) and Classification Board silently showed
+// everything. It also cost a
+// full header row: flex-wrap plus margin-left:auto pushed it onto a line of its
+// own. Sorting now covers the need it was reaching for.
+
+// ── ACTION RECEIPTS — dismissable, persistent, cannot re-pop ───────────────────
+// 2026-09-19: the operator cancelled a live order and the page said nothing. The
+// cancel had already succeeded; the only confirmation sat at the bottom of the
+// document. He clicked twice more, which is what anyone does when an action
+// appears to do nothing. Cancel is idempotent so it cost nothing. APPROVE is not.
+//
+// The server cannot decide whether to show a receipt, because it does not know
+// what this operator has already seen. So the server always renders the last
+// action with a monotonic id, hidden, and the browser decides:
+//
+//   show it only if its id is greater than the last id dismissed here.
+//
+// Without that comparison the receipt would reappear on every 30s refresh after
+// being dismissed, forever, until another action happened -- worse than silence.
+// BUG FOUND BY THE OPERATOR, 2026-09-19 14:28: storing only the dismissed
+// counter was wrong. The server's counter restarts at 0 on every launch, while
+// localStorage survives. After dismissing id 9 and restarting the server,
+// actions 1..9 all looked "already dismissed" and vanished silently -- this
+// feature's own defect, rebuilt inside its dismissal memory. It presented as a
+// random misfire and was fully deterministic.
+//
+// A dismissal is therefore scoped to the server run that produced it: we store
+// "<boot_id>:<action_id>" and only suppress a receipt when the boot id matches.
+// A restarted server always shows its receipts again, which is the safe
+// direction -- showing a receipt twice costs a click, hiding one costs the
+// operator the truth.
+const RECEIPT_KEY = 'rosie.action.dismissed';
+
+function readDismissed() {
+  try {
+    const raw = localStorage.getItem(RECEIPT_KEY) || '';
+    const cut = raw.lastIndexOf(':');
+    if (cut < 0) return {boot: '', id: 0};      // legacy bare number -> ignore
+    const n = parseInt(raw.slice(cut + 1), 10);
+    return {boot: raw.slice(0, cut), id: isNaN(n) ? 0 : n};
+  } catch (err) {
+    return {boot: '', id: 0};                   // unreadable -> show it
+  }
+}
+
+function applyActionReceipt() {
+  const host = document.getElementById('action-receipt-host');
+  if (!host) return;
+  const id   = parseInt(host.getAttribute('data-receipt-id') || '0', 10) || 0;
+  const boot = host.getAttribute('data-receipt-boot') || '';
+  if (!id) { host.hidden = true; return; }      // no action this server run
+  const seen = readDismissed();
+  // Only a dismissal from THIS server run can suppress anything.
+  host.hidden = (seen.boot === boot && id <= seen.id);
+}
+
+// Delegated on document so it survives every innerHTML swap, and because the
+// receipt markup is replaced wholesale on each refresh.
+document.addEventListener('click', (ev) => {
+  const btn = ev.target && ev.target.closest ? ev.target.closest('[data-receipt-dismiss]') : null;
+  if (!btn) return;
+  const host = document.getElementById('action-receipt-host');
+  if (!host) return;
+  const id = parseInt(host.getAttribute('data-receipt-id') || '0', 10) || 0;
+  const boot = host.getAttribute('data-receipt-boot') || '';
+  try { localStorage.setItem(RECEIPT_KEY, boot + ':' + id); } catch (err) { /* non-fatal */ }
+  host.hidden = true;
+});
+
+applyActionReceipt();
+
+// ── PANEL OPEN/CLOSED STATE — persisted in localStorage ───────────────────────
+// Every operator control (POWER, ROSIE, GUARD, PROPOSE, APPROVE, Save, Reset,
+// symbol select) is a link or form submit that hits its route, redirects to /,
+// and causes a FULL page load. The server renders every panel open, so any panel
+// the operator had collapsed sprang back open the moment he touched any control.
+// Panel state was only ever remembered for the lifetime of one page.
+//
+// localStorage is now the single source of truth. It is read on load and after
+// each refresh swap, and written whenever the operator toggles a panel. The old
+// in-memory openIds capture was removed so two mechanisms cannot disagree.
+//
+// The toggle listener is delegated at document level: panels live inside <main>,
+// and the refresh below replaces main via innerHTML, so a listener bound to the
+// panels themselves would be orphaned on the first refresh -- exactly the defect
+// that killed table sorting until 2026-09-18.
+//
+// The operator decides what is open. The code does not. (2026-09-18)
+//
+// CLEAN START, 2026-09-28 (operator request). Remembered state is scoped to ONE
+// server run, keyed by boot_id, exactly like the action-receipt dismissal above.
+// A new Rosie start (watchdog restart, nightly TWS cycle, manual restart) opens
+// with EVERY panel collapsed, so the operator exposes only the panel he needs
+// instead of closing a dozen he doesn't. Within a run, open/closed state still
+// survives refreshes and control clicks. Stored as {boot, open:[ids]}; a legacy
+// bare array, a missing boot, or a different boot all mean "new run -> collapse".
+const PANEL_STATE_KEY = 'rosie.panels.open';
+
+function currentBoot() {
+  const host = document.getElementById('action-receipt-host');
+  return host ? (host.getAttribute('data-receipt-boot') || '') : '';
+}
+
+function readPanelState() {
+  try {
+    const boot = currentBoot();
+    const raw = localStorage.getItem(PANEL_STATE_KEY);
+    const saved = raw ? JSON.parse(raw) : null;
+    if (saved && !Array.isArray(saved) && saved.boot === boot
+        && Array.isArray(saved.open)) {
+      return new Set(saved.open);                // same run -> operator's layout
+    }
+    return new Set();                            // new run / legacy / none -> all collapsed
+  } catch (err) {
+    return new Set();                            // unreadable -> all collapsed
+  }
+}
+
+function writePanelState() {
+  try {
+    const open = [];
+    document.querySelectorAll('details.panel[id], details.hero-fold[id]').forEach(d => {
+      if (d.open) open.push(d.id);
+    });
+    localStorage.setItem(PANEL_STATE_KEY, JSON.stringify({boot: currentBoot(), open: open}));
+  } catch (err) {
+    /* storage disabled or full -- panels still work, they just stop persisting */
+  }
+}
+
+function applyPanelState() {
+  const stored = readPanelState();              // always a Set; empty on a new run
+  document.querySelectorAll('details.panel[id], details.hero-fold[id]').forEach(d => {
+    d.open = stored.has(d.id);
+  });
+  // Record this run's layout so the next refresh reads "same run" and keeps it.
+  writePanelState();
+}
+
+// Delegated: survives every innerHTML swap of <main>.
+document.addEventListener('toggle', (ev) => {
+  const d = ev.target;
+  if (d && d.tagName === 'DETAILS' && (d.classList.contains('panel') || d.classList.contains('hero-fold')) && d.id) {
+    writePanelState();
+  }
+}, true);                                       // capture phase -- toggle does not bubble
+
+applyPanelState();
+
+// ── TABLE SORTING — delegated, attached ONCE, outside <main> ───────────────────
+// Every sortable table used to emit its own <script> next to the table. Those
+// scripts sat inside <main>, and the refresh below replaces main via innerHTML,
+// which never executes inserted <script> elements. So sorting worked until the
+// first refresh (30s) and was dead thereafter until a full page reload. This
+// listener is attached once to document, so it keeps working no matter how many
+// times the table markup is swapped out. Found by the operator 2026-09-18.
+const sortStates = new Map();   // stable table id -> { key, dir }
+const NUMERIC_SORT_KEYS = ['last', 'change', 'percent', 'phaseOrd', 'signalOrd', 'rank'];
+
+function applySort(table, key, dir) {
+  const tbody = table.querySelector('tbody');
+  if (!tbody) return;
+  const rows = Array.from(tbody.querySelectorAll('tr[data-sym]'));
+  if (!rows.length) return;
+  rows.sort((a, b) => {
+    // Pinning removed 2026-09-21. Holding four rows above every sort meant a
+    // sort by % did not show the biggest movers at the top, which is the main
+    // thing the column is clicked for.
+    let av = a.dataset[key] || '';
+    let bv = b.dataset[key] || '';
+    if (NUMERIC_SORT_KEYS.includes(key)) {
+      // A row with no quote carries no data attribute for this column. It used
+      // to become 0, which sorted unanswered symbols into the middle of the %
+      // column between the decliners and the gainers. Missing sorts last in
+      // BOTH directions -- dir is deliberately not applied -- because the
+      // bottom is the only honest place for a row that says nothing.
+      const aMissing = av === '' || isNaN(parseFloat(av));
+      const bMissing = bv === '' || isNaN(parseFloat(bv));
+      if (aMissing && bMissing) return 0;
+      if (aMissing) return 1;
+      if (bMissing) return -1;
+      return (parseFloat(av) - parseFloat(bv)) * dir;
+    }
+    return String(av).localeCompare(String(bv)) * dir;
+  });
+  rows.forEach(r => tbody.appendChild(r));
+
+  // A positional column must renumber, or it lies. The # cell says "#1" for
+  // the first row; after a sort by Symbol that row can sit in the middle of the
+  // table still claiming #1. data-renumber names the cell index to rewrite from
+  // the row's new position. Tables without the attribute are untouched.
+  // (2026-09-20; moved from Signal Rank to the Watchlist 2026-09-21)
+  if (table.dataset.renumber !== undefined) {
+    const cellIdx = parseInt(table.dataset.renumber, 10) || 0;
+    rows.forEach((r, i) => {
+      const cell = r.cells[cellIdx];
+      if (cell) cell.textContent = '#' + (i + 1);
+    });
+  }
+
+  table.querySelectorAll('.sort-ind').forEach(ind => {
+    ind.classList.remove('active');
+    ind.textContent = '⇅';
+  });
+  const activeInd = table.querySelector('.sort-ind[data-key="' + key + '"]');
+  if (activeInd) {
+    activeInd.classList.add('active');
+    activeInd.textContent = dir === 1 ? '▲' : '▼';
+  }
+}
+
+document.addEventListener('click', (ev) => {
+  const th = ev.target.closest('.sortable-th[data-sort-key]');
+  if (!th) return;
+  const table = th.closest('table');
+  if (!table || !table.id) return;
+  const key  = th.dataset.sortKey;
+  const prev = sortStates.get(table.id);
+  const dir  = (prev && prev.key === key) ? prev.dir * -1 : 1;
+  sortStates.set(table.id, { key: key, dir: dir });
+  applySort(table, key, dir);
+});
+
+// Re-apply the operator's chosen sort after a refresh swap. Without this the
+// handler would survive but the rows would silently snap back to server order
+// every 30s, which looks just as broken as no sorting at all.
+function reapplySorts() {
+  sortStates.forEach((state, tableId) => {
+    const table = document.getElementById(tableId);
+    if (table) applySort(table, state.key, state.dir);
+  });
+}
+
+// ── LIVE REFRESH — fetch HTML, swap <main> + operator cluster in place ─────────
+// Collapsible <details> open/closed state is restored from localStorage after the
+// swap -- see applyPanelState() above. It also survives full page loads, which the
+// old in-page-only mechanism did not.
+async function refreshData() {
+  const ind = document.getElementById('refresh-indicator');
+  if (ind) { ind.classList.add('pulsing'); ind.textContent = '↻ refreshing…'; }
+  try {
+    const res  = await fetch(window.location.href, {cache: 'no-store'});
+    // Session expired or logged out elsewhere: go to the login page instead of
+    // silently keeping a stale screen (2026-09-29, operator login).
+    if (res.status === 401 || (res.redirected && new URL(res.url).pathname === '/login')) {
+      window.location.href = '/login'; return;
+    }
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const text = await res.text();
+    const doc  = new DOMParser().parseFromString(text, 'text/html');
+
+    const newMain = doc.querySelector('.main');
+    const oldMain = document.querySelector('.main');
+    if (newMain && oldMain) oldMain.innerHTML = newMain.innerHTML;
+
+    const newOps = doc.querySelector('.op-cluster');
+    const oldOps = document.querySelector('.op-cluster');
+    if (newOps && oldOps) oldOps.innerHTML = newOps.innerHTML;
+
+    // Action receipt lives OUTSIDE <main>, so the swap above does not touch it.
+    // Replace it explicitly, carry the new id across, then let the browser decide
+    // whether it should be visible. (2026-09-19)
+    const newRcp = doc.getElementById('action-receipt-host');
+    const oldRcp = document.getElementById('action-receipt-host');
+    if (newRcp && oldRcp) {
+      oldRcp.innerHTML = newRcp.innerHTML;
+      oldRcp.setAttribute('data-receipt-id', newRcp.getAttribute('data-receipt-id') || '0');
+      oldRcp.setAttribute('data-receipt-blocks', newRcp.getAttribute('data-receipt-blocks') || '0');
+    }
+    applyActionReceipt();
+
+    // restore panel open/closed state from localStorage, the single source of truth
+    applyPanelState();
+
+    // re-apply any active column sort after swap
+    reapplySorts();
+
+    if (ind) ind.textContent = '✓ ' + new Date().toLocaleTimeString();
+  } catch(err) {
+    console.warn('Refresh failed:', err);
+    if (ind) ind.textContent = '⚠ ' + new Date().toLocaleTimeString();
+  } finally {
+    if (ind) setTimeout(() => ind.classList.remove('pulsing'), 600);
+  }
+}
+
+setInterval(refreshData, REFRESH_MS);
+</script>
+<script>
+// Public demo: nothing on this page can act. Every form and control is inert.
+document.addEventListener('submit', function(e){ e.preventDefault(); demoNote(); }, true);
+document.addEventListener('click', function(e){
+  var a = e.target.closest('a'); if (a && a.id === 'harbor-top') return;      // Harbor Now link stays live
+  if (e.target.closest('button, a')) { e.preventDefault(); demoNote(); }
+}, true);
+function demoNote(){ var b=document.getElementById('demo-banner'); if(!b) return;
+  b.textContent='DEMO · controls are display-only here · in Rosie, every action needs your login and approval';
+  b.style.background='#00ff7f'; setTimeout(function(){ b.textContent='DEMO · test data only · no broker connected · controls are display-only'; b.style.background='#ffd24a'; }, 2600); }
+</script></body>
+</html>
