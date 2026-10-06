@@ -42,7 +42,7 @@ const SURFACES = [
   ['#market-report', 'market report section'],
   ['#evaluation', 'evaluation section'],
   ['#pricing', 'pricing section'],
-  ['#spy-pipeline', 'SPY Pipeline section'],
+  ['#partners', 'Partners section'],
   ['#how-to-begin', 'how to begin section'],
   ['.foot', 'footer'],
 ];
@@ -869,7 +869,7 @@ test('rendered: the page is complete and usable with JavaScript disabled', async
       '#what-we-do',
       '#market-report',
       '#pricing',
-      '#spy-pipeline',
+      '#partners',
       '#how-to-begin',
       '[data-pricing-table]',
     ]) {

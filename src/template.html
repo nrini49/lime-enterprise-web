@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>LIME Enterprise — Lime Signalworks loss-prevention-first trading assistance</title>
+    <title>LIME Enterprise — Keelwise, trading decision support that protects capital first</title>
     <meta
       name="description"
-      content="LIME Enterprise is the Lime Signalworks enterprise surface: a daily market situation report, the Rosie decision-support dashboard, and a free 33-day evaluation that runs in demo and paper mode only."
+      content="Keelwise is a loss-prevention-first trading assistant from Lime Signalworks. It connects to Interactive Brokers, proposes trades for your approval, and protects every approved buy with stops held at the broker."
     />
     <meta name="robots" content="noindex, nofollow" />
     <!-- Declares light as the default rendering scheme so a dark operating system does
@@ -77,12 +77,12 @@
         <div class="shell hero__grid">
           <div>
             <p class="label rule-after">LIME Enterprise</p>
-            <h1>Loss-prevention-first AI trading assistance for households and companies</h1>
+            <h1>Keelwise: trading decision support that protects capital first</h1>
             <p class="hero__lede">
-              Lime Signalworks publishes a plain-language market report each trading day and builds
-              Rosie, a decision-support dashboard that reads market conditions and flags when they
-              change. Protecting capital is weighted ahead of pursuing gains. The decisions stay
-              yours.
+              Keelwise (formerly Rosie) is a trading assistant from Lime Signalworks. It watches the
+              market, proposes trades with its reasons, and waits for your approval. Every approved
+              buy goes to your broker with two protective stops already attached. Protecting capital
+              comes first. The decisions stay yours.
             </p>
 
             <!-- E1 call to action. Both facts below are static markup, rendered before any
@@ -97,20 +97,20 @@
 
             <dl class="hero__meta">
               <div>
+                <dt>Broker</dt>
+                <dd>Interactive Brokers, through IBKR's own TWS. Running on IBKR paper accounts</dd>
+              </div>
+              <div>
+                <dt>Orders</dt>
+                <dd>Keelwise proposes, you approve. Nothing is sent without you</dd>
+              </div>
+              <div>
+                <dt>Protection</dt>
+                <dd>Two trailing stops held at the broker on every approved buy</dd>
+              </div>
+              <div>
                 <dt>Evaluation</dt>
-                <dd>Free for {{EVAL_DAYS}} days, in demo and paper mode only</dd>
-              </div>
-              <div>
-                <dt>Broker connection</dt>
-                <dd>None. No real orders are placed at any point</dd>
-              </div>
-              <div>
-                <dt>Signup</dt>
-                <dd>Designed, not built. There is no account to create on this site today</dd>
-              </div>
-              <div>
-                <dt>Enrollment</dt>
-                <dd>Prices published below; checkout is not built</dd>
+                <dd>Free for {{EVAL_DAYS}} days in paper mode, with guided setup</dd>
               </div>
             </dl>
           </div>
@@ -172,9 +172,9 @@
                 width="1200"
                 height="750"
                 loading="lazy"
-                alt="Rosie IB operator workstation, demo with test data: header controls, Account Overview, Positions with the Signal column, and broker-held Stops"
+                alt="Keelwise operator workstation, demo with test data: header controls, Account Overview, Positions with the Signal column, and broker-held Stops"
               />
-              <figcaption>Rosie IB, the real dashboard, shown with test data and no broker connection. <a href="/rosie-demo/">Open the interactive demo</a>.</figcaption>
+              <figcaption>The Keelwise dashboard, shown here with test data. <a href="/rosie-demo/">Open the interactive demo</a>.</figcaption>
             </figure>
           </div>
         </div>
@@ -225,24 +225,55 @@
         </div>
       </section>
 
-      <!-- E5 — positioning statement -->
-      <section class="section" id="approach" aria-labelledby="approach-title">
+      <!-- E5 — how Keelwise works -->
+      <section class="section" id="how-it-works" aria-labelledby="how-it-works-title">
         <div class="shell">
           <div class="section__head">
             <p class="label rule-after">Section 04</p>
-            <h2 id="approach-title">Discipline and decision support, in one system</h2>
-          </div>
-          <div class="prose">
+            <h2 id="how-it-works-title">How Keelwise works</h2>
             <p>
-              Lime Signalworks combines a disciplined decision process with AI assistance that reads
-              market conditions and flags when they change. The design goal is protective: reduce
-              avoidable losses and unforced errors first, and treat gains as the result of a process
-              rather than the object of a prediction.
+              Discipline and decision support in one system. Keelwise does the watching and the
+              bookkeeping; you make the call.
             </p>
           </div>
+          <ol class="stages">
+            <li>
+              <p class="label">Step one</p>
+              <h3>It watches</h3>
+              <p>
+                Keelwise samples prices about once a minute and compares each one with its recent
+                average. It also checks the day's stated market posture: on a defensive day, new
+                buys are blocked.
+              </p>
+            </li>
+            <li>
+              <p class="label">Step two</p>
+              <h3>It proposes, you decide</h3>
+              <p>
+                When a price moves clearly above its average, Keelwise proposes a buy and shows its
+                reason. When a holding falls clearly below, it proposes closing. Nothing reaches your
+                broker until you approve it.
+              </p>
+            </li>
+            <li>
+              <p class="label">Step three</p>
+              <h3>Every buy is protected</h3>
+              <p>
+                An approved buy goes out as a limit order priced from a live quote, with two
+                trailing stops held at the broker. The stops are sized from each symbol's measured
+                overnight moves, so ordinary noise does not shake you out, and they keep working
+                even if your computer is off.
+              </p>
+            </li>
+          </ol>
+          <ul class="ticks">
+            <li>A symbol without measured history is refused, never given a guessed stop.</li>
+            <li>A daily loss limit, account checks, and a separate paper/live switch run before any order.</li>
+            <li>Every proposal, approval, and order is written to a Journal and a Trade Record you keep.</li>
+            <li>Keelwise runs on your own computer. Your broker login stays with your broker.</li>
+          </ul>
         </div>
       </section>
-
       <!-- E6 — the 33-day evaluation -->
       <section class="section" id="evaluation" aria-labelledby="evaluation-title">
         <div class="shell">
@@ -250,9 +281,9 @@
             <p class="label rule-after">Section 05</p>
             <h2 id="evaluation-title">The {{EVAL_DAYS}}-day evaluation</h2>
             <p>
-              New users begin with a free {{EVAL_DAYS}}-day evaluation that runs in demo and paper
-              mode only — no live capital and no real orders at any point. Access ends automatically
-              on day {{EVAL_DAYS}}, and continuing afterwards is optional.
+              New users begin with a free {{EVAL_DAYS}}-day evaluation on an Interactive Brokers paper
+              account: the real Keelwise and real market prices, with no live capital and no real-money
+              orders. We help you set it up. Continuing afterwards is optional.
             </p>
           </div>
 
@@ -269,8 +300,8 @@
               <p class="label">Stage two</p>
               <h3>Daily practice</h3>
               <p>
-                Use the reporting and decision tools against the market each day, in demo and paper
-                mode, and record what you would have done and why.
+                Let Keelwise propose trades on paper each day, approve or decline them, and see the
+                stops and records it keeps.
               </p>
             </li>
             <li>
@@ -285,7 +316,7 @@
 
           <p class="prose__aside">
             The period is long enough to judge the system on your own behaviour rather than on a
-            sales claim. Nothing in the evaluation touches a real brokerage account.
+            sales claim. Nothing in the evaluation touches live money.
           </p>
 
           <a class="anchor-link" href="#pricing">See pricing and how to start</a>
@@ -335,8 +366,8 @@
             <p class="label rule-after">Section 08</p>
             <h2 id="pricing-title">Pricing and what you get</h2>
             <p>
-              The free {{EVAL_DAYS}}-day evaluation runs in demo and paper mode only. The prices
-              below are what enrollment is planned to cost once the evaluation ends.
+              Start with the free {{EVAL_DAYS}}-day paper evaluation. If you continue, enrollment is
+              one of the plans below.
             </p>
           </div>
 
@@ -351,7 +382,7 @@
 
             <div class="stack">
               <div>
-                <h3>What each plan is planned to include</h3>
+                <h3>What each plan includes</h3>
                 <ul class="ticks">{{PRICING_INCLUDES}}</ul>
               </div>
               <div>
@@ -363,37 +394,40 @@
         </div>
       </section>
 
-      <!-- E10 — SPY Pipeline eligibility -->
-      <section class="section" id="spy-pipeline" aria-labelledby="spy-pipeline-title">
+      <!-- E10 — for brokers and partners -->
+      <section class="section" id="partners" aria-labelledby="partners-title">
         <div class="shell">
           <div class="section__head">
             <p class="label rule-after">Section 09</p>
-            <h2 id="spy-pipeline-title">SPY Pipeline: eligibility</h2>
+            <h2 id="partners-title">For brokers and partners</h2>
           </div>
           <div class="prose">
             <p>
-              The SPY Pipeline is a separate component with its own access requirement: it requires
-              an eligible Interactive Brokers paper-trading account. Anyone may read what it is
-              designed to do; using it is a different step.
+              Keelwise is built to sit alongside a broker, not in place of one. It runs on the
+              customer's own computer, sends orders through the broker's own API, and leaves the
+              broker login with the broker. Protective stops live at the broker, where your systems
+              can see them.
             </p>
             <p>
-              Eligibility verification is not yet built, so access cannot be granted or confirmed at
-              this time. Starting the {{EVAL_DAYS}}-day evaluation does not include or unlock the
-              SPY Pipeline — the two are separate. We will publish the requirements and the
-              verification path when that mechanism is complete.
+              Keelwise is available to brokers and educators who want to offer it to their
+              customers. On request we share a security overview of how Keelwise handles data and
+              orders, and we welcome your security review.
             </p>
           </div>
-          <div class="notice">
-            <span class="label">Status</span>
+          <div class="notice" data-security-standards>
+            <span class="label">Security standards</span>
             <p>
-              No access control, verification service, or introduction link exists for this
-              component yet. Because there is nothing to click that would work, this section
-              deliberately carries no button.
+              We design our controls around the SOC 2 Trust Services Criteria: security,
+              availability, processing integrity, confidentiality, and privacy. Access, change
+              review, backups, and incident response are written policies. Keelwise has not yet
+              completed a SOC 2 audit; we will pursue one alongside our first broker partner.
             </p>
           </div>
+          <p class="anchor-row">
+            <a class="anchor-link" href="#contact">Start a partner conversation</a>
+          </p>
         </div>
       </section>
-
       <!-- E11 — how to begin -->
       <section class="section" id="how-to-begin" aria-labelledby="how-to-begin-title">
         <div class="shell">
@@ -401,27 +435,35 @@
             <p class="label rule-after">Section 10</p>
             <h2 id="how-to-begin-title">How to begin</h2>
           </div>
-          <div class="prose">
-            <p>
-              Self-service signup and personalized instances are designed but not yet built, so
-              there is no account to create on this site today. No form on this page collects your
-              name, your email address, or your phone number, because there is no provisioning
-              pipeline yet to receive them.
-            </p>
-            <p>
-              Until that pipeline is built, the demonstration environment linked at the top of
-              this page is what there is to look at. Access to it is controlled by its host
-              rather than by us: a Perplexity sign-in may be required, so it is not anonymously
-              reachable and we cannot promise it will open for you.
-            </p>
-            <p>
-              To reach a person, use the telephone number, email address, or office address in
-              the footer. Those are the working contact paths, and contact is by appointment.
-            </p>
-          </div>
+          <ol class="stages">
+            <li>
+              <p class="label">Individuals</p>
+              <h3>Book a guided setup</h3>
+              <p>
+                Call or email us. We set up Keelwise with you on an Interactive Brokers paper account
+                and start your {{EVAL_DAYS}}-day evaluation.
+              </p>
+            </li>
+            <li>
+              <p class="label">Brokers and firms</p>
+              <h3>Start a partner conversation</h3>
+              <p>
+                We walk you through Keelwise, share the security overview, and talk about offering it
+                to the people you serve.
+              </p>
+            </li>
+            <li>
+              <p class="label">Just looking</p>
+              <h3>Open the demo</h3>
+              <p>
+                See the real dashboard with test data before you talk to anyone. A Perplexity
+                sign-in may be required to open it.
+              </p>
+            </li>
+          </ol>
           <p class="anchor-row">
-            <a class="anchor-link" href="#demo">Back to the demo link at the top of this page</a>
-            <a class="anchor-link" href="#contact">Contact details in the footer</a>
+            <a class="anchor-link" href="#contact">Call or email us</a>
+            <a class="anchor-link" href="#demo">Open the demo</a>
           </p>
         </div>
       </section>
@@ -433,13 +475,10 @@
         <div>
           <p class="label">Lime Signalworks LLC · LIME Enterprise</p>
           <p class="foot__note">
-            LIME Enterprise is the enterprise surface for Lime Signalworks. The Signals site and the
-            Leadership library are separate surfaces with their own repositories and deployments, and
-            are unaffected by this page.
+            Keelwise is a product of Lime Signalworks LLC. The daily market report is published on
+            our Signals site; the Leadership library is a separate site.
           </p>
-          <!-- The one working contact path on this surface. Already-public Lime Signalworks
-               details, rendered as real mailto: and tel: links rather than a form, because no
-               backend exists to receive a submission. -->
+          <!-- Contact is by real mailto: and tel: links; there is no form on this site. -->
           <dl class="contact" id="contact" data-contact>
             <div>
               <dt>Email</dt>
