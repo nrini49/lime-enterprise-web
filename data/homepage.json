@@ -3,7 +3,7 @@
   "canonical": {
     "demoUrl": "https://limesignalworks.pplx.app/",
     "demoCtaLabel": "Open the Keelwise demo",
-    "demoDisclosure": "Demonstration environment. Simulated data. No broker connection and no real orders. Not production-ready.",
+    "demoDisclosure": "Demonstration environment. Simulated data. No broker connection and no real orders.",
     "demoSignIn": "Perplexity sign-in may be required.",
     "contact": {
       "email": "contact@limesignalworks.com",
@@ -74,7 +74,7 @@
   ],
   "marketReport": {
     "asOfLabel": "As of the close of Thursday, July 23, 2026",
-    "exampleNotice": "This is a worked example of the report format, not current market data. The figures shown are the last completed report carried over from the reporting archive and are dated. Reports are published after the close, never in real time, and live market data may be newer than any published report.",
+    "exampleNotice": "This table shows the report format using figures from a past report; it is not current market data. Reports are written after the close and dated, never in real time.",
     "posture": "Conditions read bearish. Stated posture: protect first.",
     "rows": [
       {
@@ -111,7 +111,7 @@
   },
   "pricing": {
     "heading": "Enrollment after the evaluation",
-    "status": "Enrollment is arranged directly with us after your evaluation. There is no online checkout, and no payment can be taken on this site.",
+    "status": "Enrollment is arranged directly with us, by phone or email, after your evaluation. Nothing is sold or charged on this site.",
     "rows": [
       {
         "term": "Monthly",

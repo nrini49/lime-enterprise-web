@@ -22,8 +22,7 @@ const LEADERSHIP_URL = 'https://signals.limesignalworks.com';
 const LIBRARY_URL = 'https://leadership.limesignalworks.com';
 const DEMO_LABEL = 'Open the Keelwise demo';
 const DEMO_DISCLOSURE =
-  'Demonstration environment. Simulated data. No broker connection and no real orders. ' +
-  'Not production-ready.';
+  'Demonstration environment. Simulated data. No broker connection and no real orders.';
 const DEMO_SIGNIN = 'Perplexity sign-in may be required.';
 const CONTACT_EMAIL = 'contact@limesignalworks.com';
 const CONTACT_TEL_HREF = 'tel:+13802000288';
@@ -447,7 +446,6 @@ test('dom: the demo is never presented as open, anonymous, or guaranteed to work
     'simulated data',
     'no broker connection',
     'no real orders',
-    'not production-ready',
   ]) {
     assert.ok(haystack.includes(fact), `disclosure fact lost: "${fact}"`);
   }
@@ -476,9 +474,8 @@ test('dom: prices carry no online purchase path or purchase control', () => {
   assert.deepEqual(rows.flat(), pricing.rows.flatMap((r) => [r.term, r.price]));
 
   const status = norm($('[data-pricing-status]').text());
-  assert.ok(/no online checkout/i.test(status), 'the status states there is no online checkout');
   assert.ok(
-    /nothing here to buy|no payment can be taken/i.test(status),
+    /nothing is sold or charged on this site/i.test(status),
     'the absence of a purchase path is stated',
   );
 
@@ -577,12 +574,13 @@ test('dom: every mention of real-time data is negated', () => {
 
 /* ---------- links off this surface ---------- */
 
-test('dom: exactly three off-origin destinations exist — the demo, Site 1, and the Leadership library', () => {
+const YOUTUBE_URL = 'https://www.youtube.com/@noelrini3882';
+test('dom: exactly four off-origin destinations exist — the demo, Site 1, the Leadership library, and YouTube', () => {
   const hrefs = $('a[href^="http"]')
     .map((_, el) => $(el).attr('href'))
     .get();
-  assert.deepEqual([...new Set(hrefs)].sort(), [LEADERSHIP_URL, LIBRARY_URL, DEMO_URL].sort());
-  assert.equal(hrefs.length, 3, 'no duplicate off-origin links');
+  assert.deepEqual([...new Set(hrefs)].sort(), [LEADERSHIP_URL, LIBRARY_URL, DEMO_URL, YOUTUBE_URL].sort());
+  assert.equal(hrefs.length, 4, 'no duplicate off-origin links');
 });
 
 test('dom: exactly two reciprocal links exist — Site 1 and the Leadership library, each singular', () => {
@@ -661,13 +659,8 @@ test('dom: no unsupported commercial, security or superiority claim', () => {
   });
   assert.ok(!/soc 2 (compliant|certified|certification)/i.test(haystack), 'no SOC 2 compliance claim');
 
-  // Production readiness may only appear as the demo disclosure's own negation.
-  const productionMentions = [...visibleText().matchAll(/production[- ]ready/gi)];
-  assert.equal(productionMentions.length, 1, 'production-ready is mentioned only once');
-  assert.ok(
-    DEMO_DISCLOSURE.includes('Not production-ready'),
-    'and only inside the negated disclosure',
-  );
+  // Production readiness is never claimed.
+  assert.equal([...visibleText().matchAll(/production[- ]ready/gi)].length, 0, 'no production-ready claim');
 });
 
 test('dom: the limits of the offer are stated, not softened', () => {
