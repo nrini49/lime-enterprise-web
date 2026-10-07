@@ -20,7 +20,7 @@ const $ = cheerio.load(html);
 const DEMO_URL = 'https://limesignalworks.pplx.app/';
 const LEADERSHIP_URL = 'https://signals.limesignalworks.com';
 const LIBRARY_URL = 'https://leadership.limesignalworks.com';
-const DEMO_LABEL = 'Open the Rosie Server Demo';
+const DEMO_LABEL = 'Open the Keelwise demo';
 const DEMO_DISCLOSURE =
   'Demonstration environment. Simulated data. No broker connection and no real orders. ' +
   'Not production-ready.';
@@ -197,7 +197,6 @@ const FORBIDDEN_COMMERCIAL = [
   'endorsed by',
   'guaranteed',
   'certified secure',
-  'soc 2',
   'iso 27001',
   'bank-grade',
   'best-in-class',
@@ -250,12 +249,12 @@ test('data: the section order is the translated Site 1 order, with unique ids', 
       'what-we-do',
       'market-report',
       'commitments',
-      'approach',
+      'how-it-works',
       'evaluation',
       'who-its-for',
       'where-to-start',
       'pricing',
-      'spy-pipeline',
+      'partners',
       'how-to-begin',
     ],
   );
@@ -456,21 +455,15 @@ test('dom: the demo is never presented as open, anonymous, or guaranteed to work
 
 /* ---------- evaluation, pricing, SPY boundary, signup ---------- */
 
-test('dom: the evaluation is stated as 33 days, demo and paper only', () => {
+test('dom: the evaluation is stated as 33 days, paper only, no live capital', () => {
   const text = visibleText();
   assert.ok(/free 33-day evaluation/i.test(text), 'the 33-day term is stated plainly');
-  assert.ok(/demo and paper mode only/i.test(text), 'demo and paper mode only is stated');
-  assert.ok(
-    /no real orders/i.test(text) && /no live capital/i.test(text),
-    'the no-live-capital boundary is stated',
-  );
-  assert.ok(
-    /(ends automatically|no broker connection)/i.test(text),
-    'the end of access or the absence of a broker connection is stated',
-  );
+  assert.ok(/paper account/i.test(text), 'the evaluation runs on a paper account');
+  assert.ok(/no live capital/i.test(text), 'the no-live-capital boundary is stated');
+  assert.ok(/no real-money orders|no real orders/i.test(text), 'no real-money orders is stated');
 });
 
-test('dom: prices are labelled planned, with no purchase control', () => {
+test('dom: prices carry no online purchase path or purchase control', () => {
   const table = $('[data-pricing-table]');
   assert.equal(table.length, 1, 'exactly one pricing table');
   const rows = table
@@ -483,8 +476,7 @@ test('dom: prices are labelled planned, with no purchase control', () => {
   assert.deepEqual(rows.flat(), pricing.rows.flatMap((r) => [r.term, r.price]));
 
   const status = norm($('[data-pricing-status]').text());
-  assert.ok(/not built/i.test(status), 'the status states that checkout is not built');
-  assert.ok(/planned/i.test(status), 'the prices are labelled planned');
+  assert.ok(/no online checkout/i.test(status), 'the status states there is no online checkout');
   assert.ok(
     /nothing here to buy|no payment can be taken/i.test(status),
     'the absence of a purchase path is stated',
@@ -501,23 +493,17 @@ test('dom: prices are labelled planned, with no purchase control', () => {
   });
 });
 
-test('dom: the SPY Pipeline section states the boundary and carries no access control', () => {
-  const section = $('section#spy-pipeline');
+test('dom: the partners section sends people to contact, with no access control', () => {
+  const section = $('section#partners');
   assert.equal(section.length, 1);
-  const text = norm(section.text());
-  assert.ok(/Interactive Brokers paper-trading account/i.test(text), 'the account requirement');
-  assert.ok(/not yet built/i.test(text), 'verification is stated as unbuilt');
-  assert.ok(
-    /does not include or unlock/i.test(text),
-    'the evaluation must not be implied to unlock the pipeline',
-  );
   assert.equal(section.find('button').length, 0, 'no control in this section');
-  assert.equal(section.find('a[href]').length, 0, 'no access or affiliate link in this section');
+  section.find('a[href]').each((_, el) => {
+    assert.equal($(el).attr('href'), '#contact', 'the only link goes to the contact details');
+  });
 });
 
-test('dom: signup is marked designed but not built, with no capture of any kind', () => {
+test('dom: there is no signup or capture of any kind', () => {
   const text = visibleText();
-  assert.ok(/designed but not yet built|Designed, not built/i.test(text), 'signup status stated');
   assert.equal($('form').length, 0, 'no forms on this surface');
   assert.equal($('input, textarea, select').length, 0, 'no fields of any kind');
   assert.equal($('[type="submit"], [type="email"]').length, 0, 'no submit or email control');
@@ -663,6 +649,18 @@ test('dom: no unsupported commercial, security or superiority claim', () => {
   for (const phrase of FORBIDDEN_COMMERCIAL) {
     assert.ok(!haystack.includes(phrase), `unsupported or transactional copy: "${phrase}"`);
   }
+  // SOC 2 may be named only inside the security-standards notice, and only alongside the
+  // plain statement that no SOC 2 audit has been completed.
+  const socMentions = $('body *')
+    .filter((_, el) => $(el).children().length === 0 && /soc 2/i.test($(el).text()));
+  socMentions.each((_, el) => {
+    const notice = $(el).closest('[data-security-standards]');
+    assert.equal(notice.length, 1, 'SOC 2 is mentioned only in the security-standards notice');
+    assert.ok(/has not yet completed a soc 2 audit/i.test(norm(notice.text())),
+      'the notice states plainly that no SOC 2 audit has been completed');
+  });
+  assert.ok(!/soc 2 (compliant|certified|certification)/i.test(haystack), 'no SOC 2 compliance claim');
+
   // Production readiness may only appear as the demo disclosure's own negation.
   const productionMentions = [...visibleText().matchAll(/production[- ]ready/gi)];
   assert.equal(productionMentions.length, 1, 'production-ready is mentioned only once');

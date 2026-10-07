@@ -1,8 +1,8 @@
 {
-  "revision": "site2-plain-translation-2026-07-26b",
+  "revision": "site2-keelwise-ready-2026-10-06",
   "canonical": {
     "demoUrl": "https://limesignalworks.pplx.app/",
-    "demoCtaLabel": "Open the Rosie Server Demo",
+    "demoCtaLabel": "Open the Keelwise demo",
     "demoDisclosure": "Demonstration environment. Simulated data. No broker connection and no real orders. Not production-ready.",
     "demoSignIn": "Perplexity sign-in may be required.",
     "contact": {
@@ -18,7 +18,7 @@
     "libraryLabel": "LIME Leadership",
     "securitiesDisclaimer": "Lime Signalworks provides educational tools and analysis, not personalized investment advice. Securities trading involves risk of loss. Your decisions and results are your own. Nothing here is an offer to sell or a solicitation to buy any security.",
     "evaluationDays": 33,
-    "copyright": "\u00a9 2026 Lime Signalworks LLC."
+    "copyright": "© 2026 Lime Signalworks LLC."
   },
   "sectionOrder": [
     {
@@ -34,12 +34,12 @@
     {
       "id": "commitments",
       "eyebrow": "Section 03",
-      "nav": "Commitments"
+      "nav": null
     },
     {
-      "id": "approach",
+      "id": "how-it-works",
       "eyebrow": "Section 04",
-      "nav": null
+      "nav": "How it works"
     },
     {
       "id": "evaluation",
@@ -62,9 +62,9 @@
       "nav": "Pricing"
     },
     {
-      "id": "spy-pipeline",
+      "id": "partners",
       "eyebrow": "Section 09",
-      "nav": "SPY Pipeline"
+      "nav": "Partners"
     },
     {
       "id": "how-to-begin",
@@ -110,8 +110,8 @@
     ]
   },
   "pricing": {
-    "heading": "Planned post-evaluation enrollment options",
-    "status": "Checkout and billing are not built. These are the planned enrollment prices, published so the cost is known before anyone starts an evaluation. No payment can be taken on this site today, and there is nothing here to buy.",
+    "heading": "Enrollment after the evaluation",
+    "status": "Enrollment is arranged directly with us after your evaluation. There is no online checkout, and no payment can be taken on this site.",
     "rows": [
       {
         "term": "Monthly",
@@ -123,9 +123,11 @@
       }
     ],
     "includes": [
+      "The Keelwise trading assistant, installed on your computer.",
+      "Broker-held protective stops on every approved buy.",
       "The daily market situation report.",
-      "The Rosie decision-support dashboard.",
-      "Alerts that flag when conditions change."
+      "Alerts that flag when conditions change.",
+      "Guided setup and support."
     ],
     "notThis": [
       "Not a signal service to copy.",
@@ -137,7 +139,7 @@
   "startCards": [
     {
       "title": "What the system is",
-      "body": "The problem it addresses, in plain language, and what it actually does.",
+      "body": "The problem it addresses, and how Keelwise works.",
       "href": "#what-we-do"
     },
     {
@@ -147,22 +149,22 @@
     },
     {
       "title": "The 33-day evaluation",
-      "body": "How the free evaluation is structured, and why it is demo and paper only.",
+      "body": "How the free evaluation works on an IBKR paper account.",
       "href": "#evaluation"
     },
     {
       "title": "Pricing and what you get",
-      "body": "Planned enrollment prices, what each plan includes, and what it is not.",
+      "body": "Enrollment prices, what each plan includes, and what it is not.",
       "href": "#pricing"
     },
     {
-      "title": "SPY Pipeline eligibility",
-      "body": "What the component is and the account requirement that governs its use.",
-      "href": "#spy-pipeline"
+      "title": "For brokers and partners",
+      "body": "How Keelwise works alongside a broker, and how to start a conversation.",
+      "href": "#partners"
     },
     {
-      "title": "Account access",
-      "body": "What exists today, what does not, and where that leaves you.",
+      "title": "How to begin",
+      "body": "Guided setup, partner conversations, or the demo.",
       "href": "#how-to-begin"
     }
   ]
