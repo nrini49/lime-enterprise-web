@@ -83,7 +83,7 @@ function renderPricingTable(pricing) {
               <thead>
                 <tr>
                   <th scope="col">Term</th>
-                  <th scope="col" class="num">Planned price</th>
+                  <th scope="col" class="num">Price</th>
                 </tr>
               </thead>
               <tbody>${rows}
@@ -191,7 +191,7 @@ async function main() {
   await writeFile(path.join(root, 'index.html'), html, 'utf8');
   console.log(
     `built index.html — ${sectionOrder.length} sections, ${startCards.length} start cards, ` +
-      `${pricing.rows.length} planned prices, ${marketReport.rows.length} example report rows`,
+      `${pricing.rows.length} prices, ${marketReport.rows.length} example report rows`,
   );
 }
 

@@ -10,7 +10,7 @@
       name="description"
       content="Keelwise is a loss-prevention-first trading assistant from Lime Signalworks. It connects to Interactive Brokers, proposes trades for your approval, and protects every approved buy with stops held at the broker."
     />
-    <meta name="robots" content="noindex, nofollow" />
+    <meta name="robots" content="index, follow" />
     <!-- Declares light as the default rendering scheme so a dark operating system does
          not paint the canvas or form controls dark before the stylesheet applies. The
          dark palette is reached only through the toggle, via the color-scheme property. -->
@@ -97,7 +97,7 @@
                  reachable, so a visitor learns that before spending a click on it. -->
             <div class="cta-block" id="demo">
               <a class="cta" href="https://limesignalworks.pplx.app/" target="_blank" rel="noopener noreferrer">Open the Keelwise demo<span class="ext" aria-hidden="true">&#8599;</span><span class="sr-only"> (opens in a new tab)</span></a>
-              <p class="cta-block__disclosure" data-demo-disclosure>Demonstration environment. Simulated data. No broker connection and no real orders. Not production-ready.</p>
+              <p class="cta-block__disclosure" data-demo-disclosure>Demonstration environment. Simulated data. No broker connection and no real orders.</p>
               <p class="cta-block__signin" data-demo-signin>Perplexity sign-in may be required.</p>
             </div>
 
@@ -178,9 +178,9 @@
                 width="1200"
                 height="750"
                 loading="lazy"
-                alt="Keelwise operator workstation, demo with test data: header controls, Account Overview, Positions with the Signal column, and broker-held Stops"
+                alt="IB Keelwise operator workstation, demo with test data: header controls, Account Overview, Positions with the Signal column, and broker-held Stops"
               />
-              <figcaption>The Keelwise dashboard, shown here with test data. <a href="/rosie-demo/">Open the interactive demo</a>.</figcaption>
+              <figcaption>The IB Keelwise dashboard, shown here with test data. <a href="/rosie-demo/">Open the interactive demo</a>.</figcaption>
             </figure>
           </div>
         </div>
@@ -193,9 +193,10 @@
             <p class="label rule-after">Section 02</p>
             <h2 id="market-report-title">Daily market situation report</h2>
             <p>
-              Each market day we publish a plain-language summary of conditions: index-level moves,
-              volatility, and a stated risk posture. Reports are published after the close and are
-              labelled with their as-of date.
+              Our market situation report is a plain-language summary of conditions: index-level
+              moves, volatility, and a stated risk posture. It is written after the close, dated, and
+              published on our Signals site; Keelwise reads the stated posture before proposing any
+              new buy. The table below shows the report format.
             </p>
           </div>
 
@@ -256,7 +257,7 @@
             </table>
           </div>
             <p class="panel__posture">Conditions read bearish. Stated posture: protect first.</p>
-            <p class="panel__note">This is a worked example of the report format, not current market data. The figures shown are the last completed report carried over from the reporting archive and are dated. Reports are published after the close, never in real time, and live market data may be newer than any published report.</p>
+            <p class="panel__note">This table shows the report format using figures from a past report; it is not current market data. Reports are written after the close and dated, never in real time.</p>
           </div>
         </div>
       </section>
@@ -468,7 +469,7 @@
               <thead>
                 <tr>
                   <th scope="col">Term</th>
-                  <th scope="col" class="num">Planned price</th>
+                  <th scope="col" class="num">Price</th>
                 </tr>
               </thead>
               <tbody>
@@ -483,7 +484,7 @@
               </tbody>
             </table>
           </div>
-              <p class="panel__note" data-pricing-status>Enrollment is arranged directly with us after your evaluation. There is no online checkout, and no payment can be taken on this site.</p>
+              <p class="panel__note" data-pricing-status>Enrollment is arranged directly with us, by phone or email, after your evaluation. Nothing is sold or charged on this site.</p>
             </div>
 
             <div class="stack">
@@ -571,14 +572,15 @@
               <p class="label">Just looking</p>
               <h3>Open the demo</h3>
               <p>
-                See the real dashboard with test data before you talk to anyone. A Perplexity
-                sign-in may be required to open it.
+                See the real dashboard with test data, or watch our short videos on YouTube. A
+                Perplexity sign-in may be required to open the demo.
               </p>
             </li>
           </ol>
           <p class="anchor-row">
             <a class="anchor-link" href="#contact">Call or email us</a>
             <a class="anchor-link" href="#demo">Open the demo</a>
+            <a class="anchor-link" href="https://www.youtube.com/@noelrini3882" target="_blank" rel="noopener noreferrer">Watch on YouTube<span class="sr-only"> (opens in a new tab)</span></a>
           </p>
         </div>
       </section>

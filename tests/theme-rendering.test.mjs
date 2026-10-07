@@ -880,8 +880,7 @@ test('rendered: the page is complete and usable with JavaScript disabled', async
     assert.equal(await page.locator('button').count(), 0, 'no inert control without JS');
     assert.equal(
       await page.locator('[data-demo-disclosure]').innerText(),
-      'Demonstration environment. Simulated data. No broker connection and no real orders. ' +
-        'Not production-ready.',
+      'Demonstration environment. Simulated data. No broker connection and no real orders.',
       'the disclosure wording is served, not scripted',
     );
     // The toggle is the only scripted control; with script off it must still be labelled.
