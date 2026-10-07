@@ -110,16 +110,20 @@
     ]
   },
   "pricing": {
-    "heading": "Enrollment after the evaluation",
-    "status": "Enrollment is arranged directly with us, by phone or email, after your evaluation. Nothing is sold or charged on this site.",
+    "heading": "Keelwise pricing",
+    "status": "Pay $183.33 a month for 18 months and Keelwise is yours to keep. Cancel any time, no questions asked; if payments stop, Keelwise pauses until they resume. From month 19, maintenance of $330 a year covers software updates and the daily market report. Enrollment is arranged directly with us, by phone or email, after your evaluation. Nothing is sold or charged on this site.",
     "rows": [
       {
-        "term": "Monthly",
-        "price": "$200"
+        "term": "Keelwise, paid over 18 months",
+        "price": "$3,300"
       },
       {
-        "term": "Annually",
-        "price": "$1,000"
+        "term": "Monthly payment, months 1 to 18",
+        "price": "$183.33"
+      },
+      {
+        "term": "Maintenance from month 19",
+        "price": "$330/year"
       }
     ],
     "includes": [
@@ -154,7 +158,7 @@
     },
     {
       "title": "Pricing and what you get",
-      "body": "Enrollment prices, what each plan includes, and what it is not.",
+      "body": "One price, paid over 18 months, then it is yours. What it includes, and what it is not.",
       "href": "#pricing"
     },
     {

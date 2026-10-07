@@ -261,14 +261,22 @@ test('data: the section order is the translated Site 1 order, with unique ids', 
   assert.equal(new Set(ids).size, ids.length, 'section ids must be unique');
 });
 
-test('data: planned prices are the locked figures', () => {
+test('data: prices are the locked figures (2026-10-07)', () => {
   assert.deepEqual(
     pricing.rows.map((r) => [r.term, r.price]),
     [
-      ['Monthly', '$200'],
-      ['Annually', '$1,000'],
+      ['Keelwise, paid over 18 months', '$3,300'],
+      ['Monthly payment, months 1 to 18', '$183.33'],
+      ['Maintenance from month 19', '$330/year'],
     ],
   );
+});
+
+test('dom: no retired price appears anywhere', () => {
+  const text = visibleText();
+  for (const old of ['$200', '$1,000', '$20 ']) {
+    assert.ok(!text.includes(old), `retired price on the page: ${old}`);
+  }
 });
 
 test('data: the market example carries figures and a dated as-of label', () => {
