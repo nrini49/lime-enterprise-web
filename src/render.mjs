@@ -178,6 +178,7 @@ async function main() {
         `<span class="ext" aria-hidden="true">&#8599;</span></a>`,
     )
     .replaceAll('{{SECURITIES_DISCLAIMER}}', esc(canonical.securitiesDisclaimer))
+    .replaceAll('{{RISK_DISCLOSURE}}', esc(canonical.riskDisclosure))
     .replaceAll('{{EVAL_DAYS}}', String(canonical.evaluationDays))
     .replaceAll('{{COPYRIGHT}}', esc(canonical.copyright));
 

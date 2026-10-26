@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>LIME Enterprise — Keelwise, trading decision support that protects capital first</title>
+    <title>LIME Enterprise — Rosie, the automated trading operator that protects your account first</title>
     <meta
       name="description"
-      content="Keelwise is a loss-prevention-first trading assistant from Lime Signalworks. It connects to Interactive Brokers, proposes trades for your approval, and protects every approved buy with stops held at the broker."
+      content="Rosie is an automated, rules-based trading operator from Lime Signalworks. She watches the markets, applies your risk rules, places the trades and puts a stop on every position, so you supervise instead of watching every tick. Prove her free for 33 days in paper mode."
     />
     <meta name="robots" content="index, follow" />
     <!-- Declares light as the default rendering scheme so a dark operating system does
@@ -64,9 +64,10 @@
           >
         </a>
 
-        <nav class="masthead__nav" aria-label="Sections"><a href="#what-we-do">What we do</a>
-          <a href="#market-report">Market report</a>
+        <nav class="masthead__nav" aria-label="Sections"><a href="#what-we-do">What Rosie does</a>
           <a href="#how-it-works">How it works</a>
+          <a href="#protection">Protection</a>
+          <a href="#markets">Markets</a>
           <a href="#evaluation">Evaluation</a>
           <a href="#pricing">Pricing</a>
           <a href="#partners">Partners</a>
@@ -82,43 +83,54 @@
       <section class="hero">
         <div class="shell hero__grid">
           <div>
-            <p class="label rule-after">LIME Enterprise</p>
-            <h1>Keelwise: trading decision support that protects capital first</h1>
+            <p class="label rule-after">Rosie IB · Operator Workstation</p>
+            <h1>Meet Rosie. She trades your rules, so you don’t have to watch every tick.</h1>
             <p class="hero__lede">
-              Keelwise (formerly Rosie) is a trading assistant from Lime Signalworks. It watches the
-              market, proposes trades with its reasons, and waits for your approval. Every approved
-              buy goes to your broker with two protective stops already attached. Protecting capital
-              comes first. The decisions stay yours.
+              Rosie is an automated, rules-based trading operator from Lime Signalworks. She watches
+              the markets, applies your risk rules and places the trades those rules call for. Once
+              she is set up, your job is to supervise. And she is built to protect your account
+              first: a stop on every position, hard limits on every trade, and one button that stops
+              everything.
             </p>
+
+            <div class="hero__actions">
+              <a class="hero-action" href="#contact">Book a guided setup</a>
+              <a class="hero-action hero-action--quiet" href="#how-it-works">See how Rosie works</a>
+            </div>
 
             <!-- E1 call to action. Both facts below are static markup, rendered before any
                  click, and neither is a toast, a tooltip, or collapsed content. The second
                  states the access precondition: the destination is not anonymously
                  reachable, so a visitor learns that before spending a click on it. -->
             <div class="cta-block" id="demo">
-              <a class="cta" href="https://limesignalworks.pplx.app/" target="_blank" rel="noopener noreferrer">Open the Keelwise demo<span class="ext" aria-hidden="true">&#8599;</span><span class="sr-only"> (opens in a new tab)</span></a>
+              <a class="cta" href="https://limesignalworks.pplx.app/" target="_blank" rel="noopener noreferrer">Open the Rosie demo<span class="ext" aria-hidden="true">&#8599;</span><span class="sr-only"> (opens in a new tab)</span></a>
               <p class="cta-block__disclosure" data-demo-disclosure>Demonstration environment. Simulated data. No broker connection and no real orders.</p>
               <p class="cta-block__signin" data-demo-signin>Perplexity sign-in may be required.</p>
             </div>
 
             <dl class="hero__meta">
               <div>
-                <dt>Broker</dt>
-                <dd>Interactive Brokers, through IBKR's own TWS. Running on IBKR paper accounts</dd>
-              </div>
-              <div>
-                <dt>Orders</dt>
-                <dd>Keelwise proposes, you approve. Nothing is sent without you</dd>
+                <dt>What she does</dt>
+                <dd>Watches, sizes, places and protects trades by your rules. You supervise</dd>
               </div>
               <div>
                 <dt>Protection</dt>
-                <dd>Two trailing stops held at the broker on every approved buy</dd>
+                <dd>Disaster stop on every position, 2% risk per trade, 6% total open-risk cap</dd>
               </div>
               <div>
-                <dt>Evaluation</dt>
+                <dt>Markets</dt>
+                <dd>Stocks and ETFs today. Options, futures, crypto and forex in development</dd>
+              </div>
+              <div>
+                <dt>Status</dt>
+                <dd>Interactive Brokers version running in paper mode today</dd>
+              </div>
+              <div>
+                <dt>Prove it first</dt>
                 <dd>Free for 33 days in paper mode, with guided setup</dd>
               </div>
             </dl>
+            <p class="hero__risk">Trading involves risk of loss. Rosie enforces your limits; she cannot remove market risk.</p>
           </div>
           <div>
             <svg
@@ -152,24 +164,29 @@
         </div>
       </section>
 
-      <!-- E2 — what Lime Signalworks does -->
+      <!-- E2 — what Rosie does for you -->
       <section class="section" id="what-we-do" aria-labelledby="what-we-do-title">
         <div class="shell">
           <div class="section__head">
             <p class="label rule-after">Section 01</p>
-            <h2 id="what-we-do-title">What Lime Signalworks does</h2>
+            <h2 id="what-we-do-title">What Rosie does for you</h2>
           </div>
           <div class="section__grid">
             <div class="prose">
-              <p>
-                Lime Signalworks provides AI-assisted trading and investing support that prioritizes
-                protecting capital before pursuing gains. Individuals and companies face the same
-                problem: making disciplined market decisions under pressure, without outsourcing
-                judgment to someone else's conviction.
+              <p class="prose__lead">
+                Rosie does the watching, the sizing, the order entry and the protection. You set the
+                rules and stay in charge.
               </p>
               <p>
-                We supply the reporting, the structure, and the decision support. We do not take
-                positions for you, and we do not tell you what to buy. The decisions remain yours.
+                Most people cannot watch the market all day, and most people who try end up breaking
+                their own rules under pressure. Rosie is built to follow the rules you set: no impulse
+                buys, no oversized positions, no skipped stops.
+              </p>
+              <p>
+                She samples prices through the session, checks every idea against your risk limits,
+                sizes the position, sends the order to your broker and attaches protection the moment
+                it fills. Everything she does shows up on the Operator Workstation, where you can step
+                in, pause her or shut everything down at any time.
               </p>
             </div>
             <figure class="product-shot">
@@ -178,25 +195,252 @@
                 width="1200"
                 height="750"
                 loading="lazy"
-                alt="IB Keelwise operator workstation, demo with test data: header controls, Account Overview, Positions with the Signal column, and broker-held Stops"
+                alt="Rosie IB Operator Workstation, demo with test data: header controls, Account Overview, Positions with the Signal column, and broker-held Stops"
               />
-              <figcaption>The IB Keelwise dashboard, shown here with test data. <a href="/rosie-demo/">Open the interactive demo</a>.</figcaption>
+              <figcaption>The Rosie IB Operator Workstation, shown here with test data. <a href="/rosie-demo/">Open the interactive demo</a>.</figcaption>
             </figure>
           </div>
         </div>
       </section>
 
-      <!-- E3 — daily market situation report -->
-      <section class="section" id="market-report" aria-labelledby="market-report-title">
+      <!-- E3 — how Rosie works -->
+      <section class="section" id="how-it-works" aria-labelledby="how-it-works-title">
         <div class="shell">
           <div class="section__head">
             <p class="label rule-after">Section 02</p>
-            <h2 id="market-report-title">Daily market situation report</h2>
+            <h2 id="how-it-works-title">How Rosie works, in three steps</h2>
+            <p>
+              Set her up once. Let her run. Keep watch.
+            </p>
+          </div>
+          <ol class="stages">
+            <li>
+              <p class="label">Step one</p>
+              <h3>You set the rules</h3>
+              <p>
+                Pick your markets, your risk per trade and your daily loss limit. We set Rosie up with
+                you on a paper account first, so you see her work before any real money is involved.
+              </p>
+            </li>
+            <li>
+              <p class="label">Step two</p>
+              <h3>Rosie watches and trades</h3>
+              <p>
+                She tracks prices against their recent averages and reads the day’s stated market
+                posture. When your rules say enter or exit, she sizes the position and places the
+                order. On a defensive day, new buys are blocked.
+              </p>
+            </li>
+            <li>
+              <p class="label">Step three</p>
+              <h3>You supervise</h3>
+              <p>
+                Every position, stop and order is on your screen, and every decision is written to a
+                Journal and Trade Record you keep. Live trading runs only when you switch it on, and
+                one click stops it all.
+              </p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- E4 — what Rosie protects -->
+      <section class="section" id="protection" aria-labelledby="protection-title">
+        <div class="shell">
+          <div class="section__head">
+            <p class="label rule-after">Section 03</p>
+            <h2 id="protection-title">Built to protect the account first</h2>
+            <p>
+              Before Rosie chases a gain, she limits what a single trade, or a single bad day, can
+              cost you.
+            </p>
+          </div>
+          <ul class="guards">
+            <li>
+              <h3>A disaster stop on every position</h3>
+              <p>No position runs without a fixed protective stop. Stops are held at the broker, so they keep working even if your computer is off.</p>
+            </li>
+            <li>
+              <h3>2% risk per trade</h3>
+              <p>Each position is sized so that, at its stop, it risks no more than 2% of the account.</p>
+            </li>
+            <li>
+              <h3>6% total open-risk cap</h3>
+              <p>Add up the risk on everything open: Rosie will not let it pass 6%.</p>
+            </li>
+            <li>
+              <h3>Daily loss limit and kill switch</h3>
+              <p>Hit the day’s loss limit and new trading halts. No chasing losses.</p>
+            </li>
+            <li>
+              <h3>STOP ALL and FLATTEN ALL</h3>
+              <p>One button halts Rosie. One button closes every open position. You can take over at any moment.</p>
+            </li>
+            <li>
+              <h3>Paper mode to prove it first</h3>
+              <p>Run Rosie on a paper account with real market prices before a single real dollar is at stake.</p>
+            </li>
+          </ul>
+          <ul class="ticks">
+            <li>A symbol without measured price history is refused, never given a guessed stop.</li>
+            <li>Rosie runs on your own computer. Your broker login stays with your broker.</li>
+            <li>Limits reduce how much a trade or a day can cost. They do not eliminate losses.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- E5 — markets roadmap -->
+      <section class="section" id="markets" aria-labelledby="markets-title">
+        <div class="shell">
+          <div class="section__head">
+            <p class="label rule-after">Section 04</p>
+            <h2 id="markets-title">One operator. A wide range of markets.</h2>
+            <p>
+              Rosie is being built to cover stocks, ETFs, options, futures, cryptocurrency and forex:
+              a range of markets ordinary traders rarely get from a single tool.
+            </p>
+          </div>
+          <ol class="roadmap">
+            <li>
+              <p class="flag flag--live">Available today</p>
+              <h3>Stocks and ETFs</h3>
+              <p>Interactive Brokers and Schwab versions. The Interactive Brokers version runs in paper mode today.</p>
+            </li>
+            <li>
+              <p class="flag">Coming next · in development</p>
+              <h3>Options and futures</h3>
+              <p>The same rules-first protection, extended to options and futures.</p>
+            </li>
+            <li>
+              <p class="flag">Coming after that · in development</p>
+              <h3>Cryptocurrency and forex</h3>
+              <p>Rosie’s discipline, brought to crypto and currency markets.</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- E6 — the 33-day evaluation -->
+      <section class="section" id="evaluation" aria-labelledby="evaluation-title">
+        <div class="shell">
+          <div class="section__head">
+            <p class="label rule-after">Section 05</p>
+            <h2 id="evaluation-title">Prove her on paper: free for 33 days</h2>
+            <p>
+              Every new user starts with a free 33-day evaluation on an Interactive Brokers
+              paper account: the real Rosie and real market prices, with no live capital and no
+              real-money orders. We set it up with you. Continuing afterwards is your choice.
+            </p>
+          </div>
+
+          <ol class="stages">
+            <li>
+              <p class="label">Stage one</p>
+              <h3>Set up together</h3>
+              <p>
+                We install Rosie with you, walk through the Operator Workstation and set your rules.
+              </p>
+            </li>
+            <li>
+              <p class="label">Stage two</p>
+              <h3>Watch her work</h3>
+              <p>
+                Rosie trades the paper account each day. You see every order, stop and journal entry.
+              </p>
+            </li>
+            <li>
+              <p class="label">Stage three</p>
+              <h3>Judge the record</h3>
+              <p>
+                Review the period on the evidence, not on a sales pitch, and decide whether to
+                continue.
+              </p>
+            </li>
+          </ol>
+
+          <a class="anchor-link" href="#pricing">See pricing and how to start</a>
+        </div>
+      </section>
+
+      <!-- E7 — pricing and what you get -->
+      <section class="section" id="pricing" aria-labelledby="pricing-title">
+        <div class="shell">
+          <div class="section__head">
+            <p class="label rule-after">Section 06</p>
+            <h2 id="pricing-title">One price. Then Rosie is yours.</h2>
+            <p>
+              Start with the free 33-day paper evaluation. If you continue, there is one
+              price: $3,300 paid over 18 months, and then Rosie is yours to keep.
+            </p>
+          </div>
+
+          <div class="split">
+            <div class="panel">
+              <div class="panel__head">
+                <p class="label">Rosie pricing</p>
+              </div>
+              <div class="table-wrap">
+            <table class="data-table" data-pricing-table>
+              <caption class="sr-only">Rosie pricing</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Term</th>
+                  <th scope="col" class="num">Price</th>
+                </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <th scope="row">Rosie, paid over 18 months</th>
+                <td class="num">$3,300</td>
+              </tr>
+              <tr>
+                <th scope="row">Monthly payment, months 1 to 18</th>
+                <td class="num">$183.33</td>
+              </tr>
+              <tr>
+                <th scope="row">Maintenance from month 19</th>
+                <td class="num">$330/year</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+              <p class="panel__note" data-pricing-status>Pay $183.33 a month for 18 months and Rosie is yours to keep. Cancel any time, no questions asked; if payments stop, Rosie pauses until they resume. From month 19, maintenance of $330 a year covers software updates and the daily market report. Enrollment is arranged directly with us, by phone or email, after your evaluation. Nothing is sold or charged on this site.</p>
+            </div>
+
+            <div class="stack">
+              <div>
+                <h3>What Rosie includes</h3>
+                <ul class="ticks">
+                <li>Rosie, the automated trading operator, installed on your computer.</li>
+                <li>A broker-held protective stop on every position.</li>
+                <li>Built-in risk limits: 2% per trade, 6% total open risk, a daily loss limit.</li>
+                <li>The daily market situation report.</li>
+                <li>Guided setup and support.</li></ul>
+              </div>
+              <div>
+                <h3>What this is not</h3>
+                <ul class="ticks ticks--neg">
+                <li>Not a promise of profit.</li>
+                <li>Not a signal service to copy.</li>
+                <li>Not personalized investment advice.</li>
+                <li>Not hands-off: you supervise Rosie and can stop her at any time.</li></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- E8 — daily market situation report -->
+      <section class="section" id="market-report" aria-labelledby="market-report-title">
+        <div class="shell">
+          <div class="section__head">
+            <p class="label rule-after">Section 07</p>
+            <h2 id="market-report-title">The daily market report Rosie reads</h2>
             <p>
               Our market situation report is a plain-language summary of conditions: index-level
               moves, volatility, and a stated risk posture. It is written after the close, dated, and
-              published on our Signals site; Keelwise reads the stated posture before proposing any
-              new buy. The table below shows the report format.
+              published on our Signals site. Rosie reads the stated posture before opening any new
+              buy. The table below shows the report format.
             </p>
           </div>
 
@@ -262,254 +506,22 @@
         </div>
       </section>
 
-      <!-- E4 — what we commit to, and what we do not -->
+      <!-- E9 — straight talk: what we commit to, and what we do not -->
       <section class="section" id="commitments" aria-labelledby="commitments-title">
         <div class="shell">
           <div class="section__head">
-            <p class="label rule-after">Section 03</p>
-            <h2 id="commitments-title">What we commit to, and what we do not</h2>
+            <p class="label rule-after">Section 08</p>
+            <h2 id="commitments-title">Straight talk</h2>
           </div>
           <div class="prose">
             <p class="prose__lead">
               We do not guarantee profits and we cannot eliminate risk. No honest provider can.
             </p>
             <p>
-              Markets move in every direction, and your decisions and results are your own. What we
-              commit to is clear instruction, honest tooling, and a system designed to weigh capital
-              preservation ahead of gain.
+              What we do commit to is discipline you can see: a rules-based operator, hard risk limits,
+              a stop on every position, and a full record of every decision. Markets move in every
+              direction. The rules Rosie runs, and the decisions about your account, stay yours.
             </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- E5 — how Keelwise works -->
-      <section class="section" id="how-it-works" aria-labelledby="how-it-works-title">
-        <div class="shell">
-          <div class="section__head">
-            <p class="label rule-after">Section 04</p>
-            <h2 id="how-it-works-title">How Keelwise works</h2>
-            <p>
-              Discipline and decision support in one system. Keelwise does the watching and the
-              bookkeeping; you make the call.
-            </p>
-          </div>
-          <ol class="stages">
-            <li>
-              <p class="label">Step one</p>
-              <h3>It watches</h3>
-              <p>
-                Keelwise samples prices about once a minute and compares each one with its recent
-                average. It also checks the day's stated market posture: on a defensive day, new
-                buys are blocked.
-              </p>
-            </li>
-            <li>
-              <p class="label">Step two</p>
-              <h3>It proposes, you decide</h3>
-              <p>
-                When a price moves clearly above its average, Keelwise proposes a buy and shows its
-                reason. When a holding falls clearly below, it proposes closing. Nothing reaches your
-                broker until you approve it.
-              </p>
-            </li>
-            <li>
-              <p class="label">Step three</p>
-              <h3>Every buy is protected</h3>
-              <p>
-                An approved buy goes out as a limit order priced from a live quote, with two
-                trailing stops held at the broker. The stops are sized from each symbol's measured
-                overnight moves, so ordinary noise does not shake you out, and they keep working
-                even if your computer is off.
-              </p>
-            </li>
-          </ol>
-          <ul class="ticks">
-            <li>A symbol without measured history is refused, never given a guessed stop.</li>
-            <li>A daily loss limit, account checks, and a separate paper/live switch run before any order.</li>
-            <li>Every proposal, approval, and order is written to a Journal and a Trade Record you keep.</li>
-            <li>Keelwise runs on your own computer. Your broker login stays with your broker.</li>
-          </ul>
-        </div>
-      </section>
-      <!-- E6 — the 33-day evaluation -->
-      <section class="section" id="evaluation" aria-labelledby="evaluation-title">
-        <div class="shell">
-          <div class="section__head">
-            <p class="label rule-after">Section 05</p>
-            <h2 id="evaluation-title">The 33-day evaluation</h2>
-            <p>
-              New users begin with a free 33-day evaluation on an Interactive Brokers paper
-              account: the real Keelwise and real market prices, with no live capital and no real-money
-              orders. We help you set it up. Continuing afterwards is optional.
-            </p>
-          </div>
-
-          <ol class="stages">
-            <li>
-              <p class="label">Stage one</p>
-              <h3>Setup and orientation</h3>
-              <p>
-                Learn what the report covers, how the dashboard is laid out, and what each condition
-                flag means before relying on any of it.
-              </p>
-            </li>
-            <li>
-              <p class="label">Stage two</p>
-              <h3>Daily practice</h3>
-              <p>
-                Let Keelwise propose trades on paper each day, approve or decline them, and see the
-                stops and records it keeps.
-              </p>
-            </li>
-            <li>
-              <p class="label">Stage three</p>
-              <h3>Review</h3>
-              <p>
-                Look back over the period and judge what the process did and did not change about
-                your own behaviour and results.
-              </p>
-            </li>
-          </ol>
-
-          <p class="prose__aside">
-            The period is long enough to judge the system on your own behaviour rather than on a
-            sales claim. Nothing in the evaluation touches live money.
-          </p>
-
-          <a class="anchor-link" href="#pricing">See pricing and how to start</a>
-        </div>
-      </section>
-
-      <!-- E7 — who this is for -->
-      <section class="section" id="who-its-for" aria-labelledby="who-its-for-title">
-        <div class="shell">
-          <div class="section__head">
-            <p class="label rule-after">Section 06</p>
-            <h2 id="who-its-for-title">Who this is for</h2>
-          </div>
-          <div class="prose">
-            <p>
-              This is built for people and firms that have lost money or confidence trading on
-              impulse, and for those who want a documented process instead of a tip service.
-            </p>
-            <p>
-              Market mechanics are often described in language that keeps them inaccessible. We
-              explain them plainly and show the reasoning behind each report. We make no claim about
-              outcomes — only about the clarity of the method.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- E8 — where to start -->
-      <section class="section" id="where-to-start" aria-labelledby="where-to-start-title">
-        <div class="shell">
-          <div class="section__head">
-            <p class="label rule-after">Section 07</p>
-            <h2 id="where-to-start-title">Where to start</h2>
-            <p>
-              The sections below cover what the system is, what it reports, what it costs, and how
-              to begin. Start wherever matches your question.
-            </p>
-          </div>
-          <div class="cards">
-            <a class="card" href="#what-we-do">
-              <h3>What the system is</h3>
-              <p>The problem it addresses, and how Keelwise works.</p>
-              <span class="card__go" aria-hidden="true">&#8594;</span>
-            </a>
-            <a class="card" href="#market-report">
-              <h3>Daily market report</h3>
-              <p>The report format, an as-of-close example, and how freshness is labelled.</p>
-              <span class="card__go" aria-hidden="true">&#8594;</span>
-            </a>
-            <a class="card" href="#evaluation">
-              <h3>The 33-day evaluation</h3>
-              <p>How the free evaluation works on an IBKR paper account.</p>
-              <span class="card__go" aria-hidden="true">&#8594;</span>
-            </a>
-            <a class="card" href="#pricing">
-              <h3>Pricing and what you get</h3>
-              <p>One price, paid over 18 months, then it is yours. What it includes, and what it is not.</p>
-              <span class="card__go" aria-hidden="true">&#8594;</span>
-            </a>
-            <a class="card" href="#partners">
-              <h3>For brokers and partners</h3>
-              <p>How Keelwise works alongside a broker, and how to start a conversation.</p>
-              <span class="card__go" aria-hidden="true">&#8594;</span>
-            </a>
-            <a class="card" href="#how-to-begin">
-              <h3>How to begin</h3>
-              <p>Guided setup, partner conversations, or the demo.</p>
-              <span class="card__go" aria-hidden="true">&#8594;</span>
-            </a></div>
-        </div>
-      </section>
-
-      <!-- E9 — pricing and what you get -->
-      <section class="section" id="pricing" aria-labelledby="pricing-title">
-        <div class="shell">
-          <div class="section__head">
-            <p class="label rule-after">Section 08</p>
-            <h2 id="pricing-title">Pricing and what you get</h2>
-            <p>
-              Start with the free 33-day paper evaluation. If you continue, there is one
-              price: $3,300 paid over 18 months, and then Keelwise is yours to keep.
-            </p>
-          </div>
-
-          <div class="split">
-            <div class="panel">
-              <div class="panel__head">
-                <p class="label">Keelwise pricing</p>
-              </div>
-              <div class="table-wrap">
-            <table class="data-table" data-pricing-table>
-              <caption class="sr-only">Keelwise pricing</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Term</th>
-                  <th scope="col" class="num">Price</th>
-                </tr>
-              </thead>
-              <tbody>
-              <tr>
-                <th scope="row">Keelwise, paid over 18 months</th>
-                <td class="num">$3,300</td>
-              </tr>
-              <tr>
-                <th scope="row">Monthly payment, months 1 to 18</th>
-                <td class="num">$183.33</td>
-              </tr>
-              <tr>
-                <th scope="row">Maintenance from month 19</th>
-                <td class="num">$330/year</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-              <p class="panel__note" data-pricing-status>Pay $183.33 a month for 18 months and Keelwise is yours to keep. Cancel any time, no questions asked; if payments stop, Keelwise pauses until they resume. From month 19, maintenance of $330 a year covers software updates and the daily market report. Enrollment is arranged directly with us, by phone or email, after your evaluation. Nothing is sold or charged on this site.</p>
-            </div>
-
-            <div class="stack">
-              <div>
-                <h3>What Keelwise includes</h3>
-                <ul class="ticks">
-                <li>The Keelwise trading assistant, installed on your computer.</li>
-                <li>Broker-held protective stops on every approved buy.</li>
-                <li>The daily market situation report.</li>
-                <li>Alerts that flag when conditions change.</li>
-                <li>Guided setup and support.</li></ul>
-              </div>
-              <div>
-                <h3>What this is not</h3>
-                <ul class="ticks ticks--neg">
-                <li>Not a signal service to copy.</li>
-                <li>Not a promise of profit.</li>
-                <li>Not personalized investment advice.</li>
-                <li>Alerts indicate changed conditions; the decision is yours.</li></ul>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -523,15 +535,15 @@
           </div>
           <div class="prose">
             <p>
-              Keelwise is built to sit alongside a broker, not in place of one. It runs on the
-              customer's own computer, sends orders through the broker's own API, and leaves the
+              Rosie is built to sit alongside a broker, not in place of one. She runs on the
+              customer’s own computer, sends orders through the broker’s own API, and leaves the
               broker login with the broker. Protective stops live at the broker, where your systems
               can see them.
             </p>
             <p>
-              Keelwise is available to brokers and educators who want to offer it to their
-              customers. On request we share a security overview of how Keelwise handles data and
-              orders, and we welcome your security review.
+              Rosie is available to brokers and educators who want to offer her to their customers.
+              On request we share a security overview of how Rosie handles data and orders, and we
+              welcome your security review.
             </p>
           </div>
           <div class="notice" data-security-standards>
@@ -539,7 +551,7 @@
             <p>
               We design our controls around the SOC 2 Trust Services Criteria: security,
               availability, processing integrity, confidentiality, and privacy. Access, change
-              review, backups, and incident response are written policies. Keelwise has not yet
+              review, backups, and incident response are written policies. Rosie has not yet
               completed a SOC 2 audit; we will pursue one alongside our first broker partner.
             </p>
           </div>
@@ -548,27 +560,32 @@
           </p>
         </div>
       </section>
+
       <!-- E11 — how to begin -->
-      <section class="section" id="how-to-begin" aria-labelledby="how-to-begin-title">
+      <section class="section section--cta" id="how-to-begin" aria-labelledby="how-to-begin-title">
         <div class="shell">
           <div class="section__head">
             <p class="label rule-after">Section 10</p>
-            <h2 id="how-to-begin-title">How to begin</h2>
+            <h2 id="how-to-begin-title">Put Rosie to work</h2>
+            <p>
+              Call or email us today. We will have Rosie running on a paper account with you and
+              start your free 33-day evaluation.
+            </p>
           </div>
           <ol class="stages">
             <li>
               <p class="label">Individuals</p>
               <h3>Book a guided setup</h3>
               <p>
-                Call or email us. We set up Keelwise with you on an Interactive Brokers paper account
-                and start your 33-day evaluation.
+                We set Rosie up with you on an Interactive Brokers paper account and start your
+                33-day evaluation.
               </p>
             </li>
             <li>
               <p class="label">Brokers and firms</p>
               <h3>Start a partner conversation</h3>
               <p>
-                We walk you through Keelwise, share the security overview, and talk about offering it
+                We walk you through Rosie, share the security overview, and talk about offering her
                 to the people you serve.
               </p>
             </li>
@@ -596,8 +613,9 @@
         <div>
           <p class="label">Lime Signalworks LLC · LIME Enterprise</p>
           <p class="foot__note">
-            Keelwise is a product of Lime Signalworks LLC. The daily market report is published on
-            our Signals site; the Leadership library is a separate site.
+            Rosie is a product of Lime Signalworks LLC. Lime Signalworks also offers five
+            TradingView indicators. The daily market report is published on our Signals site; the
+            Leadership library is a separate site.
           </p>
           <!-- Contact is by real mailto: and tel: links; there is no form on this site. -->
           <dl class="contact" id="contact" data-contact>
@@ -624,6 +642,7 @@
         <div>
           <p class="label">Disclaimer</p>
           <p class="foot__disclaimer" data-securities-disclaimer>Lime Signalworks provides educational tools and analysis, not personalized investment advice. Securities trading involves risk of loss. Your decisions and results are your own. Nothing here is an offer to sell or a solicitation to buy any security.</p>
+          <p class="foot__disclaimer" data-risk-disclosure>Trading involves risk of loss. Past performance, including paper-trading results, does not guarantee future results. Nothing on this site is investment advice.</p>
         </div>
       </div>
     </footer>

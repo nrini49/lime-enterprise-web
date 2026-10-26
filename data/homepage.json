@@ -1,8 +1,8 @@
 {
-  "revision": "site2-keelwise-ready-2026-10-06",
+  "revision": "site2-rosie-bolder-2026-10-26",
   "canonical": {
     "demoUrl": "https://limesignalworks.pplx.app/",
-    "demoCtaLabel": "Open the Keelwise demo",
+    "demoCtaLabel": "Open the Rosie demo",
     "demoDisclosure": "Demonstration environment. Simulated data. No broker connection and no real orders.",
     "demoSignIn": "Perplexity sign-in may be required.",
     "contact": {
@@ -18,28 +18,29 @@
     "libraryLabel": "LIME Leadership",
     "securitiesDisclaimer": "Lime Signalworks provides educational tools and analysis, not personalized investment advice. Securities trading involves risk of loss. Your decisions and results are your own. Nothing here is an offer to sell or a solicitation to buy any security.",
     "evaluationDays": 33,
-    "copyright": "© 2026 Lime Signalworks LLC."
+    "copyright": "© 2026 Lime Signalworks LLC.",
+    "riskDisclosure": "Trading involves risk of loss. Past performance, including paper-trading results, does not guarantee future results. Nothing on this site is investment advice."
   },
   "sectionOrder": [
     {
       "id": "what-we-do",
       "eyebrow": "Section 01",
-      "nav": "What we do"
-    },
-    {
-      "id": "market-report",
-      "eyebrow": "Section 02",
-      "nav": "Market report"
-    },
-    {
-      "id": "commitments",
-      "eyebrow": "Section 03",
-      "nav": null
+      "nav": "What Rosie does"
     },
     {
       "id": "how-it-works",
-      "eyebrow": "Section 04",
+      "eyebrow": "Section 02",
       "nav": "How it works"
+    },
+    {
+      "id": "protection",
+      "eyebrow": "Section 03",
+      "nav": "Protection"
+    },
+    {
+      "id": "markets",
+      "eyebrow": "Section 04",
+      "nav": "Markets"
     },
     {
       "id": "evaluation",
@@ -47,19 +48,19 @@
       "nav": "Evaluation"
     },
     {
-      "id": "who-its-for",
+      "id": "pricing",
       "eyebrow": "Section 06",
-      "nav": null
+      "nav": "Pricing"
     },
     {
-      "id": "where-to-start",
+      "id": "market-report",
       "eyebrow": "Section 07",
       "nav": null
     },
     {
-      "id": "pricing",
+      "id": "commitments",
       "eyebrow": "Section 08",
-      "nav": "Pricing"
+      "nav": null
     },
     {
       "id": "partners",
@@ -110,11 +111,11 @@
     ]
   },
   "pricing": {
-    "heading": "Keelwise pricing",
-    "status": "Pay $183.33 a month for 18 months and Keelwise is yours to keep. Cancel any time, no questions asked; if payments stop, Keelwise pauses until they resume. From month 19, maintenance of $330 a year covers software updates and the daily market report. Enrollment is arranged directly with us, by phone or email, after your evaluation. Nothing is sold or charged on this site.",
+    "heading": "Rosie pricing",
+    "status": "Pay $183.33 a month for 18 months and Rosie is yours to keep. Cancel any time, no questions asked; if payments stop, Rosie pauses until they resume. From month 19, maintenance of $330 a year covers software updates and the daily market report. Enrollment is arranged directly with us, by phone or email, after your evaluation. Nothing is sold or charged on this site.",
     "rows": [
       {
-        "term": "Keelwise, paid over 18 months",
+        "term": "Rosie, paid over 18 months",
         "price": "$3,300"
       },
       {
@@ -127,49 +128,18 @@
       }
     ],
     "includes": [
-      "The Keelwise trading assistant, installed on your computer.",
-      "Broker-held protective stops on every approved buy.",
+      "Rosie, the automated trading operator, installed on your computer.",
+      "A broker-held protective stop on every position.",
+      "Built-in risk limits: 2% per trade, 6% total open risk, a daily loss limit.",
       "The daily market situation report.",
-      "Alerts that flag when conditions change.",
       "Guided setup and support."
     ],
     "notThis": [
-      "Not a signal service to copy.",
       "Not a promise of profit.",
+      "Not a signal service to copy.",
       "Not personalized investment advice.",
-      "Alerts indicate changed conditions; the decision is yours."
+      "Not hands-off: you supervise Rosie and can stop her at any time."
     ]
   },
-  "startCards": [
-    {
-      "title": "What the system is",
-      "body": "The problem it addresses, and how Keelwise works.",
-      "href": "#what-we-do"
-    },
-    {
-      "title": "Daily market report",
-      "body": "The report format, an as-of-close example, and how freshness is labelled.",
-      "href": "#market-report"
-    },
-    {
-      "title": "The 33-day evaluation",
-      "body": "How the free evaluation works on an IBKR paper account.",
-      "href": "#evaluation"
-    },
-    {
-      "title": "Pricing and what you get",
-      "body": "One price, paid over 18 months, then it is yours. What it includes, and what it is not.",
-      "href": "#pricing"
-    },
-    {
-      "title": "For brokers and partners",
-      "body": "How Keelwise works alongside a broker, and how to start a conversation.",
-      "href": "#partners"
-    },
-    {
-      "title": "How to begin",
-      "body": "Guided setup, partner conversations, or the demo.",
-      "href": "#how-to-begin"
-    }
-  ]
+  "startCards": []
 }

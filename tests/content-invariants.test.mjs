@@ -20,7 +20,7 @@ const $ = cheerio.load(html);
 const DEMO_URL = 'https://limesignalworks.pplx.app/';
 const LEADERSHIP_URL = 'https://signals.limesignalworks.com';
 const LIBRARY_URL = 'https://leadership.limesignalworks.com';
-const DEMO_LABEL = 'Open the Keelwise demo';
+const DEMO_LABEL = 'Open the Rosie demo';
 const DEMO_DISCLOSURE =
   'Demonstration environment. Simulated data. No broker connection and no real orders.';
 const DEMO_SIGNIN = 'Perplexity sign-in may be required.';
@@ -150,7 +150,8 @@ const FORBIDDEN_CLAIMS = [
   'candlestick',
   'sets a new bar',
   'nothing armed until you say so',
-  'schwab',
+  // 2026-10-26: 'schwab' removed from this list. The home page now names the Schwab
+  // version of Rosie under Stocks and ETFs at the owner's direction.
   'refer a friend',
   'ibkr.com',
   'interactivebrokers.com',
@@ -246,13 +247,13 @@ test('data: the section order is the translated Site 1 order, with unique ids', 
     sectionOrder.map((s) => s.id),
     [
       'what-we-do',
+      'how-it-works',
+      'protection',
+      'markets',
+      'evaluation',
+      'pricing',
       'market-report',
       'commitments',
-      'how-it-works',
-      'evaluation',
-      'who-its-for',
-      'where-to-start',
-      'pricing',
       'partners',
       'how-to-begin',
     ],
@@ -265,7 +266,7 @@ test('data: prices are the locked figures (2026-10-07)', () => {
   assert.deepEqual(
     pricing.rows.map((r) => [r.term, r.price]),
     [
-      ['Keelwise, paid over 18 months', '$3,300'],
+      ['Rosie, paid over 18 months', '$3,300'],
       ['Monthly payment, months 1 to 18', '$183.33'],
       ['Maintenance from month 19', '$330/year'],
     ],
@@ -563,7 +564,7 @@ test('dom: the market example is dated and carries a freshness caveat', () => {
   assert.equal(norm($('[data-report-asof]').text()), marketReport.asOfLabel);
   const caveat = norm($('[data-report-caveat]').text());
   assert.ok(/example/i.test(caveat) && /not real-time/i.test(caveat), 'prominent dated caveat');
-  const notice = norm($('.panel__note').first().text());
+  const notice = norm($('section#market-report .panel__note').first().text());
   assert.ok(/not current market data/i.test(notice), 'the example is not presented as current');
   const section = $('section#market-report');
   assert.equal(section.find('a[href]').length, 0, 'the report section adds no links');
@@ -628,6 +629,46 @@ test('dom: the footer carries the exact securities disclaimer', () => {
   assert.equal(disclaimer.length, 1);
   assert.equal(norm(disclaimer.text()), SECURITIES_DISCLAIMER);
   assert.equal(disclaimer.closest('footer').length, 1, 'the disclaimer sits in the footer');
+});
+
+/* ---------- risk disclosure and roadmap honesty (2026-10-26 rewrite) ---------- */
+
+const RISK_DISCLOSURE =
+  'Trading involves risk of loss. Past performance, including paper-trading results, does not ' +
+  'guarantee future results. Nothing on this site is investment advice.';
+
+test('dom: the footer carries the plain risk disclosure', () => {
+  assert.equal(canonical.riskDisclosure, RISK_DISCLOSURE);
+  const el = $('[data-risk-disclosure]');
+  assert.equal(el.length, 1);
+  assert.equal(norm(el.text()), RISK_DISCLOSURE);
+  assert.equal(el.closest('footer').length, 1, 'the risk disclosure sits in the footer');
+});
+
+test('dom: markets not yet supported are labelled as in development, never as available', () => {
+  const items = $('section#markets .roadmap li');
+  assert.equal(items.length, 3);
+  const byTitle = Object.fromEntries(
+    items.map((_, el) => [[norm($(el).find('h3').text()), norm($(el).find('.flag').text())]]).get(),
+  );
+  assert.match(byTitle['Stocks and ETFs'], /available today/i);
+  for (const later of ['Options and futures', 'Cryptocurrency and forex']) {
+    assert.match(byTitle[later], /in development/i, `${later} must be labelled in development`);
+    assert.doesNotMatch(byTitle[later], /available/i, `${later} must not read as available`);
+  }
+  assert.ok(/paper mode today/i.test(visibleText()), 'the Interactive Brokers paper status is stated');
+});
+
+test('dom: no promise of profit, perfection, or full replacement of the operator', () => {
+  const text = visibleText().toLowerCase();
+  for (const phrase of [
+    'never loses', 'never lose', 'can\'t lose', 'cannot lose', 'no downside', 'risk-free', 'risk free',
+    'only good', 'replaces you', 'completely replaces', 'set it and forget it', 'guaranteed returns',
+    'guaranteed profit', 'passive income', 'nothing to disadvantage',
+  ]) {
+    assert.ok(!text.includes(phrase), `overclaim on the page: "${phrase}"`);
+  }
+  assert.ok(/you supervise/i.test(text), 'the operator\'s supervisory role is stated');
 });
 
 /* ---------- language and claims ---------- */

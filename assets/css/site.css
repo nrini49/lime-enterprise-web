@@ -362,9 +362,15 @@ a:hover {
   font-size: var(--text-2xl);
   font-weight: 700;
   letter-spacing: -0.02em;
-  line-height: 1.08;
+  line-height: 1.04;
   margin-block: var(--space-5) var(--space-6);
-  max-width: 30ch;
+  max-width: 22ch;
+}
+
+@media (min-width: 60rem) {
+  .hero h1 {
+    font-size: clamp(2.5rem, 1.4rem + 2.6vw, 3.75rem);
+  }
 }
 
 .hero__lede {
@@ -413,6 +419,59 @@ a:hover {
   max-width: 22rem;
   margin-inline-start: auto;
   display: block;
+}
+
+/* Primary hero actions: in-page links to the contact details and how-it-works. */
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-4);
+  margin-top: var(--space-8);
+}
+
+.hero-action {
+  display: inline-flex;
+  align-items: center;
+  min-height: 3rem;
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-sm);
+  background: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  color: var(--color-text-inverse);
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: var(--shadow-md);
+}
+
+.hero-action:hover {
+  background: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+  color: var(--color-text-inverse);
+}
+
+.hero-action--quiet {
+  background: transparent;
+  color: var(--color-primary);
+  box-shadow: none;
+}
+
+.hero-action--quiet:hover {
+  background: var(--color-primary-highlight);
+  color: var(--color-primary-hover);
+}
+
+[data-theme='dark'] .hero-action:not(.hero-action--quiet),
+[data-theme='dark'] .hero-action:not(.hero-action--quiet):hover {
+  color: var(--color-bg);
+}
+
+.hero__risk {
+  margin-top: var(--space-5);
+  font-size: var(--text-xs);
+  color: var(--color-text-faint);
+  max-width: 58ch;
 }
 
 /* ---------- Section media grid (prose + real product image) ---------- */
@@ -488,15 +547,28 @@ a:hover {
   box-shadow: var(--shadow-sm);
 }
 
+.hero .cta-block {
+  margin-top: var(--space-6);
+}
+
+.hero .cta {
+  background: var(--color-surface-2);
+  color: var(--color-primary);
+  border-color: var(--color-border);
+}
+
 .cta:hover {
   background: var(--color-primary-hover);
   border-color: var(--color-primary-hover);
   color: var(--color-text-inverse);
 }
 
-[data-theme='dark'] .cta,
 [data-theme='dark'] .cta:hover {
   color: var(--color-bg);
+}
+
+[data-theme='dark'] .hero .cta:not(:hover) {
+  color: var(--color-primary);
 }
 
 .cta-block__disclosure {
@@ -721,6 +793,65 @@ a:hover {
 .stages p:last-child {
   font-size: var(--text-sm);
   color: var(--color-text-muted);
+}
+
+/* ---------- Protection list and markets roadmap ---------- */
+
+.guards,
+.roadmap {
+  display: grid;
+  gap: var(--space-4);
+  list-style: none;
+  padding: 0;
+}
+
+@media (min-width: 44rem) {
+  .guards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 68rem) {
+  .guards,
+  .roadmap {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.guards li,
+.roadmap li {
+  display: grid;
+  gap: var(--space-2);
+  align-content: start;
+  padding: var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-top: 3px solid var(--color-accent);
+  border-radius: var(--radius-md);
+}
+
+.guards p,
+.roadmap li > p:last-child {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.guards + .ticks {
+  margin-top: var(--space-8);
+}
+
+.roadmap .flag {
+  justify-self: start;
+}
+
+.flag--live {
+  color: var(--color-primary);
+  background: var(--color-primary-highlight);
+  border-color: color-mix(in srgb, var(--color-primary) 35%, transparent);
+}
+
+.section--cta {
+  background-color: var(--color-surface-offset);
 }
 
 /* ---------- Start cards ---------- */
