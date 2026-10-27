@@ -38,38 +38,48 @@
       "nav": "Protection"
     },
     {
-      "id": "markets",
+      "id": "phone",
       "eyebrow": "Section 04",
+      "nav": "Phone and tablet"
+    },
+    {
+      "id": "markets",
+      "eyebrow": "Section 05",
       "nav": "Markets"
     },
     {
+      "id": "indicators",
+      "eyebrow": "Section 06",
+      "nav": "Indicators"
+    },
+    {
       "id": "evaluation",
-      "eyebrow": "Section 05",
+      "eyebrow": "Section 07",
       "nav": "Evaluation"
     },
     {
       "id": "pricing",
-      "eyebrow": "Section 06",
+      "eyebrow": "Section 08",
       "nav": "Pricing"
     },
     {
       "id": "market-report",
-      "eyebrow": "Section 07",
+      "eyebrow": "Section 09",
       "nav": null
     },
     {
       "id": "commitments",
-      "eyebrow": "Section 08",
+      "eyebrow": "Section 10",
       "nav": null
     },
     {
       "id": "partners",
-      "eyebrow": "Section 09",
+      "eyebrow": "Section 11",
       "nav": "Partners"
     },
     {
       "id": "how-to-begin",
-      "eyebrow": "Section 10",
+      "eyebrow": "Section 12",
       "nav": "How to begin"
     }
   ],
