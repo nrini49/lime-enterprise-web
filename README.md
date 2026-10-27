@@ -4,7 +4,7 @@ Static enterprise homepage for the LIME Enterprise surface. Root route `/` only,
 anchor navigation.
 
 This repository is **not** Site 1 (`lime-web-public`, `limesignalworks.com`). Nothing here deploys
-to, reads from, or links into Site 1 beyond the single approved reciprocal link.
+to, reads from, or links into Site 1; the sister-site link buttons were removed.
 
 ## What this surface is
 
@@ -57,7 +57,7 @@ npm run serve        # serve the repo root on http://localhost:4173
    `npm run build`. The build throws on an unreplaced token, on section-order drift against the
    data file, on a duplicate element id, and on an in-page anchor with no target.
 2. **Canonical strings live in `data/homepage.json`.** The demo CTA label, its disclosure, the
-   securities disclaimer, the reciprocal-link label, and the evaluation length are asserted
+   securities disclaimer, and the evaluation length are asserted
    character-for-character by the tests. Change them in the data file, never in the template.
 3. **Add a test with every content rule.** The two suites are the enforcement surface: section
    order, forbidden vocabulary, non-translatable claims, commercial-copy bans, the adjacency of the
@@ -85,8 +85,8 @@ npm run serve        # serve the repo root on http://localhost:4173
   production-ready) and the access precondition, "Perplexity sign-in may be required." Access is
   controlled by the destination's host, so the page must never describe the demo as open,
   anonymous, or certain to work, and must not call it the only route that works.
-- **Exactly one reciprocal link**, labelled "LIME Leadership", pointing at
-  `https://limesignalworks.com`. Those two URLs are the only off-origin destinations on the page.
+- **No sister-site links.** The former "Signals" and "LIME Leadership" footer buttons are gone;
+  the demo and YouTube are the only off-origin destinations on the page.
 - The evaluation is stated as **33 days, demo and paper mode only**, with no live capital and no
   real orders. There is no ninety-day or no-pay claim on this surface.
 - Prices ($20 weekly, $85 monthly, $245 quarterly, $925 annually) are labelled **planned

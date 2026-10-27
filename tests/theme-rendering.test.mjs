@@ -378,65 +378,6 @@ test('rendered theme: toggling light→dark→light writes no browser storage', 
   }
 });
 
-test('rendered theme: the reciprocal Site 1 and Leadership library links are visible and focusable', async (t) => {
-  const server = await startServer();
-  const browser = await chromium.launch();
-  try {
-    for (const { width, height, label } of [
-      { width: 1440, height: 900, label: 'desktop 1440' },
-      { width: 414, height: 896, label: 'mobile 414' },
-      { width: 375, height: 812, label: 'mobile 375' },
-      { width: 320, height: 640, label: 'mobile 320' },
-    ]) {
-      await t.test(`${label} (${width}px)`, async () => {
-        const context = await browser.newContext({
-          viewport: { width, height },
-          colorScheme: 'dark',
-        });
-        const page = await context.newPage();
-        await page.goto(ORIGIN, { waitUntil: 'networkidle' });
-        const link = page.locator('[data-sibling-site="signals"]');
-
-        await link.scrollIntoViewIfNeeded();
-        assert.equal(await link.count(), 1, 'exactly one Site 1 reciprocal link');
-        assert.ok(await link.isVisible(), `reciprocal link must be visible at ${width}px`);
-        assert.equal((await link.innerText()).replace(/[↗\s]+$/, '').trim(), 'Signals');
-        assert.equal(await link.getAttribute('href'), 'https://signals.limesignalworks.com');
-
-        const libraryLink = page.locator('[data-sibling-site="library"]');
-        assert.equal(await libraryLink.count(), 1, 'exactly one Leadership library link');
-        assert.ok(await libraryLink.isVisible(), `library link must be visible at ${width}px`);
-        assert.equal((await libraryLink.innerText()).replace(/[↗\s]+$/, '').trim(), 'LIME Leadership');
-        assert.equal(await libraryLink.getAttribute('href'), 'https://leadership.limesignalworks.com');
-
-        const box = await link.boundingBox();
-        assert.ok(box.height >= 44, `target height ${box.height}px must be at least 44px`);
-        assert.ok(box.width > 0 && box.x >= 0 && box.x + box.width <= width + 1, 'within viewport');
-
-        // Keyboard reachable, with a visible focus indicator.
-        await link.focus();
-        const focus = await page.evaluate(() => {
-          const el = document.querySelector('[data-sibling-site]');
-          const style = getComputedStyle(el);
-          return {
-            focused: document.activeElement === el,
-            outlineWidth: style.outlineWidth,
-            outlineStyle: style.outlineStyle,
-          };
-        });
-        assert.ok(focus.focused, 'reciprocal link is keyboard focusable');
-        assert.notEqual(focus.outlineStyle, 'none', 'focus outline is drawn');
-        assert.ok(parseFloat(focus.outlineWidth) >= 2, 'focus outline is at least 2px');
-
-        await context.close();
-      });
-    }
-  } finally {
-    await browser.close();
-    server.kill();
-  }
-});
-
 test('rendered: the contact channels are visible, sized and keyboard reachable', async (t) => {
   const server = await startServer();
   const browser = await chromium.launch();
@@ -855,7 +796,7 @@ test('rendered: the page is complete and usable with JavaScript disabled', async
     const page = await context.newPage();
     await page.goto(ORIGIN, { waitUntil: 'load' });
 
-    // Every section, the call to action, its disclosure and the reciprocal link are
+    // Every section, the call to action and its disclosure are
     // present in the served markup, so nothing essential depends on script.
     for (const selector of [
       'a.cta',
@@ -864,7 +805,6 @@ test('rendered: the page is complete and usable with JavaScript disabled', async
       '[data-contact]',
       '[data-contact-email]',
       '[data-contact-phone]',
-      '[data-sibling-site]:first-of-type',
       '[data-securities-disclaimer]',
       '#what-we-do',
       '#market-report',
