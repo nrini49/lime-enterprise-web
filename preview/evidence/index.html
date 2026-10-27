@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>PREVIEW: How Rosie's evidence could look | Lime Signalworks</title>
+<link rel="stylesheet" href="/assets/css/fonts.css">
+<style>
+:root{--text-xs:clamp(.75rem,.7rem + .25vw,.875rem);--text-sm:clamp(.875rem,.8rem + .35vw,1rem);--text-base:clamp(1rem,.95rem + .25vw,1.0625rem);--text-lg:clamp(1.125rem,1rem + .5vw,1.375rem);--text-xl:clamp(1.5rem,1.2rem + 1.1vw,2.125rem);--text-2xl:clamp(1.875rem,1.25rem + 2.2vw,3rem);
+--color-bg:#f4f6f4;--color-surface:#fafcfa;--color-surface-2:#fff;--color-surface-offset:#e9ece9;--color-divider:#dbe0db;--color-border:#c4ccc5;--color-text:#101a14;--color-text-muted:#44514a;--color-text-faint:#566159;--color-text-inverse:#f7faf7;--color-primary:#1f6b45;--color-primary-highlight:#dbe9de;--color-accent:#7cb342;--color-flag:#8a4a10;--color-flag-surface:#f7ede1;--color-down:#9b2c2c;--radius-sm:.25rem;--radius-md:.375rem;--radius-lg:.5rem;--shadow-sm:0 1px 2px rgba(16,40,26,.07);--shadow-md:0 4px 14px rgba(16,40,26,.09);
+--font-display:'Archivo',ui-sans-serif,system-ui,sans-serif;--font-body:'Inter',ui-sans-serif,system-ui,sans-serif;--font-mono:'JetBrains Mono',ui-monospace,monospace;--night:#0b1416}
+*{box-sizing:border-box}body{margin:0;background:var(--color-bg);color:var(--color-text);font:400 var(--text-base)/1.6 var(--font-body)}
+.shell{max-width:1180px;margin:0 auto;padding:0 1.5rem}
+.banner{background:var(--color-flag-surface);color:var(--color-flag);border-bottom:1px solid #e2c9a8;font:600 var(--text-xs)/1.4 var(--font-mono);letter-spacing:.04em;text-transform:uppercase;padding:.6rem 0;text-align:center}
+header.mast{border-bottom:1px solid var(--color-divider);background:var(--color-surface)}
+header.mast .shell{display:flex;justify-content:space-between;align-items:center;padding-top:1rem;padding-bottom:1rem}
+.brand{font:700 var(--text-lg)/1 var(--font-display)}.brand b{color:var(--color-primary)}
+.label{font:600 var(--text-xs)/1.2 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--color-primary)}
+h1{font:800 var(--text-2xl)/1.1 var(--font-display);margin:.5rem 0 1rem;letter-spacing:-.01em}
+h2{font:750 var(--text-xl)/1.15 var(--font-display);margin:.4rem 0 .75rem}
+h3{font:700 var(--text-lg)/1.25 var(--font-display);margin:0 0 .4rem}
+p{margin:0 0 .9rem}.muted{color:var(--color-text-muted)}.faint{color:var(--color-text-faint);font-size:var(--text-sm)}
+section{padding:3.5rem 0;border-bottom:1px solid var(--color-divider)}
+.opt{display:inline-block;font:700 var(--text-xs)/1 var(--font-mono);background:var(--color-primary);color:var(--color-text-inverse);padding:.35rem .55rem;border-radius:var(--radius-sm);margin-right:.5rem;vertical-align:middle}
+.why{border-left:3px solid var(--color-accent);padding:.25rem 0 .25rem .9rem;color:var(--color-text-muted);font-size:var(--text-sm);max-width:70ch;margin-bottom:1.75rem}
+.ex{display:inline-block;font:700 .68rem/1 var(--font-mono);letter-spacing:.06em;color:var(--color-flag);background:var(--color-flag-surface);border:1px dashed var(--color-flag);padding:.2rem .35rem;border-radius:3px;vertical-align:middle;margin-left:.35rem}
+.ok{display:inline-block;font:700 .68rem/1 var(--font-mono);letter-spacing:.06em;color:var(--color-primary);background:var(--color-primary-highlight);padding:.2rem .35rem;border-radius:3px;vertical-align:middle}
+.soon{display:inline-block;font:700 .68rem/1 var(--font-mono);letter-spacing:.06em;color:var(--color-text-muted);background:var(--color-surface-offset);padding:.2rem .35rem;border-radius:3px}
+.src{font:500 .72rem/1.4 var(--font-mono);color:var(--color-text-faint);margin-top:.6rem;display:block}
+/* A: tiles */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+.tile{background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:1.1rem 1.2rem;box-shadow:var(--shadow-sm);position:relative}
+.tile::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--color-accent);border-radius:var(--radius-lg) 0 0 var(--radius-lg)}
+.tile .big{font:800 2.4rem/1 var(--font-display);color:var(--color-primary);margin:.35rem 0 .5rem}
+.tile .big small{font-size:1rem;color:var(--color-text-muted);font-weight:600}
+.tile p{font-size:var(--text-sm);margin:0}
+/* B: ticket */
+.ticket{display:grid;grid-template-columns:1.1fr 1fr;gap:1.5rem;align-items:start}
+@media(max-width:820px){.ticket{grid-template-columns:1fr}}
+.receipt{background:var(--night);color:#dde5df;border-radius:var(--radius-lg);padding:1.25rem 1.4rem;font:500 .9rem/1.7 var(--font-mono);box-shadow:var(--shadow-md)}
+.receipt .row{display:flex;justify-content:space-between;gap:1rem;border-bottom:1px dashed #2c3b3e;padding:.2rem 0}
+.receipt .k{color:#92a398}.receipt .g{color:#9ccc65}.receipt .r{color:#f0a0a0}
+.receipt .hd{color:#6fc795;font-weight:700;letter-spacing:.06em;margin-bottom:.4rem}
+.receipt .ex{background:#241d13;color:#e0a561;border-color:#e0a561}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0}
+.steps li{counter-increment:s;padding:.55rem 0 .55rem 2.4rem;position:relative;border-bottom:1px solid var(--color-divider);font-size:var(--text-sm)}
+.steps li::before{content:counter(s);position:absolute;left:0;top:.5rem;width:1.7rem;height:1.7rem;border-radius:50%;background:var(--color-primary-highlight);color:var(--color-primary);font:700 .85rem/1.7rem var(--font-mono);text-align:center}
+/* C: timeline */
+.tl{position:relative;margin:0;padding:0 0 0 1.6rem;list-style:none}
+.tl::before{content:"";position:absolute;left:.45rem;top:.3rem;bottom:.3rem;width:2px;background:var(--color-divider)}
+.tl li{position:relative;padding:0 0 1.3rem}
+.tl li::before{content:"";position:absolute;left:-1.42rem;top:.35rem;width:.8rem;height:.8rem;border-radius:50%;background:var(--color-surface-2);border:3px solid var(--color-accent)}
+.tl time{font:600 var(--text-xs)/1 var(--font-mono);color:var(--color-primary);letter-spacing:.05em}
+.tl h3{margin-top:.3rem}
+/* D: table */
+table{width:100%;border-collapse:collapse;background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:var(--radius-lg);overflow:hidden;font-size:var(--text-sm)}
+th,td{text-align:left;padding:.7rem .85rem;border-bottom:1px solid var(--color-divider);vertical-align:top}
+th{font:600 var(--text-xs)/1.2 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--color-text-muted);background:var(--color-surface-offset)}
+/* will-not */
+.wont{background:var(--color-surface-2);border:2px solid var(--color-text);border-radius:var(--radius-lg);padding:1.5rem 1.6rem}
+.wont ul{word-break:break-word;margin:0;padding:0;list-style:none;columns:2 320px;column-gap:2rem}
+.wont li{break-inside:avoid;padding:.45rem 0 .45rem 1.7rem;position:relative;font-size:var(--text-sm)}
+.wont li::before{content:"\00D7";position:absolute;left:0;top:.2rem;font:800 1.2rem/1 var(--font-display);color:var(--color-down)}
+/* screenshot frame */
+.frame{border:1px solid var(--color-border);border-radius:var(--radius-lg);overflow:hidden;background:var(--color-surface-2);box-shadow:var(--shadow-md)}
+.frame .bar{display:flex;justify-content:space-between;align-items:center;padding:.5rem .8rem;background:var(--color-surface-offset);font:600 var(--text-xs)/1 var(--font-mono);color:var(--color-text-muted)}
+.frame .slot{aspect-ratio:16/10;display:grid;place-items:center;text-align:center;padding:2rem;background:repeating-linear-gradient(135deg,#f1f4f1 0 14px,#e9ece9 14px 28px);color:var(--color-text-muted);font-size:var(--text-sm)}
+.frame figcaption{padding:.7rem .9rem;font-size:var(--text-sm);color:var(--color-text-muted);border-top:1px solid var(--color-divider)}
+/* breaks */
+.brk{margin:2.5rem 0;border-radius:var(--radius-lg);overflow:hidden;position:relative;min-height:220px;display:flex;align-items:center}
+.brk--video{background:#3b3d45;flex-wrap:wrap}
+.brk--video video{width:220px;height:220px;object-fit:cover;flex:none}
+.brk--video .cap,.brk--shape .cap{padding:1.5rem 2rem;color:#f7faf7;max-width:60ch}
+.brk .cap .label{color:#b9e08e}
+.brk .cap p{font:700 var(--text-lg)/1.35 var(--font-display);margin:.4rem 0 0}
+.brk--shape{background:var(--night)}
+.brk--shape svg{position:absolute;inset:0;width:100%;height:100%}
+.brk--shape .cap{position:relative;margin-left:auto}
+.beam{transform-origin:50% 50%;animation:sweep 9s ease-in-out infinite alternate}
+.ring{fill:none;stroke-width:2;animation:pulse 6s ease-in-out infinite}
+.ring.b{animation-delay:-2s}.ring.c{animation-delay:-4s}
+.wave{fill:none;stroke-width:3;stroke-linecap:round;animation:drift 12s linear infinite}
+@keyframes sweep{from{transform:rotate(-18deg)}to{transform:rotate(18deg)}}
+@keyframes pulse{0%,100%{opacity:.15;transform:scale(.92)}50%{opacity:.7;transform:scale(1.04)}}
+@keyframes drift{from{transform:translateX(0)}to{transform:translateX(-200px)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}video{display:none}.brk--video .poster{display:block!important}}
+.rhythm{display:grid;gap:0}
+.rhythm .card{background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:1.2rem 1.4rem}
+.note{background:var(--color-flag-surface);border:1px solid #e2c9a8;border-radius:var(--radius-md);padding:.9rem 1rem;font-size:var(--text-sm);color:#5a3209}
+footer{padding:2.5rem 0 4rem;font-size:var(--text-sm);color:var(--color-text-muted)}
+a{color:var(--color-primary)}code{font-family:var(--font-mono);font-size:.85em;word-break:break-all}
+@media(max-width:520px){.brk--video video{width:100%;height:auto;max-height:260px}.receipt{font-size:.78rem}.receipt .row{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<div class="banner">Internal preview · not linked from the live site · layout study only · numbers marked EXAMPLE are placeholders</div>
+<header class="mast"><div class="shell"><div class="brand">Lime <b>Signalworks</b> LLC</div><div class="label">Evidence display study · 27 Oct 2026</div></div></header>
+<main class="shell">
+
+<section>
+  <div class="label">Rosie / Keelwise · Evidence</div>
+  <h1>What Rosie does, and the rules that hold her to it.</h1>
+  <p class="muted" style="max-width:68ch">Rosie trades a <strong>paper account only</strong> today. We don't publish profit figures. This page shows the rules every order has to pass, how we test them, and what Rosie won't do. Options, futures, crypto and forex are <span class="soon">COMING</span>. None of them is live.</p>
+  <p class="faint">Below are four ways we could lay this out. They all use the same facts, so we can compare the formats. The sources for each fact are listed at the bottom of the page.</p>
+</section>
+
+<!-- OPTION A -->
+<section id="a">
+  <div class="label"><span class="opt">A</span>Rule tiles</div>
+  <h2>Five numbers, each with its source</h2>
+  <p class="why">Best for: a quick scan on the homepage. One big number per rule, one plain sentence, and where to check it.</p>
+  <div class="tiles">
+    <div class="tile"><div class="label">Disaster stop</div><div class="big">10<small>% default</small></div><p>Every buy goes to the broker with <strong>one fixed stop-sell order (GTC)</strong> for the same number of shares. The stop price is set at entry and never moves. It is never placed tighter than 3× the symbol's measured overnight gap, so volatile names get a wider stop.</p><span class="src">Source: Rosie README · "Protection"</span></div>
+    <div class="tile"><div class="label">Risk per trade</div><div class="big">2<small>% of equity</small></div><p>Each position is sized so that if its stop is hit, the loss <em>at the stop price</em> is at most 2% of the account. A gap can still fill below the stop.</p><span class="src">Source: README · "Sizing"</span></div>
+    <div class="tile"><div class="label">Total open risk</div><div class="big">6<small>% of equity</small></div><p>All open positions and pending orders together can't risk more than 6%, which is three full-size trades. Any order that would go over is refused.</p><span class="src">Source: README · "Total open risk"</span></div>
+    <div class="tile"><div class="label">Trailing stops</div><div class="big">0</div><p>Trailing stops were removed by owner decision on 21 Oct 2026. Entries, scale-outs and exits come from the signal logic. A test checks that Rosie never creates a trailing stop.</p><span class="src">Source: tests/test_no_trailing_stops.py</span></div>
+    <div class="tile"><div class="label">Automated tests</div><div class="big">1,706<small> passed</small></div><p>Out of 1,746 tests, 1,706 passed and 0 failed. 40 were skipped because they need a browser that wasn't installed on the test machine. Run 27 Oct 2026, 12:41 ET, commit d299899.</p><span class="src">Source: pytest run on nrini49/interactive</span></div>
+  </div>
+</section>
+
+<div class="brk brk--video" aria-label="Brand interlude">
+  <video src="media/rotating-logo-560.mp4" poster="media/rotating-logo-poster.jpg" autoplay muted loop playsinline aria-hidden="true"></video>
+  <img class="poster" src="media/rotating-logo-poster.jpg" alt="" style="display:none;width:220px;height:220px">
+  <div class="cap"><div class="label">Video break · own asset</div><p>The lighthouse doesn't steer the ship. It shows where the rocks are.</p></div>
+</div>
+
+<!-- OPTION B -->
+<section id="b">
+  <div class="label"><span class="opt">B</span>Anatomy of one order</div>
+  <h2>Follow a single buy through the checks</h2>
+  <p class="why">Best for: people who want to see how it works. A worked example uses the same formula as the code, and every number in it is marked EXAMPLE.</p>
+  <div class="ticket">
+    <div class="receipt" role="img" aria-label="Example order ticket with placeholder numbers">
+      <div class="hd">ORDER PACKAGE · PAPER LANE <span class="ex">EXAMPLE</span></div>
+      <div class="row"><span class="k">Account equity</span><span>$50,000.00 <span class="ex">EXAMPLE</span></span></div>
+      <div class="row"><span class="k">Entry · LMT BUY</span><span>$100.00 <span class="ex">EXAMPLE</span></span></div>
+      <div class="row"><span class="k">Disaster stop · STP SELL GTC</span><span class="r">$90.00 (10%)</span></div>
+      <div class="row"><span class="k">Risk per share</span><span>$10.00</span></div>
+      <div class="row"><span class="k">2% risk budget</span><span>$1,000.00</span></div>
+      <div class="row"><span class="k">Shares = floor(1,000 / 10)</span><span class="g">100</span></div>
+      <div class="row"><span class="k">Open risk after fill (cap 6%)</span><span>2.0% of 6.0% <span class="ex">EXAMPLE</span></span></div>
+      <div class="row"><span class="k">Symbol measured?</span><span class="g">required</span></div>
+      <div class="row" style="border:0"><span class="k">Lane</span><span class="g">PAPER only</span></div>
+    </div>
+    <ol class="steps">
+      <li><strong>Measured symbols only.</strong> If Rosie doesn't have gap statistics for a symbol yet, she refuses the entry. Exits are never blocked.</li>
+      <li><strong>Size from the stop.</strong> The number of shares comes from the actual stop price, so the loss at the stop is at most 2%.</li>
+      <li><strong>Check the 6% budget.</strong> If the order would push total open risk past 6%, it's trimmed to fit or refused.</li>
+      <li><strong>Send as one package.</strong> The limit buy and its stop-sell (GTC) go to the broker together. The stop stays with the broker even if Rosie's computer goes offline.</li>
+      <li><strong>Fail closed.</strong> If equity is unknown or stale, or a setting is invalid, nothing is sent and Rosie records the reason.</li>
+    </ol>
+  </div>
+</section>
+
+<div class="brk brk--shape" aria-hidden="true">
+  <svg viewBox="0 0 1200 260" preserveAspectRatio="xMidYMid slice">
+    <defs><linearGradient id="bm" x1="0" x2="1"><stop offset="0" stop-color="#9ccc65" stop-opacity=".55"/><stop offset="1" stop-color="#9ccc65" stop-opacity="0"/></linearGradient></defs>
+    <g transform="translate(220 130)"><polygon class="beam" points="0,0 520,-90 520,90" fill="url(#bm)"/></g>
+    <circle class="ring" cx="220" cy="130" r="40" stroke="#6fc795"/><circle class="ring b" cx="220" cy="130" r="70" stroke="#6fc795"/><circle class="ring c" cx="220" cy="130" r="100" stroke="#6fc795"/>
+    <circle cx="220" cy="130" r="9" fill="#dde5df"/>
+    <g class="wave"><path d="M0 220 Q50 200 100 220 T200 220 T300 220 T400 220 T500 220 T600 220 T700 220 T800 220 T900 220 T1000 220 T1100 220 T1200 220 T1300 220 T1400 220" stroke="#2c6e8a"/></g>
+  </svg>
+  <div class="cap"><div class="label">Shape break · generated SVG, no stock media</div><p>Steady light. Steady rules.</p></div>
+</div>
+
+<!-- OPTION C -->
+<section id="c">
+  <div class="label"><span class="opt">C</span>Decision log</div>
+  <h2>When each rule was set</h2>
+  <p class="why">Best for: building trust over time. Each dated entry is a decision we made and wrote down. This list only gets longer, and nothing on it is a result.</p>
+  <ol class="tl">
+    <li><time>22 SEP 2026</time><h3>Measured-symbol gate confirmed</h3><p class="muted">An order for a symbol without measured gap statistics can't reach the broker. Closing an existing position doesn't need those statistics.</p></li>
+    <li><time>07 OCT 2026</time><h3>Automatic execution limited to paper</h3><p class="muted">The trading loop can place orders on its own only in the paper lane. It checks that it's in paper before every order.</p></li>
+    <li><time>21 OCT 2026</time><h3>Trailing stops removed; 2% per trade and 6% total set</h3><p class="muted">Each position now has one fixed disaster stop held at the broker. Sizing and the total open-risk budget were set the same day.</p></li>
+    <li><time>22 OCT 2026</time><h3>Loop entry and exit guards</h3><p class="muted">Added a 30-minute pause after the open, a 60-minute cooldown before buying a symbol again, and minimum hold times to cut down on rapid in-and-out trades.</p></li>
+    <li><time>27 OCT 2026</time><h3>Test run: 1,706 passed, 0 failed</h3><p class="muted">1,746 tests in total. 40 browser tests were skipped on this machine.</p></li>
+  </ol>
+</section>
+
+<!-- OPTION D -->
+<section id="d">
+  <div class="label"><span class="opt">D</span>Claim and check</div>
+  <h2>Each claim next to how to verify it</h2>
+  <p class="why">Best for: skeptical or professional readers. Every claim sits next to how to check it and its current status, including what isn't done yet.</p>
+  <div style="overflow-x:auto"><table>
+    <thead><tr><th>What we say</th><th>How you can check</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Every buy is sent with one fixed GTC stop-sell order.</td><td>The order package in the broker's open-orders list. Code: <code>place_protected_entry()</code>.</td><td><span class="ok">IN CODE · TESTED</span></td></tr>
+      <tr><td>The loss at the stop price is at most 2% of equity.</td><td>The sizing formula in the README and its tests.</td><td><span class="ok">IN CODE · TESTED</span></td></tr>
+      <tr><td>Total open risk is capped at 6%.</td><td>The refusal message names what's already at risk and how many shares would still fit.</td><td><span class="ok">IN CODE · TESTED</span></td></tr>
+      <tr><td>No trailing stops.</td><td>tests/test_no_trailing_stops.py</td><td><span class="ok">IN CODE · TESTED</span></td></tr>
+      <tr><td>Rosie trades a paper account only.</td><td>The lane is checked before every order, and the dashboard shows a PAPER badge.</td><td><span class="ok">TRUE TODAY</span></td></tr>
+      <tr><td>Options, futures, crypto, forex.</td><td>n/a</td><td><span class="soon">COMING · NOT LIVE</span></td></tr>
+      <tr><td>Performance results.</td><td>We don't publish any. Paper results don't predict live results.</td><td><span class="soon">NOT CLAIMED</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.25rem;margin-top:2rem">
+    <figure class="frame" style="margin:0">
+      <div class="bar"><span>Dashboard · paper account</span><span class="ex">EXAMPLE SLOT</span></div>
+      <div class="slot">Screenshot slot.<br>A new capture of the dashboard on the paper account goes here, with the PAPER badge visible and the account number blurred.</div>
+      <figcaption>Caption format: "Paper account, 27 Oct 2026, 10:15 ET. Not a live account. Not a performance claim."</figcaption>
+    </figure>
+    <figure class="frame" style="margin:0">
+      <div class="bar"><span>Stops panel · paper account</span><span class="ex">EXAMPLE SLOT</span></div>
+      <div class="slot">Screenshot slot.<br>The Stops panel showing one fixed STP GTC order for each position, with no trailing stops.</div>
+      <figcaption>This one should replace the current homepage image. That image is from the demo feed and still shows trailing stops.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- WILL NOT -->
+<section id="wont">
+  <div class="label">Plain limits</div>
+  <h2>What Rosie will not do</h2>
+  <div class="wont"><ul>
+    <li>Trade real money today. Rosie trades a paper account only.</li>
+    <li>Promise profits, or claim she never loses. She can lose, and paper results don't predict live results.</li>
+    <li>Guarantee the stop price. A stop becomes a market order when it triggers, and a gap or crash can fill below it.</li>
+    <li>Use trailing stops, or move the disaster stop after entry.</li>
+    <li>Enter a symbol she hasn't measured.</li>
+    <li>Go over 2% risk per trade or 6% total open risk. Those orders are refused, not quietly resized upward.</li>
+    <li>Block you from exiting. Closing positions, FLATTEN ALL, and anything you do in TWS are never blocked.</li>
+    <li>Trade options, futures, crypto or forex. Those are coming and are not live.</li>
+    <li>Give investment advice.</li>
+  </ul></div>
+</section>
+
+<!-- RHYTHM -->
+<section id="rhythm">
+  <div class="label">Rhythm study</div>
+  <h2>How it reads with an occasional video or shape break</h2>
+  <p class="why">Suggested pacing: two or three evidence blocks, then one short break, never two breaks in a row. Each break is a short muted loop or a generated shape with one line of text. When the visitor's system asks for reduced motion, breaks show a still image instead.</p>
+  <div class="rhythm">
+    <div class="card"><div class="label">Evidence</div><h3>One fixed stop held at the broker</h3><p class="muted" style="margin:0">One STP SELL GTC per buy. Its price is set at entry and never moves.</p></div>
+    <div class="card" style="margin-top:1rem"><div class="label">Evidence</div><h3>2% per trade · 6% total</h3><p class="muted" style="margin:0">Position size comes from the stop price. Orders that would go over the limits are refused.</p></div>
+    <div class="brk brk--video" style="margin:1.5rem 0;min-height:160px"><video src="media/lighthouse-loop.mp4" autoplay muted loop playsinline aria-hidden="true" style="width:160px;height:160px"></video><div class="cap"><div class="label">Break · 16 s loop · own asset</div><p>Calm is a setting, not a mood.</p></div></div>
+    <div class="card"><div class="label">Evidence</div><h3>1,706 tests passed, 0 failed</h3><p class="muted" style="margin:0">Run 27 Oct 2026, commit d299899. 40 browser tests were skipped.</p></div>
+    <div class="card" style="margin-top:1rem"><div class="label">Evidence</div><h3>Paper only, checked before every order</h3><p class="muted" style="margin:0">Automatic orders can only go to the paper lane.</p></div>
+    <div class="brk brk--shape" style="margin:1.5rem 0;min-height:160px" aria-hidden="true"><svg viewBox="0 0 1200 160" preserveAspectRatio="xMidYMid slice"><circle class="ring" cx="160" cy="80" r="30" stroke="#9ccc65"/><circle class="ring b" cx="160" cy="80" r="55" stroke="#9ccc65"/><circle class="ring c" cx="160" cy="80" r="80" stroke="#9ccc65"/><g class="wave"><path d="M0 130 Q50 110 100 130 T200 130 T300 130 T400 130 T500 130 T600 130 T700 130 T800 130 T900 130 T1000 130 T1100 130 T1200 130 T1300 130 T1400 130" stroke="#6fc795"/></g></svg><div class="cap"><div class="label">Break · generated shapes</div><p>Rules first. Then signals.</p></div></div>
+    <div class="card"><div class="label">Evidence</div><h3>What Rosie will not do</h3><p class="muted" style="margin:0">The full list of limits from the section above.</p></div>
+  </div>
+</section>
+
+<section style="border:0">
+  <div class="note"><strong>Notes for review (not for publication).</strong> Facts come from the README in nrini49/interactive at commit d299899 (27 Oct 2026) and a pytest run of that commit on the build box. That repository is private, so the public "check" links need a public decision. Possible options: a public summary page, excerpts, or "available on request". The rotating-logo video is Noal's own upload, taken from the old GoDaddy site's CDN. The 16-second lighthouse loop comes from signals.limesignalworks.com. The shape breaks are inline SVG and CSS. No stock media is used anywhere on this page.</div>
+</section>
+</main>
+<footer><div class="shell">Trading involves risk of loss. Past performance, including paper-trading results, does not guarantee future results. Nothing on this site is investment advice. © Lime Signalworks LLC.</div></footer>
+</body>
+</html>
