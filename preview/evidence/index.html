@@ -91,16 +91,41 @@ th{font:600 var(--text-xs)/1.2 var(--font-mono);letter-spacing:.06em;text-transf
 footer{padding:2.5rem 0 4rem;font-size:var(--text-sm);color:var(--color-text-muted)}
 a{color:var(--color-primary)}code{font-family:var(--font-mono);font-size:.85em;word-break:break-all}
 @media(max-width:520px){.brk--video video{width:100%;height:auto;max-height:260px}.receipt{font-size:.78rem}.receipt .row{flex-wrap:wrap}}
+/* opening: personal, single column */
+.opening .rings circle{transform-box:fill-box;transform-origin:center}
+.opening{position:relative;overflow:hidden;padding:clamp(3rem,2rem + 5vw,6.5rem) 0 clamp(2.5rem,2rem + 3vw,4.5rem);background:radial-gradient(120% 90% at 85% 0%,#fbf3e6 0%,rgba(251,243,230,0) 60%),var(--color-bg)}
+.opening .col{position:relative;max-width:40rem;margin:0 auto}
+.opening .label{color:var(--color-flag)}
+.opening h1{font:800 clamp(2.1rem,1.3rem + 3.6vw,3.9rem)/1.06 var(--font-display);letter-spacing:-.02em;margin:.9rem 0 2rem;text-wrap:balance}
+.opening h1::after{content:"";display:block;width:3.5rem;height:4px;border-radius:2px;background:var(--color-accent);margin-top:1.6rem}
+.opening p{font-size:var(--text-lg);line-height:1.7;color:#24302a;margin:0 0 1.3rem;max-width:36em}
+.opening p.sign{font:700 var(--text-xl)/1.3 var(--font-display);color:var(--color-primary);margin-top:2rem}
+.opening .rings{position:absolute;right:-90px;top:-70px;width:360px;height:360px;pointer-events:none;opacity:.55}
+.opening .draft{margin-top:2.25rem;display:flex;gap:.6rem;align-items:baseline;flex-wrap:wrap}
+.opening .draft .ex{margin:0}
+@media(max-width:640px){.opening .rings{width:220px;height:220px;right:-80px;top:-60px;opacity:.4}.opening h1{margin-bottom:1.5rem}.opening p{font-size:1.0625rem;line-height:1.65}.opening p.sign{font-size:1.3rem}}
 </style>
 </head>
 <body>
 <div class="banner">Internal preview · not linked from the live site · layout study only · numbers marked EXAMPLE are placeholders</div>
 <header class="mast"><div class="shell"><div class="brand">Lime <b>Signalworks</b> LLC</div><div class="label">Evidence display study · 27 Oct 2026</div></div></header>
+<section class="opening" id="opening" aria-labelledby="opening-h">
+  <svg class="rings" viewBox="0 0 360 360" aria-hidden="true"><circle class="ring" cx="180" cy="180" r="60" stroke="#7cb342"/><circle class="ring b" cx="180" cy="180" r="110" stroke="#7cb342"/><circle class="ring c" cx="180" cy="180" r="160" stroke="#7cb342"/><circle cx="180" cy="180" r="8" fill="#9ccc65"/></svg>
+  <div class="shell"><div class="col">
+    <div class="label">From Noal</div>
+    <h1 id="opening-h">I built Rosie so I could stop watching, relax and enjoy my life.</h1>
+    <p>Picture an ordinary Tuesday. I'm at my daughter's recital, then out for a walk, then at a long lunch with an old friend, phone face-down on the table. I'm not checking anything, and I'm not worried.</p>
+    <p>Rosie is on the job. Before anything I own is ever at risk, she's already placed a protective stop with my broker, so it's there whether I'm watching or not. She keeps the risk small, the rules plain, and she tells me the truth, even on the days that don't go well.</p>
+    <p>Knowing she's on watch gives me my time back, and I spend it on what the money was for in the first place: being fully present with the people I love, taking care of my health, staying curious, and feeling looked after.</p>
+    <p class="sign">I built her for me, and I built her so you can have it too.</p>
+    <div class="note draft" role="note"><span class="ex">PREVIEW ONLY</span><span>Draft opening copy, for review. Today Rosie runs in a paper (practice) account.</span></div>
+  </div></div>
+</section>
 <main class="shell">
 
 <section>
   <div class="label">Rosie / Keelwise · Evidence</div>
-  <h1>What Rosie does, and the rules that hold her to it.</h1>
+  <h2 style="font:800 var(--text-2xl)/1.1 var(--font-display);letter-spacing:-.01em;margin:.5rem 0 1rem">What Rosie does, and the rules that hold her to it.</h2>
   <p class="muted" style="max-width:68ch">Rosie trades a <strong>paper account only</strong> today. We don't publish profit figures. This page shows the rules every order has to pass, how we test them, and what Rosie won't do. Options, futures, crypto and forex are <span class="soon">COMING</span>. None of them is live.</p>
   <p class="faint">Below are four ways we could lay this out. They all use the same facts, so we can compare the formats. The sources for each fact are listed at the bottom of the page.</p>
 </section>
