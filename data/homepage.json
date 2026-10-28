@@ -1,5 +1,5 @@
 {
-  "revision": "site2-assembled-home-2026-10-28c",
+  "revision": "site2-assembled-home-2026-10-28d",
   "canonical": {
     "demoUrl": "/rosie-demo/",
     "demoCtaLabel": "Open the Rosie demo",
@@ -111,7 +111,7 @@
   ],
   "pros": {
     "heading": "Trading the way the pros do.",
-    "body": "The best traders in the world share a few habits: they trade by written rules, they decide what they can lose before they decide what they can win, and they stay consistent when it's hard. Rosie is built on those same habits. And unlike a big firm, she works for one person: you.",
+    "body": "The best traders in the world share a few habits: they trade by written rules, they decide what they can lose before they decide what they can win, and they stay consistent when it's hard. I'm built on those same habits. And unlike a big firm, I work for one person: you.",
     "habits": [
       {
         "label": "Written rules",

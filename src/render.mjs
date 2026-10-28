@@ -202,10 +202,11 @@ function renderPros(pros, sectionOrder) {
         `            <div class="tile"><p class="label">${esc(h.label)}</p><p>${esc(h.text)}</p></div>`,
     )
     .join('\n');
-  return `      <section class="section pros" id="pros" aria-labelledby="pros-title">
+  return `      <section class="section pros" id="pros" aria-labelledby="pros-title" data-voice="rosie">
         <div class="shell">
           <div class="section__head">
             <p class="label rule-after">${esc(eyebrow)}</p>
+            <p class="label voice-tag" data-voice-tag>From Rosie</p>
             <h2 id="pros-title">${esc(pros.heading)}</h2>
             <p>${esc(pros.body)}</p>
           </div>
