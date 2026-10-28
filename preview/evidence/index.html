@@ -136,6 +136,11 @@ a{color:var(--color-primary)}code{font-family:var(--font-mono);font-size:.85em;w
 .ww .draft{margin-top:2rem;display:flex;gap:.6rem;align-items:baseline;flex-wrap:wrap}
 .ww .draft .ex{margin:0}
 @media(max-width:640px){.ww p{font-size:1.0625rem;line-height:1.65}.ww p.pull{padding-left:.9rem}.ww p.sign{font-size:1.3rem}}
+/* sleep pull-quote under the life cards */
+.life .sleep{max-width:40rem;margin:2.25rem auto 0}
+.life .sleep blockquote{margin:0;font:700 clamp(1.2rem,1.05rem + .8vw,1.5rem)/1.5 var(--font-display);color:var(--color-primary);border-left:4px solid var(--color-accent);padding:.2rem 0 .2rem 1.1rem}
+.life .sleep figcaption{margin-top:.6rem;padding-left:1.4rem;font:600 var(--text-xs)/1.2 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--color-flag)}
+@media(max-width:640px){.life .sleep blockquote{padding-left:.9rem}.life .sleep figcaption{padding-left:1.2rem}}
 </style>
 </head>
 <body>
@@ -169,6 +174,10 @@ a{color:var(--color-primary)}code{font-family:var(--font-mono);font-size:.85em;w
     <li class="vcard"><svg viewBox="0 0 84 84" aria-hidden="true"><circle cx="42" cy="42" r="14" fill="none" stroke="#7cb342" stroke-width="2"/><circle cx="42" cy="42" r="28" fill="none" stroke="#7cb342" stroke-width="2" opacity=".6"/><circle cx="42" cy="42" r="4" fill="#9ccc65"/></svg><h3>Confidence to say yes.</h3><p>Travel, family, a new project, an afternoon off. You can say yes without first checking what the market is doing, because the watching isn’t on you.</p></li>
     <li class="vcard"><svg viewBox="0 0 84 84" aria-hidden="true"><circle cx="42" cy="42" r="14" fill="none" stroke="#7cb342" stroke-width="2"/><circle cx="42" cy="42" r="28" fill="none" stroke="#7cb342" stroke-width="2" opacity=".6"/><circle cx="42" cy="42" r="4" fill="#9ccc65"/></svg><h3>A sense of order.</h3><p>The risk is kept small, written down, and checked before every order. Your money feels looked after rather than gambled.</p></li>
   </ul>
+  <figure class="sleep" id="sleep">
+    <blockquote>I sleep like a baby now, and not only because I found the right device. I know Rosie is on watch, with my stops already in place. I can't promise how every trade ends, but I know what's protecting me while I rest.</blockquote>
+    <figcaption>Noal</figcaption>
+  </figure>
   <div class="close"><p>I do the watching, you do the living.</p></div>
   <div class="note draft" role="note"><span class="ex">PREVIEW ONLY</span><span>Draft copy, for review. Today Rosie runs in a paper (practice) account. Trading involves risk of loss, and nothing here is a promise of results.</span></div>
   </div>
