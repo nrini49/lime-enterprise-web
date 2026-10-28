@@ -1,5 +1,5 @@
 {
-  "revision": "site2-assembled-home-2026-10-28b",
+  "revision": "site2-assembled-home-2026-10-28c",
   "canonical": {
     "demoUrl": "/rosie-demo/",
     "demoCtaLabel": "Open the Rosie demo",
@@ -34,76 +34,99 @@
       "nav": null
     },
     {
+      "id": "pros",
+      "eyebrow": "Section 04",
+      "nav": null
+    },
+    {
       "id": "evidence",
       "eyebrow": "Rosie / Keelwise · Evidence",
       "nav": "Evidence"
     },
     {
       "id": "indicators",
-      "eyebrow": "Section 05",
+      "eyebrow": "Section 06",
       "nav": "Indicators"
     },
     {
       "id": "demo",
-      "eyebrow": "Section 06",
+      "eyebrow": "Section 07",
       "nav": "Demo"
     },
     {
       "id": "what-we-do",
-      "eyebrow": "Section 07",
+      "eyebrow": "Section 08",
       "nav": null
     },
     {
       "id": "how-it-works",
-      "eyebrow": "Section 08",
+      "eyebrow": "Section 09",
       "nav": "How it works"
     },
     {
       "id": "protection",
-      "eyebrow": "Section 09",
+      "eyebrow": "Section 10",
       "nav": "Protection"
     },
     {
       "id": "phone",
-      "eyebrow": "Section 10",
+      "eyebrow": "Section 11",
       "nav": null
     },
     {
       "id": "markets",
-      "eyebrow": "Section 11",
+      "eyebrow": "Section 12",
       "nav": "Markets"
     },
     {
       "id": "evaluation",
-      "eyebrow": "Section 12",
+      "eyebrow": "Section 13",
       "nav": "Evaluation"
     },
     {
       "id": "pricing",
-      "eyebrow": "Section 13",
+      "eyebrow": "Section 14",
       "nav": "Pricing"
     },
     {
       "id": "market-report",
-      "eyebrow": "Section 14",
-      "nav": null
-    },
-    {
-      "id": "commitments",
       "eyebrow": "Section 15",
       "nav": null
     },
     {
-      "id": "partners",
+      "id": "commitments",
       "eyebrow": "Section 16",
+      "nav": null
+    },
+    {
+      "id": "partners",
+      "eyebrow": "Section 17",
       "nav": "Partners"
     },
     {
       "id": "how-to-begin",
-      "eyebrow": "Section 17",
+      "eyebrow": "Section 18",
       "nav": "How to begin"
     }
   ],
+  "pros": {
+    "heading": "Trading the way the pros do.",
+    "body": "The best traders in the world share a few habits: they trade by written rules, they decide what they can lose before they decide what they can win, and they stay consistent when it's hard. Rosie is built on those same habits. And unlike a big firm, she works for one person: you.",
+    "habits": [
+      {
+        "label": "Written rules",
+        "text": "They trade by written rules."
+      },
+      {
+        "label": "Risk first",
+        "text": "They decide what they can lose before they decide what they can win."
+      },
+      {
+        "label": "Consistency",
+        "text": "They stay consistent when it's hard."
+      }
+    ]
+  },
   "marketReport": {
     "asOfLabel": "As of the close of Thursday, July 23, 2026",
     "exampleNotice": "This table shows the report format using figures from a past report; it is not current market data. Reports are written after the close and dated, never in real time.",

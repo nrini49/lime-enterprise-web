@@ -1493,3 +1493,10 @@ a:hover {
 }
 .demo-ask .anchor-link { display: flex; width: max-content; margin-top: var(--space-3); font-family: var(--font-body); font-size: var(--text-sm); }
 .ww__quote { margin: 2rem 0; }
+
+/* ---------- Trading the way the pros do ---------- */
+.pros__habits {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  margin-top: var(--space-6);
+  max-width: 64rem;
+}

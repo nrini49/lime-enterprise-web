@@ -260,6 +260,7 @@ test('data: the section order is the translated Site 1 order, with unique ids', 
       'opening',
       'life',
       'will-wont',
+      'pros', // 2026-10-28: "Trading the way the pros do", after will-and-won't
       'evidence',
       'indicators',
       'demo',
@@ -665,6 +666,28 @@ test('dom: no forbidden Site 1 or scriptural terminology in rendered text or met
   }
   for (const phrase of FORBIDDEN_PHRASES) {
     assert.ok(!haystack.includes(phrase), `forbidden phrase appears: "${phrase}"`);
+  }
+});
+
+test('dom: the pros block is the approved copy, right after will-and-won\'t, naming no one', () => {
+  const sec = $('section#pros');
+  assert.equal(sec.length, 1);
+  assert.equal(sec.prev('section').attr('id'), 'will-wont', 'it follows What Rosie will and won\'t do');
+  assert.equal(sec.next('section').attr('id'), 'evidence', 'it comes before Evidence');
+  assert.equal(norm(sec.find('h2').text()), 'Trading the way the pros do.');
+  assert.equal(norm(sec.find('.section__head > p:not(.label)').text()), data.pros.body);
+  assert.equal(
+    data.pros.body,
+    "The best traders in the world share a few habits: they trade by written rules, they decide what they can lose before they decide what they can win, and they stay consistent when it's hard. Rosie is built on those same habits. And unlike a big firm, she works for one person: you.",
+  );
+  const body = data.pros.body.toLowerCase();
+  for (const h of data.pros.habits) {
+    // Each habit tile only restates the body: no extra claims.
+    assert.ok(body.includes(h.text.replace(/\.$/, '').toLowerCase()), `habit not from the body: ${h.text}`);
+  }
+  const text = norm(sec.text()).toLowerCase();
+  for (const name of ['renaissance', 'citadel', 'bridgewater', 'two sigma', 'de shaw', 'jane street', 'simons', 'dalio', 'griffin', 'buffett']) {
+    assert.ok(!text.includes(name), `the pros block must not name "${name}"`);
   }
 });
 

@@ -191,6 +191,29 @@ function assertUniqueIds(html) {
   if (duplicates.length) throw new Error(`Duplicate element ids: ${[...new Set(duplicates)].join(', ')}`);
 }
 
+/** "Trading the way the pros do": heading, body and the three habits, all from the JSON. */
+function renderPros(pros, sectionOrder) {
+  const eyebrow = sectionOrder.find((s) => s.id === 'pros').eyebrow;
+  const habits = pros.habits
+    .map(
+      (h) =>
+        `            <div class="tile"><p class="label">${esc(h.label)}</p><p>${esc(h.text)}</p></div>`,
+    )
+    .join('\n');
+  return `      <section class="section pros" id="pros" aria-labelledby="pros-title">
+        <div class="shell">
+          <div class="section__head">
+            <p class="label rule-after">${esc(eyebrow)}</p>
+            <h2 id="pros-title">${esc(pros.heading)}</h2>
+            <p>${esc(pros.body)}</p>
+          </div>
+          <div class="tiles pros__habits">
+${habits}
+          </div>
+        </div>
+      </section>`;
+}
+
 async function main() {
   const [dataRaw, template] = await Promise.all([
     readFile(path.join(root, 'data', 'homepage.json'), 'utf8'),
@@ -198,7 +221,7 @@ async function main() {
   ]);
 
   const data = JSON.parse(dataRaw);
-  const { canonical, sectionOrder, marketReport, pricing, startCards, indicators } = data;
+  const { canonical, sectionOrder, marketReport, pricing, startCards, indicators, pros } = data;
 
   const html = template
     .replaceAll('{{NAV}}', renderNav(sectionOrder))
@@ -222,6 +245,7 @@ async function main() {
     .replaceAll('{{PRICING_INCLUDES}}', renderList(pricing.includes))
     .replaceAll('{{PRICING_NOT}}', renderList(pricing.notThis))
     .replaceAll('{{START_CARDS}}', renderCards(startCards))
+    .replaceAll('{{PROS}}', renderPros(pros, sectionOrder))
     .replaceAll('{{INDICATORS}}', renderIndicators(indicators))
     .replaceAll('{{SECURITIES_DISCLAIMER}}', esc(canonical.securitiesDisclaimer))
     .replaceAll('{{RISK_DISCLOSURE}}', esc(canonical.riskDisclosure))
