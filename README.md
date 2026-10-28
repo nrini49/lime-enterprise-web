@@ -37,6 +37,11 @@ Zero-framework static build. No bundler, no CSS preprocessor, no client framewor
 - `scripts/fetch-fonts.mjs` — one-off vendoring helper; regenerates `assets/fonts/` (never run by
   the site)
 - `index.html` — **generated artifact**, committed so the site works with no build step
+- `rosie-demo/` — the public Rosie demo: a static, script-free snapshot of the current Rosie IB
+  Operator Workstation layout filled with **sample data** (paper account, invented numbers). Every
+  control is disabled, there are no forms or network calls, and `tests/rosie-demo.test.mjs`
+  enforces that, the sample-data banner, `noindex`, and broker-held (never trailing) stops.
+  `assets/img/rosie-dashboard-preview.png` on the homepage is a 1200×750 screenshot of it.
 
 `data/operating-roles.json` and `data/principles.json` are retained source from the earlier
 content-integration preview. They are deliberately **not rendered** on this homepage, and a test
