@@ -138,11 +138,15 @@
             <h2 id="will-wont-title">What Rosie will and won't do</h2>
             <p>I'll tell you what I love about her, because it's the reason I trust her.</p>
             <p>Rosie is all for you. She works in your account, for you, and nobody else. She has no way to move your money out. All she can do is place orders with your broker, inside the limits you set. There are no nefarious bones in this baby.</p>
-            <p>She's consistent. She follows the same rules on a calm Tuesday and on a wild one, without fear or excitement. She's always available and always ready for me, at any hour.</p>
+            <p>She's consistent. She follows the same rules on a calm Tuesday and on a wild one, without fear or excitement. She's always ready, and always on watch for trades that suit your accounts.</p>
             <p>And she's honest. She can't promise good trades, and no one can. Markets move, and a stop can fill below its price. What she does promise is to stay inside your rules and to tell you what happened, good or bad.</p>
             <p class="ww__pull">My favorite thing about Rosie is where she's headed: watching the markets around the clock and around the world, while I only look in casually or give her a nudge one way or the other. She's mine, and she works entirely for my benefit. She's the most remarkable relationship I've had in life.</p>
             <p class="ww__phone"><span class="soon">COMING SOON</span> <span><strong>Follow along from your phone.</strong> Phone viewing is on its way for everyone; I already check in on mine.</span></p>
             <p class="ww__sign">Her only job is to help me with my funds, and I like her more and more.</p>
+            <figure class="sleep ww__quote" id="teammate">
+              <blockquote>Rosie is the primo teammate. There's no one I'd rather have on my team than Rosie, because she's the only team member I can truly trust.</blockquote>
+              <figcaption data-attribution>Noal</figcaption>
+            </figure>
             <p class="warm-note">Today Rosie runs in a paper (practice) account. Around-the-clock and worldwide markets, including crypto, forex and futures, are coming and not live. Trading involves risk of loss, and nothing here is a promise of results.</p>
           </div>
         </div>
@@ -158,11 +162,11 @@
           </div>
           <h3 class="evidence__sub">Five numbers, each with its source</h3>
           <div class="tiles">
-            <div class="tile"><p class="label">Disaster stop</p><p class="tile__big">10<small>% default</small></p><p>Every buy goes to the broker with <strong>one fixed stop-sell order (GTC)</strong> for the same number of shares. The stop price is set at entry and never moves. It is never placed tighter than 3× the symbol's measured overnight gap, so volatile names get a wider stop.</p><p class="tile__src">Source: Rosie README · "Protection"</p></div>
-            <div class="tile"><p class="label">Risk per trade</p><p class="tile__big">2<small>% of equity</small></p><p>Each position is sized so that if its stop is hit, the loss <em>at the stop price</em> is at most 2% of the account. A gap can still fill below the stop.</p><p class="tile__src">Source: README · "Sizing"</p></div>
-            <div class="tile"><p class="label">Total open risk</p><p class="tile__big">6<small>% of equity</small></p><p>All open positions and pending orders together can't risk more than 6%, which is three full-size trades. Any order that would go over is refused.</p><p class="tile__src">Source: README · "Total open risk"</p></div>
-            <div class="tile"><p class="label">Trailing stops</p><p class="tile__big">0</p><p>Trailing stops were removed by owner decision on 21 Oct 2026. Entries, scale-outs and exits come from the signal logic. A test checks that Rosie never creates a trailing stop.</p><p class="tile__src">Source: tests/test_no_trailing_stops.py</p></div>
-            <div class="tile"><p class="label">Automated tests</p><p class="tile__big">1,706<small> passed</small></p><p>Out of 1,746 tests, 1,706 passed and 0 failed. 40 were skipped because they need a browser that wasn't installed on the test machine. Run 27 Oct 2026, 12:41 ET, commit d299899.</p><p class="tile__src">Source: pytest run on nrini49/interactive</p></div>
+            <div class="tile"><p class="label">Disaster stop</p><p class="tile__big">10<small>% default</small></p><p><strong>A protective stop sits at the broker on every position.</strong> It is sent with the buy order, for the same number of shares, and stays in place until the position is closed. Its price is set at entry and doesn't move. It is never set tighter than three times the stock's usual overnight gap, so jumpier stocks get more room.</p><p class="tile__src">Source: Rosie's written protection rules</p></div>
+            <div class="tile"><p class="label">Risk per trade</p><p class="tile__big">2<small>% of equity</small></p><p>Each position is sized so that if its stop is hit, the loss <em>at the stop price</em> is at most 2% of the account. A fast market can still fill below the stop.</p><p class="tile__src">Source: Rosie's written sizing rules</p></div>
+            <div class="tile"><p class="label">Total open risk</p><p class="tile__big">6<small>% of equity</small></p><p><strong>Every order passes the same safety checks before it is sent.</strong> All open positions and pending orders together can't put more than 6% of the account at risk, about three full-size trades. Any order that would go over is refused.</p><p class="tile__src">Source: Rosie's written risk limits</p></div>
+            <div class="tile"><p class="label">Trailing stops</p><p class="tile__big">0</p><p>We took trailing stops out on 21 October 2026. Entries, partial sales and exits come from her signal rules instead, and an automated check makes sure she never creates a trailing stop.</p><p class="tile__src">Source: our decision of 21 Oct 2026, checked by an automated test</p></div>
+            <div class="tile"><p class="label">Automated tests</p><p class="tile__big">0<small> failed</small></p><p>Rosie's rules are checked by an automated test suite. In the latest full run, on 27 October 2026, none of the tests that ran failed. A few were skipped because they need a web browser the test machine didn't have.</p><p class="tile__src">Source: our automated test suite, full run of 27 Oct 2026</p></div>
           </div>
         </div>
       </section>
@@ -256,8 +260,9 @@
         </div>
       </section>
 
-      <!-- Demo — the static sample-data demo at /rosie-demo/ (PR #15), plus the hosted demo
-           call to action with its disclosure and sign-in precondition. -->
+      <!-- Demo — the static sample-data demo at /rosie-demo/ (PR #15) is the only demo link.
+           The hosted demo was retired on 2026-10-28 at the owner's direction;
+           the full demo is offered on request through the contact block. -->
       <section class="section demo" id="demo" aria-labelledby="demo-title">
         <div class="shell">
           <div class="section__head">
@@ -273,20 +278,17 @@
                 first: a stop on every position, hard limits on every trade, and one button that stops
                 everything.
               </p>
+              <!-- E1 call to action. The labelling below is static markup, rendered before any
+                   click: never a toast, a tooltip, or collapsed content. -->
+              <div class="cta-block">
+                <a class="cta" href="/rosie-demo/">Open the Rosie demo</a>
+                <p class="cta-block__disclosure" data-demo-disclosure>Sample data in a paper (practice) account. No broker connection, no real orders, and nothing here is advice.</p>
+              </div>
+              <p class="demo-ask" data-demo-ask>If you'd like the full demo, just ask. We'll set you up with the whole thing, for free, no strings attached. <a class="anchor-link" href="#contact">Ask for the full demo</a></p>
+
               <div class="hero__actions">
-                <a class="hero-action" href="/rosie-demo/">Open the interactive demo</a>
                 <a class="hero-action hero-action--quiet" href="#contact">Book a guided setup</a>
                 <a class="hero-action hero-action--quiet" href="#how-it-works">See how Rosie works</a>
-              </div>
-
-              <!-- E1 call to action. Both facts below are static markup, rendered before any
-                   click, and neither is a toast, a tooltip, or collapsed content. The second
-                   states the access precondition: the destination is not anonymously
-                   reachable, so a visitor learns that before spending a click on it. -->
-              <div class="cta-block">
-                <a class="cta" href="https://limesignalworks.pplx.app/" target="_blank" rel="noopener noreferrer">Open the Rosie demo<span class="ext" aria-hidden="true">&#8599;</span><span class="sr-only"> (opens in a new tab)</span></a>
-                <p class="cta-block__disclosure" data-demo-disclosure>Demonstration environment. Simulated data. No broker connection and no real orders.</p>
-                <p class="cta-block__signin" data-demo-signin>Perplexity sign-in may be required.</p>
               </div>
 
               <dl class="hero__meta">
@@ -778,8 +780,9 @@
               <p class="label">Just looking</p>
               <h3>Open the demo</h3>
               <p>
-                See the dashboard with sample data, or watch our short videos on YouTube. A
-                Perplexity sign-in may be required to open the demo.
+                See the dashboard with sample data, or watch our short videos on YouTube. If you'd
+                like the full demo, just ask: we'll set the whole thing up for you, for free, no
+                strings attached.
               </p>
             </li>
           </ol>

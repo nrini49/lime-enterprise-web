@@ -17,13 +17,18 @@ const { canonical, sectionOrder, marketReport, pricing, startCards } = data;
 const html = readFileSync(path.join(root, 'index.html'), 'utf8');
 const $ = cheerio.load(html);
 
-const DEMO_URL = 'https://limesignalworks.pplx.app/';
+// 2026-10-28: the hosted Perplexity demo is retired from the home page at the owner's
+// direction. The only demo link is the static sample-data demo at /rosie-demo/ (PR #15),
+// and the full demo is offered on request through the contact block.
+const DEMO_URL = '/rosie-demo/';
+const RETIRED_DEMO_URL = 'https://limesignalworks.pplx.app/';
 const LEADERSHIP_URL = 'https://signals.limesignalworks.com';
 const LIBRARY_URL = 'https://leadership.limesignalworks.com';
 const DEMO_LABEL = 'Open the Rosie demo';
 const DEMO_DISCLOSURE =
-  'Demonstration environment. Simulated data. No broker connection and no real orders.';
-const DEMO_SIGNIN = 'Perplexity sign-in may be required.';
+  'Sample data in a paper (practice) account. No broker connection, no real orders, and nothing here is advice.';
+const DEMO_ASK =
+  "If you'd like the full demo, just ask. We'll set you up with the whole thing, for free, no strings attached.";
 const CONTACT_EMAIL = 'contact@limesignalworks.com';
 const CONTACT_TEL_HREF = 'tel:+13802000288';
 const CONTACT_PHONE_DISPLAY = '+1 380-200-0288';
@@ -158,9 +163,9 @@ const FORBIDDEN_CLAIMS = [
 ];
 
 /**
- * Access claims that would be false about the demo destination. The host requires a
- * Perplexity sign-in — an anonymous request is answered with HTTP 401 — so the page
- * may not present the demo as open, anonymous, or guaranteed to work.
+ * Access claims the page should not make about the demo. The hosted demo is retired
+ * (2026-10-28); the list is kept so the page still never presents a demo as open,
+ * anonymous, or guaranteed to work.
  */
 const FORBIDDEN_ACCESS_CLAIMS = [
   'open to everyone',
@@ -236,7 +241,8 @@ test('data: canonical strings are the exact approved wording', () => {
   assert.equal(canonical.demoUrl, DEMO_URL);
   assert.equal(canonical.demoCtaLabel, DEMO_LABEL);
   assert.equal(canonical.demoDisclosure, DEMO_DISCLOSURE);
-  assert.equal(canonical.demoSignIn, DEMO_SIGNIN);
+  assert.equal(canonical.demoAsk, DEMO_ASK);
+  assert.equal(canonical.demoSignIn, undefined, 'the sign-in line went with the hosted demo');
   for (const retired of ['leadershipUrl', 'leadershipLabel', 'libraryUrl', 'libraryLabel']) {
     assert.equal(canonical[retired], undefined, `${retired} is retired: the sister-site buttons are gone`);
   }
@@ -382,17 +388,35 @@ test('dom: html element ids are unique across the document', () => {
 /* ---------- the demo call to action and its disclosure ---------- */
 
 test('dom: exactly one demo call to action, with the approved label and target', () => {
-  const demoLinks = $(`a[href="${DEMO_URL}"]`);
-  assert.equal(demoLinks.length, 1, 'exactly one link to the demo environment');
-  const link = demoLinks.first();
-  assert.ok(link.hasClass('cta'), 'the demo link is the page call to action');
-  const label = norm(link.clone().find('.sr-only, .ext').remove().end().text());
-  assert.equal(label, DEMO_LABEL);
-  assert.equal(link.attr('target'), '_blank');
-  assert.equal(link.attr('rel'), 'noopener noreferrer');
+  const ctas = $('a.cta');
+  assert.equal(ctas.length, 1, 'exactly one page call to action');
+  const link = ctas.first();
+  assert.equal(link.attr('href'), DEMO_URL, 'the call to action opens the sample-data demo');
+  assert.equal(norm(link.text()), DEMO_LABEL);
+  assert.equal(link.attr('target'), undefined, 'the demo is on this site, so no new tab');
+  $('a[href*="rosie-demo"]').each((_, el) => {
+    assert.equal($(el).attr('href'), DEMO_URL, 'every demo link points at /rosie-demo/');
+  });
+});
+
+test('dom: the retired hosted demo leaves no trace on the home page', () => {
+  assert.equal($(`a[href="${RETIRED_DEMO_URL}"]`).length, 0, 'no link to the hosted demo');
+  assert.equal($('[data-demo-signin]').length, 0, 'no sign-in precondition line');
+  for (const term of ['perplexity', 'pplx', 'sign-in may be required']) {
+    assert.ok(!html.toLowerCase().includes(term), `retired demo wording left behind: "${term}"`);
+  }
+});
+
+test('dom: the full demo is offered on request through the existing contact block', () => {
+  const ask = $('[data-demo-ask]');
+  assert.equal(ask.length, 1, 'one offer next to the demo');
+  assert.ok(norm(ask.text()).startsWith(DEMO_ASK), 'the offer wording is exact');
+  assert.equal(ask.closest('section#demo').length, 1, 'the offer sits in the demo section');
+  assert.equal(ask.find('a[href="#contact"]').length, 1, 'the way to ask is the contact block');
+  assert.equal($('#contact[data-contact]').length, 1, 'the contact block it points to exists');
   assert.ok(
-    norm(link.find('.sr-only').text()).includes('opens in a new tab'),
-    'new-tab behaviour is announced',
+    /full demo, just ask/i.test(norm($('section#how-to-begin').text())),
+    'the section that discusses the demo repeats the offer',
   );
 });
 
@@ -402,7 +426,7 @@ test('dom: the disclosure is static markup adjacent to the call to action', () =
   assert.equal(norm(disclosure.text()), DEMO_DISCLOSURE, 'disclosure wording must be exact');
 
   // Immediately adjacent: same block, and the very next element after the link.
-  const link = $(`a[href="${DEMO_URL}"]`).first();
+  const link = $('a.cta').first();
   const block = link.parent();
   assert.ok(block.hasClass('cta-block'), 'the call to action sits in the disclosure block');
   assert.equal(block.find('[data-demo-disclosure]').length, 1, 'the disclosure shares the block');
@@ -425,48 +449,18 @@ test('dom: the disclosure is static markup adjacent to the call to action', () =
   );
 });
 
-test('dom: the sign-in precondition is stated adjacent to the call to action', () => {
-  const signin = $('[data-demo-signin]');
-  assert.equal(signin.length, 1, 'exactly one sign-in statement');
-  assert.equal(norm(signin.text()), DEMO_SIGNIN, 'sign-in wording must be exact');
-
-  // It shares the call-to-action block, immediately after the five-fact disclosure,
-  // so a visitor reads it before deciding to click.
-  const block = $(`a[href="${DEMO_URL}"]`).first().parent();
-  assert.equal(block.find('[data-demo-signin]').length, 1, 'the sign-in fact shares the block');
-  assert.equal(
-    $('[data-demo-disclosure]').next().get(0),
-    signin.get(0),
-    'the sign-in fact follows the disclosure directly',
-  );
-
-  // Static, visible, unscripted — the same standard the disclosure is held to.
-  assert.equal(signin.attr('hidden'), undefined, 'the sign-in fact is not hidden');
-  assert.equal(signin.attr('aria-hidden'), undefined, 'the sign-in fact is exposed to AT');
-  assert.equal(signin.closest('.sr-only').length, 0, 'the sign-in fact is visible');
-  assert.equal(signin.closest('details, dialog, [popover]').length, 0, 'not collapsed content');
-  const js = readFileSync(path.join(root, 'assets/js/app.js'), 'utf8');
-  assert.ok(!js.includes('data-demo-signin'), 'the sign-in fact must not depend on JavaScript');
-
-  // Restated wherever the demo is discussed in prose, not only at the button.
-  const howToBegin = norm($('section#how-to-begin').text());
-  assert.ok(
-    /sign-in may be required/i.test(howToBegin),
-    'the section that discusses the demo repeats the access precondition',
-  );
-});
-
 test('dom: the demo is never presented as open, anonymous, or guaranteed to work', () => {
   const haystack = `${visibleText()} ${metadataText()}`.toLowerCase();
   for (const claim of FORBIDDEN_ACCESS_CLAIMS) {
     assert.ok(!haystack.includes(claim), `false access claim about the demo: "${claim}"`);
   }
-  // The five original facts survive verbatim alongside the sixth.
+  // The demo stays labelled: sample data, a paper account, no real orders, not advice.
   for (const fact of [
-    'demonstration environment',
-    'simulated data',
+    'sample data',
+    'paper (practice) account',
     'no broker connection',
     'no real orders',
+    'nothing here is advice',
   ]) {
     assert.ok(haystack.includes(fact), `disclosure fact lost: "${fact}"`);
   }
@@ -596,12 +590,12 @@ test('dom: every mention of real-time data is negated', () => {
 /* ---------- links off this surface ---------- */
 
 const YOUTUBE_URL = 'https://www.youtube.com/@noelrini3882';
-test('dom: exactly two off-origin destinations exist — the demo and YouTube', () => {
+test('dom: exactly one off-origin destination exists — YouTube (the demo is on this site)', () => {
   const hrefs = $('a[href^="http"]')
     .map((_, el) => $(el).attr('href'))
     .get();
-  assert.deepEqual([...new Set(hrefs)].sort(), [DEMO_URL, YOUTUBE_URL].sort());
-  assert.equal(hrefs.length, 2, 'no duplicate off-origin links');
+  assert.deepEqual([...new Set(hrefs)], [YOUTUBE_URL]);
+  assert.equal(hrefs.length, 1, 'no duplicate off-origin links');
 });
 
 test('dom: the Signals and LIME Leadership sister-site buttons are gone, with no leftover row', () => {
@@ -678,7 +672,7 @@ test('dom: the owner credit appears only as a plain attribution', () => {
   const credits = $('[data-attribution]')
     .map((_, el) => norm($(el).text()))
     .get();
-  assert.ok(credits.length <= 2, 'at most the opening label and the sleep-quote credit');
+  assert.ok(credits.length <= 3, 'at most the opening label and the two pull-quote credits');
   for (const credit of credits) {
     assert.match(credit, /^(From )?Noal$/, `attribution must be the bare credit, got: "${credit}"`);
   }

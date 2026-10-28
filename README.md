@@ -82,16 +82,15 @@ npm run serve        # serve the repo root on http://localhost:4173
   JavaScript is disabled. `data-theme="light"` ships in the markup, `<meta name="color-scheme">`
   declares light, and no `prefers-color-scheme: dark` rule exists. The dark toggle is optional,
   fully functional, and never persisted to any browser storage.
-- **Exactly one demo call to action**, labelled "Open the Rosie Server Demo", pointing at
-  `https://limesignalworks.pplx.app/`, with its disclosure rendered as the immediately following
-  static element — never a tooltip, toast, modal, or collapsed content.
-- **Six static pre-click facts accompany that call to action**: the five-fact disclosure
-  (demonstration environment, simulated data, no broker connection, no real orders, not
-  production-ready) and the access precondition, "Perplexity sign-in may be required." Access is
-  controlled by the destination's host, so the page must never describe the demo as open,
-  anonymous, or certain to work, and must not call it the only route that works.
+- **Exactly one demo call to action**, labelled "Open the Rosie demo", pointing at the static
+  sample-data demo `/rosie-demo/` on this site, with its labelling rendered as the immediately
+  following static element (never a tooltip, toast, modal, or collapsed content): sample data,
+  a paper (practice) account, no broker connection, no real orders, not advice. The hosted demo
+  and its sign-in line were retired from the home page on 2026-10-28; the full demo is offered on
+  request ("just ask") through the existing contact block. The page must never describe a demo
+  as open, anonymous, or certain to work.
 - **No sister-site links.** The former "Signals" and "LIME Leadership" footer buttons are gone;
-  the demo and YouTube are the only off-origin destinations on the page.
+  YouTube is the only off-origin destination on the page.
 - The evaluation is stated as **33 days, demo and paper mode only**, with no live capital and no
   real orders. There is no ninety-day or no-pay claim on this surface.
 - Prices ($20 weekly, $85 monthly, $245 quarterly, $925 annually) are labelled **planned

@@ -204,10 +204,10 @@ async function main() {
     .replaceAll('{{NAV}}', renderNav(sectionOrder))
     .replaceAll(
       '{{DEMO_CTA}}',
-      externalLink(canonical.demoUrl, canonical.demoCtaLabel, 'cta'),
+      `<a class="cta" href="${esc(canonical.demoUrl)}">${esc(canonical.demoCtaLabel)}</a>`,
     )
     .replaceAll('{{DEMO_DISCLOSURE}}', esc(canonical.demoDisclosure))
-    .replaceAll('{{DEMO_SIGNIN}}', esc(canonical.demoSignIn))
+    .replaceAll('{{DEMO_ASK}}', esc(canonical.demoAsk))
     .replaceAll('{{CONTACT_EMAIL}}', contactLink(`mailto:${canonical.contact.email}`, canonical.contact.email, 'contact-email'))
     .replaceAll('{{CONTACT_PHONE}}', contactLink(canonical.contact.phoneHref, canonical.contact.phone, 'contact-phone'))
     .replaceAll('{{CONTACT_ADDRESS}}', esc(canonical.contact.address))

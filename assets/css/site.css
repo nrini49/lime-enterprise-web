@@ -1484,16 +1484,12 @@ a:hover {
 .demo__grid { align-items: start; }
 .demo .hero__actions { margin-top: var(--space-6); }
 .demo .cta-block { margin-top: var(--space-6); }
-.demo .cta {
-  background: var(--color-surface-2);
-  color: var(--color-primary);
-  border-color: var(--color-border);
-}
-[data-theme='dark'] .demo .cta:not(:hover) { color: var(--color-primary); }
 .demo .section__head h2 { max-width: 30ch; }
-.demo .cta:hover {
-  background: var(--color-primary-hover);
-  border-color: var(--color-primary-hover);
-  color: var(--color-text-inverse);
+.demo-ask {
+  margin-top: var(--space-6);
+  max-width: 44rem;
+  font: 600 var(--text-lg)/1.5 var(--font-display);
+  color: var(--color-primary);
 }
-[data-theme='dark'] .demo .cta:hover { color: var(--color-bg); }
+.demo-ask .anchor-link { display: flex; width: max-content; margin-top: var(--space-3); font-family: var(--font-body); font-size: var(--text-sm); }
+.ww__quote { margin: 2rem 0; }

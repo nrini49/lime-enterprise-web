@@ -599,32 +599,11 @@ test('rendered: the demo disclosure is visible next to the call to action before
         assert.ok(Number(style.opacity) > 0.95, 'the disclosure is fully opaque');
         assert.ok(style.height > 10, 'the disclosure has real height');
 
-        assert.equal(await cta.getAttribute('href'), 'https://limesignalworks.pplx.app/');
-        assert.equal(await cta.getAttribute('target'), '_blank');
-
-        // The sixth fact — the access precondition — is held to the same standard: on
-        // screen, adjacent, and before any click.
-        const signin = page.locator('[data-demo-signin]');
-        assert.equal(await signin.count(), 1, 'exactly one sign-in statement');
-        assert.ok(await signin.isVisible(), 'the sign-in fact is visible without interaction');
-        assert.equal(
-          await signin.innerText(),
-          'Perplexity sign-in may be required.',
-          'the sign-in wording is served, not scripted',
-        );
-        const signinBox = await signin.boundingBox();
-        assert.ok(
-          signinBox.y >= discBox.y + discBox.height - 1,
-          'the sign-in fact follows the disclosure',
-        );
-        assert.ok(
-          signinBox.y - (discBox.y + discBox.height) < 40,
-          `the sign-in fact must be adjacent, gap was ${signinBox.y - (discBox.y + discBox.height)}px`,
-        );
-        assert.ok(
-          signinBox.y < ctaBox.y + ctaBox.height + 260,
-          'the sign-in fact stays within the call-to-action block',
-        );
+        // 2026-10-28: the call to action is the on-site sample-data demo; the hosted
+        // demo and its sign-in line are retired from the home page.
+        assert.equal(await cta.getAttribute('href'), '/rosie-demo/');
+        assert.equal(await cta.getAttribute('target'), null, 'on-site demo, same tab');
+        assert.equal(await page.locator('[data-demo-signin]').count(), 0, 'no sign-in line');
 
         await context.close();
       });
@@ -801,7 +780,7 @@ test('rendered: the page is complete and usable with JavaScript disabled', async
     for (const selector of [
       'a.cta',
       '[data-demo-disclosure]',
-      '[data-demo-signin]',
+      '[data-demo-ask]',
       '[data-contact]',
       '[data-contact-email]',
       '[data-contact-phone]',
@@ -820,7 +799,7 @@ test('rendered: the page is complete and usable with JavaScript disabled', async
     assert.equal(await page.locator('button').count(), 0, 'no inert control without JS');
     assert.equal(
       await page.locator('[data-demo-disclosure]').innerText(),
-      'Demonstration environment. Simulated data. No broker connection and no real orders.',
+      'Sample data in a paper (practice) account. No broker connection, no real orders, and nothing here is advice.',
       'the disclosure wording is served, not scripted',
     );
     // The toggle is the only scripted control; with script off it must still be labelled.

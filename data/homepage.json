@@ -1,10 +1,10 @@
 {
-  "revision": "site2-assembled-home-2026-10-28",
+  "revision": "site2-assembled-home-2026-10-28b",
   "canonical": {
-    "demoUrl": "https://limesignalworks.pplx.app/",
+    "demoUrl": "/rosie-demo/",
     "demoCtaLabel": "Open the Rosie demo",
-    "demoDisclosure": "Demonstration environment. Simulated data. No broker connection and no real orders.",
-    "demoSignIn": "Perplexity sign-in may be required.",
+    "demoDisclosure": "Sample data in a paper (practice) account. No broker connection, no real orders, and nothing here is advice.",
+    "demoAsk": "If you'd like the full demo, just ask. We'll set you up with the whole thing, for free, no strings attached.",
     "contact": {
       "email": "contact@limesignalworks.com",
       "phone": "+1 380-200-0288",
