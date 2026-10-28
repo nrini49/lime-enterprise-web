@@ -165,18 +165,6 @@ async function main() {
     .replaceAll('{{PRICING_INCLUDES}}', renderList(pricing.includes))
     .replaceAll('{{PRICING_NOT}}', renderList(pricing.notThis))
     .replaceAll('{{START_CARDS}}', renderCards(startCards))
-    .replaceAll(
-      '{{LEADERSHIP_LINK}}',
-      `<a class="sibling-link" href="${esc(canonical.leadershipUrl)}" rel="noopener noreferrer" ` +
-        `data-sibling-site="signals">${esc(canonical.leadershipLabel)}` +
-        `<span class="ext" aria-hidden="true">&#8599;</span></a>`,
-    )
-    .replaceAll(
-      '{{LIBRARY_LINK}}',
-      `<a class="sibling-link" href="${esc(canonical.libraryUrl)}" rel="noopener noreferrer" ` +
-        `data-sibling-site="library">${esc(canonical.libraryLabel)}` +
-        `<span class="ext" aria-hidden="true">&#8599;</span></a>`,
-    )
     .replaceAll('{{SECURITIES_DISCLAIMER}}', esc(canonical.securitiesDisclaimer))
     .replaceAll('{{RISK_DISCLOSURE}}', esc(canonical.riskDisclosure))
     .replaceAll('{{EVAL_DAYS}}', String(canonical.evaluationDays))

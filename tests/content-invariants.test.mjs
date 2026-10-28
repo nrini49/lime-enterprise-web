@@ -234,10 +234,9 @@ test('data: canonical strings are the exact approved wording', () => {
   assert.equal(canonical.demoCtaLabel, DEMO_LABEL);
   assert.equal(canonical.demoDisclosure, DEMO_DISCLOSURE);
   assert.equal(canonical.demoSignIn, DEMO_SIGNIN);
-  assert.equal(canonical.leadershipUrl, LEADERSHIP_URL);
-  assert.equal(canonical.leadershipLabel, 'Signals');
-  assert.equal(canonical.libraryUrl, LIBRARY_URL);
-  assert.equal(canonical.libraryLabel, 'LIME Leadership');
+  for (const retired of ['leadershipUrl', 'leadershipLabel', 'libraryUrl', 'libraryLabel']) {
+    assert.equal(canonical[retired], undefined, `${retired} is retired: the sister-site buttons are gone`);
+  }
   assert.equal(canonical.securitiesDisclaimer, SECURITIES_DISCLAIMER);
   assert.equal(canonical.evaluationDays, 33);
 });
@@ -586,42 +585,20 @@ test('dom: every mention of real-time data is negated', () => {
 /* ---------- links off this surface ---------- */
 
 const YOUTUBE_URL = 'https://www.youtube.com/@noelrini3882';
-test('dom: exactly four off-origin destinations exist — the demo, Site 1, the Leadership library, and YouTube', () => {
+test('dom: exactly two off-origin destinations exist — the demo and YouTube', () => {
   const hrefs = $('a[href^="http"]')
     .map((_, el) => $(el).attr('href'))
     .get();
-  assert.deepEqual([...new Set(hrefs)].sort(), [LEADERSHIP_URL, LIBRARY_URL, DEMO_URL, YOUTUBE_URL].sort());
-  assert.equal(hrefs.length, 4, 'no duplicate off-origin links');
+  assert.deepEqual([...new Set(hrefs)].sort(), [DEMO_URL, YOUTUBE_URL].sort());
+  assert.equal(hrefs.length, 2, 'no duplicate off-origin links');
 });
 
-test('dom: exactly two reciprocal links exist — Site 1 and the Leadership library, each singular', () => {
-  const links = $('[data-sibling-site]');
-  assert.equal(links.length, 2, 'exactly two reciprocal links — no alternate paths');
-
-  const leadership = $('[data-sibling-site="signals"]');
-  assert.equal(leadership.length, 1, 'exactly one link to Site 1');
-  assert.equal(leadership.attr('href'), LEADERSHIP_URL);
-  assert.equal(leadership.get(0).tagName, 'a', 'the reciprocal link is a real anchor');
-  const leadershipLabel = norm(leadership.text()).replace(/[↗\s]+$/, '').trim();
-  assert.equal(leadershipLabel, 'Signals', 'Site 1 reciprocal link label');
-  assert.equal(leadership.attr('rel'), 'noopener noreferrer');
-
-  const library = $('[data-sibling-site="library"]');
-  assert.equal(library.length, 1, 'exactly one link to the Leadership library');
-  assert.equal(library.attr('href'), LIBRARY_URL);
-  assert.equal(library.get(0).tagName, 'a', 'the library link is a real anchor');
-  const libraryLabel = norm(library.text()).replace(/[↗\s]+$/, '').trim();
-  assert.equal(libraryLabel, 'LIME Leadership', 'library reciprocal link label');
-  assert.equal(library.attr('rel'), 'noopener noreferrer');
-
-  for (const link of [leadership, library]) {
-    assert.equal(link.attr('hidden'), undefined, 'the reciprocal link is not hidden');
-    assert.equal(link.attr('aria-hidden'), undefined, 'the reciprocal link is exposed to AT');
-    assert.equal(link.closest('.sr-only').length, 0, 'the reciprocal link is visible, not sr-only');
-    assert.ok(!link.hasClass('anchor-link'), 'must not reuse the protected anchor-link class');
-  }
-  assert.equal($(`a[href^="${LEADERSHIP_URL}"]`).length, 1, 'no second path into Site 1');
-  assert.equal($(`a[href^="${LIBRARY_URL}"]`).length, 1, 'no second path into the library');
+test('dom: the Signals and LIME Leadership sister-site buttons are gone, with no leftover row', () => {
+  assert.equal($('[data-sibling-site]').length, 0, 'no sister-site links');
+  assert.equal($('.sibling-link').length, 0, 'no sister-site buttons');
+  assert.equal($('.foot__link-row').length, 0, 'no empty link row or dot separator');
+  assert.equal($(`a[href^="${LEADERSHIP_URL}"]`).length, 0, 'no link into the Signals site');
+  assert.equal($(`a[href^="${LIBRARY_URL}"]`).length, 0, 'no link into the Leadership library');
 });
 
 /* ---------- footer ---------- */
