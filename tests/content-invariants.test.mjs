@@ -214,7 +214,10 @@ const FORBIDDEN_COMMERCIAL = [
 
 const visibleText = () => {
   const clone = cheerio.load(html);
-  clone('script, style, .sr-only').remove();
+  // [data-attribution] marks the owner's own name as the credit on his first-person
+  // copy (2026-10-28, assembled home). It is checked separately below and is the only
+  // place that name may appear.
+  clone('script, style, .sr-only, [data-attribution]').remove();
   return clone('body').text().replace(/\s+/g, ' ');
 };
 
@@ -245,12 +248,20 @@ test('data: the section order is the translated Site 1 order, with unique ids', 
   assert.deepEqual(
     sectionOrder.map((s) => s.id),
     [
+      // 2026-10-28 (content/assembled-home): the personal opening, life with Rosie,
+      // will and won't, evidence tiles, indicators and demo lead the page, in the
+      // owner's order; the existing sections follow unchanged.
+      'opening',
+      'life',
+      'will-wont',
+      'evidence',
+      'indicators',
+      'demo',
       'what-we-do',
       'how-it-works',
       'protection',
       'phone',
       'markets',
-      'indicators',
       'evaluation',
       'pricing',
       'market-report',
@@ -660,6 +671,16 @@ test('dom: no forbidden Site 1 or scriptural terminology in rendered text or met
   }
   for (const phrase of FORBIDDEN_PHRASES) {
     assert.ok(!haystack.includes(phrase), `forbidden phrase appears: "${phrase}"`);
+  }
+});
+
+test('dom: the owner credit appears only as a plain attribution', () => {
+  const credits = $('[data-attribution]')
+    .map((_, el) => norm($(el).text()))
+    .get();
+  assert.ok(credits.length <= 2, 'at most the opening label and the sleep-quote credit');
+  for (const credit of credits) {
+    assert.match(credit, /^(From )?Noal$/, `attribution must be the bare credit, got: "${credit}"`);
   }
 });
 

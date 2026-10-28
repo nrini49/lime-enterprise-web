@@ -2,7 +2,7 @@
 /**
  * Build step: render data/homepage.json into a static index.html.
  * data/homepage.json is the single source of truth for canonical strings, the
- * section order, the market-report example, pricing, and the start cards.
+ * section order, the market-report example, pricing, the indicators, and the start cards.
  * index.html is generated output.
  */
 import { readFile, writeFile } from 'node:fs/promises';
@@ -108,6 +108,63 @@ function renderCards(cards) {
     .join('');
 }
 
+/**
+ * Each indicator is shown as a small framed artwork: an abstract, generated inline SVG
+ * drawn only from palette colours (currentColor plus CSS classes), so it follows the
+ * light/dark toggle. Decorative, so hidden from assistive tech.
+ */
+const INDICATOR_ART = {
+  weather: `
+                <rect class="art__fill-a" x="0" y="0" width="240" height="38" />
+                <rect class="art__fill-b" x="0" y="38" width="240" height="38" />
+                <rect class="art__fill-c" x="0" y="76" width="240" height="38" />
+                <rect class="art__fill-d" x="0" y="114" width="240" height="36" />
+                <path class="art__line" d="M0 112 C40 96 60 60 96 66 S150 30 180 44 S224 88 240 80" />`,
+  notify: `
+                <path class="art__rule" d="M20 40h200M20 75h200M20 110h200" />
+                <circle class="art__dot" cx="70" cy="40" r="11" />
+                <circle class="art__dot art__dot--soft" cx="120" cy="75" r="11" />
+                <circle class="art__dot art__dot--hollow" cx="170" cy="110" r="11" />`,
+  exhaustion: `
+                <path class="art__rule" d="M16 132h208" />
+                <path class="art__line" d="M16 130 C60 126 90 110 116 76 S170 26 196 30 S220 44 224 52" />
+                <circle class="art__ring" cx="196" cy="30" r="9" />
+                <circle class="art__ring art__ring--b" cx="196" cy="30" r="20" />`,
+  stopwatcher: `
+                <path class="art__line" d="M16 120 L60 96 L96 104 L140 64 L176 70 L224 30" />
+                <path class="art__step" d="M16 132h60v-14h56v-26h52v-22h40" />
+                <path class="art__rule" d="M184 20v116" />`,
+  filters: `
+                <rect class="art__layer" x="40" y="22" width="160" height="14" rx="3" />
+                <rect class="art__layer" x="48" y="42" width="144" height="14" rx="3" />
+                <rect class="art__layer" x="56" y="62" width="128" height="14" rx="3" />
+                <rect class="art__layer" x="64" y="82" width="112" height="14" rx="3" />
+                <rect class="art__layer art__layer--open" x="72" y="102" width="96" height="14" rx="3" />
+                <path class="art__rule" d="M120 120v18" />`,
+};
+
+function renderIndicators(indicators) {
+  return indicators
+    .map((ind, i) => {
+      const technical = ind.technical
+        ? `
+              <p class="artwork__tech"><span class="label">A little technical</span> ${esc(ind.technical)}</p>`
+        : '';
+      return `
+            <li class="artwork">
+              <svg class="artwork__canvas" viewBox="0 0 240 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none">${
+                INDICATOR_ART[ind.art] || ''
+              }
+              </svg>
+              <p class="artwork__no label">No. ${i + 1}</p>
+              <h3>${esc(ind.name)}</h3>
+              <p class="artwork__problem"><span class="label">The problem it solves</span> ${esc(ind.problem)}</p>
+              <p class="artwork__answer">${esc(ind.answer)}</p>${technical}
+            </li>`;
+    })
+    .join('');
+}
+
 /** The rendered section order must equal the order recorded in the data file. */
 function assertSectionOrder(html, sections) {
   const rendered = [...html.matchAll(/<section[^>]*\sid="([^"]+)"/g)].map((m) => m[1]);
@@ -141,7 +198,7 @@ async function main() {
   ]);
 
   const data = JSON.parse(dataRaw);
-  const { canonical, sectionOrder, marketReport, pricing, startCards } = data;
+  const { canonical, sectionOrder, marketReport, pricing, startCards, indicators } = data;
 
   const html = template
     .replaceAll('{{NAV}}', renderNav(sectionOrder))
@@ -165,6 +222,7 @@ async function main() {
     .replaceAll('{{PRICING_INCLUDES}}', renderList(pricing.includes))
     .replaceAll('{{PRICING_NOT}}', renderList(pricing.notThis))
     .replaceAll('{{START_CARDS}}', renderCards(startCards))
+    .replaceAll('{{INDICATORS}}', renderIndicators(indicators))
     .replaceAll('{{SECURITIES_DISCLAIMER}}', esc(canonical.securitiesDisclaimer))
     .replaceAll('{{RISK_DISCLOSURE}}', esc(canonical.riskDisclosure))
     .replaceAll('{{EVAL_DAYS}}', String(canonical.evaluationDays))

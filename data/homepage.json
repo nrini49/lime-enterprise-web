@@ -1,5 +1,5 @@
 {
-  "revision": "site2-rosie-bolder-2026-10-26",
+  "revision": "site2-assembled-home-2026-10-28",
   "canonical": {
     "demoUrl": "https://limesignalworks.pplx.app/",
     "demoCtaLabel": "Open the Rosie demo",
@@ -19,63 +19,88 @@
   },
   "sectionOrder": [
     {
+      "id": "opening",
+      "eyebrow": "From Noal",
+      "nav": null
+    },
+    {
+      "id": "life",
+      "eyebrow": "Your life with Rosie",
+      "nav": "Life with Rosie"
+    },
+    {
+      "id": "will-wont",
+      "eyebrow": "What Rosie will and won't do",
+      "nav": null
+    },
+    {
+      "id": "evidence",
+      "eyebrow": "Rosie / Keelwise · Evidence",
+      "nav": "Evidence"
+    },
+    {
+      "id": "indicators",
+      "eyebrow": "Section 05",
+      "nav": "Indicators"
+    },
+    {
+      "id": "demo",
+      "eyebrow": "Section 06",
+      "nav": "Demo"
+    },
+    {
       "id": "what-we-do",
-      "eyebrow": "Section 01",
-      "nav": "What Rosie does"
+      "eyebrow": "Section 07",
+      "nav": null
     },
     {
       "id": "how-it-works",
-      "eyebrow": "Section 02",
+      "eyebrow": "Section 08",
       "nav": "How it works"
     },
     {
       "id": "protection",
-      "eyebrow": "Section 03",
+      "eyebrow": "Section 09",
       "nav": "Protection"
     },
     {
       "id": "phone",
-      "eyebrow": "Section 04",
-      "nav": "Phone and tablet"
-    },
-    {
-      "id": "markets",
-      "eyebrow": "Section 05",
-      "nav": "Markets"
-    },
-    {
-      "id": "indicators",
-      "eyebrow": "Section 06",
-      "nav": "Indicators"
-    },
-    {
-      "id": "evaluation",
-      "eyebrow": "Section 07",
-      "nav": "Evaluation"
-    },
-    {
-      "id": "pricing",
-      "eyebrow": "Section 08",
-      "nav": "Pricing"
-    },
-    {
-      "id": "market-report",
-      "eyebrow": "Section 09",
-      "nav": null
-    },
-    {
-      "id": "commitments",
       "eyebrow": "Section 10",
       "nav": null
     },
     {
-      "id": "partners",
+      "id": "markets",
       "eyebrow": "Section 11",
+      "nav": "Markets"
+    },
+    {
+      "id": "evaluation",
+      "eyebrow": "Section 12",
+      "nav": "Evaluation"
+    },
+    {
+      "id": "pricing",
+      "eyebrow": "Section 13",
+      "nav": "Pricing"
+    },
+    {
+      "id": "market-report",
+      "eyebrow": "Section 14",
+      "nav": null
+    },
+    {
+      "id": "commitments",
+      "eyebrow": "Section 15",
+      "nav": null
+    },
+    {
+      "id": "partners",
+      "eyebrow": "Section 16",
       "nav": "Partners"
     },
     {
       "id": "how-to-begin",
-      "eyebrow": "Section 12",
+      "eyebrow": "Section 17",
       "nav": "How to begin"
     }
   ],
@@ -147,5 +172,42 @@
       "Not hands-off: you supervise Rosie and can stop her at any time."
     ]
   },
-  "startCards": []
+  "startCards": [],
+  "indicators": [
+    {
+      "name": "Lime Color Weather",
+      "art": "weather",
+      "problem": "You trade the same way whether the market is friendly or stormy, and only find out which it was afterwards.",
+      "answer": "Shows the market’s current “weather” as colour bands, so you can see whether conditions favour buying, holding or staying small.",
+      "technical": "Conditions are drawn as colour bands with readings such as “bull cooling” or “strong bull rising”. The same read appears in more than one pane, and the middle pane shows whether a tiring move is forming with or against the larger trend."
+    },
+    {
+      "name": "Lime Notify",
+      "art": "notify",
+      "problem": "There are so many signals on your screen that you can’t tell what you’re actually supposed to do.",
+      "answer": "Reduces the noise to three readings only: Buy, Trim and Exit, each checked on the 1-day, 6-hour and 3-hour time frames.",
+      "technical": "The published reading is Alignment + Momentum − Exhaustion − Risk: Buy when it is strong, Trim when it softens, Exit when it breaks down. Tiredness and risk count against a Buy."
+    },
+    {
+      "name": "Lime Exhaustion",
+      "art": "exhaustion",
+      "problem": "You keep getting in too late, buying right as the move runs out of steam.",
+      "answer": "Shows whether a move is fresh, mid-journey or worn out, so you can avoid buying the last gasp of a move.",
+      "technical": "The published reading is Stretch from Trend + Momentum Extremes + Volatility Expansion − Fresh Support. The further price stretches from its trend, the more tired the move reads."
+    },
+    {
+      "name": "Lime StopWatcher",
+      "art": "stopwatcher",
+      "problem": "You never know where to put your stop, so you either get shaken out or give back what you made.",
+      "answer": "Three tools for the life of a trade: a first stop level at entry, a trailing guard as the trade moves your way, and a line that marks where a mature move may be ending.",
+      "technical": "Three parts: StopWatcher I (First Stop), StopWatcher II (Trailing Guard) and StopWatcher III (Harvest Line), which gives its final read as CAND, AVOID, WATCH or HOLD."
+    },
+    {
+      "name": "Lime 8 Filter Stack",
+      "art": "filters",
+      "problem": "When the signals are mixed, it’s easy to talk yourself into the trade anyway.",
+      "answer": "Combines several safety checks into one pass or fail view, so you can stand aside when the signals are mixed.",
+      "technical": null
+    }
+  ]
 }
