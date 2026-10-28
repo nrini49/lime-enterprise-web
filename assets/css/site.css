@@ -1500,3 +1500,188 @@ a:hover {
   margin-top: var(--space-6);
   max-width: 64rem;
 }
+
+/* ============================================================
+   Harbor Now — the daily market report (/harbor-now/), rendered by
+   src/harbor.mjs from data/harbor/. Reuses the panel, data-table, notice,
+   ticks and footer components; only the pieces below are new.
+   ============================================================ */
+
+.hn-head {
+  margin-bottom: var(--space-6);
+}
+
+.hn-head a {
+  color: inherit;
+}
+
+.hn-h1 {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  margin-block: var(--space-3) var(--space-5);
+}
+
+.hn-notice {
+  margin-top: 0;
+  margin-bottom: var(--space-8);
+}
+
+.hn-stale {
+  margin-top: var(--space-4);
+}
+
+.hn-latest-label {
+  margin-bottom: var(--space-3);
+}
+
+.hn-panel {
+  max-width: 52rem;
+}
+
+.hn-title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-top: var(--space-4);
+  overflow-wrap: anywhere;
+}
+
+.hn-tag {
+  margin-top: var(--space-2);
+  margin-bottom: var(--space-4);
+  color: var(--color-text-muted);
+}
+
+.hn-table th[scope='row'] {
+  min-width: 9rem;
+}
+
+.hn-read {
+  display: block;
+  margin-top: var(--space-1);
+  font-weight: 400;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 30rem) {
+  .hn-table .hn-hi {
+    display: none;
+  }
+}
+
+.hn-wx {
+  margin-top: var(--space-4);
+  display: grid;
+  gap: var(--space-3);
+}
+
+.hn-wx dt {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+
+.hn-wx dd {
+  margin-top: var(--space-1);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+}
+
+.hn-h {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  margin-top: var(--space-10);
+}
+
+.hn-list {
+  max-width: 52rem;
+}
+
+.hn-canon {
+  margin-top: var(--space-10);
+  max-width: 52rem;
+  border-top: 1px solid var(--color-divider);
+  padding-top: var(--space-5);
+}
+
+.hn-canon summary {
+  cursor: pointer;
+  font-weight: 600;
+  min-height: 2.75rem;
+  display: flex;
+  align-items: center;
+}
+
+.hn-canon h3 {
+  margin-top: var(--space-5);
+  font-size: var(--text-sm);
+}
+
+.hn-count {
+  margin-top: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.hn-arch {
+  list-style: none;
+  padding: 0;
+  margin-top: var(--space-4);
+  max-width: 52rem;
+}
+
+.hn-arch li {
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.hn-arch li:first-child {
+  border-top: 1px solid var(--color-divider);
+}
+
+.hn-arch a {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  gap: var(--space-4);
+  padding-block: var(--space-3);
+  min-height: 2.75rem;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.hn-arch a:hover .hn-arch__title {
+  color: var(--color-primary);
+}
+
+.hn-arch__date {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  padding-top: 0.2em;
+}
+
+.hn-arch__title {
+  font-size: var(--text-sm);
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 30rem) {
+  .hn-arch a {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-1);
+  }
+}
+
+.hn-foot-link {
+  margin-top: var(--space-3);
+}
+
+.foot__harbor {
+  margin-top: var(--space-1);
+}

@@ -1,0 +1,57 @@
+{
+  "title": "Broad red close — QQQ lags as volatility rises",
+  "tag": "All four tracked funds closed lower; QQQ fell 1.06% and VIX rose 8.07% to 16.07.",
+  "weather": {
+    "spy": {
+      "price": "765.56",
+      "change": "-0.75%",
+      "high52": "779.37",
+      "read": "Down 0.75%; held up better than QQQ but remains below its 52-week high"
+    },
+    "qqq": {
+      "price": "736.59",
+      "change": "-1.06%",
+      "high52": "748.65",
+      "read": "Down 1.06%; weakest of the tracked funds and below its 52-week high"
+    },
+    "dia": {
+      "price": "514.02",
+      "change": "-0.67%",
+      "high52": "546.75",
+      "read": "Down 0.67%; least negative of the tracked funds, still below its 52-week high"
+    },
+    "iwm": {
+      "price": "280.06",
+      "change": "-0.68%",
+      "high52": "305.18",
+      "read": "Down 0.68%; slightly firmer than SPY but no broad strength, below its 52-week high"
+    },
+    "sentiment": {
+      "label": "UNAVAILABLE",
+      "qualifier": "the market-sentiment tool was unavailable; all four tracked funds declined and VIX rose"
+    },
+    "volatility": "VIX 16.07, up 8.07% (+1.20 points); volatility rose",
+    "tone": "Broad red tape; QQQ lagged as volatility rose"
+  },
+  "cluster": [
+    "Leadership lane: DIA was least negative at -0.67%; QQQ lagged at -1.06%, and all four tracked funds declined",
+    "Key catalyst today: Jefferies Financial Group and Vail Resorts are marked reported on today's earnings schedule",
+    "Secondary catalyst: Carnival Corporation and CarMax are scheduled for tomorrow; treat timing as event risk, not a forecast",
+    "Small cap vs large cap: IWM fell 0.68% versus SPY down 0.75%; relative firmness did not turn the tape green",
+    "Broad participation: all four tracked funds closed lower as VIX rose to 16.07",
+    "Rotation note: DIA held up best and QQQ lagged; there was no broad green leadership lane",
+    "Behavior rule: do not chase a bounce or treat one close as a trigger; wait for clean alignment and defined risk"
+  ],
+  "account": [
+    "Mission for today: preserve optionality; no new risk without clean alignment",
+    "Broker status: IB paper connected; no live execution; Schwab pending",
+    "Elevated event risk: Carnival Corporation and CarMax are scheduled for tomorrow; verify timing before the next session"
+  ],
+  "checklist": [
+    "Data flow, broker connections, overnight positions, and stop logic: check before the next session",
+    "Core universe glance: all four tracked funds red; QQQ lagged; VIX higher",
+    "Day-specific catalyst note #1: Jefferies Financial Group and Vail Resorts marked reported today",
+    "Day-specific catalyst note #2: Carnival Corporation and CarMax scheduled for tomorrow"
+  ],
+  "body_muted": "Red breadth is information, not a trigger; cash is safety, and patience is the position."
+}

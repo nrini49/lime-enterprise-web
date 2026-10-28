@@ -4,10 +4,12 @@
  * data/homepage.json is the single source of truth for canonical strings, the
  * section order, the market-report example, pricing, the indicators, and the start cards.
  * index.html is generated output.
+ * It also renders Harbor Now (data/harbor/*.data.json) into harbor-now/ via src/harbor.mjs.
  */
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import { buildHarbor } from './harbor.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -263,6 +265,12 @@ async function main() {
   console.log(
     `built index.html — ${sectionOrder.length} sections, ${startCards.length} start cards, ` +
       `${pricing.rows.length} prices, ${marketReport.rows.length} example report rows`,
+  );
+
+  const harbor = await buildHarbor(root, canonical);
+  console.log(
+    `built harbor-now/ — ${harbor.count} editions, latest ${harbor.latest}` +
+      (harbor.stale ? ' (stale: restart note shown)' : ''),
   );
 }
 

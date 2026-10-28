@@ -1,0 +1,57 @@
+{
+  "title": "QQQ leads a broad green close — volatility eases",
+  "tag": "All four tracked funds finished green; QQQ led at +1.73% while the VIX fell 12.82% to 15.44.",
+  "weather": {
+    "spy": {
+      "price": "762.60",
+      "change": "+1.13%",
+      "high52": "779.37",
+      "read": "Up 1.13%; broad-market strength, still below its 52-week high"
+    },
+    "qqq": {
+      "price": "716.92",
+      "change": "+1.73%",
+      "high52": "748.65",
+      "read": "Up 1.73%; strongest tracked fund and the clear leadership lane"
+    },
+    "dia": {
+      "price": "518.35",
+      "change": "+0.61%",
+      "high52": "546.75",
+      "read": "Up 0.61%; participating, but behind SPY and QQQ"
+    },
+    "iwm": {
+      "price": "285.38",
+      "change": "+0.51%",
+      "high52": "305.18",
+      "read": "Up 0.51%; green, but lagging the large-cap and tech complex"
+    },
+    "sentiment": {
+      "label": "CONSTRUCTIVE",
+      "qualifier": "all four tracked funds rose and VIX fell 12.82%; QQQ led at +1.73%, so the tape is constructive without calling a trend"
+    },
+    "volatility": "VIX 15.44, down 12.82% (-2.27 points); volatility eased",
+    "tone": "Broad green tape, lead held by QQQ"
+  },
+  "cluster": [
+    "Leadership lane: QQQ led at +1.73%; SPY followed at +1.13%, with DIA and IWM positive but slower",
+    "Key catalyst today: Lennar (LEN) was returned as reported on today's earnings schedule; no earnings details were pulled",
+    "Secondary catalyst: no major/well-known name was returned for tomorrow in the fetched earnings window",
+    "Small cap vs large cap: IWM rose 0.51%, lagging SPY at 1.13% and QQQ at 1.73%",
+    "Broad participation: all four tracked funds finished green while VIX fell to 15.44",
+    "Rotation note: strength was broad but concentrated at the QQQ leadership edge; easing volatility supports patience, not permission to chase",
+    "Behavior rule: do not chase a strong close; wait for a clean pullback, aligned cluster, and written reason"
+  ],
+  "account": [
+    "Mission for today: protect gains and optionality; no new risk without a clean setup",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: Lennar reported today; no major-name event was returned for tomorrow"
+  ],
+  "checklist": [
+    "Data flow: quotes current after-hours; VIX quote timestamp 20:14 UTC; no live execution",
+    "Core universe glance: all four funds green, QQQ strongest, VIX lower",
+    "Day-specific catalyst note #1: Lennar (LEN) was marked reported today; review only",
+    "Day-specific catalyst note #2: tomorrow's fetched earnings window returned no major/well-known name"
+  ],
+  "body_muted": "Broad green tape is information, not permission; let alignment earn the next risk."
+}

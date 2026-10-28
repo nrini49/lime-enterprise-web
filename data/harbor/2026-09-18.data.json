@@ -1,0 +1,57 @@
+{
+  "title": "QQQ leads a mixed tape — volatility eases",
+  "tag": "QQQ gained 0.63% while SPY, DIA, and IWM finished lower; VIX fell 4.08% to 14.81.",
+  "weather": {
+    "spy": {
+      "price": "761.69",
+      "change": "-0.12%",
+      "high52": "779.37",
+      "read": "Down 0.12%; near its 52-week high, but not leading"
+    },
+    "qqq": {
+      "price": "721.45",
+      "change": "+0.63%",
+      "high52": "748.65",
+      "read": "Up 0.63%; clear leader among the tracked funds"
+    },
+    "dia": {
+      "price": "515.88",
+      "change": "-0.48%",
+      "high52": "546.75",
+      "read": "Down 0.48%; lagging the QQQ-led tape"
+    },
+    "iwm": {
+      "price": "284.10",
+      "change": "-0.47%",
+      "high52": "305.18",
+      "read": "Down 0.47%; small caps did not confirm QQQ strength"
+    },
+    "sentiment": {
+      "label": "MIXED",
+      "qualifier": "QQQ led while SPY, DIA, and IWM fell; the market-sentiment tool was unavailable, so no stronger label is claimed"
+    },
+    "volatility": "VIX 14.81, down 4.08% (-0.63 points); volatility eased",
+    "tone": "Narrow leadership, calmer volatility"
+  },
+  "cluster": [
+    "Leadership lane: QQQ led at +0.63%; SPY, DIA, and IWM finished lower",
+    "Key catalyst today: no major or well-known earnings catalyst returned; BLSM was skipped as small and illiquid",
+    "Secondary catalyst: no major or well-known earnings catalyst returned for tomorrow; the fetched row was also BLSM",
+    "Small cap vs large cap: IWM fell 0.47% while SPY fell 0.12%; small caps lagged",
+    "Broad participation: mixed, with only QQQ green; VIX fell to 14.81",
+    "Rotation note: strength stayed concentrated in QQQ while the other tracked funds slipped; calmer volatility supports patience, not a chase",
+    "Behavior rule: do not chase the leader; wait for broader confirmation and a written reason"
+  ],
+  "account": [
+    "Mission for today: protect optionality; no new risk without a clean, aligned setup",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: no major or well-known earnings catalyst returned for today or tomorrow"
+  ],
+  "checklist": [
+    "Data flow: quotes current after-hours; no live execution",
+    "Core universe glance: QQQ green, DIA and IWM lower, VIX lower",
+    "Day-specific catalyst note #1: no major-name earnings catalyst returned today",
+    "Day-specific catalyst note #2: no major-name earnings catalyst returned for tomorrow"
+  ],
+  "body_muted": "A calmer VIX is information, not permission; let broader alignment earn the next risk."
+}

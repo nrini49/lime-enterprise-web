@@ -1,0 +1,57 @@
+{
+  "title": "Broad red close — QQQ and IWM lag as volatility rises",
+  "tag": "All four tracked funds closed lower; SPY held up best relatively while QQQ and IWM lagged, and the VIX rose 8.38% to 17.84.",
+  "weather": {
+    "spy": {
+      "price": "757.83",
+      "change": "-0.60%",
+      "high52": "779.37",
+      "read": "Down 0.60%; the strongest relative hold among the four tracked funds"
+    },
+    "qqq": {
+      "price": "708.69",
+      "change": "-1.06%",
+      "high52": "748.65",
+      "read": "Down 1.06%; the weakest relative hold, with growth exposure under pressure"
+    },
+    "dia": {
+      "price": "520.75",
+      "change": "-0.63%",
+      "high52": "546.75",
+      "read": "Down 0.63%; close to SPY but slightly weaker"
+    },
+    "iwm": {
+      "price": "287.70",
+      "change": "-1.01%",
+      "high52": "305.18",
+      "read": "Down 1.01%; small caps lagged the broad market"
+    },
+    "sentiment": {
+      "label": "CAUTIOUS",
+      "qualifier": "all four tracked funds closed lower and VIX rose 8.38%; breadth was weak"
+    },
+    "volatility": "VIX 17.84, up 8.38% (+1.38 points); volatility expanded",
+    "tone": "Protect first, wait for breadth to repair"
+  },
+  "cluster": [
+    "Leadership lane: SPY led relative at -0.60%; QQQ lagged at -1.06%",
+    "Key catalyst today: Oracle, Adobe, Copart, Macy's, and RH were listed as reported earnings; no post-report market reaction was retrieved",
+    "Secondary catalyst: tomorrow's upcoming calendar includes Kroger; keep the reaction unprecommitted",
+    "Small cap vs large cap: IWM fell 1.01%, underperforming SPY's 0.60% decline",
+    "Broad participation: all four tracked funds closed red; breadth was weak",
+    "Rotation note: no confirmed leadership change while the relative leader also closed lower",
+    "Behavior rule: do not chase a red tape or pre-position for earnings; wait for aligned breadth and a written reason"
+  ],
+  "account": [
+    "Mission for today: preserve optionality through weak breadth and rising volatility; no new risk without a clean setup",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: tomorrow's listed earnings include Kroger"
+  ],
+  "checklist": [
+    "Data flow: quotes current after-hours; VIX quote timestamp 20:14 UTC; no live execution",
+    "Core universe glance: all four tracked funds red, QQQ weakest, VIX higher",
+    "Day-specific catalyst note #1: today's listed reported earnings include Oracle, Adobe, Copart, Macy's, and RH",
+    "Day-specific catalyst note #2: tomorrow's upcoming calendar includes Kroger"
+  ],
+  "body_muted": "Cash is safety and optionality; broad weakness with expanding volatility is a reason to protect the account, not to force a trade."
+}

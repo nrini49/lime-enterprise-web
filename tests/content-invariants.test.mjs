@@ -95,8 +95,8 @@ const FORBIDDEN_TERMS = [
   'coherence',
   'manifestation',
   'manifest',
-  'harbor',
-  'harbour',
+  // 2026-10-28: 'harbor', 'harbour', 'market weather' and 'sea state' removed at the
+  // owner's direction ("don't ban anything"). Harbor Now is published on this site.
   'wicket gate',
   'nine doors',
   'metaphor gate',
@@ -107,9 +107,7 @@ const FORBIDDEN_TERMS = [
   'inner rail',
   'inner posture',
   'guru',
-  'market weather',
   'fidelity switch',
-  'sea state',
   'amber light',
   'renaissance',
   'cockpit',

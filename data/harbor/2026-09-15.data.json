@@ -1,0 +1,57 @@
+{
+  "title": "Broad red close — IWM lags as volatility ticks higher",
+  "tag": "All four tracked funds closed lower; SPY held best while IWM lagged, and the VIX rose 0.58% to 17.20.",
+  "weather": {
+    "spy": {
+      "price": "757.39",
+      "change": "-0.46%",
+      "high52": "779.37",
+      "read": "Down 0.46%; held best among the four tracked funds, still below its 52-week high"
+    },
+    "qqq": {
+      "price": "704.54",
+      "change": "-0.65%",
+      "high52": "748.65",
+      "read": "Down 0.65%; lagged SPY as growth stayed under pressure"
+    },
+    "dia": {
+      "price": "521.30",
+      "change": "-0.61%",
+      "high52": "546.75",
+      "read": "Down 0.61%; close to SPY but still red"
+    },
+    "iwm": {
+      "price": "285.15",
+      "change": "-0.96%",
+      "high52": "305.18",
+      "read": "Down 0.96%; weakest relative tape and furthest below its 52-week high"
+    },
+    "sentiment": {
+      "label": "CAUTIOUS",
+      "qualifier": "all four tracked funds closed lower and VIX rose 0.58%; risk-off pressure is present, but volatility remains contained"
+    },
+    "volatility": "VIX 17.20, up 0.58% (+0.10 points); volatility ticked higher",
+    "tone": "Risk-off pressure, discipline first"
+  },
+  "cluster": [
+    "Leadership lane: SPY held best at -0.46%; IWM lagged at -0.96%, so no clean upside leader",
+    "Key catalyst today: no major or well-known company was returned for today; smaller names were skipped",
+    "Secondary catalyst: no major or well-known company was returned for tomorrow; smaller names were skipped",
+    "Small cap vs large cap: IWM fell 0.96%, underperforming SPY's 0.46% decline",
+    "Broad participation: all four tracked funds closed lower; VIX rose to 17.20",
+    "Rotation note: SPY showed relative resilience while IWM lagged; do not treat one session as a trend",
+    "Behavior rule: do not chase weakness or force a setup; wait for a clean, written reason"
+  ],
+  "account": [
+    "Mission for today: preserve cash and optionality; no new risk without a clean setup",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: tomorrow's returned schedule contained smaller names only; no major catalyst was flagged"
+  ],
+  "checklist": [
+    "Data flow: quotes current after-hours; VIX quote timestamp 20:15 UTC; no live execution",
+    "Core universe glance: all four tracked funds red, SPY strongest, IWM weakest, VIX higher",
+    "Day-specific catalyst note #1: no major or well-known earnings catalyst was returned today; smaller names were skipped",
+    "Day-specific catalyst note #2: no major or well-known earnings catalyst was returned for tomorrow; smaller names were skipped"
+  ],
+  "body_muted": "Cash is safety and optionality; a broad red close with higher volatility argues for patience, clean state, and no chase."
+}

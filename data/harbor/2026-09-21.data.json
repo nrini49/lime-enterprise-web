@@ -1,0 +1,57 @@
+{
+  "title": "QQQ leads a broad green close — volatility stays calm",
+  "tag": "QQQ gained 2.77% and led all tracked funds; SPY, DIA, and IWM also finished higher while VIX eased 0.07% to 14.80.",
+  "weather": {
+    "spy": {
+      "price": "773.50",
+      "change": "+1.55%",
+      "high52": "779.37",
+      "read": "Up 1.55%; broad-market strength, sitting near its 52-week high"
+    },
+    "qqq": {
+      "price": "741.47",
+      "change": "+2.77%",
+      "high52": "748.65",
+      "read": "Up 2.77%; clear leader and still below its 52-week high"
+    },
+    "dia": {
+      "price": "519.78",
+      "change": "+0.76%",
+      "high52": "546.75",
+      "read": "Up 0.76%; participating, but lagging QQQ and SPY"
+    },
+    "iwm": {
+      "price": "285.58",
+      "change": "+0.52%",
+      "high52": "305.18",
+      "read": "Up 0.52%; green, but the weakest of the tracked funds"
+    },
+    "sentiment": {
+      "label": "CONSTRUCTIVE",
+      "qualifier": "all four tracked funds finished higher with QQQ leading; the market-sentiment tool was unavailable, so no stronger label is claimed"
+    },
+    "volatility": "VIX 14.80, down 0.07% (-0.01 points); volatility stayed calm",
+    "tone": "Broad participation, concentrated leadership"
+  },
+  "cluster": [
+    "Leadership lane: QQQ led at +2.77%; SPY followed at +1.55%",
+    "Key catalyst today: no major or well-known earnings catalyst returned; AnaptysBio and Ennis were not treated as major catalysts",
+    "Secondary catalyst: tomorrow's returned schedule includes AutoZone, Thor Industries, and KB Home; keep event risk contained",
+    "Small cap vs large cap: IWM gained 0.52% while SPY gained 1.55%; small caps participated but lagged",
+    "Broad participation: all four tracked funds finished green; VIX eased slightly to 14.80",
+    "Rotation note: strength was broad but QQQ-led; do not confuse a strong close with permission to chase an extended leader",
+    "Behavior rule: no chase; wait for a written reason, defined risk, and confirmation beyond one leading fund"
+  ],
+  "account": [
+    "Mission for today: protect optionality in a strong tape; no new risk without a clean, aligned setup",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: AutoZone, Thor Industries, and KB Home are listed for tomorrow; keep pre-earnings risk contained"
+  ],
+  "checklist": [
+    "Data flow: quotes current after-hours; no live execution",
+    "Core universe glance: QQQ and SPY led, DIA and IWM participated, VIX eased",
+    "Day-specific catalyst note #1: no major-name earnings catalyst returned for today",
+    "Day-specific catalyst note #2: AutoZone, Thor Industries, and KB Home are listed for tomorrow"
+  ],
+  "body_muted": "A broad green close is information, not permission; let clean alignment earn the next risk."
+}

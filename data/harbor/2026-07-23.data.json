@@ -1,0 +1,54 @@
+{
+  "title": "Broad risk-off close — QQQ leads lower as VIX spikes into heavy earnings",
+  "tag": "All four major ETFs closed red with QQQ the weakest and volatility jumping sharply — a day to protect capital amid one of the busiest earnings sessions of the quarter.",
+  "weather": {
+    "spy": {
+      "price": "738.18",
+      "change": "-1.23%",
+      "high52": "760.40",
+      "read": "Pulled back further from the 52-week high — broad risk-off tape"
+    },
+    "qqq": {
+      "price": "691.96",
+      "change": "-1.90%",
+      "read": "Clear laggard again — mega-cap tech led the market lower"
+    },
+    "dia": {
+      "price": "516.26",
+      "change": "-1.00%",
+      "read": "Fell in line with the broader tape — no defensive rotation today"
+    },
+    "iwm": {
+      "price": "292.09",
+      "change": "-0.58%",
+      "read": "Held up best of the four — small caps relatively resilient"
+    },
+    "sentiment": {
+      "label": "BEARISH",
+      "qualifier": "broad decline across all four major ETFs with volatility spiking"
+    },
+    "volatility": "VIX 18.70, up 12.38% on the day — fear premium jumped sharply",
+    "tone": "Protect-first — steep down day with a volatility spike; wait for the tape to stabilize"
+  },
+  "cluster": [
+    "Leadership lane: IWM held up best; QQQ was the clear laggard — broad-based weakness, not a single-sector story",
+    "Volatility regime: VIX jumped to 18.70 (+12.38%) — treat signals as lower-confidence until vol cools",
+    "Breadth read: all four major ETFs closed red — a broad risk-off day",
+    "Heavy earnings tape: Intel, T-Mobile, Union Pacific, Honeywell, Comcast, Lockheed Martin, Blackstone, and Southwest Airlines were among today's reporters",
+    "Rotation note: no clear rotation into safety — value, growth, and small caps all fell together",
+    "Behavior rule: no chasing downside; keep size small, demand A+ setups, and respect wider stops given the vol spike"
+  ],
+  "account": [
+    "Mission for today: protect capital — reduce size and wait for a cleaner tape before adding risk",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Event risk: earnings season remains in full swing — more large-cap reports land through the rest of the week"
+  ],
+  "checklist": [
+    "Execution reality check: cash is safety — no obligation to trade a volatile, broad-red tape",
+    "Core universe glance: SPY/QQQ/DIA/IWM all red; QQQ weakest, IWM steadiest",
+    "Day-specific catalyst note #1: Intel, T-Mobile, Union Pacific, Honeywell, Comcast, Lockheed Martin, Blackstone, and Southwest Airlines reported today",
+    "Day-specific catalyst note #2: VIX spiked over 12% — treat any new entries as lower-confidence until volatility settles"
+  ],
+  "body_muted": "Today is a protect-first day. A volatility spike like this calls for patience, not new risk.",
+  "_sources": "SPY/QQQ/DIA/IWM/VIX quotes via finance_quotes; overall sentiment via finance_market_sentiment; earnings items via finance_earnings_schedule (Perplexity Realtime Finance Data). Account/checklist lines are Plex's draft judgment calls for Noal to adjust."
+}

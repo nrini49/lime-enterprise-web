@@ -1,0 +1,34 @@
+{
+  "title": "Big banks open earnings season — tape stabilizes",
+  "tag": "SPY, QQQ, DIA, and IWM all closed higher as volatility eased and the major banks kicked off Q2 earnings.",
+  "weather": {
+    "spy": {"price": "751.83", "change": "+0.36%", "high52": "758.08", "read": "Recovered part of yesterday's pullback, still below the 52-week high"},
+    "qqq": {"price": "719.69", "change": "+1.12%", "read": "Led today's gainers — tech bounced back after yesterday's leading decline"},
+    "dia": {"price": "524.69", "change": "+0.04%", "read": "Essentially flat — value held its ground rather than extending"},
+    "iwm": {"price": "294.51", "change": "+0.35%", "read": "Small caps firmed, in line with the broader recovery"},
+    "sentiment": {"label": "STEADY", "qualifier": "broad recovery, no single catalyst outside bank earnings"},
+    "volatility": "VIX 16.50, down 3.85% on the day — volatility eased back after yesterday's jump",
+    "tone": "Calmer — a day to confirm the pullback was noise, not a shift"
+  },
+  "cluster": [
+    "Leadership lane: QQQ led the recovery; DIA was flat — growth outpaced value today",
+    "Key catalyst today: JPMorgan Chase, Bank of America, Goldman Sachs, Wells Fargo, and Citigroup all reported Q2 earnings this morning",
+    "Secondary catalyst: Johnson & Johnson, Morgan Stanley, BlackRock, and Cintas report tomorrow (7/15)",
+    "Small cap vs large cap: IWM (+0.35%) roughly matched SPY, no clean divergence",
+    "Broad participation: positive across all four majors — clean recovery day",
+    "Rotation note: money flowed back into tech after yesterday's rotation out",
+    "Behavior rule: one green day recovering one red day is not confirmation of a trend either way"
+  ],
+  "account": [
+    "Mission for today: observe — a clean recovery day, but one day of bank earnings isn't a full read on the quarter",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: Johnson & Johnson, Morgan Stanley, BlackRock, and Cintas report tomorrow morning — carries into tomorrow's open"
+  ],
+  "checklist": [
+    "Data flow, broker connections, overnight positions, stop logic: monitoring data-only — no live broker connection yet",
+    "Core universe glance: SPY and IWM clear; QQQ clearest gainer, DIA flat",
+    "Day-specific catalyst note #1: big bank Q2 earnings reported this morning (JPM, BAC, GS, WFC, C)",
+    "Day-specific catalyst note #2: healthcare, banking, and industrial earnings continue tomorrow morning (JNJ, MS, BLK, CTAS)"
+  ],
+  "body_muted": "The tape shrugged off yesterday's pullback — the first wave of bank earnings didn't spook anyone."
+}

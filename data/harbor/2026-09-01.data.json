@@ -1,0 +1,58 @@
+{
+  "title": "Broad risk-off tape — volatility jumps as tech and small caps lag",
+  "tag": "All four majors closed lower; SPY held best by a small margin, while QQQ and IWM lagged as VIX rose 9.52%.",
+  "weather": {
+    "spy": {
+      "price": "761.78",
+      "change": "-0.69%",
+      "high52": "779.37",
+      "read": "Down 0.69%; broad tape softened and stayed below the 52-week high"
+    },
+    "qqq": {
+      "price": "707.64",
+      "change": "-1.27%",
+      "high52": "748.65",
+      "read": "Weakest major; tech lagged the broad tape"
+    },
+    "dia": {
+      "price": "527.75",
+      "change": "-0.72%",
+      "high52": "546.75",
+      "read": "Held close to SPY; industrials were relatively steadier, but still red"
+    },
+    "iwm": {
+      "price": "290.57",
+      "change": "-1.14%",
+      "high52": "305.18",
+      "read": "Small caps lagged SPY; no relative-strength signal"
+    },
+    "sentiment": {
+      "label": "CAUTIOUSLY RISK-OFF",
+      "qualifier": "All four funds declined and VIX rose 9.52%; SPY and DIA were relatively steadier, but breadth was uniformly red"
+    },
+    "volatility": "VIX 16.34, up 9.52% (+1.42 points) from the 14.92 previous close; volatility premium widened",
+    "tone": "Defensive and selective — broad weakness, higher volatility, no chase"
+  },
+  "cluster": [
+    "Leadership lane: SPY was the least negative major at -0.69%, with DIA close at -0.72%; no clean leader",
+    "Key catalyst today: Palo Alto Networks, Dell Technologies, Medtronic, and GitLab were marked reported on the returned earnings calendar",
+    "Secondary catalyst: Broadcom, Snowflake, Hewlett Packard Enterprise, and NetApp are listed upcoming tomorrow; keep reactions unprecommitted",
+    "Small cap vs large cap: IWM (-1.14%) trailed SPY (-0.69%) by 0.45 percentage points",
+    "Broad participation: all four tracked funds finished red; weakness was broad rather than isolated",
+    "Rotation note: no constructive rotation was visible; SPY and DIA held relatively better than QQQ and IWM, but every major declined",
+    "Behavior rule: do not chase weakness or try to make it back; require a written reason, clean structure, and named risk before adding exposure"
+  ],
+  "account": [
+    "Mission for today: preserve optionality and observe whether volatility settles; no new risk without a written reason",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: Broadcom, Snowflake, Hewlett Packard Enterprise, and NetApp are listed upcoming tomorrow; keep the reaction unprecommitted"
+  ],
+  "checklist": [
+    "Data flow: after-hours quotes current; no live execution",
+    "Core universe glance: all four majors lower; QQQ and IWM weakest; VIX higher",
+    "Day-specific catalyst note #1: Palo Alto Networks, Dell Technologies, Medtronic, and GitLab were marked reported today",
+    "Day-specific catalyst note #2: Broadcom, Snowflake, Hewlett Packard Enterprise, and NetApp are listed upcoming tomorrow; watch the open"
+  ],
+  "body_muted": "Cash is safety and optionality; let higher volatility settle before adding risk.",
+  "_sources": "SPY/QQQ/DIA/IWM/^VIX via finance_quotes (Realtime Finance Data), fetched 2026-09-01 after hours; earnings catalysts via finance_earnings_schedule for 2026-09-01 and 2026-09-02. finance_market_sentiment was not present in the connected finance catalog, so CAUTIOUSLY RISK-OFF is a conservative read from the pulled breadth and volatility data. Account/checklist lines are draft judgment calls for Noal’s correction, not asserted as his mission."
+}

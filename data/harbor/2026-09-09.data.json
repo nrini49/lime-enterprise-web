@@ -1,0 +1,57 @@
+{
+  "title": "Broad red close — IWM lags as volatility rises",
+  "tag": "All four tracked funds closed lower; QQQ held up best relatively while IWM lagged, and the VIX rose 4.71% to 16.46.",
+  "weather": {
+    "spy": {
+      "price": "762.46",
+      "change": "-0.46%",
+      "high52": "779.37",
+      "read": "Down 0.46%; broad-market exposure softened with the tape"
+    },
+    "qqq": {
+      "price": "716.31",
+      "change": "-0.29%",
+      "high52": "748.65",
+      "read": "Down 0.29%; the strongest relative hold among the four tracked funds"
+    },
+    "dia": {
+      "price": "524.09",
+      "change": "-0.75%",
+      "high52": "546.75",
+      "read": "Down 0.75%; weaker than SPY and QQQ"
+    },
+    "iwm": {
+      "price": "290.65",
+      "change": "-1.36%",
+      "high52": "305.18",
+      "read": "Down 1.36%; the weakest of the four tracked funds"
+    },
+    "sentiment": {
+      "label": "CAUTIOUS",
+      "qualifier": "all four tracked funds closed lower and VIX rose 4.71%; QQQ held best relatively"
+    },
+    "volatility": "VIX 16.46, up 4.71% (+0.74 points); volatility expanded",
+    "tone": "Protect first, wait for breadth to repair"
+  },
+  "cluster": [
+    "Leadership lane: QQQ led relative at -0.29%; IWM lagged at -1.36%",
+    "Key catalyst today: Chewy, Casey's General Stores, American Eagle Outfitters, Academy Sports, and Signet Jewelers were listed as reported earnings; no post-report market reaction was retrieved",
+    "Secondary catalyst: tomorrow's upcoming calendar includes Oracle, Adobe, Copart, Macy's, and RH; keep reactions unprecommitted",
+    "Small cap vs large cap: IWM fell 1.36%, underperforming SPY's 0.46% decline",
+    "Broad participation: all four tracked funds closed red; breadth was weak",
+    "Rotation note: QQQ's relative hold is not a confirmed leadership change while it remains red",
+    "Behavior rule: do not chase a red tape or pre-position for earnings; wait for aligned breadth and a written reason"
+  ],
+  "account": [
+    "Mission for today: preserve optionality through weak breadth and rising volatility; no new risk without a clean setup",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: tomorrow's listed earnings include Oracle, Adobe, Copart, Macy's, and RH"
+  ],
+  "checklist": [
+    "Data flow: quotes current after-hours; VIX quote timestamp 20:14 UTC; no live execution",
+    "Core universe glance: all four tracked funds red, IWM weakest, VIX higher",
+    "Day-specific catalyst note #1: today's listed reported earnings include Chewy, Casey's General Stores, American Eagle Outfitters, Academy Sports, and Signet Jewelers",
+    "Day-specific catalyst note #2: tomorrow's upcoming calendar includes Oracle, Adobe, Copart, Macy's, and RH"
+  ],
+  "body_muted": "Cash is safety and optionality; broad weakness with expanding volatility is a reason to protect the account, not to force a trade."
+}

@@ -1,0 +1,58 @@
+{
+  "title": "DIA steadies a red tape — IWM and QQQ lag as volatility eases",
+  "tag": "All four funds closed lower; DIA was nearly flat while IWM fell 1.35% and VIX eased to 14.43.",
+  "weather": {
+    "spy": {
+      "price": "769.35",
+      "change": "-0.23%",
+      "high52": "779.37",
+      "read": "Down 0.23%; broad tape softened, still below the 52-week high"
+    },
+    "qqq": {
+      "price": "716.43",
+      "change": "-0.65%",
+      "high52": "748.65",
+      "read": "Down 0.65%; growth lagged SPY"
+    },
+    "dia": {
+      "price": "535.06",
+      "change": "-0.03%",
+      "high52": "546.75",
+      "read": "Nearly flat; held best among the four"
+    },
+    "iwm": {
+      "price": "295.76",
+      "change": "-1.35%",
+      "high52": "305.18",
+      "read": "Down 1.35%; weakest major and small-cap pressure showed"
+    },
+    "sentiment": {
+      "label": "CAUTIOUSLY RISK-OFF",
+      "qualifier": "all four funds declined and IWM lagged at -1.35%, but VIX eased 0.55%, so the red tape was orderly rather than a fear spike"
+    },
+    "volatility": "VIX 14.43, down 0.55% (-0.08 points) on the day; volatility eased despite the red tape",
+    "tone": "Protective and selective — let the tape settle, do not chase weakness or reach for a rebound"
+  },
+  "cluster": [
+    "Leadership lane: DIA held best at -0.03%; SPY (-0.23%), QQQ (-0.65%), and IWM (-1.35%) lagged",
+    "Key catalyst today: MINISO Group Holding Limited was marked reported on the returned earnings calendar",
+    "Secondary catalyst: no earnings entries were returned for tomorrow, August 29",
+    "Small cap vs large cap: IWM (-1.35%) underperformed SPY (-0.23%) by 1.12 percentage points",
+    "Broad participation: all four funds closed lower, with the cleanest relative strength in DIA",
+    "Rotation note: relative strength favored DIA over QQQ and IWM; treat one-session defense as information, not a trend change",
+    "Behavior rule: do not chase a rebound after a red close; wait for aligned structure and a written reason before adding risk"
+  ],
+  "account": [
+    "Mission for today: preserve optionality, observe follow-through, and add no risk without alignment",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: no entries were returned for tomorrow; keep the next reaction unprecommitted"
+  ],
+  "checklist": [
+    "Data flow: after-hours quotes current; no live execution",
+    "Core universe glance: all four funds red; DIA held best; IWM weakest; VIX lower",
+    "Day-specific catalyst note #1: MINISO was marked reported on today’s returned calendar",
+    "Day-specific catalyst note #2: no earnings entries returned for 2026-08-29"
+  ],
+  "body_muted": "No new action required today. A calmer volatility reading does not turn a broad red close into a command; cash remains safety and optionality.",
+  "_sources": "SPY/QQQ/DIA/IWM quotes and ^VIX via finance_quotes (Realtime Finance Data), fetched 2026-08-28 after hours; SPY timestamp 2026-08-28 20:00 UTC, market_status after_hours. Earnings catalysts via finance_earnings_schedule for 2026-08-28 through 2026-08-29; MINISO was marked reported today and no rows were returned for tomorrow. finance_market_sentiment was not present in the connected finance catalog, so CAUTIOUSLY RISK-OFF is a conservative read from the pulled breadth and volatility data. Account/checklist lines are draft judgment calls for Noal's correction, not asserted as his mission."
+}

@@ -1,0 +1,58 @@
+{
+  "title": "QQQ leads a broad green tape — volatility ticks higher",
+  "tag": "All four major ETFs advanced; QQQ led while VIX edged higher from a low absolute level.",
+  "weather": {
+    "spy": {
+      "price": "777.88",
+      "change": "+0.70%",
+      "high52": "779.37",
+      "read": "Advanced and finished close to its 52-week high of 779.37"
+    },
+    "qqq": {
+      "price": "732.07",
+      "change": "+1.16%",
+      "high52": "748.65",
+      "read": "Led the four at +1.16%; growth was the clearest relative-strength lane while below its 52-week high"
+    },
+    "dia": {
+      "price": "537.91",
+      "change": "+0.14%",
+      "high52": "546.75",
+      "read": "Added modestly, trailing the other three and showing the least participation"
+    },
+    "iwm": {
+      "price": "303.50",
+      "change": "+0.26%",
+      "high52": "305.05",
+      "read": "Moved higher but lagged SPY and QQQ, keeping small-cap breadth positive but not leading"
+    },
+    "sentiment": {
+      "label": "BULLISH",
+      "qualifier": "the overall US market-sentiment read was bullish and all four major ETFs gained"
+    },
+    "volatility": "VIX 14.63, up 0.55% on the day — volatility edged higher despite a low absolute reading",
+    "tone": "Constructive but disciplined — QQQ leads, breadth is green, and the near-high tape still does not justify chasing"
+  },
+  "cluster": [
+    "Leadership lane: QQQ led at +1.16%, SPY followed at +0.70%, IWM gained +0.26%, and DIA added +0.14%",
+    "Key earnings today: Applied Materials, Tapestry, Birkenstock, JD.com, and YETI were on today's schedule; Nu Holdings remained upcoming after close",
+    "Secondary earnings tomorrow: Credicorp (BAP) is scheduled for 10:30 ET; no pre-commitment to trade the reaction",
+    "Small cap vs large cap: IWM (+0.26%) lagged SPY (+0.70%), so the green tape was led by larger growth rather than small caps",
+    "Broad participation: all four major ETFs advanced, but the spread from QQQ to DIA shows uneven conviction",
+    "Rotation note: relative strength favored growth over industrials and small caps; keep the read selective rather than broad-brush",
+    "Behavior rule: do not chase a strong close near highs; wait for a clean setup, written reason, and defined stop logic"
+  ],
+  "account": [
+    "Mission for today: observe the strength, participate only on clean setups, and do not chase",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: Nu Holdings is scheduled after close today and Credicorp is scheduled tomorrow; no pre-commitment to trade reactions"
+  ],
+  "checklist": [
+    "Data flow, broker connections, overnight positions, stop logic: monitoring data-only — no live broker connection yet",
+    "Core universe glance: QQQ led, SPY followed, IWM and DIA gained more modestly, and VIX edged higher",
+    "Day-specific catalyst note #1: today's recognizable earnings schedule included Applied Materials, Tapestry, Birkenstock, JD.com, and YETI",
+    "Day-specific catalyst note #2: Nu Holdings is upcoming after close; Credicorp is scheduled tomorrow at 10:30 ET"
+  ],
+  "body_muted": "A bullish read is a condition, not a command. Cash remains safety and optionality.",
+  "_sources": "SPY/QQQ/DIA/IWM quotes and VIX quote via finance_quotes; overall US market sentiment via finance_market_sentiment; today's and tomorrow's earnings schedule via finance_earnings_schedule. Account/checklist day-specific lines are draft judgment calls for Noal's correction, not asserted as his mission."
+}

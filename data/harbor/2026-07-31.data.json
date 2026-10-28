@@ -1,0 +1,53 @@
+{
+  "title": "Mid-session snapshot, July 31 — small caps lag, VIX ticks up while the tape stays orderly",
+  "tag": "An intraday read, not a close — SPY and QQQ modestly red, DIA holding flat-to-green, IWM the weakest of the four, and volatility up mid-session. Session is still open.",
+  "weather": {
+    "spy": {
+      "price": "740.25",
+      "change": "-0.19%",
+      "high52": "760.40",
+      "read": "Modestly softer intraday, still well within recent range"
+    },
+    "qqq": {
+      "price": "681.63",
+      "change": "-0.28%",
+      "read": "Mild underperformer versus SPY, no sharp break"
+    },
+    "dia": {
+      "price": "521.72",
+      "change": "+0.04%",
+      "read": "Effectively flat, holding up best of the four mid-session"
+    },
+    "iwm": {
+      "price": "289.48",
+      "change": "-1.06%",
+      "read": "Weakest of the four intraday — small caps underperforming"
+    },
+    "sentiment": {
+      "label": "CAUTIOUS",
+      "qualifier": "small caps lagging and volatility ticking up while large-cap indices stay orderly — mid-session read, not a final tape"
+    },
+    "volatility": "VIX 17.85, up 4.45% intraday — a modest pickup in fear premium, not a spike",
+    "tone": "Watching, not reacting — this is a mid-session snapshot with the market still open, not an end-of-day close"
+  },
+  "cluster": [
+    "Leadership lane: DIA holding up best, effectively flat; IWM the clear laggard intraday",
+    "Volatility regime: VIX up modestly to 17.85 — worth watching, not yet a stress signal",
+    "Breadth read: mixed — SPY/QQQ/IWM red, DIA slightly green, no single clean direction yet",
+    "Rotation note: small caps underperforming large caps so far today",
+    "Behavior rule: this is a mid-session read — do not treat it as the day's final word; revisit at the close"
+  ],
+  "account": [
+    "Mission for today: observe — this snapshot was taken mid-session, before the close",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Event risk: none flagged beyond the standard mid-session volatility watch"
+  ],
+  "checklist": [
+    "Execution reality check: this read is intraday — treat any signal here as provisional until the actual close",
+    "Core universe glance: SPY/QQQ/IWM red, DIA flat-to-green; IWM weakest",
+    "Day-specific catalyst note #1: none flagged for this mid-session snapshot",
+    "Day-specific catalyst note #2: VIX up 4.45% intraday — a modest pickup worth tracking into the close"
+  ],
+  "body_muted": "This is a mid-session snapshot taken at 11:32 AM ET, not an end-of-day close read. Numbers will move before the bell.",
+  "_sources": "SPY/QQQ/DIA/IWM/VIX real-time quotes via finance_quotes (Perplexity Realtime Finance Data), fetched 2026-07-31 15:32 UTC / 11:32 AM ET, market status: open. Account/checklist lines are Plex's draft judgment calls for Noal to adjust. This edition is explicitly labeled intraday because the market was still open when it was generated."
+}

@@ -1,0 +1,57 @@
+{
+  "title": "Broad green close — DIA leads as volatility eases",
+  "tag": "All four tracked funds closed higher; DIA led the group while IWM lagged, and the VIX fell 11.21% to 15.84.",
+  "weather": {
+    "spy": {
+      "price": "764.20",
+      "change": "+0.84%",
+      "high52": "779.37",
+      "read": "Up 0.84%; solid broad-market gain, still below its 52-week high"
+    },
+    "qqq": {
+      "price": "714.93",
+      "change": "+0.88%",
+      "high52": "748.65",
+      "read": "Up 0.88%; slightly ahead of SPY, with growth participating"
+    },
+    "dia": {
+      "price": "525.81",
+      "change": "+0.97%",
+      "high52": "546.75",
+      "read": "Up 0.97%; relative leader among the four tracked funds"
+    },
+    "iwm": {
+      "price": "288.91",
+      "change": "+0.42%",
+      "high52": "305.18",
+      "read": "Up 0.42%; weakest relative gain, with small caps lagging"
+    },
+    "sentiment": {
+      "label": "CONSTRUCTIVE",
+      "qualifier": "all four tracked funds closed higher and VIX fell 11.21%; breadth improved, but follow-through still matters"
+    },
+    "volatility": "VIX 15.84, down 11.21% (-2.00 points); volatility eased",
+    "tone": "Constructive tape, discipline still first"
+  },
+  "cluster": [
+    "Leadership lane: DIA led relative at +0.97%; IWM lagged at +0.42%",
+    "Key catalyst today: Kroger was listed as reported earnings; no post-report market reaction was retrieved",
+    "Secondary catalyst: no major earnings event was returned for tomorrow's date",
+    "Small cap vs large cap: IWM rose 0.42%, underperforming SPY's 0.84% gain",
+    "Broad participation: all four tracked funds closed green; breadth improved",
+    "Rotation note: DIA led and IWM lagged; no persistence is assumed from one session",
+    "Behavior rule: do not chase a green tape; wait for a clean setup and a written reason"
+  ],
+  "account": [
+    "Mission for today: preserve optionality in a constructive tape; no new risk without a clean setup",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: no major earnings event was returned for tomorrow's date"
+  ],
+  "checklist": [
+    "Data flow: quotes current after-hours; VIX quote timestamp 20:14 UTC; no live execution",
+    "Core universe glance: all four tracked funds green, DIA strongest, IWM weakest, VIX lower",
+    "Day-specific catalyst note #1: Kroger was listed as reported earnings today",
+    "Day-specific catalyst note #2: no major earnings event was returned for tomorrow's date"
+  ],
+  "body_muted": "Cash is safety and optionality; a broad green close with lower volatility improves the weather, but discipline still outranks the urge to chase."
+}

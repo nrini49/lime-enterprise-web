@@ -74,9 +74,9 @@
       "permanent": true
     },
     {
-      "source": "/harbor-now",
-      "destination": "https://signals.limesignalworks.com/harbor-now/",
-      "permanent": true
+      "source": "/data/harbor/:path*",
+      "destination": "/harbor-now/",
+      "permanent": false
     }
   ]
 }

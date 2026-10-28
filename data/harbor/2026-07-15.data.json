@@ -1,0 +1,35 @@
+{
+  "title": "Breadth broad, tech lags \u2014 a quiet day near highs",
+  "tag": "SPY closing near its 52-week high on falling volatility; small caps and value led, tech lagged.",
+  "weather": {
+    "spy": {"price": "754.81", "change": "+0.40%", "high52": "760.40", "read": "Closed near the 52-week high; broad, unremarkable strength"},
+    "qqq": {"price": "717.74", "change": "-0.27%", "read": "Lagged the tape \u2014 mega-cap tech gave a little back"},
+    "dia": {"price": "525.95", "change": "+0.24%", "read": "Value participated, steady gain"},
+    "iwm": {"price": "295.77", "change": "+0.43%", "read": "Small caps led today's gainers"},
+    "sentiment": {"label": "UPBEAT", "qualifier": "broad participation outside tech, volatility fell sharply"},
+    "volatility": "VIX 15.67, down 5.03% on the day \u2014 quiet, no fear premium showing",
+    "tone": "Calm and broad \u2014 a day to hold discipline, not chase the small-cap pop"
+  },
+  "cluster": [
+    "Leadership lane: DIA and IWM led; QQQ lagged \u2014 value and small-cap over mega-cap tech today",
+    "Key catalyst today: Morgan Stanley, BlackRock, Johnson & Johnson, Elevance Health, and Cintas all reported Q2 earnings this morning",
+    "Secondary catalyst: Netflix, UnitedHealth, and GE Aerospace report tomorrow (7/16) \u2014 worth watching into the close",
+    "Small cap vs large cap: IWM (+0.43%) outpaced both SPY and QQQ \u2014 small caps leading",
+    "Broad participation: positive across SPY, DIA, IWM \u2014 only QQQ was negative, breadth looks healthy",
+    "Rotation note: mild rotation away from mega-cap tech into value and small-cap names",
+    "Behavior rule: don't chase today's small-cap pop, and don't read one lagging day in QQQ as a reversal"
+  ],
+  "account": [
+    "Mission for today: observe \u2014 breadth is healthy, but nothing aligned enough yet to add risk",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: Netflix, UnitedHealth, and GE Aerospace report tomorrow morning \u2014 carries into tomorrow's open"
+  ],
+  "checklist": [
+    "Data flow, broker connections, overnight positions, stop logic: monitoring data-only \u2014 no live broker connection yet",
+    "Core universe glance: SPY, DIA, IWM clear; QQQ cloudy (lagging)",
+    "Day-specific catalyst note #1: big bank and healthcare Q2 earnings reported this morning (MS, BLK, JNJ, ELV, CTAS)",
+    "Day-specific catalyst note #2: Netflix, UnitedHealth, GE Aerospace report tomorrow \u2014 watch the open"
+  ],
+  "body_muted": "No new action required today. Hold discipline, let the tape show its hand before adding risk.",
+  "_sources": "SPY/QQQ/DIA/IWM/VIX quotes and market sentiment via finance_quotes and finance_market_sentiment (Perplexity Realtime Finance Data); earnings catalysts via finance_earnings_schedule. Account/checklist day-specific lines are Plex's draft judgment calls, not Noal's own \u2014 flagged for review, not asserted as final."
+}

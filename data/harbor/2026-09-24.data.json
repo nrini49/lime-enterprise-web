@@ -1,0 +1,57 @@
+{
+  "title": "Soft red close — DIA lags as volatility ticks higher",
+  "tag": "DIA fell 0.31% and lagged the tracked funds; all four closed lower, with VIX up 3.23% to 15.67.",
+  "weather": {
+    "spy": {
+      "price": "767.18",
+      "change": "-0.08%",
+      "high52": "779.37",
+      "read": "Down 0.08%; near its 52-week high, but still below it"
+    },
+    "qqq": {
+      "price": "741.10",
+      "change": "-0.01%",
+      "high52": "748.65",
+      "read": "Down 0.01%; strongest of the tracked funds, still below its 52-week high"
+    },
+    "dia": {
+      "price": "512.68",
+      "change": "-0.31%",
+      "high52": "546.75",
+      "read": "Down 0.31%; weakest of the tracked funds and below its 52-week high"
+    },
+    "iwm": {
+      "price": "281.66",
+      "change": "-0.09%",
+      "high52": "305.18",
+      "read": "Down 0.09%; slightly weaker than SPY and below its 52-week high"
+    },
+    "sentiment": {
+      "label": "UNAVAILABLE",
+      "qualifier": "the market-sentiment tool was unavailable; all four tracked funds declined and VIX rose"
+    },
+    "volatility": "VIX 15.67, up 3.23% (+0.49 points); volatility ticked higher",
+    "tone": "Soft red tape, volatility rising"
+  },
+  "cluster": [
+    "Leadership lane: no clear leader; QQQ was closest to flat while DIA lagged",
+    "Key catalyst today: Costco and Darden Restaurants reported on the returned earnings schedule",
+    "Secondary catalyst: no major names are on the returned schedule for tomorrow; keep event risk contained",
+    "Small cap vs large cap: IWM fell 0.09% versus SPY down 0.08%; small caps slightly underperformed",
+    "Broad participation: all four tracked funds declined and VIX rose to 15.67, showing broad but modest pressure",
+    "Rotation note: no tracked fund held green; QQQ held best and DIA lagged, so no clean rotation",
+    "Behavior rule: do not chase a soft red tape; wait for a written reason, defined risk, and confirmation beyond a single rebound"
+  ],
+  "account": [
+    "Mission for today: protect optionality in soft red tape; no new risk without clean alignment",
+    "Broker status: IB paper connected; no live execution; Schwab pending",
+    "Elevated event risk: Costco and Darden Restaurants reported today; no major names are on tomorrow's returned schedule"
+  ],
+  "checklist": [
+    "Data flow: quotes current after-hours; no live execution",
+    "Core universe glance: all four tracked funds declined, DIA lagged, QQQ held best, and VIX rose",
+    "Day-specific catalyst note #1: Costco and Darden Restaurants reported today",
+    "Day-specific catalyst note #2: no major names are on the returned schedule for tomorrow"
+  ],
+  "body_muted": "Soft red tape is information, not permission; keep cash as safety and let clean alignment earn the next risk."
+}

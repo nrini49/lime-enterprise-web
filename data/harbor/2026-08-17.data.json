@@ -1,0 +1,58 @@
+{
+  "title": "Broad red tape — volatility rises as QQQ holds up best",
+  "tag": "All four major ETFs fell; QQQ was the least weak while VIX rose 6.60% to 15.19.",
+  "weather": {
+    "spy": {
+      "price": "772.66",
+      "change": "-0.47%",
+      "high52": "779.37",
+      "read": "Fell 0.47% and finished below its 52-week high of 779.37"
+    },
+    "qqq": {
+      "price": "729.87",
+      "change": "-0.16%",
+      "high52": "748.65",
+      "read": "Held up best at -0.16% but still finished below its 52-week high"
+    },
+    "dia": {
+      "price": "534.22",
+      "change": "-0.48%",
+      "high52": "546.75",
+      "read": "Was the weakest of the four at -0.48%, remaining below its 52-week high"
+    },
+    "iwm": {
+      "price": "304.04",
+      "change": "-0.34%",
+      "high52": "305.18",
+      "read": "Outperformed SPY and DIA at -0.34% but still closed red and below its 52-week high"
+    },
+    "sentiment": {
+      "label": "UNCERTAIN",
+      "qualifier": "the overall US market-sentiment read was uncertain while all four major ETFs declined"
+    },
+    "volatility": "VIX 15.19, up 6.60% on the day from a 14.25 previous close — volatility rose",
+    "tone": "Risk-off but orderly — QQQ held up best, all four majors fell, and rising volatility argues against forcing a trade"
+  },
+  "cluster": [
+    "Leadership lane: QQQ held up best at -0.16%; IWM fell -0.34%, SPY fell -0.47%, and DIA fell -0.48%",
+    "Key earnings today: no major recognizable company was returned among the listed reports; Fabrinet and XP Inc. were both marked Reported",
+    "Secondary earnings tomorrow: Home Depot and Keysight Technologies are scheduled; no pre-commitment to trade the reaction",
+    "Small cap vs large cap: IWM (-0.34%) outperformed SPY (-0.47%), but both lanes closed red",
+    "Broad participation: all four major ETFs declined, so the close was broadly weak rather than a one-symbol break",
+    "Rotation note: relative strength favored QQQ and IWM over SPY and DIA, but no lane was green; keep the read selective",
+    "Behavior rule: do not chase a red tape or a volatility spike; wait for a clean setup, written reason, and defined stop logic"
+  ],
+  "account": [
+    "Mission for today: observe the broad weakness, protect optionality, and take no risk without a clean setup",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: Home Depot and Keysight Technologies are scheduled tomorrow; no pre-commitment to trade reactions"
+  ],
+  "checklist": [
+    "Data flow, broker connections, overnight positions, stop logic: monitoring data-only — no live broker connection yet",
+    "Core universe glance: QQQ held up best, IWM was next, SPY and DIA lagged, and VIX rose",
+    "Day-specific catalyst note #1: no major recognizable earnings event was returned today; Fabrinet and XP Inc. were listed as Reported",
+    "Day-specific catalyst note #2: Home Depot and Keysight Technologies are scheduled tomorrow"
+  ],
+  "body_muted": "Uncertainty is a condition, not a command. Cash remains safety and optionality.",
+  "_sources": "SPY/QQQ/DIA/IWM quotes and VIX quote via finance_quotes; overall US market sentiment via finance_market_sentiment; 2026-08-17 and 2026-08-18 earnings schedule via finance_earnings_schedule. Account/checklist day-specific lines are draft judgment calls for Noal's correction, not asserted as his mission."
+}

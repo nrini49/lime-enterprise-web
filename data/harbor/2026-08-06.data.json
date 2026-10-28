@@ -1,0 +1,58 @@
+{
+  "title": "SPY held best in a red tape — volatility eased",
+  "tag": "All four major ETFs finished lower, SPY held the line relative to QQQ, IWM, and DIA, and VIX eased while the overall market read stayed uncertain.",
+  "weather": {
+    "spy": {
+      "price": "768.56",
+      "change": "-0.16%",
+      "high52": "771.82",
+      "read": "Held up best of the four, but still finished below its 52-week high of 771.82"
+    },
+    "qqq": {
+      "price": "714.65",
+      "change": "-0.37%",
+      "high52": "748.65",
+      "read": "Finished lower and lagged SPY; growth stayed soft without a sharp break"
+    },
+    "dia": {
+      "price": "538.21",
+      "change": "-0.85%",
+      "high52": "544.57",
+      "read": "Lagged all three peers and closed furthest below its 52-week high"
+    },
+    "iwm": {
+      "price": "298.25",
+      "change": "-0.51%",
+      "high52": "302.72",
+      "read": "Small caps also lagged SPY, with no breadth confirmation"
+    },
+    "sentiment": {
+      "label": "UNCERTAIN",
+      "qualifier": "the overall US market-sentiment read was uncertain and all four major ETFs finished lower"
+    },
+    "volatility": "VIX 15.15, down 4.17% on the day — volatility eased despite the red tape",
+    "tone": "Cautious and selective — SPY held best, but breadth did not confirm a broad risk-on move"
+  },
+  "cluster": [
+    "Leadership lane: SPY held best at -0.16%; QQQ fell -0.37%, IWM -0.51%, and DIA lagged at -0.85%",
+    "Key catalyst today: Cloudflare, Datadog, Constellation Energy, Airbnb, Warner Bros. Discovery, Zoetis, Atlassian, and Twilio were marked reported on today's earnings schedule",
+    "Secondary catalyst: tomorrow's schedule includes Aflac, American International Group, DraftKings, Take-Two Interactive, Under Armour, and Vistra",
+    "Small cap vs large cap: IWM (-0.51%) lagged SPY (-0.16%), while DIA was weaker still at -0.85%",
+    "Broad participation: all four major ETFs finished lower; there was no broad positive confirmation",
+    "Rotation note: relative strength stayed with SPY while DIA and IWM lagged; the tape did not confirm fresh risk appetite",
+    "Behavior rule: do not chase a relative-strength read inside a broadly red tape; wait for breadth and a cleaner setup"
+  ],
+  "account": [
+    "Mission for today: protect optionality; observe whether breadth repairs before adding risk",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: tomorrow's schedule includes Aflac, American International Group, DraftKings, Take-Two Interactive, Under Armour, and Vistra"
+  ],
+  "checklist": [
+    "Data flow, broker connections, overnight positions, stop logic: monitoring data-only — no live broker connection yet",
+    "Core universe glance: SPY held best; QQQ and IWM were weaker; DIA lagged; VIX eased",
+    "Day-specific catalyst note #1: major-company earnings reported today across software, travel, energy, media, healthcare, and communications",
+    "Day-specific catalyst note #2: tomorrow's major-company schedule is active; no pre-commitment to trade the reaction"
+  ],
+  "body_muted": "No new action required today. Relative strength is information, not an invitation to chase; cash remains safety and optionality.",
+  "_sources": "SPY/QQQ/DIA/IWM quotes and VIX quote via finance_quotes; overall US market sentiment via finance_market_sentiment; today's and tomorrow's earnings schedule via finance_earnings_schedule. Account/checklist day-specific lines are draft judgment calls for Noal's correction, not asserted as his mission."
+}

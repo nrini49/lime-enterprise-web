@@ -1,0 +1,58 @@
+{
+  "title": "Broad red tape — DIA holds best as tech and small caps lag",
+  "tag": "All four majors fell; DIA was least weak while QQQ and IWM led the downside and VIX rose 4.28% to 15.84.",
+  "weather": {
+    "spy": {
+      "price": "767.36",
+      "change": "-0.69%",
+      "high52": "779.37",
+      "read": "Fell 0.69% and finished below its 52-week high of 779.37"
+    },
+    "qqq": {
+      "price": "717.51",
+      "change": "-1.69%",
+      "high52": "748.65",
+      "read": "Was weakest at -1.69% and remained below its 52-week high"
+    },
+    "dia": {
+      "price": "532.91",
+      "change": "-0.24%",
+      "high52": "546.75",
+      "read": "Held up best at -0.24% but still finished below its 52-week high"
+    },
+    "iwm": {
+      "price": "300.19",
+      "change": "-1.27%",
+      "high52": "305.18",
+      "read": "Fell 1.27%, lagging SPY and DIA while remaining below its 52-week high"
+    },
+    "sentiment": {
+      "label": "UNCERTAIN",
+      "qualifier": "the tape was broadly weak with volatility higher; the overall read stayed uncertain"
+    },
+    "volatility": "VIX 15.84, up 4.28% on the day from a 15.19 previous close — volatility rose",
+    "tone": "Risk-off and selective — DIA held up best, tech and small caps lagged, and rising volatility argues against forcing a trade"
+  },
+  "cluster": [
+    "Leadership lane: DIA held best at -0.24%; SPY fell -0.69%, IWM fell -1.27%, and QQQ fell -1.69%",
+    "Key earnings today: Home Depot and Keysight Technologies were listed as Reported",
+    "Secondary earnings tomorrow: Analog Devices, TJX, Lowe's, Target, and Estée Lauder are scheduled; no pre-commitment to trade reactions",
+    "Small cap vs large cap: IWM (-1.27%) lagged SPY (-0.69%), so small caps were weaker than the broad tape",
+    "Broad participation: all four major ETFs declined, making the close broadly weak rather than a one-symbol break",
+    "Rotation note: relative strength favored DIA over tech and small caps, but no lane was green; keep the read selective",
+    "Behavior rule: do not chase a red tape or a volatility rise; wait for a clean setup, written reason, and defined stop logic"
+  ],
+  "account": [
+    "Mission for today: observe the broad weakness, protect optionality, and take no risk without a clean setup",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: Analog Devices, TJX, Lowe's, Target, and Estée Lauder are scheduled tomorrow; no pre-commitment to trade reactions"
+  ],
+  "checklist": [
+    "Data flow, broker connections, overnight positions, stop logic: monitoring data-only — no live broker connection yet",
+    "Core universe glance: DIA held best, SPY was next, IWM and QQQ lagged, and VIX rose",
+    "Day-specific catalyst note #1: Home Depot and Keysight Technologies were listed as Reported today",
+    "Day-specific catalyst note #2: Analog Devices, TJX, Lowe's, Target, and Estée Lauder are scheduled tomorrow"
+  ],
+  "body_muted": "Uncertainty is a condition, not a command. Cash remains safety and optionality.",
+  "_sources": "SPY/QQQ/DIA/IWM quotes and VIX quote via finance_quotes; earnings catalysts via finance_earnings_schedule. The requested finance_market_sentiment tool was not present in the current connected finance catalog, so the UNCERTAIN label is a conservative read from the retrieved breadth and volatility data. Account/checklist day-specific lines are draft judgment calls for Noal's correction, not asserted as his mission."
+}

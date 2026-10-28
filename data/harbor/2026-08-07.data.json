@@ -1,0 +1,58 @@
+{
+  "title": "QQQ leads a broad green close — volatility stays quiet",
+  "tag": "All four major ETFs finished higher, QQQ and IWM led the tape, and VIX eased while the overall market read stayed bullish.",
+  "weather": {
+    "spy": {
+      "price": "773.26",
+      "change": "+0.61%",
+      "high52": "773.91",
+      "read": "Finished higher and near its 52-week high of 773.91, but did not set a new high"
+    },
+    "qqq": {
+      "price": "723.03",
+      "change": "+1.17%",
+      "high52": "748.65",
+      "read": "Led the four at +1.17%; tech showed the clearest relative strength while remaining below its 52-week high"
+    },
+    "dia": {
+      "price": "539.62",
+      "change": "+0.27%",
+      "high52": "540.19",
+      "read": "Lagged the other three at +0.27%, with only modest upside participation"
+    },
+    "iwm": {
+      "price": "301.56",
+      "change": "+1.11%",
+      "high52": "302.72",
+      "read": "Second strongest at +1.11%, adding breadth alongside QQQ"
+    },
+    "sentiment": {
+      "label": "BULLISH",
+      "qualifier": "the overall US market-sentiment read was bullish and all four major ETFs finished higher"
+    },
+    "volatility": "VIX 14.90, down 1.65% on the day — volatility eased as equities advanced",
+    "tone": "Constructive but disciplined — QQQ and IWM led, breadth improved, and the tape still calls for selectivity"
+  },
+  "cluster": [
+    "Leadership lane: QQQ led at +1.17%, IWM followed at +1.11%, SPY gained +0.61%, and DIA lagged at +0.27%",
+    "Key catalyst today: Aflac, American International Group, DraftKings, Take-Two Interactive, Under Armour, and Vistra were scheduled on today's earnings calendar",
+    "Secondary catalyst: Berkshire Hathaway is scheduled to report tomorrow",
+    "Small cap vs large cap: IWM (+1.11%) outpaced SPY (+0.61%), confirming broader participation in the green close",
+    "Broad participation: all four major ETFs finished higher; leadership was concentrated in QQQ and IWM",
+    "Rotation note: relative strength favored growth and small caps over DIA; the bullish read had breadth, but DIA participation was modest",
+    "Behavior rule: do not chase a strong close; wait for clean, aligned setups and a written reason before adding risk"
+  ],
+  "account": [
+    "Mission for today: participate selectively only on clean setups; no chasing",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: Berkshire Hathaway is scheduled to report tomorrow"
+  ],
+  "checklist": [
+    "Data flow, broker connections, overnight positions, stop logic: monitoring data-only — no live broker connection yet",
+    "Core universe glance: QQQ and IWM led; SPY held near its 52-week high; DIA lagged; VIX eased",
+    "Day-specific catalyst note #1: today's major-company earnings calendar included Aflac, AIG, DraftKings, Take-Two, Under Armour, and Vistra",
+    "Day-specific catalyst note #2: tomorrow's Berkshire Hathaway event is noted; no pre-commitment to trade the reaction"
+  ],
+  "body_muted": "Green breadth is a condition, not a command. Cash remains safety and optionality.",
+  "_sources": "SPY/QQQ/DIA/IWM quotes and VIX quote via finance_quotes; overall US market sentiment via finance_market_sentiment; today's and tomorrow's earnings schedule via finance_earnings_schedule. Account/checklist day-specific lines are draft judgment calls for Noal's correction, not asserted as his mission."
+}

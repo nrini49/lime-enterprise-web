@@ -1,0 +1,58 @@
+{
+  "title": "Tech surge leads a broad green close — volatility still rose",
+  "tag": "All four major ETFs finished higher; QQQ led decisively, while VIX rose into a busy earnings tape.",
+  "weather": {
+    "spy": {
+      "price": "771.23",
+      "change": "+1.79%",
+      "high52": "773.41",
+      "read": "Broad strength; SPY at 771.23 is below its 52-week high of 773.41"
+    },
+    "qqq": {
+      "price": "723.70",
+      "change": "+3.38%",
+      "high52": "748.65",
+      "read": "Clear leader at +3.38%; growth and tech carried the tape"
+    },
+    "dia": {
+      "price": "540.47",
+      "change": "+1.74%",
+      "high52": "542.08",
+      "read": "Positive and near its 52-week high; value participated"
+    },
+    "iwm": {
+      "price": "301.69",
+      "change": "+1.85%",
+      "high52": "302.72",
+      "read": "Small caps gained +1.85%, just ahead of DIA and SPY but behind QQQ"
+    },
+    "sentiment": {
+      "label": "BULLISH",
+      "qualifier": "all four ETFs were higher and the market-sentiment read was bullish"
+    },
+    "volatility": "VIX 16.50, up 4.04% on the day — volatility rose even as equities advanced",
+    "tone": "Constructive but not complacent — broad gains with QQQ leading, while higher VIX argues for patience"
+  },
+  "cluster": [
+    "Leadership lane: QQQ led at +3.38%; IWM gained +1.85%, SPY +1.79%, and DIA +1.74%",
+    "Key catalyst today: AMD, Caterpillar, Merck, McDonald's, Booking Holdings, Pfizer, Spotify, Amgen, Arista Networks, and Gilead all reported",
+    "Secondary catalyst: tomorrow's schedule includes Disney, CVS Health, Shopify, Duolingo, e.l.f. Beauty, and Kraft Heinz",
+    "Small cap vs large cap: IWM (+1.85%) edged SPY (+1.79%) while QQQ led the group",
+    "Broad participation: SPY, QQQ, DIA, and IWM all finished positive",
+    "Rotation note: leadership leaned toward growth and tech, with small caps participating; the VIX rise tempers the bullish read",
+    "Behavior rule: do not chase a strong QQQ-led move; let the earnings tape settle and keep stops and size disciplined"
+  ],
+  "account": [
+    "Mission for today: protect optionality; let the post-earnings tape settle before adding risk",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: tomorrow's schedule includes Disney, CVS Health, Shopify, Duolingo, e.l.f. Beauty, and Kraft Heinz"
+  ],
+  "checklist": [
+    "Data flow, broker connections, overnight positions, stop logic: monitoring data-only — no live broker connection yet",
+    "Core universe glance: all four ETFs higher; QQQ led and VIX rose",
+    "Day-specific catalyst note #1: major-company earnings reported today across semiconductors, industrials, healthcare, travel, and media",
+    "Day-specific catalyst note #2: tomorrow's major-company schedule is active; no pre-commitment to trade the reaction"
+  ],
+  "body_muted": "No new action required today. Broad strength is useful information, not an invitation to chase; cash remains safety and optionality.",
+  "_sources": "SPY/QQQ/DIA/IWM quotes and VIX quote via finance_quotes; overall US market sentiment via finance_market_sentiment; today's and tomorrow's earnings schedule via finance_earnings_schedule. Account/checklist day-specific lines are draft judgment calls for Noal's correction, not asserted as his mission."
+}
