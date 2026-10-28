@@ -1,8 +1,8 @@
 {
   "edition": "2026-07-31",
   "rewrites": {
-    "Watching, not reacting — this is a mid-session snapshot with the market still open, not an end-of-day close": "We're watching, not reacting — this is a mid-session snapshot with the market still open, not an end-of-day close",
-    "Volatility regime: VIX up modestly to 17.85 — worth watching, not yet a stress signal": "Volatility regime: VIX up modestly to 17.85; we noticed it, but it did not read as a stress signal"
+    "Watching, not reacting — this is a mid-session snapshot with the market still open, not an end-of-day close": "I'm watching, not reacting — this is a mid-session snapshot with the market still open, not an end-of-day close",
+    "Volatility regime: VIX up modestly to 17.85 — worth watching, not yet a stress signal": "Volatility regime: VIX up modestly to 17.85; I noticed it, but it did not read as a stress signal"
   },
   "descriptive": [
     "Mid-session snapshot, July 31 — small caps lag, VIX ticks up while the tape stays orderly",

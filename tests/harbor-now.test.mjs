@@ -25,6 +25,7 @@ import {
   VOICE_DIR,
   CANON_REWRITTEN,
   canonLines,
+  pluralVoice,
 } from '../src/harbor.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -426,4 +427,64 @@ test('voice: a reviewed "descriptive" entry cannot let advice wording through, a
   assert.match(err2.message, /names text this edition does not render/);
 
   assert.equal(await buildWith(() => {}), null, 'the unedited archive builds');
+});
+
+/* ---------- voice: Rosie's own first person (2026-10-28) ---------- */
+
+// Owner decision: "I" = Rosie throughout. The rewrites say "I", "my seat", "to me"; only the
+// legal notice keeps the company "we", and it stays word for word.
+test('voice: the educational-not-advice notice is unchanged legal text', () => {
+  assert.equal(
+    HARBOR_NOTICE,
+    'Educational market commentary, not investment advice. We do not know your situation, ' +
+      'and past conditions do not predict future results.',
+  );
+});
+
+test('voice: no "we", "our" or "us" renders outside the legal notice; Rosie says "I"', () => {
+  for (const rel of pages) {
+    const c = load(rel);
+    c('details.hn-canon').remove(); // the canon reference is third-person rules text
+    const text = harborText(c);
+    assert.ok(!pluralVoice(text), `${rel}: plural first person: ${text.match(/.{0,60}\b(we|our|us)\b.{0,40}/i)?.[0]}`);
+  }
+  let firstPerson = 0;
+  for (const d of dates) {
+    for (const out of Object.values(voice(d).rewrites)) {
+      assert.ok(!pluralVoice(out), `${d}: rewrite still says we/our/us: ${out}`);
+      assert.ok(!/\bRosie\b/.test(out), `${d}: rewrite narrates Rosie in the third person: ${out}`);
+      if (/\b(I|I'm|my|me)\b/.test(out)) firstPerson++;
+    }
+  }
+  assert.ok(firstPerson >= 46, `expected at least 46 rewrites in Rosie's first person, found ${firstPerson}`);
+  const eg = voice('2026-08-20').rewrites;
+  assert.ok(Object.values(eg).includes("A cautious tape today; I'm keeping a close eye while it settles."));
+});
+
+test('voice: every Harbor page says whose "I" it is, with a "From Rosie" tag', () => {
+  for (const rel of pages) {
+    const tag = load(rel)('[data-voice-tag]');
+    assert.equal(tag.length, 1, `${rel}: one voice tag`);
+    assert.equal(norm(tag.text()), 'From Rosie');
+  }
+  assert.ok(
+    norm(load('harbor-now/index.html')('.hn-head > p:not(.label)').first().text()).startsWith('My dated, plain-language read'),
+  );
+});
+
+test('voice: Rosie claims no invented past, track record or promise on Harbor pages', () => {
+  for (const rel of pages) {
+    const text = harborText(load(rel)).toLowerCase();
+    for (const phrase of ["i've seen", 'seen it all', "i've made", 'made money', 'track record', 'in my experience', 'i guarantee', 'i promise', 'never lose', 'i recommend']) {
+      assert.ok(!text.includes(phrase), `${rel}: "${phrase}"`);
+    }
+  }
+});
+
+test('voice: the build fails on a rewrite that slips back into "we"', async () => {
+  const d = dates.at(-1);
+  const err = await buildWith((r) => { r.weather.tone = 'Quiet close'; }, (v) => { v.rewrites['Quiet close'] = 'A quiet close from our seat'; });
+  assert.ok(err instanceof HarborVoiceError, 'build should fail');
+  assert.match(err.message, /we\/our\/us" would render/);
+  assert.ok(err.message.includes(`${VOICE_DIR}/${d}.json`), err.message);
 });

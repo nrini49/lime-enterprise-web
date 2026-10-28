@@ -81,7 +81,8 @@ export function publicClusterLine(line) {
 /**
  * Editions were written with stance lines ("Protect first, wait for…", "no chase", "a day to
  * hold discipline"). The public pages describe the day instead: what it looked and felt like
- * from Rosie's or the Lime Signalworks team's seat. Source JSON is never edited; rewrites live in
+ * from Rosie's seat, in her own first person ("I", "my seat", "to me"; 2026-10-28 owner
+ * decision). Only the legal notice (HARBOR_NOTICE) keeps the company "we". Source JSON is never edited; rewrites live in
  * data/harbor-voice/<date>.json:
  *
  *   { "rewrites":    { "<exact source text>": "<rendered text>" },
@@ -127,6 +128,13 @@ export const ADVICE_BANNED = [
   /\bact\b/i, /\bposture favored\b/i, /\bfollow-through still matters\b/i,
 ];
 
+/**
+ * Rosie speaks for herself: a rendered line may say "I", "my" or "me", never the team's "we",
+ * "our" or "us" (lowercase "us" only, so the country "US" is not caught).
+ */
+export const PLURAL_VOICE = /\b(?:[Ww]e|[Ww]e're|[Ww]e’re|[Ww]e've|[Ww]e’ve|[Ww]e'll|[Ww]e’ll|[Oo]ur|[Oo]urs|us)\b/;
+export const pluralVoice = (s) => PLURAL_VOICE.test(neutral(s));
+
 export const looksDirective = (s) => DIRECTIVE_VOCAB.test(neutral(s));
 export const adviceHits = (s) => ADVICE_BANNED.filter((r) => r.test(neutral(s))).map(String);
 
@@ -156,6 +164,7 @@ export function voiceFor(date, voice = EMPTY_VOICE) {
   const usedDescriptive = new Set();
   const unknown = [];
   const banned = [];
+  const plural = [];
   const speak = (field, source, project = (x) => x) => {
     const src = String(source ?? '');
     let out;
@@ -172,6 +181,7 @@ export function voiceFor(date, voice = EMPTY_VOICE) {
     }
     const hits = adviceHits(out);
     if (hits.length) banned.push(`${field}: "${out}" (${hits.join(', ')})`);
+    if (pluralVoice(out)) plural.push(`${field}: "${out}"`);
     return scrub(out);
   };
   const finish = () => {
@@ -183,6 +193,11 @@ export function voiceFor(date, voice = EMPTY_VOICE) {
       );
     }
     if (banned.length) problems.push(`advice wording would render:\n    - ${banned.join('\n    - ')}`);
+    if (plural.length) {
+      problems.push(
+        `"we/our/us" would render; Rosie speaks as "I/my/me". Fix in ${file}:\n    - ${plural.join('\n    - ')}`,
+      );
+    }
     const staleR = Object.keys(voice.rewrites).filter((k) => !usedRewrites.has(k));
     const staleD = [...descriptive].filter((k) => !usedDescriptive.has(k));
     if (staleR.length || staleD.length) {
@@ -492,8 +507,9 @@ export async function buildHarbor(root, canonical) {
 
   const indexBody = `          <div class="section__head hn-head">
             <p class="label rule-after">Harbor Now · Daily market report</p>
+            <p class="label voice-tag" data-voice-tag>From Rosie</p>
             <h1 class="hn-h1">Harbor Now</h1>
-            <p>A dated, plain-language read of the market after the close: SPY, QQQ, DIA and IWM, sentiment, volatility and the tone of the day.</p>
+            <p>My dated, plain-language read of the market after the close: SPY, QQQ, DIA and IWM, sentiment, volatility and the tone of the day.</p>
             ${stale(latest.date, today)}
           </div>
           ${notice()}
@@ -528,6 +544,7 @@ export async function buildHarbor(root, canonical) {
     ].filter(Boolean).join('\n            ');
     const body = `          <div class="hn-head">
             <p class="label rule-after"><a href="/harbor-now/">Harbor Now</a> · ${esc(prettyDate(ed.date))}</p>
+            <p class="label voice-tag" data-voice-tag>From Rosie</p>
             ${stale(latest.date, today)}
           </div>
           ${notice()}
