@@ -678,7 +678,8 @@ test('dom: the pros block is the approved copy, right after will-and-won\'t, nam
   assert.equal(norm(sec.find('.section__head > p:not(.label)').text()), data.pros.body);
   assert.equal(
     data.pros.body,
-    "The best traders in the world share a few habits: they trade by written rules, they decide what they can lose before they decide what they can win, and they stay consistent when it's hard. Rosie is built on those same habits. And unlike a big firm, she works for one person: you.",
+    // 2026-10-28: recast in Rosie's own first person (owner decision: "I" = Rosie).
+    "The best traders in the world share a few habits: they trade by written rules, they decide what they can lose before they decide what they can win, and they stay consistent when it's hard. I'm built on those same habits. And unlike a big firm, I work for one person: you.",
   );
   const body = data.pros.body.toLowerCase();
   for (const h of data.pros.habits) {
@@ -924,5 +925,76 @@ test('css: stylesheets reference only vendored, self-hosted font files', () => {
     'assets/fonts/LICENSE-jetbrains-mono.txt',
   ]) {
     assert.ok(existsSync(path.join(root, file)), `missing vendored font asset: ${file}`);
+  }
+});
+
+/* ---------- whose voice: Noal or Rosie, never anyone else (2026-10-28) ---------- */
+
+// Owner decision, 2026-10-28: the public writing is in Rosie's own first person ("I" =
+// Rosie), except Noal's own words (the opening, his will-and-won't letter and the two
+// credited quotes). Every first-person line must sit inside a block that says whose
+// voice it is, so no invented speaker can appear, and Rosie never claims a past or a
+// result she does not have.
+const FIRST_PERSON = /\b(I|I'm|I’m|I'll|I’ll|I've|I’ve|I'd|I’d|me|my|mine|myself)\b/;
+const PLURAL_FIRST_PERSON = /\b(we|we'll|we’ll|we're|we’re|we've|we’ve|us|our|ours|ourselves|our team)\b/i;
+
+const leafBlocks = () =>
+  $('main p, main li, main h1, main h2, main h3, main dd, main blockquote, main figcaption, main td, main th')
+    .filter((_, el) => $(el).find('p, li, h1, h2, h3, dd, blockquote').length === 0)
+    .toArray();
+
+test('voice: every first-person line belongs to a labelled voice, Noal or Rosie', () => {
+  const unowned = [];
+  for (const el of leafBlocks()) {
+    const node = $(el);
+    // "StopWatcher I/II/III" are indicator part names, not a speaker.
+    const text = norm(node.clone().find('.sr-only').remove().end().text()).replace(/StopWatcher I{1,3}\b/g, '');
+    if (!FIRST_PERSON.test(text)) continue;
+    const owner = node.closest('[data-voice]').attr('data-voice');
+    if (owner !== 'noal' && owner !== 'rosie') unowned.push(text);
+  }
+  assert.deepEqual(unowned, [], `first person with no labelled speaker: ${unowned.join(' | ')}`);
+  // Noal's blocks are exactly his opening, his will-and-won't letter and the sleep quote.
+  assert.deepEqual(
+    $('[data-voice="noal"]').map((_, el) => $(el).closest('section').attr('id')).get(),
+    ['opening', 'life', 'will-wont'],
+  );
+  assert.equal($('#opening [data-voice="noal"] [data-attribution]').length, 1, 'the opening is credited');
+  assert.equal($('#sleep[data-voice="noal"] [data-attribution]').length, 1, 'the sleep quote is credited');
+  assert.equal($('#teammate [data-attribution]').length, 1, 'the teammate quote is credited');
+});
+
+test('voice: every section in Rosie\'s voice says so with a "From Rosie" tag', () => {
+  $('[data-voice="rosie"]').each((_, el) => {
+    const section = $(el).closest('section');
+    const tagged =
+      section.find('[data-voice-tag]').length > 0 || /^From me, Rosie:/.test(norm($(el).text()));
+    assert.ok(tagged, `Rosie speaks in #${section.attr('id')} without a "From Rosie" label`);
+  });
+  $('[data-voice-tag]').each((_, el) => {
+    assert.equal(norm($(el).text()), 'From Rosie');
+    assert.ok($(el).closest('section').find('[data-voice="rosie"]').length > 0 ||
+      $(el).closest('[data-voice="rosie"]').length > 0, 'a tag only where Rosie speaks');
+  });
+});
+
+test('voice: Rosie\'s lines use "I", never a "we" or "our team"', () => {
+  // Kept on purpose, word for word: the approved full-demo offer (canonical.demoAsk) is
+  // the company's offer, not Rosie's line.
+  for (const el of $('[data-voice="rosie"]').toArray()) {
+    const text = norm($(el).clone().find('[data-demo-ask]').remove().end().text());
+    assert.ok(!PLURAL_FIRST_PERSON.test(text), `plural first person in Rosie's voice: "${text.slice(0, 120)}"`);
+  }
+});
+
+test('voice: Rosie claims no invented past, track record, promise or advice', () => {
+  const text = norm($('[data-voice="rosie"]').text()).toLowerCase();
+  for (const phrase of [
+    "i've seen", 'i’ve seen', 'seen it all', "i've made", 'i’ve made', 'made money', 'track record',
+    'in my experience', 'years of experience', 'my results', 'my returns', 'i guarantee', 'i promise',
+    'never lose', 'never loses', "can't make a bad", 'cannot make a bad', 'no bad trades',
+    'you should buy', 'you should sell', 'i recommend', 'my advice',
+  ]) {
+    assert.ok(!text.includes(phrase), `invented or overclaiming first person: "${phrase}"`);
   }
 });

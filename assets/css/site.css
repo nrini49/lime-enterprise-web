@@ -1500,3 +1500,14 @@ a:hover {
   margin-top: var(--space-6);
   max-width: 64rem;
 }
+
+/* 2026-10-28: Rosie speaks in the first person from the pros block on. Each section in
+   her voice carries a small "From Rosie" tag, mirroring "From Noal" on the opening, so
+   the reader always knows whose "I" it is. */
+.voice-tag {
+  color: var(--color-flag);
+  margin-block: var(--space-1) 0;
+}
+.voice-tag--block {
+  margin-block: var(--space-6) var(--space-3);
+}
