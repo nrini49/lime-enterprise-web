@@ -76,6 +76,123 @@ export function publicClusterLine(line) {
   return kept.join('; ');
 }
 
+/* ---------- voice: no advice-sounding language on the public pages ---------- */
+
+/**
+ * Editions were written with stance lines ("Protect first, wait for…", "no chase", "a day to
+ * hold discipline"). The public pages describe the day instead: what it looked and felt like
+ * from Rosie's or the Lime Signalworks team's seat. Source JSON is never edited; rewrites live in
+ * data/harbor-voice/<date>.json:
+ *
+ *   { "rewrites":    { "<exact source text>": "<rendered text>" },
+ *     "descriptive": [ "<rendered text reviewed as description, kept as-is>" ] }
+ *
+ * Every rendered string goes through two gates:
+ *   1. DIRECTIVE_VOCAB: text that *looks* directive (protect, size, wait, avoid, reduce, review,
+ *      chase, stay, hold, trim, buy, sell, add, keep, let, treat, …) must have a rewrite, or be
+ *      listed as reviewed "descriptive" (e.g. "SPY holds near flat"). Otherwise the build fails
+ *      and names the string, so a new edition with new phrasing gets a rewrite before publishing.
+ *   2. ADVICE_BANNED: advice wording that is never allowed on a page, reviewed or not.
+ */
+export const VOICE_DIR = path.join('data', 'harbor-voice');
+
+/** Proper names that contain a vocabulary word ("JPMorgan Chase", "Best Buy"). */
+export const PROPER_NAMES = ['JPMorgan Chase', 'Best Buy', 'On Holding', 'Group Holding'];
+const neutral = (s) => PROPER_NAMES.reduce((t, n) => t.split(n).join('[name]'), String(s));
+
+export const DIRECTIVE_VOCAB = new RegExp(
+  '\\b(' +
+    [
+      'protect(s|ing)?', 'protective', 'size[sd]?', 'sizing', 'wait(s|ing)?', 'avoid(s|ing)?', 'reduc(e|es|ing)',
+      'review(s|ing)?', 'chas(e|es|ing)', 'stay(s|ing)?', 'hold(s|ing)?', 'trim(s|ming)?', 'buy(s|ing)?',
+      'sell(s|ing)?', 'add(s|ing)?', 'keep(s|ing)?', 'let', 'verify', 'treat(s|ing)?', 'consider',
+      'participate', 'watch(ing)?', 'forc(e|ing)', 'disciplined?', 'patien(ce|t)', 'should', 'must',
+      'needs?', 'warranted', 'matters', 'posture', 'pre-commitment', 'complacent', 'caution',
+      'selective', 'selectivity', 'justify', 'reward', 'argues', 'calls for', 'free lunch(es)?',
+      'a day to', 'call it', 'read [a-z ]+ as', 'stand aside', 'act',
+    ].join('|') +
+    ')\\b',
+  'i',
+);
+
+/** Advice wording that may never render, whatever the voice file says. */
+export const ADVICE_BANNED = [
+  /protect[- ]first/i, /\bprotect\b/i, /\bsize\b/i, /\bsize down\b/i, /\bsizing\b/i, /\bchas(e|es|ing)\b/i,
+  /\bnot a chase\b/i, /\ba day to\b/i, /\bshould\b/i, /\bmust\b/i, /\bdisciplin/i, /\bpatien(ce|t)\b/i,
+  /\bwait(s|ing)?\b/i, /\bargues? (for|against)\b/i, /\bcalls for\b/i, /\bwarranted\b/i, /\bstand aside\b/i,
+  /\b(do not|don't) [a-z]+/i, /\byou(r|'re)?\b/i, /\bforc(e|ing) a trade\b/i, /\bkeep an eye\b/i,
+  /\bfree lunch/i, /\bcomplacent\b/i, /\badding risk\b/i, /\btrade the reaction/i, /\bpre-commitment\b/i,
+  /\btreat\b/i, /\bverify\b/i, /\bselectivity\b/i, /\breview the event\b/i, /\breduce\b/i, /\btrim\b/i,
+  /\bavoid/, /^Avoid\b/, /\b(buy|sell)\b/, /\blet\b/i, /\bparticipate only\b/i, /\bworth watching\b/i,
+  /\bact\b/i, /\bposture favored\b/i, /\bfollow-through still matters\b/i,
+];
+
+export const looksDirective = (s) => DIRECTIVE_VOCAB.test(neutral(s));
+export const adviceHits = (s) => ADVICE_BANNED.filter((r) => r.test(neutral(s))).map(String);
+
+export class HarborVoiceError extends Error {}
+
+const EMPTY_VOICE = Object.freeze({ rewrites: {}, descriptive: [] });
+
+export async function loadVoice(root, date) {
+  try {
+    const v = JSON.parse(await readFile(path.join(root, VOICE_DIR, `${date}.json`), 'utf8'));
+    return { rewrites: v.rewrites || {}, descriptive: v.descriptive || [] };
+  } catch (e) {
+    if (e.code === 'ENOENT') return EMPTY_VOICE;
+    throw e;
+  }
+}
+
+/**
+ * Returns speak(field, source, project) for one edition, plus finish() which throws if any
+ * directive-looking text has no rewrite, any advice wording would render, or the voice file
+ * names text the edition does not contain.
+ */
+export function voiceFor(date, voice = EMPTY_VOICE) {
+  const file = `${VOICE_DIR}/${date}.json`;
+  const descriptive = new Set(voice.descriptive);
+  const usedRewrites = new Set();
+  const usedDescriptive = new Set();
+  const unknown = [];
+  const banned = [];
+  const speak = (field, source, project = (x) => x) => {
+    const src = String(source ?? '');
+    let out;
+    if (Object.hasOwn(voice.rewrites, src)) {
+      usedRewrites.add(src);
+      out = voice.rewrites[src];
+    } else {
+      out = project(src);
+      if (out == null) return null;
+      if (looksDirective(out)) {
+        if (descriptive.has(out)) usedDescriptive.add(out);
+        else unknown.push(`${field}: "${out}"`);
+      }
+    }
+    const hits = adviceHits(out);
+    if (hits.length) banned.push(`${field}: "${out}" (${hits.join(', ')})`);
+    return scrub(out);
+  };
+  const finish = () => {
+    const problems = [];
+    if (unknown.length) {
+      problems.push(
+        `directive-looking text with no rewrite. Add each to "rewrites" in ${file} ` +
+          `(or to "descriptive" if it only describes the market):\n    - ${unknown.join('\n    - ')}`,
+      );
+    }
+    if (banned.length) problems.push(`advice wording would render:\n    - ${banned.join('\n    - ')}`);
+    const staleR = Object.keys(voice.rewrites).filter((k) => !usedRewrites.has(k));
+    const staleD = [...descriptive].filter((k) => !usedDescriptive.has(k));
+    if (staleR.length || staleD.length) {
+      problems.push(`${file} names text this edition does not render:\n    - ${[...staleR, ...staleD].join('\n    - ')}`);
+    }
+    if (problems.length) throw new HarborVoiceError(`Harbor Now ${date}: ${problems.join('\n  ')}`);
+  };
+  return { speak, finish };
+}
+
 const SYMBOLS = [
   ['spy', 'SPY', 'S&P 500 ETF'],
   ['qqq', 'QQQ', 'Nasdaq 100 ETF'],
@@ -83,27 +200,29 @@ const SYMBOLS = [
   ['iwm', 'IWM', 'Russell 2000 ETF'],
 ];
 
-/** Allowlist projection: the only shape a page is ever rendered from. */
-export function publicEdition(date, raw) {
+/** Allowlist projection: the only shape a page is ever rendered from, in the site's voice. */
+export function publicEdition(date, raw, voice = EMPTY_VOICE) {
   const wx = raw.weather || {};
-  const s = (v) => scrub(v ?? '');
-  return {
+  const { speak, finish } = voiceFor(date, voice);
+  const ed = {
     date,
-    title: s(raw.title),
-    tag: s(raw.tag),
+    title: speak('title', raw.title),
+    tag: speak('tag', raw.tag),
     rows: SYMBOLS.filter(([k]) => wx[k]).map(([k, symbol, name]) => ({
       symbol,
       name,
-      price: s(wx[k].price),
-      change: s(wx[k].change),
-      high52: wx[k].high52 ? s(wx[k].high52) : '',
-      read: s(wx[k].read),
+      price: scrub(wx[k].price ?? ''),
+      change: scrub(wx[k].change ?? ''),
+      high52: wx[k].high52 ? scrub(wx[k].high52) : '',
+      read: speak(`${symbol} read`, wx[k].read),
     })),
-    sentiment: { label: s(wx.sentiment?.label), qualifier: s(wx.sentiment?.qualifier) },
-    volatility: s(wx.volatility),
-    tone: s(wx.tone),
-    cluster: (raw.cluster || []).map(publicClusterLine).filter(Boolean).map(s),
+    sentiment: { label: speak('sentiment label', wx.sentiment?.label), qualifier: speak('sentiment', wx.sentiment?.qualifier) },
+    volatility: speak('volatility', wx.volatility),
+    tone: speak('tone', wx.tone),
+    cluster: (raw.cluster || []).map((c) => speak('cluster', c, publicClusterLine)).filter(Boolean),
   };
+  finish();
+  return ed;
 }
 
 /* ---------- dates ---------- */
@@ -135,7 +254,7 @@ const CANON = [
     'Blue progression is light blue to medium blue to dark blue. Weakness progression is yellow to orange to red-orange to red.',
     'Rosie uses the 1-hour chart range tool workflow with recurring 1% or 2% structure bands where relevant.',
     'About 0.5% is treated as the conservative seed-entry strike zone near support.',
-    'Rosie prefers entries near a recent low with K line crossing above its signal line, rather than chasing extended price.',
+    'Rosie prefers entries near a recent low with the K line crossing above its signal line, rather than entries at extended prices.',
     'If price leaves the entry band, the verdict downgrades from Enter to Watch or Avoid.',
   ]],
   ['Operator Chart Tools', [
@@ -146,21 +265,57 @@ const CANON = [
   ['Risk Rules', [
     'Rosie remains approval-based first, even if fuller automation becomes available later.',
     'No trade is sent unless the route is intentionally armed by the operator.',
-    'After each buy, Rosie creates or requires protective stop logic immediately, not as an afterthought.',
+    'After each entry, Rosie creates or requires protective stop logic immediately, not as an afterthought.',
     'Stop placement respects structure and the last qualified support area, not an arbitrary fixed percent.',
     'Rosie helps prevent revenge behavior by locking out low-quality re-entries after failed setups until conditions improve.',
-    'Near-ATH tape means stops must be respected faster — extended distance to support is lower here.',
+    'Near all-time highs, Rosie respects stops sooner; the distance back to support is shorter there.',
   ]],
   ['Performance Rules', [
     'Rosie maintains a journal and performance review trail so rules can be tuned over time.',
-    'Canon and tactics stay distinct — doctrine governs what Rosie is allowed to do, tactics govern how Rosie interprets setups inside those bounds.',
+    'Canon and tactics are kept distinct — doctrine governs what Rosie is allowed to do, tactics govern how Rosie interprets setups inside those bounds.',
   ]],
   ['Canon vs. Tactics', [
-    'Harbor Now canon defines sea-state reading and account posture — the top-level doctrine that constrains what Rosie is allowed to do.',
+    'Harbor Now canon defines how Rosie reads the sea state and runs the account — the top-level doctrine that constrains what Rosie is allowed to do.',
     'Tactics live underneath and may evolve, as long as they remain inside canon.',
     'Changes to canon are rare, deliberate edits, not session-by-session adjustments.',
   ]],
 ];
+
+/**
+ * Canon lines that contain vocabulary words but only describe Rosie (her verdict labels, her
+ * protective stop logic). Every other canon line passes the same voice gates as edition text;
+ * lines that read as directives were rewritten above (CANON_REWRITTEN lists the originals).
+ */
+export const CANON_DESCRIPTIVE = [
+  "Rosie's core verdict states are Enter, Watch, and Avoid.",
+  'After each entry, Rosie creates or requires protective stop logic immediately, not as an afterthought.',
+  'If price leaves the entry band, the verdict downgrades from Enter to Watch or Avoid.',
+  'Rosie maintains a journal and performance review trail so rules can be tuned over time.',
+];
+export const CANON_REWRITTEN = {
+  'Rosie prefers entries near a recent low with K line crossing above its signal line, rather than chasing extended price.':
+    'Rosie prefers entries near a recent low with the K line crossing above its signal line, rather than entries at extended prices.',
+  'After each buy, Rosie creates or requires protective stop logic immediately, not as an afterthought.':
+    'After each entry, Rosie creates or requires protective stop logic immediately, not as an afterthought.',
+  'Near-ATH tape means stops must be respected faster — extended distance to support is lower here.':
+    'Near all-time highs, Rosie respects stops sooner; the distance back to support is shorter there.',
+  'Canon and tactics stay distinct — doctrine governs what Rosie is allowed to do, tactics govern how Rosie interprets setups inside those bounds.':
+    'Canon and tactics are kept distinct — doctrine governs what Rosie is allowed to do, tactics govern how Rosie interprets setups inside those bounds.',
+  'Harbor Now canon defines sea-state reading and account posture — the top-level doctrine that constrains what Rosie is allowed to do.':
+    'Harbor Now canon defines how Rosie reads the sea state and runs the account — the top-level doctrine that constrains what Rosie is allowed to do.',
+};
+export const canonLines = () => CANON.flatMap(([h, items]) => [h, ...items]);
+
+/** The canon block passes the same gates as edition text. */
+export function checkCanon() {
+  const problems = [];
+  for (const line of canonLines()) {
+    if (looksDirective(line) && !CANON_DESCRIPTIVE.includes(line)) problems.push(`directive-looking canon line: "${line}"`);
+    const hits = adviceHits(line);
+    if (hits.length) problems.push(`advice wording in canon line: "${line}" (${hits.join(', ')})`);
+  }
+  if (problems.length) throw new HarborVoiceError(`Harbor Now canon:\n    - ${problems.join('\n    - ')}`);
+}
 
 const renderCanon = () =>
   CANON.map(
@@ -311,12 +466,14 @@ export async function loadEditions(root) {
   const editions = [];
   for (const f of files) {
     const date = f.slice(0, 10);
-    editions.push(publicEdition(date, JSON.parse(await readFile(path.join(dir, f), 'utf8'))));
+    const raw = JSON.parse(await readFile(path.join(dir, f), 'utf8'));
+    editions.push(publicEdition(date, raw, await loadVoice(root, date)));
   }
   return editions; // oldest first
 }
 
 export async function buildHarbor(root, canonical) {
+  checkCanon();
   const editions = await loadEditions(root);
   if (!editions.length) throw new Error('no Harbor Now editions in data/harbor/');
   const today = todayIso();

@@ -52,6 +52,13 @@ Zero-framework static build. No bundler, no CSS preprocessor, no client framewor
   latest edition is more than 3 days old (checked at build time, New York date, or
   `HARBOR_NOW_TODAY=YYYY-MM-DD`) a neutral "Latest edition: … Publishing is being restarted." note
   is shown. `vercel.json` redirects `/data/harbor/*` so the unfiltered source is not served here.
+- `data/harbor-voice/<date>.json` — the voice layer for Harbor Now. `"rewrites"` maps exact source
+  text to the descriptive, first-person wording that renders (no advice: no "protect first", "size
+  down", "wait", "no chase", "discipline first"); `"descriptive"` lists text that contains a
+  watched word but only describes the market ("SPY holds near flat"). The build **fails** and names
+  the string when an edition has directive-looking text (protect, size, wait, avoid, reduce, review,
+  chase, stay, hold, trim, buy, sell, add, keep, let, treat, …) with no entry, when advice wording
+  would render, or when a voice entry no longer matches its edition. Add the rewrite, then rebuild.
 - `harbor-now/` — **generated artifact**, committed like `index.html`
 - `tests/harbor-now.test.mjs`, `tests/harbor-rendered.test.mjs` — Harbor Now build, notice,
   dropped-field, link and overflow checks

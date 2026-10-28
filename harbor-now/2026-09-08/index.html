@@ -101,7 +101,7 @@
             <dl class="hn-wx">
               <div><dt>Sentiment</dt><dd><strong>CAUTIOUS</strong> — all four tracked funds closed lower and VIX rose 8.19%; QQQ held best relatively</dd></div>
               <div><dt>Volatility (VIX)</dt><dd>VIX 15.72, up 8.19% (+1.19 points); volatility expanded</dd></div>
-              <div><dt>Tone</dt><dd>Protect first, wait for breadth to repair</dd></div>
+              <div><dt>Tone</dt><dd>A cautious tape with all four funds lower and breadth weak; we are keeping a close eye on it.</dd></div>
             </dl>
           </div>
           <h2 class="hn-h">Cluster behavior</h2>
@@ -119,15 +119,15 @@
               <h3>Operator Logic</h3>
               <ul class="ticks"><li>Rosie operates in this order: observe, classify, rank, propose, then execute only if allowed.</li><li>Rosie's core verdict states are Enter, Watch, and Avoid.</li><li>Rosie judges each symbol relative to SPY market weather, not in isolation.</li><li>Symbols equal to or slightly stronger than SPY lean favorable for entry; weaker-than-SPY setups are lower quality.</li></ul>
               <h3>Entry Rules</h3>
-              <ul class="ticks"><li>Blue progression is light blue to medium blue to dark blue. Weakness progression is yellow to orange to red-orange to red.</li><li>Rosie uses the 1-hour chart range tool workflow with recurring 1% or 2% structure bands where relevant.</li><li>About 0.5% is treated as the conservative seed-entry strike zone near support.</li><li>Rosie prefers entries near a recent low with K line crossing above its signal line, rather than chasing extended price.</li><li>If price leaves the entry band, the verdict downgrades from Enter to Watch or Avoid.</li></ul>
+              <ul class="ticks"><li>Blue progression is light blue to medium blue to dark blue. Weakness progression is yellow to orange to red-orange to red.</li><li>Rosie uses the 1-hour chart range tool workflow with recurring 1% or 2% structure bands where relevant.</li><li>About 0.5% is treated as the conservative seed-entry strike zone near support.</li><li>Rosie prefers entries near a recent low with the K line crossing above its signal line, rather than entries at extended prices.</li><li>If price leaves the entry band, the verdict downgrades from Enter to Watch or Avoid.</li></ul>
               <h3>Operator Chart Tools</h3>
               <ul class="ticks"><li>Range Tool 1: maroon arrows, anchored at the left-side peak, expanded to 0.5%.</li><li>Range Tool 2: prior high down to the low, color bar set to light blue.</li><li>These tools define the safe strike zone and pullback structure, not a blind trigger.</li></ul>
               <h3>Risk Rules</h3>
-              <ul class="ticks"><li>Rosie remains approval-based first, even if fuller automation becomes available later.</li><li>No trade is sent unless the route is intentionally armed by the operator.</li><li>After each buy, Rosie creates or requires protective stop logic immediately, not as an afterthought.</li><li>Stop placement respects structure and the last qualified support area, not an arbitrary fixed percent.</li><li>Rosie helps prevent revenge behavior by locking out low-quality re-entries after failed setups until conditions improve.</li><li>Near-ATH tape means stops must be respected faster — extended distance to support is lower here.</li></ul>
+              <ul class="ticks"><li>Rosie remains approval-based first, even if fuller automation becomes available later.</li><li>No trade is sent unless the route is intentionally armed by the operator.</li><li>After each entry, Rosie creates or requires protective stop logic immediately, not as an afterthought.</li><li>Stop placement respects structure and the last qualified support area, not an arbitrary fixed percent.</li><li>Rosie helps prevent revenge behavior by locking out low-quality re-entries after failed setups until conditions improve.</li><li>Near all-time highs, Rosie respects stops sooner; the distance back to support is shorter there.</li></ul>
               <h3>Performance Rules</h3>
-              <ul class="ticks"><li>Rosie maintains a journal and performance review trail so rules can be tuned over time.</li><li>Canon and tactics stay distinct — doctrine governs what Rosie is allowed to do, tactics govern how Rosie interprets setups inside those bounds.</li></ul>
+              <ul class="ticks"><li>Rosie maintains a journal and performance review trail so rules can be tuned over time.</li><li>Canon and tactics are kept distinct — doctrine governs what Rosie is allowed to do, tactics govern how Rosie interprets setups inside those bounds.</li></ul>
               <h3>Canon vs. Tactics</h3>
-              <ul class="ticks"><li>Harbor Now canon defines sea-state reading and account posture — the top-level doctrine that constrains what Rosie is allowed to do.</li><li>Tactics live underneath and may evolve, as long as they remain inside canon.</li><li>Changes to canon are rare, deliberate edits, not session-by-session adjustments.</li></ul>
+              <ul class="ticks"><li>Harbor Now canon defines how Rosie reads the sea state and runs the account — the top-level doctrine that constrains what Rosie is allowed to do.</li><li>Tactics live underneath and may evolve, as long as they remain inside canon.</li><li>Changes to canon are rare, deliberate edits, not session-by-session adjustments.</li></ul>
             </div>
           </details>
           <p class="anchor-row hn-pager">

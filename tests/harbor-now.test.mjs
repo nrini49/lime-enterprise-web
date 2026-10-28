@@ -4,7 +4,7 @@
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, existsSync, readdirSync, mkdtempSync, mkdirSync, cpSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync, mkdtempSync, mkdirSync, cpSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
@@ -17,7 +17,14 @@ import {
   prettyDate,
   longDate,
   publicClusterLine,
+  publicEdition,
   scrub,
+  looksDirective,
+  adviceHits,
+  HarborVoiceError,
+  VOICE_DIR,
+  CANON_REWRITTEN,
+  canonLines,
 } from '../src/harbor.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -27,6 +34,15 @@ const dates = readdirSync(dataDir)
   .map((f) => f.slice(0, 10))
   .sort();
 const raw = (d) => JSON.parse(readFileSync(path.join(dataDir, `${d}.data.json`), 'utf8'));
+const voiceDir = path.join(root, VOICE_DIR);
+const voice = (d) => {
+  const f = path.join(voiceDir, `${d}.json`);
+  if (!existsSync(f)) return { rewrites: {}, descriptive: [] };
+  const v = JSON.parse(readFileSync(f, 'utf8'));
+  return { rewrites: v.rewrites || {}, descriptive: v.descriptive || [] };
+};
+/** The edition as it renders: allowlisted and in the site's voice. */
+const voiced = (d) => publicEdition(d, raw(d), voice(d));
 const load = (rel) => cheerio.load(readFileSync(path.join(root, rel), 'utf8'));
 const norm = (s) => s.replace(/\s+/g, ' ').trim();
 const pages = ['harbor-now/index.html', ...dates.map((d) => `harbor-now/${d}/index.html`)];
@@ -68,7 +84,7 @@ test('harbor: the latest edition is featured with its date shown clearly', () =>
   const stamp = $('[data-harbor-date] time');
   assert.equal(stamp.attr('datetime'), latest);
   assert.equal(norm(stamp.text()), longDate(latest));
-  assert.equal(norm($('.hn-title').first().text()), raw(latest).title);
+  assert.equal(norm($('.hn-title').first().text()), voiced(latest).title);
 });
 
 test('harbor: every page carries the exact notice, visible and not collapsed', () => {
@@ -109,8 +125,9 @@ test('harbor: each edition page shows its own date and its market table', () => 
       assert.ok(text.includes(r.weather[k].price), `${d}: ${k} price`);
     }
     assert.ok(text.includes(r.weather.sentiment.label), `${d}: sentiment`);
-    assert.ok(text.includes(r.weather.volatility), `${d}: VIX line`);
-    assert.ok(text.includes(r.weather.tone), `${d}: tone`);
+    const ed = voiced(d);
+    assert.ok(text.includes(ed.volatility), `${d}: VIX line`);
+    assert.ok(text.includes(ed.tone), `${d}: tone`);
   }
 });
 
@@ -165,6 +182,7 @@ test('harbor: the restart note appears only when the latest edition is more than
   const tmp = mkdtempSync(path.join(tmpdir(), 'harbor-'));
   mkdirSync(path.join(tmp, 'data'), { recursive: true });
   cpSync(dataDir, path.join(tmp, 'data', 'harbor'), { recursive: true });
+  cpSync(voiceDir, path.join(tmp, VOICE_DIR), { recursive: true });
   const prev = process.env.HARBOR_NOW_TODAY;
   try {
     for (const [days, expected] of [[0, false], [3, false], [4, true], [29, true]]) {
@@ -257,4 +275,155 @@ test('vercel: /harbor-now is served here, /daily-alerts still redirects, raw dat
   assert.ok(sources.includes('/daily-alerts'), '/daily-alerts behaviour unchanged');
   const data = v.redirects.find((r) => r.source === '/data/harbor/:path*');
   assert.ok(data, 'the unfiltered source JSON is not served from this site');
+});
+
+/* ---------- voice: descriptive, never advice ---------- */
+
+/** Every source string that can reach a page, with the text it renders as. */
+const renderedStrings = (d) => {
+  const r = raw(d);
+  const wx = r.weather || {};
+  const v = voice(d);
+  const out = [];
+  const add = (field, src, project = (x) => x) => {
+    if (src == null) return;
+    const rendered = Object.hasOwn(v.rewrites, src) ? v.rewrites[src] : project(src);
+    if (rendered != null) out.push({ field, src, rendered });
+  };
+  add('title', r.title);
+  add('tag', r.tag);
+  add('tone', wx.tone);
+  add('volatility', wx.volatility);
+  add('sentiment label', wx.sentiment?.label);
+  add('sentiment', wx.sentiment?.qualifier);
+  for (const k of ['spy', 'qqq', 'dia', 'iwm']) if (wx[k]) add(`${k} read`, wx[k].read);
+  for (const c of r.cluster || []) add('cluster', c, publicClusterLine);
+  return out;
+};
+
+/** Reader-facing Harbor text: the edition, the canon, the page copy. Legal disclaimers excluded. */
+const harborText = ($) => {
+  const c = cheerio.load($.html());
+  c('script, style, [data-harbor-notice], .foot__disclaimer').remove();
+  return norm(c('body').text());
+};
+
+// Noal's examples, checked literally in addition to ADVICE_BANNED.
+const NOAL_EXAMPLES = [
+  /protect first/i, /protect-first/i, /size down/i, /\bwait\b/i, /review the event/i, /do not chase/i,
+  /not a chase/i, /no chase/i, /stay disciplined/i, /\bact\/reduce\b/i, /you should/i, /a day to/i,
+  /discipline first/i, /hold discipline/i, /argues (for|against)/i, /forcing a trade/i,
+];
+
+test('voice: no advice wording appears on any rendered Harbor page', () => {
+  for (const rel of pages) {
+    const text = harborText(load(rel));
+    const hits = adviceHits(text);
+    assert.deepEqual(hits, [], `${rel}: advice wording ${hits.join(', ')}`);
+    for (const re of NOAL_EXAMPLES) assert.ok(!re.test(text), `${rel}: ${re}`);
+  }
+});
+
+test('voice: every directive-looking source string has a rewrite or a reviewed "descriptive" entry', () => {
+  let rewritten = 0;
+  const distinct = new Set();
+  for (const d of dates) {
+    const v = voice(d);
+    const descriptive = new Set(v.descriptive);
+    for (const { field, src, rendered } of renderedStrings(d)) {
+      if (Object.hasOwn(v.rewrites, src)) {
+        rewritten++;
+        distinct.add(src);
+        assert.notEqual(rendered, src, `${d} ${field}: rewrite is identical to the source`);
+        assert.deepEqual(adviceHits(rendered), [], `${d} ${field}: rewrite still reads as advice: ${rendered}`);
+      } else if (looksDirective(rendered)) {
+        assert.ok(descriptive.has(rendered), `${d} ${field}: no rewrite for "${rendered}"`);
+      }
+    }
+  }
+  // 62 rewrites across editions (59 distinct source strings) as of the 2026-09-29 archive.
+  assert.ok(rewritten >= 62, `expected at least 62 rewrites, found ${rewritten}`);
+  assert.ok(distinct.size >= 59, `expected at least 59 distinct rewritten strings, found ${distinct.size}`);
+});
+
+test('voice: every voice file entry matches text in its edition (no stale rewrites)', () => {
+  for (const f of readdirSync(voiceDir)) {
+    const d = f.slice(0, 10);
+    assert.ok(dates.includes(d), `${f}: no edition for this voice file`);
+    const strings = renderedStrings(d);
+    const v = voice(d);
+    for (const k of Object.keys(v.rewrites)) assert.ok(strings.some((s) => s.src === k), `${f}: rewrite key not in edition: ${k}`);
+    for (const k of v.descriptive) assert.ok(strings.some((s) => s.rendered === k), `${f}: descriptive entry not in edition: ${k}`);
+  }
+});
+
+test('voice: rewritten text is what renders, and the stance originals do not', () => {
+  for (const d of dates) {
+    const text = visible(load(`harbor-now/${d}/index.html`));
+    for (const [src, out] of Object.entries(voice(d).rewrites)) {
+      assert.ok(text.includes(out), `${d}: rewrite not rendered: ${out}`);
+      assert.ok(!text.includes(src), `${d}: original still rendered: ${src}`);
+    }
+  }
+  const text = visible(load(`harbor-now/${dates.at(-1)}/index.html`));
+  for (const [orig, now] of Object.entries(CANON_REWRITTEN)) {
+    assert.ok(!text.includes(orig), `canon original rendered: ${orig}`);
+    assert.ok(text.includes(now), `canon rewrite missing: ${now}`);
+  }
+  for (const line of canonLines()) assert.deepEqual(adviceHits(line), [], `canon: ${line}`);
+});
+
+/** Build a copy of the archive with one edition's source edited, and return the error. */
+const buildWith = async (edit, editVoice) => {
+  const canonical = JSON.parse(readFileSync(path.join(root, 'data/homepage.json'), 'utf8')).canonical;
+  const tmp = mkdtempSync(path.join(tmpdir(), 'harbor-voice-'));
+  mkdirSync(path.join(tmp, 'data'), { recursive: true });
+  cpSync(dataDir, path.join(tmp, 'data', 'harbor'), { recursive: true });
+  cpSync(voiceDir, path.join(tmp, VOICE_DIR), { recursive: true });
+  const d = dates.at(-1);
+  const r = raw(d);
+  edit(r);
+  writeFileSync(path.join(tmp, 'data', 'harbor', `${d}.data.json`), JSON.stringify(r));
+  if (editVoice) {
+    const v = voice(d);
+    editVoice(v);
+    writeFileSync(path.join(tmp, VOICE_DIR, `${d}.json`), JSON.stringify(v));
+  }
+  try {
+    await buildHarbor(tmp, canonical);
+    return null;
+  } catch (e) {
+    return e;
+  }
+};
+
+test('voice: the build fails loudly on a new directive string, naming it and the voice file', async () => {
+  const phrase = 'Protect first, trim into strength and add on dips';
+  const err = await buildWith((r) => { r.weather.tone = phrase; });
+  assert.ok(err instanceof HarborVoiceError, 'build should fail');
+  assert.match(err.message, /directive-looking text with no rewrite/);
+  assert.ok(err.message.includes(`tone: "${phrase}"`), err.message);
+  assert.ok(err.message.includes(`${VOICE_DIR}/${dates.at(-1)}.json`), err.message);
+
+  const cluster = 'Rotation note: hold winners and sell weakness into the close';
+  const err2 = await buildWith((r) => { r.cluster.push(cluster); });
+  assert.ok(err2 instanceof HarborVoiceError);
+  assert.ok(err2.message.includes(cluster), err2.message);
+
+  for (const verb of ['protect', 'size', 'wait', 'avoid', 'reduce', 'review', 'chase', 'stay', 'hold', 'trim', 'buy', 'sell', 'add']) {
+    assert.ok(looksDirective(`Today: ${verb} the lane`), `vocabulary misses "${verb}"`);
+  }
+});
+
+test('voice: a reviewed "descriptive" entry cannot let advice wording through, and stale keys fail', async () => {
+  const phrase = 'A day to wait — stay disciplined';
+  const err = await buildWith((r) => { r.weather.tone = phrase; }, (v) => v.descriptive.push(phrase));
+  assert.ok(err instanceof HarborVoiceError, 'build should fail');
+  assert.match(err.message, /advice wording would render/);
+
+  const err2 = await buildWith(() => {}, (v) => { v.rewrites['Text that is not in this edition'] = 'x'; });
+  assert.ok(err2 instanceof HarborVoiceError, 'stale rewrite should fail');
+  assert.match(err2.message, /names text this edition does not render/);
+
+  assert.equal(await buildWith(() => {}), null, 'the unedited archive builds');
 });
