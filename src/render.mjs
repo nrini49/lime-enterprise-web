@@ -252,7 +252,6 @@ async function main() {
     .replaceAll('{{INDICATORS}}', renderIndicators(indicators))
     .replaceAll('{{SECURITIES_DISCLAIMER}}', esc(canonical.securitiesDisclaimer))
     .replaceAll('{{RISK_DISCLOSURE}}', esc(canonical.riskDisclosure))
-    .replaceAll('{{EVAL_DAYS}}', String(canonical.evaluationDays))
     .replaceAll('{{COPYRIGHT}}', esc(canonical.copyright));
 
   const leftover = html.match(/\{\{[A-Z_]+\}\}/g);

@@ -10,7 +10,7 @@ to, reads from, or links into Site 1; the sister-site link buttons were removed.
 
 A plain-language enterprise translation of what Site 1 offers, in the same informational order:
 what Lime Signalworks does, the daily market situation report, what is and is not committed to,
-the positioning, the free 33-day evaluation, who it is for, where to start, planned pricing, the
+the positioning, the free one-month evaluation, who it is for, where to start, planned pricing, the
 SPY Pipeline eligibility boundary, and how to begin.
 
 It describes the offer honestly and nothing more. Signup, checkout, SPY eligibility verification,
@@ -111,7 +111,7 @@ npm run serve        # serve the repo root on http://localhost:4173
   as open, anonymous, or certain to work.
 - **No sister-site links.** The former "Signals" and "LIME Leadership" footer buttons are gone;
   YouTube is the only off-origin destination on the page.
-- The evaluation is stated as **33 days, demo and paper mode only**, with no live capital and no
+- The evaluation is stated as **one month, demo and paper mode only**, with no live capital and no
   real orders. There is no ninety-day or no-pay claim on this surface.
 - Prices ($20 weekly, $85 monthly, $245 quarterly, $925 annually) are labelled **planned
   post-evaluation enrollment options**, with the absence of checkout stated and no purchase control.
