@@ -123,6 +123,11 @@ npm run serve        # serve the repo root on http://localhost:4173
   already-public Lime Signalworks email, telephone, and office address as real `mailto:` and `tel:`
   anchors, each rendered exactly once, plus "By appointment." Contact is never a form, a capture
   field, or a backend submission.
+- **Rosie speaks in her own first person** (queen-with-a-sense-of-humor voice, 2026-10-29) everywhere
+  except Noal's credited blocks. Interactive Brokers and Schwab are both presented as working for
+  stocks and ETFs; markets that are not live are flagged "Coming" and say "Not live yet", never
+  "in development", "beta" or "preview", and the Rosie hero (`#demo`) shows only what is live.
+  Nothing may read as advice ("protect first", "size down", "you should").
 - Secular enterprise vocabulary only. No religious, scriptural, metaphysical, or Site 1 metaphor
   register in rendered content **or** metadata. `Rosie` is a retained product name.
 - No endorsement, customer, current-operation, live-account, production-readiness, performance,

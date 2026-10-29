@@ -1,5 +1,5 @@
 {
-  "revision": "site2-assembled-home-2026-10-28d",
+  "revision": "site2-rosie-queen-voice-2026-10-29",
   "canonical": {
     "demoUrl": "/rosie-demo/",
     "demoCtaLabel": "Open the Rosie demo",
@@ -130,7 +130,7 @@
   "marketReport": {
     "asOfLabel": "As of the close of Thursday, July 23, 2026",
     "exampleNotice": "This table shows the report format using figures from a past report; it is not current market data. Reports are written after the close and dated, never in real time.",
-    "posture": "Conditions read bearish. Stated posture: protect first.",
+    "posture": "Conditions read bearish. Stated posture: guarded.",
     "rows": [
       {
         "symbol": "SPY",
