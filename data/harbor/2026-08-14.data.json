@@ -1,0 +1,58 @@
+{
+  "title": "IWM stands alone — mixed tape, volatility eases",
+  "tag": "IWM gained while SPY, QQQ, and DIA slipped; VIX fell to 14.25 and the overall US sentiment read was uncertain.",
+  "weather": {
+    "spy": {
+      "price": "776.34",
+      "change": "-0.20%",
+      "high52": "779.37",
+      "read": "Slipped and finished below its 52-week high of 779.37"
+    },
+    "qqq": {
+      "price": "731.07",
+      "change": "-0.14%",
+      "high52": "748.65",
+      "read": "Lost 0.14% and remained below its 52-week high; growth did not lead the close"
+    },
+    "dia": {
+      "price": "536.80",
+      "change": "-0.21%",
+      "high52": "546.75",
+      "read": "Was the weakest of the large-cap trio, slipping while remaining below its 52-week high"
+    },
+    "iwm": {
+      "price": "305.06",
+      "change": "+0.51%",
+      "high52": "305.18",
+      "read": "Led at +0.51% and finished close to its 52-week high of 305.18"
+    },
+    "sentiment": {
+      "label": "UNCERTAIN",
+      "qualifier": "the overall US market-sentiment read was uncertain while three of the four major ETFs declined"
+    },
+    "volatility": "VIX 14.25, down 2.60% on the day — volatility eased while the tape stayed mixed",
+    "tone": "Mixed and disciplined — IWM held the lead, the large-cap ETFs slipped, and uncertainty argues against forcing a trade"
+  },
+  "cluster": [
+    "Leadership lane: IWM led at +0.51%; SPY fell -0.20%, QQQ fell -0.14%, and DIA fell -0.21%",
+    "Key earnings today: Credicorp (BAP) and Agora (API) were both marked Reported on today's finance schedule",
+    "Secondary earnings tomorrow: no major recognizable earnings event was returned for 2026-08-15",
+    "Small cap vs large cap: IWM (+0.51%) outperformed SPY (-0.20%), showing narrow small-cap relative strength",
+    "Broad participation: only IWM advanced; the other three major ETFs declined, so breadth was narrow",
+    "Rotation note: relative strength favored small caps over the large-cap ETF complex; keep the read selective, not broad-brush",
+    "Behavior rule: do not chase the lone green lane; wait for a clean setup, written reason, and defined stop logic"
+  ],
+  "account": [
+    "Mission for today: observe the mixed tape, protect optionality, and take no risk without a clean setup",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: Credicorp and Agora were marked Reported today; no major recognizable event was returned for tomorrow"
+  ],
+  "checklist": [
+    "Data flow, broker connections, overnight positions, stop logic: monitoring data-only — no live broker connection yet",
+    "Core universe glance: IWM led, SPY and QQQ slipped modestly, DIA lagged, and VIX eased",
+    "Day-specific catalyst note #1: Credicorp (BAP) was listed as Reported at 10:30 ET",
+    "Day-specific catalyst note #2: Agora (API) was listed as Reported at 21:00 ET; no major Saturday event was returned"
+  ],
+  "body_muted": "Uncertainty is a condition, not a command. Cash remains safety and optionality.",
+  "_sources": "SPY/QQQ/DIA/IWM quotes and VIX quote via finance_quotes; overall US market sentiment via finance_market_sentiment; 2026-08-14 and 2026-08-15 earnings schedule via finance_earnings_schedule. Account/checklist judgment-call lines are draft fields for Noal's correction, not asserted as his mission."
+}

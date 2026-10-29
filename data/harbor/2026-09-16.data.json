@@ -1,0 +1,57 @@
+{
+  "title": "DIA leads lower while QQQ holds near flat — volatility rises",
+  "tag": "QQQ was the only tracked fund above its prior close at +0.03%; DIA fell 1.15% as the VIX rose 2.97% to 17.71.",
+  "weather": {
+    "spy": {
+      "price": "754.05",
+      "change": "-0.44%",
+      "high52": "779.37",
+      "read": "Down 0.44%; below its prior close, with no clean broad leader"
+    },
+    "qqq": {
+      "price": "704.72",
+      "change": "+0.03%",
+      "high52": "748.65",
+      "read": "Up 0.03%; the only tracked fund green, but essentially flat"
+    },
+    "dia": {
+      "price": "515.22",
+      "change": "-1.15%",
+      "high52": "546.75",
+      "read": "Down 1.15%; weakest large-cap tape and largest decline"
+    },
+    "iwm": {
+      "price": "283.92",
+      "change": "-0.43%",
+      "high52": "305.18",
+      "read": "Down 0.43%; slightly firmer than SPY but still red"
+    },
+    "sentiment": {
+      "label": "CAUTIOUS",
+      "qualifier": "three of four tracked funds closed lower, DIA fell 1.15%, and VIX rose 2.97%; QQQ held nearly flat, so caution is warranted without a full risk-off read"
+    },
+    "volatility": "VIX 17.71, up 2.97% (+0.51 points); volatility rose",
+    "tone": "Split tape, no clean leader"
+  },
+  "cluster": [
+    "Leadership lane: QQQ held best at +0.03%; DIA lagged at -1.15%, so no clean upside leader",
+    "Key catalyst today: LUXE and ALMU were returned; both smaller names were skipped",
+    "Secondary catalyst: Lennar (LEN) is scheduled to report tomorrow; review the event, do not chase it",
+    "Small cap vs large cap: IWM fell 0.43%, firmer than DIA's 1.15% decline but still red",
+    "Broad participation: three of four tracked funds closed lower; QQQ was essentially flat and VIX rose to 17.71",
+    "Rotation note: relative strength sat in QQQ while DIA led lower; do not treat one session as a trend",
+    "Behavior rule: do not chase near-flat strength or sell into weakness; wait for an aligned cluster and written reason"
+  ],
+  "account": [
+    "Mission for today: preserve cash and optionality; no new risk without a clean setup",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: Lennar earnings are scheduled for tomorrow; keep pre-earnings risk contained"
+  ],
+  "checklist": [
+    "Data flow: quotes current after-hours; VIX quote timestamp 20:14 UTC; no live execution",
+    "Core universe glance: three funds red, QQQ near flat, DIA weakest, VIX higher",
+    "Day-specific catalyst note #1: LUXE and ALMU were returned today; smaller names were skipped",
+    "Day-specific catalyst note #2: Lennar (LEN) is scheduled tomorrow; review only, no pre-earnings chase"
+  ],
+  "body_muted": "Cash is safety and optionality; a split tape with DIA weak and volatility higher calls for patience, alignment, and no chase."
+}

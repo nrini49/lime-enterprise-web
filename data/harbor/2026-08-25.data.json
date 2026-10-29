@@ -1,0 +1,58 @@
+{
+  "title": "QQQ leads a broad green tape — volatility eases",
+  "tag": "All four funds closed higher; QQQ led, IWM followed, and VIX eased to 15.46.",
+  "weather": {
+    "spy": {
+      "price": "765.91",
+      "change": "+0.32%",
+      "high52": "779.37",
+      "read": "Up 0.32%; broad tape held together, still below the 52-week high"
+    },
+    "qqq": {
+      "price": "710.72",
+      "change": "+0.62%",
+      "high52": "748.65",
+      "read": "Leader at +0.62%; growth outpaced the broad tape"
+    },
+    "dia": {
+      "price": "535.27",
+      "change": "+0.30%",
+      "high52": "546.75",
+      "read": "Up 0.30%; nearly flat relative to SPY"
+    },
+    "iwm": {
+      "price": "299.28",
+      "change": "+0.44%",
+      "high52": "305.18",
+      "read": "Up 0.44%; small caps participated but trailed QQQ"
+    },
+    "sentiment": {
+      "label": "CAUTIOUSLY RISK-ON",
+      "qualifier": "All four funds rose and VIX fell 2.46%; breadth improved, but one close does not confirm a trend"
+    },
+    "volatility": "VIX 15.46, down 2.46% (-0.39 points) on the day; volatility eased",
+    "tone": "Constructive but unproven — let breadth confirm, no chase"
+  },
+  "cluster": [
+    "Leadership lane: QQQ led at +0.62%; IWM followed, while SPY and DIA were nearly even",
+    "Key catalyst today: Intuit, Zoom, and DICK'S Sporting Goods were marked reported on today's earnings calendar",
+    "Secondary catalyst: NVIDIA, CrowdStrike, and Salesforce are scheduled for tomorrow",
+    "Small cap vs large cap: IWM (+0.44%) outpaced SPY (+0.32%) by 0.12 percentage points",
+    "Broad participation: all four funds closed higher",
+    "Rotation note: growth led and small caps participated, but one session is not confirmation",
+    "Behavior rule: do not chase QQQ strength; require follow-through and a written reason before adding risk"
+  ],
+  "account": [
+    "Mission for today: let breadth prove itself; no new risk without a written reason",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: tomorrow's NVIDIA, CrowdStrike, and Salesforce reports can test the growth-led read"
+  ],
+  "checklist": [
+    "Data flow: after-hours quotes current; no live execution",
+    "Core universe glance: all four funds green; QQQ leads; VIX lower",
+    "Day-specific catalyst note #1: Intuit, Zoom, and DICK'S Sporting Goods reported today",
+    "Day-specific catalyst note #2: NVIDIA, CrowdStrike, and Salesforce report tomorrow"
+  ],
+  "body_muted": "No new action required today. Cash remains safety and optionality while the tape asks for proof.",
+  "_sources": "SPY/QQQ/DIA/IWM/^VIX via finance_quotes (Realtime Finance Data), fetched 2026-08-25 after hours; earnings catalysts via finance_earnings_schedule for 2026-08-25 through 2026-08-26. finance_market_sentiment was unavailable in the connected finance catalog, so CAUTIOUSLY RISK-ON is a conservative read from the pulled breadth and VIX data. Account/checklist lines are draft judgment calls for Noal's correction."
+}

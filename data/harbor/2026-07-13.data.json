@@ -1,0 +1,34 @@
+{
+  "title": "Risk-off open to the week — tech leads the pullback",
+  "tag": "SPY, QQQ, DIA, and IWM all closed lower; VIX jumped as volatility returned to start the week.",
+  "weather": {
+    "spy": {"price": "749.17", "change": "-0.77%", "high52": "758.08", "read": "Pulled back from Friday's high, still well above the 20-day"},
+    "qqq": {"price": "711.74", "change": "-1.90%", "read": "Led the downside — mega-cap tech gave back the most"},
+    "dia": {"price": "524.47", "change": "-0.25%", "read": "Held up best of the four — value less exposed to the tech pullback"},
+    "iwm": {"price": "293.48", "change": "-0.85%", "read": "Small caps softer, in line with the broader risk-off tone"},
+    "sentiment": {"label": "RISK-OFF", "qualifier": "broad pullback led by tech, no single catalyst"},
+    "volatility": "VIX 17.16, up 14.17% on the day — volatility returned after a quiet Friday",
+    "tone": "Defensive — a day to hold discipline, not chase the dip"
+  },
+  "cluster": [
+    "Leadership lane: DIA held up best; QQQ led the pullback — value over growth today",
+    "Key catalyst today: none scheduled — no major earnings reported",
+    "Secondary catalyst: bank earnings season opens tomorrow (7/14) with JPM, BAC, GS, WFC, C all reporting",
+    "Small cap vs large cap: IWM (-0.85%) roughly in line with SPY, no clean divergence",
+    "Broad participation: broad-based red across all four majors",
+    "Rotation note: money moving out of mega-cap tech, not yet clear where it's landing",
+    "Behavior rule: one red day after a quiet stretch is not a trend — don't overreact"
+  ],
+  "account": [
+    "Mission for today: observe only — a single risk-off day doesn't change the plan",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: major bank earnings (JPM, BAC, GS, WFC, C) tomorrow morning — carries into tomorrow's open"
+  ],
+  "checklist": [
+    "Data flow, broker connections, overnight positions, stop logic: monitoring data-only — no live broker connection yet",
+    "Core universe glance: DIA clearest; QQQ cloudiest (led the pullback)",
+    "Day-specific catalyst note #1: no major earnings reported today",
+    "Day-specific catalyst note #2: big bank Q2 earnings season opens tomorrow morning (JPM, BAC, GS, WFC, C)"
+  ],
+  "body_muted": "A red day to start the week — nothing that changes the picture on its own."
+}

@@ -1,0 +1,57 @@
+{
+  "title": "Risk-off close — DIA lags as volatility jumps",
+  "tag": "All four tracked funds closed red; QQQ held up best while DIA lagged, and the VIX rose 8.19% to 15.72.",
+  "weather": {
+    "spy": {
+      "price": "766.00",
+      "change": "-0.54%",
+      "high52": "779.37",
+      "read": "Down 0.54%; broad-market exposure fell with the tape"
+    },
+    "qqq": {
+      "price": "718.36",
+      "change": "-0.08%",
+      "high52": "748.65",
+      "read": "Down 0.08%; the strongest relative hold among the four tracked funds"
+    },
+    "dia": {
+      "price": "528.05",
+      "change": "-1.13%",
+      "high52": "546.75",
+      "read": "Down 1.13%; the weakest of the four tracked funds"
+    },
+    "iwm": {
+      "price": "294.68",
+      "change": "-0.45%",
+      "high52": "305.18",
+      "read": "Down 0.45%; small caps held better than SPY but lagged QQQ"
+    },
+    "sentiment": {
+      "label": "CAUTIOUS",
+      "qualifier": "all four tracked funds closed lower and VIX rose 8.19%; QQQ held best relatively"
+    },
+    "volatility": "VIX 15.72, up 8.19% (+1.19 points); volatility expanded",
+    "tone": "Protect first, wait for breadth to repair"
+  },
+  "cluster": [
+    "Leadership lane: QQQ led relative at -0.08%; DIA lagged at -1.13%",
+    "Key catalyst today: GameStop and ServiceTitan were listed as reported earnings; no post-report market reaction was retrieved",
+    "Secondary catalyst: tomorrow's calendar includes Chewy, Casey's General Stores, American Eagle Outfitters, Academy Sports, and Signet Jewelers; keep reactions unprecommitted",
+    "Small cap vs large cap: IWM fell 0.45%, better than SPY's 0.54% decline but weaker than QQQ",
+    "Broad participation: all four tracked funds closed red; breadth was weak",
+    "Rotation note: relative shelter in QQQ is not a confirmed leadership change",
+    "Behavior rule: do not chase a red tape or pre-position for earnings; wait for aligned breadth and a written reason"
+  ],
+  "account": [
+    "Mission for today: preserve optionality through weak breadth; no new risk without a clean setup",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: tomorrow's listed earnings include Chewy, Casey's General Stores, American Eagle Outfitters, Academy Sports, and Signet Jewelers"
+  ],
+  "checklist": [
+    "Data flow: quotes current after-hours; VIX quote timestamp 20:15 UTC; no live execution",
+    "Core universe glance: all four tracked funds red, DIA weakest, VIX higher",
+    "Day-specific catalyst note #1: GameStop and ServiceTitan were listed as reported today; no reaction fetched",
+    "Day-specific catalyst note #2: tomorrow's listed earnings include Chewy, Casey's General Stores, American Eagle Outfitters, Academy Sports, and Signet Jewelers"
+  ],
+  "body_muted": "Cash is safety and optionality; a red tape with expanding volatility is a reason to protect the account, not to force a trade."
+}

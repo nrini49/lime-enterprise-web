@@ -1,0 +1,58 @@
+{
+  "title": "Broad red tape — IWM and DIA lead lower as volatility rises",
+  "tag": "All four funds fell, with IWM and DIA the weakest; VIX moved above 16, so this is protect-first weather, not a chase.",
+  "weather": {
+    "spy": {
+      "price": "762.60",
+      "change": "-0.84%",
+      "high52": "779.37",
+      "read": "Down 0.84%; held better than DIA and IWM, but no clean defense"
+    },
+    "qqq": {
+      "price": "710.93",
+      "change": "-0.72%",
+      "high52": "748.65",
+      "read": "Down 0.72%; least weak of the four, still red"
+    },
+    "dia": {
+      "price": "527.51",
+      "change": "-1.27%",
+      "high52": "546.75",
+      "read": "Down 1.27%; cyclicals and value weaker than SPY"
+    },
+    "iwm": {
+      "price": "297.67",
+      "change": "-1.34%",
+      "high52": "305.18",
+      "read": "Down 1.34%; weakest fund, small caps lost yesterday's lead"
+    },
+    "sentiment": {
+      "label": "RISK-OFF",
+      "qualifier": "all four ETFs fell and VIX rose 7.52% to 16.01"
+    },
+    "volatility": "VIX 16.01, up 7.52% on the day from 14.89; volatility re-entered the tape",
+    "tone": "Protect first, wait for the tape to stabilize"
+  },
+  "cluster": [
+    "Leadership lane: none; QQQ was least weak, not a leader, while IWM and DIA lagged",
+    "Key catalyst today: Walmart, Deere, Ross Stores, and Advance Auto Parts reported",
+    "Secondary catalyst: BJ's Wholesale Club, Buckle, and Flowers Foods are scheduled tomorrow",
+    "Small cap vs large cap: IWM (-1.34%) lagged SPY (-0.84%); small caps lost 0.50 percentage points",
+    "Broad participation: all four funds closed lower; there was no supportive breadth",
+    "Rotation note: de-risking was broad, with cyclicals and small caps weaker than SPY",
+    "Behavior rule: do not chase weakness or buy the dip while VIX is rising; wait for a cleaner cluster"
+  ],
+  "account": [
+    "Mission for today: preserve optionality; no new risk without alignment",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: today’s retail and industrial reports need follow-through before any action"
+  ],
+  "checklist": [
+    "Data flow: after-hours quotes current; no live execution",
+    "Core universe glance: all four red; IWM and DIA weakest; VIX higher",
+    "Day-specific catalyst note #1: Walmart, Deere, Ross Stores, and Advance Auto Parts reported today",
+    "Day-specific catalyst note #2: BJ's Wholesale Club, Buckle, and Flowers Foods report tomorrow"
+  ],
+  "body_muted": "No new action required today. Cash remains safety and optionality while volatility rebuilds.",
+  "_sources": "SPY/QQQ/DIA/IWM/VIX via finance_quotes (Realtime Finance Data), fetched 2026-08-20 after hours; earnings catalysts via finance_earnings_schedule for 2026-08-20 and 2026-08-21. finance_market_sentiment was unavailable in the connected finance catalog, so RISK-OFF is a conservative read from the pulled breadth and VIX data. Account/checklist lines are draft judgment calls for Noal's correction."
+}

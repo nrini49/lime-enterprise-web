@@ -1,0 +1,58 @@
+{
+  "title": "SPY holds near flat while small caps lag — volatility rises",
+  "tag": "SPY and DIA held closest to flat, QQQ slipped, IWM lagged, and the VIX rose while the overall market read stayed uncertain.",
+  "weather": {
+    "spy": {
+      "price": "773.06",
+      "change": "-0.03%",
+      "high52": "776.85",
+      "read": "Held closest to flat at -0.03%, but stayed below its 52-week high"
+    },
+    "qqq": {
+      "price": "720.85",
+      "change": "-0.30%",
+      "high52": "748.65",
+      "read": "Finished lower and lagged SPY and DIA; growth participation softened"
+    },
+    "dia": {
+      "price": "539.00",
+      "change": "-0.11%",
+      "high52": "546.75",
+      "read": "Second strongest of the four, down only -0.11% and relatively steady"
+    },
+    "iwm": {
+      "price": "299.98",
+      "change": "-0.52%",
+      "high52": "303.06",
+      "read": "Lagged the group at -0.52%, showing the weakest small-cap participation"
+    },
+    "sentiment": {
+      "label": "UNCERTAIN",
+      "qualifier": "the overall US market-sentiment read was uncertain and all four major ETFs finished lower"
+    },
+    "volatility": "VIX 15.46, up 3.76% on the day — volatility rose as equities softened",
+    "tone": "Protective and patient — SPY held near flat, but breadth weakened and the tape does not reward chasing"
+  },
+  "cluster": [
+    "Leadership lane: SPY held best at -0.03%, DIA followed at -0.11%, QQQ fell -0.30%, and IWM lagged at -0.52%",
+    "Key catalyst today: selected well-known companies on the earnings calendar included Simon Property Group, Rocket Lab, Hims & Hers, and monday.com",
+    "Secondary catalyst: Sea Limited, Cardinal Health, Super Micro Computer, On Holding, CAVA, H&R Block, and CoreWeave are scheduled tomorrow",
+    "Small cap vs large cap: IWM (-0.52%) underperformed SPY (-0.03%), so small caps did not confirm the broader tape",
+    "Broad participation: all four major ETFs finished lower; SPY and DIA showed relative resilience while QQQ and IWM weakened more",
+    "Rotation note: relative strength favored the large-cap and blue-chip side of the four-ETF set over tech and small caps",
+    "Behavior rule: do not chase weakness or force a rebound; wait for a written reason, clean structure, and defined risk before adding exposure"
+  ],
+  "account": [
+    "Mission for today: protect optionality and observe for clean setups; no chasing",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: tomorrow's scheduled earnings include Sea Limited, Cardinal Health, Super Micro Computer, On Holding, CAVA, H&R Block, and CoreWeave"
+  ],
+  "checklist": [
+    "Data flow, broker connections, overnight positions, stop logic: monitoring data-only — no live broker connection yet",
+    "Core universe glance: SPY and DIA held best; QQQ softened; IWM lagged; VIX rose",
+    "Day-specific catalyst note #1: selected well-known names on today's earnings calendar included Simon Property Group, Rocket Lab, Hims & Hers, and monday.com",
+    "Day-specific catalyst note #2: tomorrow's listed events are noted; no pre-commitment to trade any reaction"
+  ],
+  "body_muted": "A softer tape is information, not an instruction. Cash remains safety and optionality.",
+  "_sources": "SPY/QQQ/DIA/IWM quotes and VIX quote via finance_quotes; overall US market sentiment via finance_market_sentiment; today's and tomorrow's earnings schedule via finance_earnings_schedule. Account/checklist day-specific lines are draft judgment calls for Noal's correction, not asserted as his mission."
+}

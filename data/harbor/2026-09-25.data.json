@@ -1,0 +1,57 @@
+{
+  "title": "Broad green close — DIA leads as volatility eases",
+  "tag": "DIA led at +0.94% and all four tracked funds closed higher, with VIX down 5.11% to 14.87.",
+  "weather": {
+    "spy": {
+      "price": "771.35",
+      "change": "+0.54%",
+      "high52": "779.37",
+      "read": "Up 0.54%; leading the broad tape behind DIA and still below its 52-week high"
+    },
+    "qqq": {
+      "price": "744.50",
+      "change": "+0.46%",
+      "high52": "748.65",
+      "read": "Up 0.46%; firm but behind SPY and DIA, still below its 52-week high"
+    },
+    "dia": {
+      "price": "517.49",
+      "change": "+0.94%",
+      "high52": "546.75",
+      "read": "Up 0.94%; strongest of the tracked funds, still below its 52-week high"
+    },
+    "iwm": {
+      "price": "281.97",
+      "change": "+0.11%",
+      "high52": "305.18",
+      "read": "Up 0.11%; weakest of the tracked funds and below its 52-week high"
+    },
+    "sentiment": {
+      "label": "UNAVAILABLE",
+      "qualifier": "the market-sentiment tool was unavailable; all four tracked funds advanced and VIX fell"
+    },
+    "volatility": "VIX 14.87, down 5.11% (-0.80 points); volatility eased",
+    "tone": "Broad green tape, leadership concentrated in DIA"
+  },
+  "cluster": [
+    "Leadership lane: DIA led at +0.94%, with SPY at +0.54%, QQQ at +0.46%, and IWM at +0.11%",
+    "Key catalyst today: no major, well-known names are on the returned earnings schedule",
+    "Secondary catalyst: no major, well-known names are on the returned schedule for tomorrow; keep event risk contained",
+    "Small cap vs large cap: IWM rose 0.11% versus SPY up 0.54%; small caps underperformed by 0.43 percentage points",
+    "Broad participation: all four tracked funds advanced and VIX fell to 14.87, showing broad but uneven strength",
+    "Rotation note: DIA led while IWM lagged; the green tape improved posture but did not produce equal leadership",
+    "Behavior rule: do not chase a strong close; wait for written reasons, defined risk, and confirmation beyond one green session"
+  ],
+  "account": [
+    "Mission for today: protect optionality in a broad green tape; no new risk without clean alignment",
+    "Broker status: IB paper connected; no live execution; Schwab pending",
+    "Elevated event risk: no major, well-known names are on today's or tomorrow's returned schedule"
+  ],
+  "checklist": [
+    "Data flow: quotes current after-hours; no live execution",
+    "Core universe glance: DIA led, IWM lagged, all four tracked funds advanced, and VIX eased",
+    "Day-specific catalyst note #1: no major, well-known names are on today's returned schedule",
+    "Day-specific catalyst note #2: no major, well-known names are on tomorrow's returned schedule"
+  ],
+  "body_muted": "A broad green close is information, not permission; keep cash as safety and let clean alignment earn the next risk."
+}

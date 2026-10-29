@@ -1,0 +1,57 @@
+{
+  "title": "Broad red close — small caps lead lower as volatility rises",
+  "tag": "IWM fell 1.84% and lagged the tracked funds; all four closed lower, with VIX up 6.83% to 15.18.",
+  "weather": {
+    "spy": {
+      "price": "767.81",
+      "change": "-0.72%",
+      "high52": "779.37",
+      "read": "Down 0.72%; lower on the session and below its 52-week high"
+    },
+    "qqq": {
+      "price": "741.21",
+      "change": "-0.84%",
+      "high52": "748.65",
+      "read": "Down 0.84%; weaker than SPY and below its 52-week high"
+    },
+    "dia": {
+      "price": "514.30",
+      "change": "-0.71%",
+      "high52": "546.75",
+      "read": "Down 0.71%; held slightly better than SPY and below its 52-week high"
+    },
+    "iwm": {
+      "price": "281.92",
+      "change": "-1.84%",
+      "high52": "305.18",
+      "read": "Down 1.84%; weakest of the tracked funds and below its 52-week high"
+    },
+    "sentiment": {
+      "label": "UNAVAILABLE",
+      "qualifier": "the market-sentiment tool was unavailable; all four tracked funds declined and VIX rose"
+    },
+    "volatility": "VIX 15.18, up 6.83% (+0.97 points); volatility rose",
+    "tone": "Broad red tape, rising volatility"
+  },
+  "cluster": [
+    "Leadership lane: none clear; all four tracked funds declined, with DIA holding slightly better than SPY and IWM weakest",
+    "Key catalyst today: Cintas, Paychex, and General Mills reported on the returned earnings schedule",
+    "Secondary catalyst: Costco and Darden Restaurants are listed for tomorrow; keep event risk contained",
+    "Small cap vs large cap: IWM fell 1.84% versus SPY down 0.72%; small caps underperformed",
+    "Broad participation: all four tracked funds closed lower and VIX rose to 15.18, confirming a risk-off read",
+    "Rotation note: no tracked lane held green; breadth weakened rather than rotating cleanly",
+    "Behavior rule: do not chase weakness; wait for a written reason, defined risk, and confirmation beyond a single rebound"
+  ],
+  "account": [
+    "Mission for today: protect optionality in a broad red tape; no new risk without a clean, aligned setup",
+    "Broker status: IB paper connected; no live execution; Schwab pending",
+    "Elevated event risk: Costco and Darden Restaurants are listed for tomorrow"
+  ],
+  "checklist": [
+    "Data flow: quotes current after-hours; no live execution",
+    "Core universe glance: all four tracked funds declined, IWM lagged, and VIX rose",
+    "Day-specific catalyst note #1: Cintas, Paychex, and General Mills reported today",
+    "Day-specific catalyst note #2: Costco and Darden Restaurants are listed for tomorrow"
+  ],
+  "body_muted": "A broad red tape is information, not permission; keep cash as safety and let clean alignment earn the next risk."
+}

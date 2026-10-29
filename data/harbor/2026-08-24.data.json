@@ -1,0 +1,58 @@
+{
+  "title": "DIA holds a split tape — QQQ and IWM lag as volatility rises",
+  "tag": "DIA was the only gainer in the four-fund snapshot; QQQ and IWM lagged, SPY slipped, and VIX rose to 15.85.",
+  "weather": {
+    "spy": {
+      "price": "763.47",
+      "change": "-0.29%",
+      "high52": "779.37",
+      "read": "Down 0.29%; held above the small-cap and tech laggards"
+    },
+    "qqq": {
+      "price": "706.32",
+      "change": "-1.00%",
+      "high52": "748.65",
+      "read": "Weakest of the four; tech led the pullback"
+    },
+    "dia": {
+      "price": "533.65",
+      "change": "+0.27%",
+      "high52": "546.75",
+      "read": "Only gainer; best relative strength in today's snapshot"
+    },
+    "iwm": {
+      "price": "297.97",
+      "change": "-0.66%",
+      "high52": "305.18",
+      "read": "Down 0.66%; small caps lagged DIA and SPY"
+    },
+    "sentiment": {
+      "label": "CAUTIOUSLY RISK-OFF",
+      "qualifier": "DIA rose, but SPY, QQQ, and IWM fell while VIX rose 4.76%; the tape was split with defensive posture favored"
+    },
+    "volatility": "VIX 15.85, up 4.76% (+0.72 points) on the day; volatility rose without a panic reading",
+    "tone": "Split and defensive — protect optionality, let DIA's relative strength prove itself, and do not chase weakness"
+  },
+  "cluster": [
+    "Leadership lane: DIA led as the only gainer; SPY was down, IWM lagged, and QQQ was weakest",
+    "Key catalyst today: PDD Holdings was marked reported on today's earnings calendar",
+    "Secondary catalyst: Intuit, Zoom, and DICK'S Sporting Goods are scheduled for tomorrow",
+    "Small cap vs large cap: IWM (-0.66%) lagged SPY (-0.29%) by 0.37 percentage points",
+    "Broad participation: only DIA was positive; three of the four funds closed lower",
+    "Rotation note: relative strength favored DIA over growth and small caps, but one session is not confirmation",
+    "Behavior rule: do not chase DIA or buy QQQ/IWM weakness while breadth is split and VIX is rising"
+  ],
+  "account": [
+    "Mission for today: preserve optionality; no new risk without aligned breadth and a written reason",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: tomorrow's Intuit, Zoom, and DICK'S Sporting Goods reports can test the tech, software, and consumer read"
+  ],
+  "checklist": [
+    "Data flow: after-hours quotes current; no live execution",
+    "Core universe glance: DIA green; SPY, QQQ, and IWM red; VIX higher",
+    "Day-specific catalyst note #1: PDD Holdings reported today",
+    "Day-specific catalyst note #2: Intuit, Zoom, and DICK'S Sporting Goods report tomorrow"
+  ],
+  "body_muted": "No new action required today. Cash remains safety and optionality while the tape asks for proof.",
+  "_sources": "SPY/QQQ/DIA/IWM via finance_quotes (Realtime Finance Data), fetched 2026-08-24 after hours; VIX via finance_quotes; earnings catalysts via finance_earnings_schedule for 2026-08-24 through 2026-08-25. finance_market_sentiment was unavailable in the connected finance catalog, so CAUTIOUSLY RISK-OFF is a conservative read from the pulled breadth and VIX data. Account/checklist lines are draft judgment calls for Noal's correction."
+}

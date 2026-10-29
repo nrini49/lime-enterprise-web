@@ -1,0 +1,58 @@
+{
+  "title": "QQQ and small caps lead an upbeat close — volatility eases",
+  "tag": "QQQ and IWM led a mostly green tape; SPY added while DIA slipped fractionally and VIX eased.",
+  "weather": {
+    "spy": {
+      "price": "772.49",
+      "change": "+0.25%",
+      "high52": "776.85",
+      "read": "Finished higher and below its 52-week high of 776.85"
+    },
+    "qqq": {
+      "price": "723.70",
+      "change": "+0.73%",
+      "high52": "748.65",
+      "read": "Led the four at +0.73%; growth showed the clearest relative strength while remaining below its 52-week high"
+    },
+    "dia": {
+      "price": "537.15",
+      "change": "-0.02%",
+      "high52": "546.75",
+      "read": "Lagged the group and slipped fractionally, showing limited participation from the large-cap industrial proxy"
+    },
+    "iwm": {
+      "price": "302.71",
+      "change": "+0.57%",
+      "high52": "303.40",
+      "read": "Followed QQQ and finished near its 52-week high of 303.40, adding breadth from small caps"
+    },
+    "sentiment": {
+      "label": "UPBEAT",
+      "qualifier": "the overall US market-sentiment read was upbeat while three of the four major ETFs finished higher"
+    },
+    "volatility": "VIX 14.55, down 4.78% on the day — volatility eased as equities advanced",
+    "tone": "Upbeat but disciplined — QQQ and IWM led, while the DIA slip keeps selectivity in the posture"
+  },
+  "cluster": [
+    "Leadership lane: QQQ led at +0.73%, IWM followed at +0.57%, SPY gained +0.25%, and DIA slipped -0.02%",
+    "Key earnings today: Cisco Systems, Coherent, Trimble, Brinker International, and Global-e Online were on today's schedule",
+    "Secondary earnings tomorrow: Applied Materials, Nu Holdings, Tapestry, Birkenstock, and Globant are scheduled",
+    "Small cap vs large cap: IWM (+0.57%) outpaced SPY (+0.25%), confirming broader participation beyond the largest names",
+    "Broad participation: three of the four major ETFs finished higher; DIA was the lone slight decliner",
+    "Rotation note: relative strength favored growth and small caps over DIA; the upbeat read had breadth but not uniform participation",
+    "Behavior rule: do not chase a strong close; wait for clean, aligned setups with a written reason and defined stop logic"
+  ],
+  "account": [
+    "Mission for today: participate selectively only on clean setups; no chasing",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: tomorrow's schedule includes Applied Materials, Nu Holdings, Tapestry, Birkenstock, and Globant; no pre-commitment to trade reactions"
+  ],
+  "checklist": [
+    "Data flow, broker connections, overnight positions, stop logic: monitoring data-only — no live broker connection yet",
+    "Core universe glance: QQQ led, IWM followed, SPY added, DIA slipped, and VIX eased",
+    "Day-specific catalyst note #1: today's major-company earnings schedule included Cisco Systems, Coherent, Trimble, Brinker International, and Global-e Online",
+    "Day-specific catalyst note #2: tomorrow's Applied Materials, Nu Holdings, Tapestry, Birkenstock, and Globant events are noted; no pre-commitment to trade the reaction"
+  ],
+  "body_muted": "Upbeat breadth is a condition, not a command. Cash remains safety and optionality.",
+  "_sources": "SPY/QQQ/DIA/IWM quotes and VIX quote via finance_quotes; overall US market sentiment via finance_market_sentiment; today's and tomorrow's earnings schedule via finance_earnings_schedule. Account/checklist day-specific lines are draft judgment calls for Noal's correction, not asserted as his mission."
+}

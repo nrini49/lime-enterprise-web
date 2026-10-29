@@ -1,0 +1,57 @@
+{
+  "title": "Broad red close — QQQ lags as volatility rises",
+  "tag": "All four tracked funds closed lower; DIA held best while QQQ lagged, and the VIX rose 7.95% to 17.10.",
+  "weather": {
+    "spy": {
+      "price": "760.88",
+      "change": "-0.45%",
+      "high52": "779.37",
+      "read": "Down 0.45%; broad-market pressure, still below its 52-week high"
+    },
+    "qqq": {
+      "price": "709.18",
+      "change": "-0.80%",
+      "high52": "748.65",
+      "read": "Down 0.80%; weakest relative tape, growth lagging"
+    },
+    "dia": {
+      "price": "524.49",
+      "change": "-0.25%",
+      "high52": "546.75",
+      "read": "Down 0.25%; held best among the four tracked funds"
+    },
+    "iwm": {
+      "price": "287.88",
+      "change": "-0.35%",
+      "high52": "305.18",
+      "read": "Down 0.35%; outperformed SPY but stayed red"
+    },
+    "sentiment": {
+      "label": "CAUTIOUS",
+      "qualifier": "all four tracked funds closed lower and VIX rose 7.95%; risk-off pressure is present"
+    },
+    "volatility": "VIX 17.10, up 7.95% (+1.26 points); volatility rose",
+    "tone": "Risk-off pressure, discipline first"
+  },
+  "cluster": [
+    "Leadership lane: DIA held best at -0.25%; QQQ lagged at -0.80%, so no clean upside leader",
+    "Key catalyst today: Dave & Buster's (PLAY) was listed as reported earnings; no post-report market reaction was retrieved",
+    "Secondary catalyst: no major or well-known company was returned for tomorrow's earnings schedule; smaller names were skipped",
+    "Small cap vs large cap: IWM fell 0.35%, outperforming SPY's 0.45% decline but remaining red",
+    "Broad participation: all four tracked funds closed lower; VIX rose to 17.10",
+    "Rotation note: DIA showed relative resilience while QQQ lagged; do not treat one session as a trend",
+    "Behavior rule: do not chase weakness or force a setup; wait for a clean, written reason"
+  ],
+  "account": [
+    "Mission for today: preserve cash and optionality; no new risk without a clean setup",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: tomorrow's returned schedule contained smaller names only; no major catalyst was flagged"
+  ],
+  "checklist": [
+    "Data flow: quotes current after-hours; VIX quote timestamp 20:12 UTC; no live execution",
+    "Core universe glance: all four tracked funds red, DIA strongest, QQQ weakest, VIX higher",
+    "Day-specific catalyst note #1: Dave & Buster's (PLAY) was listed as reported earnings today",
+    "Day-specific catalyst note #2: no major or well-known earnings catalyst was returned for tomorrow"
+  ],
+  "body_muted": "Cash is safety and optionality; a broad red close with higher volatility argues for patience, clean state, and no chase."
+}

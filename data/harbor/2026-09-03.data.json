@@ -1,0 +1,57 @@
+{
+  "title": "Broad green tape — QQQ and DIA lead as volatility eases",
+  "tag": "All four tracked funds finished higher; QQQ and DIA tied for the lead while IWM lagged, and VIX fell to 14.32.",
+  "weather": {
+    "spy": {
+      "price": "773.17",
+      "change": "+1.05%",
+      "high52": "779.37",
+      "read": "Up 1.05%; broad tape firmed and remains below the 52-week high"
+    },
+    "qqq": {
+      "price": "717.67",
+      "change": "+1.19%",
+      "high52": "748.65",
+      "read": "Tied for the lead at +1.19%; growth participated strongly"
+    },
+    "dia": {
+      "price": "536.91",
+      "change": "+1.19%",
+      "high52": "546.75",
+      "read": "Tied for the lead at +1.19%; industrial and value exposure kept pace"
+    },
+    "iwm": {
+      "price": "295.19",
+      "change": "+0.40%",
+      "high52": "305.18",
+      "read": "Up 0.40%; small caps participated but lagged the large-cap tape"
+    },
+    "sentiment": {
+      "label": "UPBEAT",
+      "qualifier": "all four tracked funds finished higher and VIX fell; QQQ and DIA led while IWM lagged"
+    },
+    "volatility": "VIX 14.32, down 5.79% (-0.88 points) from the 15.20 previous close; volatility eased",
+    "tone": "Constructive and measured — let the broad gain prove itself, no chase"
+  },
+  "cluster": [
+    "Leadership lane: QQQ and DIA tied at +1.19%; SPY followed and IWM lagged",
+    "Key catalyst today: Ciena, Zscaler, Samsara, Guidewire Software, Lululemon, DocuSign, and UiPath were marked reported",
+    "Secondary catalyst: no major-company earnings entries were returned for tomorrow",
+    "Small cap vs large cap: IWM gained, but trailed all three large-cap funds",
+    "Broad participation: all four tracked funds finished green",
+    "Rotation note: growth and industrial/value exposure led together; small caps did not confirm",
+    "Behavior rule: do not chase a broad green close; wait for aligned follow-through"
+  ],
+  "account": [
+    "Mission for today: observe whether breadth holds; no new risk without a clean setup",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: no major-company earnings entries returned for tomorrow; keep reactions unprecommitted"
+  ],
+  "checklist": [
+    "Data flow: quotes current after-hours; broker connection remains scoped, no live execution",
+    "Core universe glance: QQQ and DIA led; IWM lagged; VIX lower",
+    "Day-specific catalyst note #1: Ciena, Zscaler, Samsara, Guidewire Software, Lululemon, DocuSign, and UiPath were marked reported today",
+    "Day-specific catalyst note #2: no major-company earnings entries returned for 2026-09-04"
+  ],
+  "body_muted": "Cash is safety and optionality at highs; today's green tape is a read, not a reason to add risk."
+}

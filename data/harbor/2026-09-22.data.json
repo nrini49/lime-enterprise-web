@@ -1,0 +1,57 @@
+{
+  "title": "QQQ leads as the tape splits — volatility eases",
+  "tag": "QQQ gained 0.81% and led the tracked funds; IWM also finished higher while SPY and DIA eased, with VIX down 4.44% to 14.21.",
+  "weather": {
+    "spy": {
+      "price": "773.38",
+      "change": "-0.02%",
+      "high52": "779.37",
+      "read": "Down 0.02%; nearly flat and still close to its 52-week high"
+    },
+    "qqq": {
+      "price": "747.46",
+      "change": "+0.81%",
+      "high52": "748.65",
+      "read": "Up 0.81%; clear leader and just below its 52-week high"
+    },
+    "dia": {
+      "price": "518.00",
+      "change": "-0.34%",
+      "high52": "546.75",
+      "read": "Down 0.34%; lagging the tracked funds and below its 52-week high"
+    },
+    "iwm": {
+      "price": "287.21",
+      "change": "+0.57%",
+      "high52": "305.18",
+      "read": "Up 0.57%; participating and stronger than SPY and DIA, but behind QQQ"
+    },
+    "sentiment": {
+      "label": "NEUTRAL",
+      "qualifier": "the market-sentiment tool was unavailable; two tracked funds gained and two declined, with QQQ leading while VIX eased"
+    },
+    "volatility": "VIX 14.21, down 4.44% (-0.66 points); volatility eased",
+    "tone": "Split tape, calm volatility"
+  },
+  "cluster": [
+    "Leadership lane: QQQ led at +0.81%; IWM followed at +0.57%, while SPY was nearly flat and DIA lagged at -0.34%",
+    "Key catalyst today: AutoZone and Thor Industries reported on the returned earnings schedule; KB Home and MillerKnoll also appeared as reported",
+    "Secondary catalyst: tomorrow's returned schedule includes Cintas, Paychex, and General Mills; keep event risk contained",
+    "Small cap vs large cap: IWM gained 0.57% while SPY slipped 0.02%; small caps outperformed the broad-market proxy",
+    "Broad participation: the tape split two up and two down; VIX eased to 14.21, so the split did not come with a fear spike",
+    "Rotation note: QQQ and IWM held the green lane while DIA weakened; leadership is selective, not broad confirmation",
+    "Behavior rule: no chase; wait for a written reason, defined risk, and confirmation beyond one leading fund"
+  ],
+  "account": [
+    "Mission for today: protect optionality in a selective tape; no new risk without a clean, aligned setup",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: AutoZone, Thor Industries, KB Home, and MillerKnoll reported today; Cintas, Paychex, and General Mills are listed for tomorrow"
+  ],
+  "checklist": [
+    "Data flow: quotes current after-hours; no live execution",
+    "Core universe glance: QQQ and IWM led, SPY was nearly flat, DIA lagged, and VIX eased",
+    "Day-specific catalyst note #1: AutoZone and Thor Industries reported today; KB Home and MillerKnoll also appeared",
+    "Day-specific catalyst note #2: Cintas, Paychex, and General Mills are listed for tomorrow"
+  ],
+  "body_muted": "A split tape is information, not permission; keep cash as safety and let clean alignment earn the next risk."
+}

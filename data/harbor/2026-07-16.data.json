@@ -1,0 +1,35 @@
+{
+  "title": "Tech hit, volatility pops — breadth uncertain into earnings",
+  "tag": "QQQ led the downside while SPY/DIA/IWM held closer to flat; VIX rose, keeping the tape cautious into major reports.",
+  "weather": {
+    "spy": {"price": "750.72", "change": "-0.54%", "high52": "760.40", "read": "Pulled back from the 52-week highs; still in range but no free lunches"},
+    "qqq": {"price": "705.94", "change": "-1.64%", "read": "Clear laggard — growth/mega-cap pressure drove the risk-off tilt"},
+    "dia": {"price": "524.83", "change": "-0.21%", "read": "Held up better than tech; defensive/value tone relative to QQQ"},
+    "iwm": {"price": "295.59", "change": "-0.06%", "read": "Flat-ish — small caps steadier than tech today"},
+    "sentiment": {"label": "UNCERTAIN", "qualifier": "index pullback led by QQQ with VIX higher"},
+    "volatility": "VIX 16.73, up 6.76% on the day — risk premium waking up",
+    "tone": "Cautious and selective — protect entries, size down, and avoid chasing headlines"
+  },
+  "cluster": [
+    "Leadership lane: DIA/IWM held up while QQQ took the hit — value/defensive over growth today",
+    "Key catalyst today: UnitedHealth, GE Aerospace, Netflix, Intuitive Surgical, Abbott, U.S. Bancorp, State Street, United Airlines, and Prologis reported today (7/16)",
+    "Secondary catalyst: Travelers, Truist, Fifth Third, Regions Financial, and Autoliv report tomorrow (7/17) — keep an eye on financials and cyclicals into the open",
+    "Small cap vs large cap: IWM (-0.06%) materially steadier than SPY (-0.54%) and QQQ (-1.64%) — growth weakness was the story",
+    "Broad participation: uneven — the tape looked like 'tech down, rest holds', not an all-clear",
+    "Rotation note: rotation away from mega-cap growth toward value/steady beta (relative strength in DIA/IWM)",
+    "Behavior rule: treat the QQQ selloff + VIX pop as a 'patience day' — no chasing breakdowns, no buying dips without clean structure"
+  ],
+  "account": [
+    "Mission for today: protect decision quality — observe first, act only on clean setups",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: tomorrow's financials cluster (TRV/TFC/FITB/RF) can shift index tone early"
+  ],
+  "checklist": [
+    "Data flow, broker connections, overnight positions, stop logic: monitoring data-only — no live broker connection yet",
+    "Core universe glance: SPY pullback; QQQ weak; DIA/IWM relatively steady",
+    "Day-specific catalyst note #1: major 7/16 reporters included NFLX, UNH, GE, ISRG, ABT, USB, STT, UAL, PLD",
+    "Day-specific catalyst note #2: 7/17 includes TRV, TFC, FITB, RF, ALV — watch premarket and the open"
+  ],
+  "body_muted": "When QQQ is the source of weakness and VIX is rising, the job is to stay patient: take only A+ structure, size appropriately, and let the tape prove stabilization.",
+  "_sources": "SPY/QQQ/DIA/IWM/VIX quotes and market sentiment via finance_quotes and finance_market_sentiment (Perplexity Realtime Finance Data); earnings catalysts via finance_earnings_schedule. Account/checklist day-specific lines are Plex's draft judgment calls, not Noal's own — flagged for review, not asserted as final."
+}

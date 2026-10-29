@@ -7,7 +7,7 @@
   "scripts": {
     "build": "node src/render.mjs",
     "test": "npm run build && node --test tests/",
-    "test:content": "npm run build && node --test tests/content-invariants.test.mjs",
+    "test:content": "npm run build && node --test tests/content-invariants.test.mjs tests/harbor-now.test.mjs",
     "test:rendered": "npm run build && node --test tests/theme-rendering.test.mjs",
     "serve": "node scripts/serve.mjs"
   },

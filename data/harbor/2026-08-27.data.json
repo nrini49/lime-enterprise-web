@@ -1,0 +1,58 @@
+{
+  "title": "QQQ leads a broad green close — volatility eases",
+  "tag": "All four funds closed higher; QQQ led at +1.37% while VIX eased to 14.51.",
+  "weather": {
+    "spy": {
+      "price": "771.08",
+      "change": "+0.65%",
+      "high52": "779.37",
+      "read": "Up 0.65%; broad tape firm, still below the 52-week high"
+    },
+    "qqq": {
+      "price": "721.11",
+      "change": "+1.37%",
+      "high52": "748.65",
+      "read": "Leader at +1.37%; growth outpaced the broad tape"
+    },
+    "dia": {
+      "price": "535.21",
+      "change": "+0.18%",
+      "high52": "546.75",
+      "read": "Up 0.18%; lagged the broad tape"
+    },
+    "iwm": {
+      "price": "299.81",
+      "change": "+0.29%",
+      "high52": "305.18",
+      "read": "Up 0.29%; participated but trailed SPY and QQQ"
+    },
+    "sentiment": {
+      "label": "CAUTIOUSLY RISK-ON",
+      "qualifier": "All four funds rose, QQQ led at +1.37%, and VIX eased 4.60%; leadership was concentrated, so treat it as one-session evidence"
+    },
+    "volatility": "VIX 14.51, down 4.60% (-0.70 points) on the day; volatility eased",
+    "tone": "Constructive but concentrated — growth led, no chase"
+  },
+  "cluster": [
+    "Leadership lane: QQQ led at +1.37%; SPY (+0.65%), IWM (+0.29%), and DIA (+0.18%) trailed",
+    "Key catalyst today: Marvell Technology, Autodesk, Workday, Dollar General, Dollar Tree, Ulta Beauty, Best Buy, and Burlington Stores were marked reported",
+    "Secondary catalyst: MINISO is listed upcoming for tomorrow; no pre-commitment to trade the reaction",
+    "Small cap vs large cap: IWM (+0.29%) trailed SPY (+0.65%) by 0.36 percentage points",
+    "Broad participation: all four funds closed higher, but QQQ supplied the clearest leadership",
+    "Rotation note: QQQ outran DIA and IWM on this close; read relative strength as information, not confirmation",
+    "Behavior rule: do not chase QQQ strength; require follow-through and a written reason before adding risk"
+  ],
+  "account": [
+    "Mission for today: observe follow-through; no new risk without a written reason",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: tomorrow's returned calendar lists MINISO as upcoming; keep the reaction unprecommitted"
+  ],
+  "checklist": [
+    "Data flow: after-hours quotes current; no live execution",
+    "Core universe glance: all four funds green; QQQ leads; VIX lower",
+    "Day-specific catalyst note #1: today's returned calendar marks Marvell, Autodesk, Workday, Dollar General, Dollar Tree, Ulta, Best Buy, and Burlington reported",
+    "Day-specific catalyst note #2: MINISO is listed upcoming tomorrow; no pre-commitment to trade the reaction"
+  ],
+  "body_muted": "A concentrated green close is a condition, not a command. Cash remains safety and optionality.",
+  "_sources": "SPY/QQQ/DIA/IWM quotes and ^VIX via finance_quotes (Realtime Finance Data), fetched 2026-08-27 after hours; earnings catalysts via finance_earnings_schedule for 2026-08-27 through 2026-08-28. finance_market_sentiment was not present in the connected finance catalog, so CAUTIOUSLY RISK-ON is a conservative read from the pulled breadth and volatility data. Account/checklist lines are draft judgment calls for Noal's correction, not asserted as his mission."
+}

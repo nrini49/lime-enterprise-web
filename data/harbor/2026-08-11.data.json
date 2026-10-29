@@ -1,0 +1,58 @@
+{
+  "title": "Small caps hold up while the tape stays uncertain",
+  "tag": "IWM led at +0.34%, SPY and DIA slipped -0.32%, QQQ lagged at -0.34%, and volatility eased with the VIX at 15.28.",
+  "weather": {
+    "spy": {
+      "price": "770.56",
+      "change": "-0.32%",
+      "high52": "776.85",
+      "read": "Slipped modestly and stayed below its 52-week high"
+    },
+    "qqq": {
+      "price": "718.45",
+      "change": "-0.34%",
+      "high52": "748.65",
+      "read": "Lagged the four-ETF set by a small margin; tech participation softened"
+    },
+    "dia": {
+      "price": "537.28",
+      "change": "-0.32%",
+      "high52": "546.75",
+      "read": "Matched SPY's decline and held near the large-cap middle of the tape"
+    },
+    "iwm": {
+      "price": "300.99",
+      "change": "+0.34%",
+      "high52": "303.06",
+      "read": "Led the group and held close to its 52-week high"
+    },
+    "sentiment": {
+      "label": "UNCERTAIN",
+      "qualifier": "the overall US market-sentiment read stayed uncertain while three of the four major ETFs finished lower"
+    },
+    "volatility": "VIX 15.28, down 1.16% on the day — volatility eased",
+    "tone": "Measured and selective — IWM strength is useful information, not a reason to chase"
+  },
+  "cluster": [
+    "Leadership lane: IWM led at +0.34%; SPY and DIA both fell -0.32%, while QQQ lagged at -0.34%",
+    "Key catalyst today: scheduled reports included Sea Limited, Cardinal Health, CoreWeave, Super Micro Computer, On Holding, CAVA, and H&R Block",
+    "Secondary catalyst: tomorrow's calendar includes Cisco Systems, Coherent, Trimble, Brinker International, and Global-e Online",
+    "Small cap vs large cap: IWM (+0.34%) outperformed SPY (-0.32%), so small caps provided the clearest relative strength",
+    "Broad participation: three of the four major ETFs finished lower; only IWM closed higher",
+    "Rotation note: relative strength favored small caps over the large-cap and tech ETFs, but the overall sentiment read remained uncertain",
+    "Behavior rule: do not chase the IWM move; wait for confirmation, a written reason, and defined risk before adding exposure"
+  ],
+  "account": [
+    "Mission for today: protect optionality and observe for clean setups; no chasing",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: tomorrow's scheduled reports include Cisco Systems, Coherent, Trimble, Brinker International, and Global-e Online"
+  ],
+  "checklist": [
+    "Data flow, broker connections, overnight positions, stop logic: monitoring data-only — no live broker connection yet",
+    "Core universe glance: IWM led; SPY and DIA slipped together; QQQ lagged; VIX eased",
+    "Day-specific catalyst note #1: today's listed reports included Sea Limited, Cardinal Health, CoreWeave, Super Micro Computer, On Holding, CAVA, and H&R Block",
+    "Day-specific catalyst note #2: tomorrow's listed events are noted; no pre-commitment to trade any reaction"
+  ],
+  "body_muted": "Relative strength is information, not an instruction. Cash remains safety and optionality.",
+  "_sources": "SPY/QQQ/DIA/IWM quotes and VIX quote via finance_quotes; overall US market sentiment via finance_market_sentiment; today's and tomorrow's earnings schedule via finance_earnings_schedule. Account/checklist day-specific lines are draft judgment calls for Noal's correction, not asserted as his mission."
+}

@@ -1,0 +1,58 @@
+{
+  "title": "Broad green tape — DIA and IWM lead as volatility eases",
+  "tag": "All four funds rose, with DIA and IWM leading; VIX fell to 15.13, so breadth improved without a fear premium.",
+  "weather": {
+    "spy": {
+      "price": "765.72",
+      "change": "+0.41%",
+      "high52": "779.37",
+      "read": "Broad gain, still below the 52-week high"
+    },
+    "qqq": {
+      "price": "713.44",
+      "change": "+0.35%",
+      "high52": "748.65",
+      "read": "Positive, but the laggard among the four"
+    },
+    "dia": {
+      "price": "532.22",
+      "change": "+0.89%",
+      "high52": "546.75",
+      "read": "Best major; industrial and value exposure led"
+    },
+    "iwm": {
+      "price": "299.96",
+      "change": "+0.77%",
+      "high52": "305.18",
+      "read": "Small caps participated strongly, behind DIA"
+    },
+    "sentiment": {
+      "label": "UPBEAT",
+      "qualifier": "all four ETFs gained and VIX fell 5.50%"
+    },
+    "volatility": "VIX 15.13, down 5.50% (-0.88 points) on the day; the fear premium eased",
+    "tone": "Broad and orderly — participate only if the setup is clean, do not chase strength"
+  },
+  "cluster": [
+    "Leadership lane: DIA and IWM led; QQQ lagged, so value and small caps had the relative edge",
+    "Key catalyst today: BJ's Wholesale Club and Ubiquiti were marked reported on today's earnings calendar",
+    "Secondary catalyst: no earnings entries were returned for Saturday, August 22",
+    "Small cap vs large cap: IWM (+0.77%) outpaced SPY (+0.41%) by 0.36 percentage points",
+    "Broad participation: SPY, QQQ, DIA, and IWM all finished positive",
+    "Rotation note: relative strength favored DIA and IWM over QQQ; call it leadership, not a confirmed trend change",
+    "Behavior rule: do not chase a green close; wait for aligned structure and a written reason before adding risk"
+  ],
+  "account": [
+    "Mission for today: observe the breadth, preserve optionality, and add no risk without alignment",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: none flagged for Saturday's earnings calendar; today's scheduled reports are already marked reported"
+  ],
+  "checklist": [
+    "Data flow: after-hours quotes current; no live broker connection yet",
+    "Core universe glance: all four green; DIA and IWM strongest; VIX lower",
+    "Day-specific catalyst note #1: BJ's Wholesale Club and Ubiquiti reported today",
+    "Day-specific catalyst note #2: no earnings entries returned for 2026-08-22"
+  ],
+  "body_muted": "No new action required today. Let breadth prove itself; cash remains safety and optionality.",
+  "_sources": "SPY/QQQ/DIA/IWM via finance_quotes (Realtime Finance Data), fetched 2026-08-21 after hours; VIX via finance_quotes; earnings catalysts via finance_earnings_schedule for 2026-08-21 through 2026-08-22. finance_market_sentiment was unavailable in the connected finance catalog, so UPBEAT is a conservative read from the pulled breadth and VIX data. Account/checklist lines are draft judgment calls for Noal's correction."
+}

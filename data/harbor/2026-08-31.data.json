@@ -1,0 +1,58 @@
+{
+  "title": "QQQ holds green while DIA leads lower — volatility ticks higher",
+  "tag": "Three of four funds closed lower; QQQ edged +0.05% while VIX rose 3.40% to 14.92.",
+  "weather": {
+    "spy": {
+      "price": "767.05",
+      "change": "-0.30%",
+      "high52": "779.37",
+      "read": "Down 0.30%; broad tape softened, below the 52-week high"
+    },
+    "qqq": {
+      "price": "716.76",
+      "change": "+0.05%",
+      "high52": "748.65",
+      "read": "Only green major at +0.05%; leadership was marginal, not confirmed"
+    },
+    "dia": {
+      "price": "531.57",
+      "change": "-0.65%",
+      "high52": "546.75",
+      "read": "Down 0.65%; weakest major and industrials lagged"
+    },
+    "iwm": {
+      "price": "293.93",
+      "change": "-0.62%",
+      "high52": "305.18",
+      "read": "Down 0.62%; small caps trailed SPY and remained under pressure"
+    },
+    "sentiment": {
+      "label": "CAUTIOUSLY RISK-OFF",
+      "qualifier": "Three of four funds declined and VIX rose 3.40%; QQQ held a marginal gain, so this is defensive breadth rather than a broad breakdown"
+    },
+    "volatility": "VIX 14.92, up 3.40% (+0.49 points) from the 14.43 previous close; volatility ticked higher",
+    "tone": "Defensive and selective — QQQ green but leadership unconfirmed; no chase"
+  },
+  "cluster": [
+    "Leadership lane: QQQ was the only green major at +0.05%; SPY (-0.30%), IWM (-0.62%), and DIA (-0.65%) closed lower",
+    "Key catalyst today: SAIC was marked reported on the returned earnings calendar",
+    "Secondary catalyst: Palo Alto Networks, Dell Technologies, Medtronic, and GitLab were marked upcoming tomorrow; keep reactions unprecommitted",
+    "Small cap vs large cap: IWM (-0.62%) trailed SPY (-0.30%) by 0.32 percentage points",
+    "Broad participation: only QQQ finished green; three of four funds declined",
+    "Rotation note: QQQ barely outpaced SPY while DIA and IWM lagged; treat marginal relative strength as information, not confirmation",
+    "Behavior rule: do not chase a barely green QQQ close; require breadth and follow-through plus a written reason before adding risk"
+  ],
+  "account": [
+    "Mission for today: preserve optionality and observe whether leadership broadens; no new risk without a written reason",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: Palo Alto Networks, Dell Technologies, Medtronic, and GitLab are listed upcoming tomorrow; keep the reaction unprecommitted"
+  ],
+  "checklist": [
+    "Data flow: after-hours quotes current; no live execution",
+    "Core universe glance: QQQ marginally green; DIA and IWM lower; VIX higher",
+    "Day-specific catalyst note #1: SAIC was marked reported on today’s returned calendar",
+    "Day-specific catalyst note #2: Palo Alto Networks, Dell Technologies, Medtronic, and GitLab are listed upcoming tomorrow; no pre-commitment"
+  ],
+  "body_muted": "Marginal leadership is not breadth. Cash remains safety and optionality; discipline first.",
+  "_sources": "SPY/QQQ/DIA/IWM quotes and ^VIX via finance_quotes (Realtime Finance Data), fetched 2026-08-31 after hours; earnings catalysts via finance_earnings_schedule for 2026-08-31 through 2026-09-01. finance_market_sentiment was not present in the connected finance catalog, so CAUTIOUSLY RISK-OFF is a conservative read from the pulled breadth and volatility data. Account/checklist lines are draft judgment calls for Noal’s correction, not asserted as his mission."
+}

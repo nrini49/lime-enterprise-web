@@ -1,0 +1,58 @@
+{
+  "title": "Small caps lead a mixed green tape — tech lags",
+  "tag": "IWM led the four-fund snapshot and VIX eased, but QQQ lagged; breadth improved without a clean all-market leader.",
+  "weather": {
+    "spy": {
+      "price": "769.06",
+      "change": "+0.21%",
+      "high52": "779.37",
+      "read": "Positive close, broad tape, but not a breakout"
+    },
+    "qqq": {
+      "price": "716.08",
+      "change": "-0.20%",
+      "high52": "748.65",
+      "read": "The only major laggard; tech gave back ground"
+    },
+    "dia": {
+      "price": "534.27",
+      "change": "+0.26%",
+      "high52": "546.75",
+      "read": "Steady value participation, slightly ahead of SPY"
+    },
+    "iwm": {
+      "price": "301.72",
+      "change": "+0.50%",
+      "high52": "305.18",
+      "read": "Best of the four; small caps led without full confirmation"
+    },
+    "sentiment": {
+      "label": "CAUTIOUSLY UPBEAT",
+      "qualifier": "SPY, DIA, and IWM rose while QQQ lagged; VIX fell"
+    },
+    "volatility": "VIX 14.89, down 6.00% on the day — volatility eased, no fear premium showing",
+    "tone": "Constructive but selective — let small-cap leadership prove itself before adding risk"
+  },
+  "cluster": [
+    "Leadership lane: IWM led, DIA followed, SPY was positive, and QQQ lagged",
+    "Key catalyst today: Analog Devices, TJX, Lowe's, Target, and Estée Lauder reported",
+    "Secondary catalyst: Walmart, Deere, Ross Stores, and Advance Auto Parts are scheduled tomorrow",
+    "Small cap vs large cap: IWM (+0.50%) beat SPY (+0.21%); small caps led today's snapshot",
+    "Broad participation: SPY, DIA, and IWM were positive; QQQ was negative",
+    "Rotation note: modest rotation toward small caps and value, away from tech",
+    "Behavior rule: do not chase IWM after one strong session; wait for alignment"
+  ],
+  "account": [
+    "Mission for today: observe whether breadth holds; no new risk without a clean setup",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: tomorrow's Walmart, Deere, Ross Stores, and Advance Auto Parts reports can shift the retail and industrial read"
+  ],
+  "checklist": [
+    "Data flow: quotes current after-hours; broker connection remains scoped, no live execution",
+    "Core universe glance: SPY, DIA, IWM clear; QQQ cloudy (lagging)",
+    "Day-specific catalyst note #1: Analog Devices, TJX, Lowe's, Target, and Estée Lauder reported",
+    "Day-specific catalyst note #2: Walmart, Deere, Ross Stores, and Advance Auto Parts report tomorrow"
+  ],
+  "body_muted": "No new action required today. Let breadth prove itself; cash remains safety and optionality.",
+  "_sources": "SPY/QQQ/DIA/IWM quotes and VIX via finance_quotes (Realtime Finance Data), fetched 2026-08-19 after hours; earnings catalysts via finance_earnings_schedule. finance_market_sentiment was unavailable in the connected finance catalog, so CAUTIOUSLY UPBEAT is a conservative read from the pulled breadth and VIX data. Account/checklist lines are draft judgment calls for Noal's correction, not his stated mission."
+}

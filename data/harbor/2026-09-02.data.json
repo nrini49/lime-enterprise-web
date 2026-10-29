@@ -1,0 +1,55 @@
+{
+  "title": "Broad risk-on tape — small caps lead as volatility eases",
+  "tag": "All four majors finished higher; IWM led and QQQ lagged, while VIX fell 6.98% to 15.20.",
+  "weather": {
+    "spy": {
+      "price": "765.16",
+      "change": "+0.44%",
+      "high52": "779.37",
+      "read": "Broad strength; held below the 52-week high"
+    },
+    "qqq": {
+      "price": "709.24",
+      "change": "+0.23%",
+      "read": "Positive but lagged the major ETFs; tech participation was lighter"
+    },
+    "dia": {
+      "price": "530.62",
+      "change": "+0.54%",
+      "read": "Steady relative strength from industrials and value"
+    },
+    "iwm": {
+      "price": "294.01",
+      "change": "+1.18%",
+      "read": "Clear leader; small caps outpaced the large-cap tape"
+    },
+    "sentiment": {
+      "label": "UPBEAT",
+      "qualifier": "all four tracked funds finished higher and volatility eased; the read is constructive, not a chase signal"
+    },
+    "volatility": "VIX 15.20, down 6.98% (-1.14 points) on the day — volatility eased",
+    "tone": "Constructive and measured — let breadth confirm before adding risk"
+  },
+  "cluster": [
+    "Leadership lane: IWM led at +1.18%, followed by DIA at +0.54%, SPY at +0.44%, and QQQ at +0.23%",
+    "Key catalyst today: Broadcom, Snowflake, Hewlett Packard Enterprise, and NetApp were marked reported on the returned earnings calendar",
+    "Secondary catalyst: Ciena, Zscaler, Samsara, Guidewire Software, and Lululemon are listed upcoming tomorrow",
+    "Small cap vs large cap: IWM (+1.18%) outpaced SPY (+0.44%) by 0.74 percentage points",
+    "Broad participation: all four tracked funds finished higher and VIX declined; participation was constructive",
+    "Rotation note: relative strength favored small caps and industrial/value exposure over mega-cap tech, with QQQ the laggard",
+    "Behavior rule: do not chase the small-cap lead; require clean structure, a written reason, and a named risk rule"
+  ],
+  "account": [
+    "Mission for today: observe whether the breadth holds; preserve optionality and add no risk without a written reason",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: Ciena, Zscaler, Samsara, Guidewire Software, and Lululemon are listed upcoming tomorrow; keep reactions unprecommitted"
+  ],
+  "checklist": [
+    "Data flow: after-hours quotes current; no live execution",
+    "Core universe glance: all four majors green; IWM led, QQQ lagged, VIX lower",
+    "Day-specific catalyst note #1: Broadcom, Snowflake, Hewlett Packard Enterprise, and NetApp were marked reported today",
+    "Day-specific catalyst note #2: Ciena, Zscaler, Samsara, Guidewire Software, and Lululemon are listed upcoming tomorrow"
+  ],
+  "body_muted": "Cash is safety and optionality; let the breadth prove itself before adding risk.",
+  "_sources": "SPY/QQQ/DIA/IWM/^VIX via finance_quotes (Realtime Finance Data), fetched 2026-09-02 after hours; earnings catalysts via finance_earnings_schedule for 2026-09-02 and 2026-09-03. finance_market_sentiment was not present in the connected finance catalog, so UPBEAT is a conservative read from the pulled breadth and volatility data. Account/checklist lines are draft judgment calls for Noal’s correction, not asserted as his mission."
+}

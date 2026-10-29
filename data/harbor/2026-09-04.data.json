@@ -1,0 +1,57 @@
+{
+  "title": "Mixed tape — IWM and QQQ edge green as DIA leads lower",
+  "tag": "QQQ and IWM finished green while SPY and DIA slipped; the VIX ticked higher to 14.53.",
+  "weather": {
+    "spy": {
+      "price": "770.24",
+      "change": "-0.38%",
+      "high52": "779.37",
+      "read": "Down 0.38%; broad-market exposure slipped and remains below the 52-week high"
+    },
+    "qqq": {
+      "price": "718.96",
+      "change": "+0.18%",
+      "high52": "748.65",
+      "read": "Up 0.18%; growth exposure held a narrow green edge"
+    },
+    "dia": {
+      "price": "534.10",
+      "change": "-0.53%",
+      "high52": "546.75",
+      "read": "Down 0.53%; the weakest of the four tracked funds"
+    },
+    "iwm": {
+      "price": "295.97",
+      "change": "+0.26%",
+      "high52": "305.18",
+      "read": "Up 0.26%; small caps led the mixed session"
+    },
+    "sentiment": {
+      "label": "MIXED",
+      "qualifier": "QQQ and IWM finished higher while SPY and DIA finished lower; VIX rose 1.47%"
+    },
+    "volatility": "VIX 14.53, up 1.47% (+0.21 points); volatility ticked higher",
+    "tone": "Wait for breadth to align — no chase"
+  },
+  "cluster": [
+    "Leadership lane: IWM led at +0.26%, followed by QQQ at +0.18%; SPY and DIA lagged",
+    "Key catalyst today: no major-company earnings entries were returned",
+    "Secondary catalyst: no major-company earnings entries were returned for tomorrow",
+    "Small cap vs large cap: IWM led while DIA was the weakest of the four tracked funds",
+    "Broad participation: mixed, with two tracked funds green and two red",
+    "Rotation note: small caps and growth held up while broad and industrial/value exposure slipped; one-day read only",
+    "Behavior rule: do not chase a split tape; wait for aligned breadth"
+  ],
+  "account": [
+    "Mission for today: observe whether breadth aligns; no new risk without a clean setup",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: no major-company earnings entries returned for today or tomorrow"
+  ],
+  "checklist": [
+    "Data flow: quotes current after-hours; broker connection remains scoped, no live execution",
+    "Core universe glance: mixed tape; IWM and QQQ green, SPY and DIA red, VIX higher",
+    "Day-specific catalyst note #1: no major-company earnings entries returned for today",
+    "Day-specific catalyst note #2: no major-company earnings entries returned for tomorrow"
+  ],
+  "body_muted": "Cash is safety and optionality; today's split tape is a read, not a reason to add risk."
+}

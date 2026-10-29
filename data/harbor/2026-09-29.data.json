@@ -1,0 +1,57 @@
+{
+  "title": "Mixed close — QQQ leads while small caps lag",
+  "tag": "QQQ was the only tracked fund higher; SPY, DIA, and IWM slipped, while VIX eased slightly.",
+  "weather": {
+    "spy": {
+      "price": "764.30",
+      "change": "-0.17%",
+      "high52": "779.37",
+      "read": "Down 0.17%; broad-market proxy slipped, with no index-wide advance"
+    },
+    "qqq": {
+      "price": "737.98",
+      "change": "+0.20%",
+      "high52": "748.65",
+      "read": "Only tracked fund in green; narrow leadership, not broad confirmation"
+    },
+    "dia": {
+      "price": "512.88",
+      "change": "-0.22%",
+      "high52": "546.75",
+      "read": "Down 0.22%; softer than SPY and below its 52-week high"
+    },
+    "iwm": {
+      "price": "279.05",
+      "change": "-0.35%",
+      "high52": "305.18",
+      "read": "Weakest tracked fund; small caps lagged SPY"
+    },
+    "sentiment": {
+      "label": "UNAVAILABLE",
+      "qualifier": "the market-sentiment tool was unavailable; QQQ rose while SPY, DIA, and IWM declined, and VIX eased slightly"
+    },
+    "volatility": "VIX 16.04, down 0.19% (-0.03 points); volatility eased slightly",
+    "tone": "Mixed close; QQQ led, small caps lagged, and breadth was narrow"
+  },
+  "cluster": [
+    "Leadership lane: QQQ rose 0.20%, the only tracked fund higher; SPY, DIA, and IWM declined",
+    "Key catalyst today: Carnival Corporation and CarMax are marked reported on today's earnings schedule",
+    "Secondary catalyst: Micron Technology is scheduled for tomorrow; verify timing before the next session",
+    "Small cap vs large cap: IWM lagged SPY; relative weakness is not a standalone signal",
+    "Broad participation: three of the four tracked funds declined; one green fund is not broad confirmation",
+    "Rotation note: QQQ was the only tracked fund advancing; no broader leadership confirmation",
+    "Behavior rule: do not chase narrow strength; wait for breadth, a clean setup, and defined risk"
+  ],
+  "account": [
+    "Mission for today: preserve optionality; wait for confirmation before taking new risk",
+    "Broker status: IB paper connected; no live execution; Schwab pending",
+    "Elevated event risk: Micron Technology is scheduled for tomorrow; verify timing before the next session"
+  ],
+  "checklist": [
+    "Data flow, broker connections, overnight positions, and stop logic: check before the next session",
+    "Core universe glance: QQQ green; SPY, DIA, and IWM red; VIX eased slightly",
+    "Day-specific catalyst note #1: Carnival Corporation and CarMax marked reported today",
+    "Day-specific catalyst note #2: Micron Technology scheduled for tomorrow"
+  ],
+  "body_muted": "A single green lane is not breadth. Cash is safety; let discipline come first."
+}

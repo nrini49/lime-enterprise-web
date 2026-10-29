@@ -20,7 +20,8 @@ const TYPES = {
 
 createServer(async (req, res) => {
   const url = new URL(req.url, `http://localhost:${port}`);
-  const rel = url.pathname === '/' ? 'index.html' : decodeURIComponent(url.pathname).slice(1);
+  let rel = decodeURIComponent(url.pathname).slice(1);
+  if (rel === '' || rel.endsWith('/')) rel += 'index.html';
   const file = path.join(root, rel);
   if (!file.startsWith(root)) {
     res.writeHead(403).end('forbidden');

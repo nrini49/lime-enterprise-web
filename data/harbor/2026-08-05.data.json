@@ -1,0 +1,58 @@
+{
+  "title": "DIA steadies a split tape — volatility eases",
+  "tag": "DIA was the only major ETF higher, the growth and small-cap lanes pulled back, and VIX eased while the overall market read stayed uncertain.",
+  "weather": {
+    "spy": {
+      "price": "769.77",
+      "change": "-0.20%",
+      "high52": "776.85",
+      "read": "Slightly lower; SPY sits below its 52-week high of 776.85"
+    },
+    "qqq": {
+      "price": "717.30",
+      "change": "-0.90%",
+      "high52": "748.65",
+      "read": "Lagged the four at -0.90%; growth was the weakest lane"
+    },
+    "dia": {
+      "price": "542.79",
+      "change": "+0.44%",
+      "high52": "546.75",
+      "read": "Led the four and finished higher while the other three pulled back"
+    },
+    "iwm": {
+      "price": "299.77",
+      "change": "-0.64%",
+      "high52": "303.06",
+      "read": "Small caps lagged DIA and finished below SPY"
+    },
+    "sentiment": {
+      "label": "UNCERTAIN",
+      "qualifier": "the overall US market-sentiment read was uncertain and only DIA finished higher"
+    },
+    "volatility": "VIX 15.81, down 4.18% on the day — volatility eased despite the mixed tape",
+    "tone": "Cautious and selective — one lane held up, but breadth did not confirm a broad risk-on move"
+  },
+  "cluster": [
+    "Leadership lane: DIA led at +0.44%; SPY slipped -0.20%, IWM -0.64%, and QQQ -0.90%",
+    "Key catalyst today: Eli Lilly, Shopify, Disney, Uber, CVS Health, MercadoLibre, DoorDash, Kraft Heinz, Duolingo, and e.l.f. Beauty were marked reported on today's earnings schedule",
+    "Secondary catalyst: tomorrow's schedule includes ConocoPhillips, Cloudflare, Datadog, Constellation Energy, Airbnb, Warner Bros. Discovery, Zoetis, Atlassian, and Twilio",
+    "Small cap vs large cap: IWM (-0.64%) lagged SPY (-0.20%) while DIA gained +0.44%",
+    "Broad participation: DIA was the only one of the four major ETFs to finish positive",
+    "Rotation note: leadership leaned toward DIA while QQQ and IWM lagged; the tape did not confirm broad risk appetite",
+    "Behavior rule: do not chase isolated DIA strength; wait for breadth and a cleaner setup before adding risk"
+  ],
+  "account": [
+    "Mission for today: protect optionality; observe whether breadth repairs before adding risk",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Elevated event risk: tomorrow's schedule includes ConocoPhillips, Cloudflare, Datadog, Constellation Energy, Airbnb, Warner Bros. Discovery, Zoetis, Atlassian, and Twilio"
+  ],
+  "checklist": [
+    "Data flow, broker connections, overnight positions, stop logic: monitoring data-only — no live broker connection yet",
+    "Core universe glance: DIA higher; SPY, QQQ, and IWM lower; VIX eased",
+    "Day-specific catalyst note #1: major-company earnings reported today across healthcare, software, media, transport, payments, and consumer names",
+    "Day-specific catalyst note #2: tomorrow's major-company schedule is active; no pre-commitment to trade the reaction"
+  ],
+  "body_muted": "No new action required today. A split tape is information, not an invitation to chase; cash remains safety and optionality.",
+  "_sources": "SPY/QQQ/DIA/IWM quotes and VIX quote via finance_quotes; overall US market sentiment via finance_market_sentiment; today's and tomorrow's earnings schedule via finance_earnings_schedule. Account/checklist day-specific lines are draft judgment calls for Noal's correction, not asserted as his mission."
+}

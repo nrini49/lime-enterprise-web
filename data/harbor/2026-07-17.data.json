@@ -1,0 +1,34 @@
+{
+  "title": "Risk-off tape — tech led lower, VIX pops",
+  "tag": "Broad red close with QQQ the clear laggard and volatility rising — a day to reduce speed and protect process.",
+  "weather": {
+    "spy": {"price": "743.29", "change": "-0.99%", "high52": "760.40", "read": "Down day after flirting with highs — index gave back ground"},
+    "qqq": {"price": "695.33", "change": "-1.50%", "read": "Led lower — mega-cap tech weakness set the tone"},
+    "dia": {"price": "520.81", "change": "-0.77%", "read": "Held up best of the majors — still red, but less damage"},
+    "iwm": {"price": "294.04", "change": "-0.52%", "read": "Small caps relatively resilient — mild defensive rotation vs tech"},
+    "sentiment": {"label": "BEARISH", "qualifier": "broad decline with tech leading lower and volatility rising"},
+    "volatility": "VIX 18.77, up 12.19% on the day — fear premium back in the tape",
+    "tone": "Protect-first — down tape with rising vol; wait for cleaner alignment"
+  },
+  "cluster": [
+    "Leadership lane: DIA and IWM held up; QQQ lagged — defense vs tech today",
+    "Volatility regime: VIX jumped to 18.77 (+12.19%) — treat signals as lower-confidence until vol cools",
+    "Breadth read: all four major ETFs closed red — not a one-sector hiccup",
+    "Rotation note: mild rotation away from mega-cap tech toward value/smaller names (relative basis)",
+    "Earnings tape context: Travelers (TRV), Truist (TFC), Fifth Third (FITB), Regions (RF) reported today — financial prints in the mix",
+    "Behavior rule: no chasing downside; keep size small, demand A+ setups, and respect wider stops/vol"
+  ],
+  "account": [
+    "Mission for today: reduce speed — protect process, keep risk tight, and wait for alignment",
+    "Broker status: IB sandbox scoped, not yet connected; Schwab pending",
+    "Event risk: earnings season flow continues into next week — headline gaps still on the table"
+  ],
+  "checklist": [
+    "Execution reality check: cash is safety — no obligation to trade a noisy tape",
+    "Core universe glance: SPY/DIA/IWM steady-red; QQQ weak — leadership not supportive",
+    "Day-specific catalyst note #1: financial earnings (TRV, TFC, FITB, RF) reported today",
+    "Day-specific catalyst note #2: keep an eye on upcoming earnings calendar — avoid holding lottery risk into prints"
+  ],
+  "body_muted": "Today is a protect-first day. If there isn't a clean setup, the best trade is patience.",
+  "_sources": "SPY/QQQ/DIA/IWM/VIX quotes via finance_quotes; overall sentiment via finance_market_sentiment; earnings items via finance_earnings_schedule (Perplexity Realtime Finance Data). Account/checklist lines are Plex's draft judgment calls for Noal to adjust."
+}
