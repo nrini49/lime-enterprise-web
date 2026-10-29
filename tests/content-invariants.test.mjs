@@ -245,7 +245,7 @@ test('data: canonical strings are the exact approved wording', () => {
     assert.equal(canonical[retired], undefined, `${retired} is retired: the sister-site buttons are gone`);
   }
   assert.equal(canonical.securitiesDisclaimer, SECURITIES_DISCLAIMER);
-  assert.equal(canonical.evaluationDays, 33);
+  assert.equal(canonical.evaluationTerm, "one month");
 });
 
 test('data: the section order is the translated Site 1 order, with unique ids', () => {
@@ -467,9 +467,9 @@ test('dom: the demo is never presented as open, anonymous, or guaranteed to work
 
 /* ---------- evaluation, pricing, SPY boundary, signup ---------- */
 
-test('dom: the evaluation is stated as 33 days, paper only, no live capital', () => {
+test('dom: the evaluation is stated as one month, paper only, no live capital', () => {
   const text = visibleText();
-  assert.ok(/free 33-day evaluation/i.test(text), 'the 33-day term is stated plainly');
+  assert.ok(/free one-month evaluation/i.test(text), 'the one-month term is stated plainly');
   assert.ok(/paper account/i.test(text), 'the evaluation runs on a paper account');
   assert.ok(/no live capital/i.test(text), 'the no-live-capital boundary is stated');
   assert.ok(/no real-money orders|no real orders/i.test(text), 'no real-money orders is stated');
