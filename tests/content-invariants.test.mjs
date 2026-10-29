@@ -998,3 +998,13 @@ test('voice: Rosie claims no invented past, track record, promise or advice', ()
     assert.ok(!text.includes(phrase), `invented or overclaiming first person: "${phrase}"`);
   }
 });
+
+// 2026-10-29: Rosie's posture check reads a page that no longer carries a posture
+// line, so the claim that she reads it before every buy is not reliably true.
+// The market-report paragraph must not make that claim.
+test('market report: no claim that Rosie reads the posture before every buy', () => {
+  const text = $('#market-report').text().replace(/\s+/g, ' ');
+  assert.ok(text.includes('daily market report') || text.includes('market situation report'));
+  assert.ok(!/read the stated posture/i.test(text), 'posture-before-buy claim removed');
+  assert.ok(!/before I open any new buy/i.test(text), 'posture-before-buy claim removed');
+});
