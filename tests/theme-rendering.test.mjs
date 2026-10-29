@@ -378,65 +378,6 @@ test('rendered theme: toggling light→dark→light writes no browser storage', 
   }
 });
 
-test('rendered theme: the reciprocal Site 1 and Leadership library links are visible and focusable', async (t) => {
-  const server = await startServer();
-  const browser = await chromium.launch();
-  try {
-    for (const { width, height, label } of [
-      { width: 1440, height: 900, label: 'desktop 1440' },
-      { width: 414, height: 896, label: 'mobile 414' },
-      { width: 375, height: 812, label: 'mobile 375' },
-      { width: 320, height: 640, label: 'mobile 320' },
-    ]) {
-      await t.test(`${label} (${width}px)`, async () => {
-        const context = await browser.newContext({
-          viewport: { width, height },
-          colorScheme: 'dark',
-        });
-        const page = await context.newPage();
-        await page.goto(ORIGIN, { waitUntil: 'networkidle' });
-        const link = page.locator('[data-sibling-site="signals"]');
-
-        await link.scrollIntoViewIfNeeded();
-        assert.equal(await link.count(), 1, 'exactly one Site 1 reciprocal link');
-        assert.ok(await link.isVisible(), `reciprocal link must be visible at ${width}px`);
-        assert.equal((await link.innerText()).replace(/[↗\s]+$/, '').trim(), 'Signals');
-        assert.equal(await link.getAttribute('href'), 'https://signals.limesignalworks.com');
-
-        const libraryLink = page.locator('[data-sibling-site="library"]');
-        assert.equal(await libraryLink.count(), 1, 'exactly one Leadership library link');
-        assert.ok(await libraryLink.isVisible(), `library link must be visible at ${width}px`);
-        assert.equal((await libraryLink.innerText()).replace(/[↗\s]+$/, '').trim(), 'LIME Leadership');
-        assert.equal(await libraryLink.getAttribute('href'), 'https://leadership.limesignalworks.com');
-
-        const box = await link.boundingBox();
-        assert.ok(box.height >= 44, `target height ${box.height}px must be at least 44px`);
-        assert.ok(box.width > 0 && box.x >= 0 && box.x + box.width <= width + 1, 'within viewport');
-
-        // Keyboard reachable, with a visible focus indicator.
-        await link.focus();
-        const focus = await page.evaluate(() => {
-          const el = document.querySelector('[data-sibling-site]');
-          const style = getComputedStyle(el);
-          return {
-            focused: document.activeElement === el,
-            outlineWidth: style.outlineWidth,
-            outlineStyle: style.outlineStyle,
-          };
-        });
-        assert.ok(focus.focused, 'reciprocal link is keyboard focusable');
-        assert.notEqual(focus.outlineStyle, 'none', 'focus outline is drawn');
-        assert.ok(parseFloat(focus.outlineWidth) >= 2, 'focus outline is at least 2px');
-
-        await context.close();
-      });
-    }
-  } finally {
-    await browser.close();
-    server.kill();
-  }
-});
-
 test('rendered: the contact channels are visible, sized and keyboard reachable', async (t) => {
   const server = await startServer();
   const browser = await chromium.launch();
@@ -658,32 +599,11 @@ test('rendered: the demo disclosure is visible next to the call to action before
         assert.ok(Number(style.opacity) > 0.95, 'the disclosure is fully opaque');
         assert.ok(style.height > 10, 'the disclosure has real height');
 
-        assert.equal(await cta.getAttribute('href'), 'https://limesignalworks.pplx.app/');
-        assert.equal(await cta.getAttribute('target'), '_blank');
-
-        // The sixth fact — the access precondition — is held to the same standard: on
-        // screen, adjacent, and before any click.
-        const signin = page.locator('[data-demo-signin]');
-        assert.equal(await signin.count(), 1, 'exactly one sign-in statement');
-        assert.ok(await signin.isVisible(), 'the sign-in fact is visible without interaction');
-        assert.equal(
-          await signin.innerText(),
-          'Perplexity sign-in may be required.',
-          'the sign-in wording is served, not scripted',
-        );
-        const signinBox = await signin.boundingBox();
-        assert.ok(
-          signinBox.y >= discBox.y + discBox.height - 1,
-          'the sign-in fact follows the disclosure',
-        );
-        assert.ok(
-          signinBox.y - (discBox.y + discBox.height) < 40,
-          `the sign-in fact must be adjacent, gap was ${signinBox.y - (discBox.y + discBox.height)}px`,
-        );
-        assert.ok(
-          signinBox.y < ctaBox.y + ctaBox.height + 260,
-          'the sign-in fact stays within the call-to-action block',
-        );
+        // 2026-10-28: the call to action is the on-site sample-data demo; the hosted
+        // demo and its sign-in line are retired from the home page.
+        assert.equal(await cta.getAttribute('href'), '/rosie-demo/');
+        assert.equal(await cta.getAttribute('target'), null, 'on-site demo, same tab');
+        assert.equal(await page.locator('[data-demo-signin]').count(), 0, 'no sign-in line');
 
         await context.close();
       });
@@ -855,16 +775,15 @@ test('rendered: the page is complete and usable with JavaScript disabled', async
     const page = await context.newPage();
     await page.goto(ORIGIN, { waitUntil: 'load' });
 
-    // Every section, the call to action, its disclosure and the reciprocal link are
+    // Every section, the call to action and its disclosure are
     // present in the served markup, so nothing essential depends on script.
     for (const selector of [
       'a.cta',
       '[data-demo-disclosure]',
-      '[data-demo-signin]',
+      '[data-demo-ask]',
       '[data-contact]',
       '[data-contact-email]',
       '[data-contact-phone]',
-      '[data-sibling-site]:first-of-type',
       '[data-securities-disclaimer]',
       '#what-we-do',
       '#market-report',
@@ -880,7 +799,7 @@ test('rendered: the page is complete and usable with JavaScript disabled', async
     assert.equal(await page.locator('button').count(), 0, 'no inert control without JS');
     assert.equal(
       await page.locator('[data-demo-disclosure]').innerText(),
-      'Demonstration environment. Simulated data. No broker connection and no real orders.',
+      'Sample data in a paper (practice) account. No broker connection, no real orders, and nothing here is advice.',
       'the disclosure wording is served, not scripted',
     );
     // The toggle is the only scripted control; with script off it must still be labelled.

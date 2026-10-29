@@ -17,13 +17,18 @@ const { canonical, sectionOrder, marketReport, pricing, startCards } = data;
 const html = readFileSync(path.join(root, 'index.html'), 'utf8');
 const $ = cheerio.load(html);
 
-const DEMO_URL = 'https://limesignalworks.pplx.app/';
+// 2026-10-28: the hosted Perplexity demo is retired from the home page at the owner's
+// direction. The only demo link is the static sample-data demo at /rosie-demo/ (PR #15),
+// and the full demo is offered on request through the contact block.
+const DEMO_URL = '/rosie-demo/';
+const RETIRED_DEMO_URL = 'https://limesignalworks.pplx.app/';
 const LEADERSHIP_URL = 'https://signals.limesignalworks.com';
 const LIBRARY_URL = 'https://leadership.limesignalworks.com';
 const DEMO_LABEL = 'Open the Rosie demo';
 const DEMO_DISCLOSURE =
-  'Demonstration environment. Simulated data. No broker connection and no real orders.';
-const DEMO_SIGNIN = 'Perplexity sign-in may be required.';
+  'Sample data in a paper (practice) account. No broker connection, no real orders, and nothing here is advice.';
+const DEMO_ASK =
+  "If you'd like the full demo, just ask. We'll set you up with the whole thing, for free, no strings attached.";
 const CONTACT_EMAIL = 'contact@limesignalworks.com';
 const CONTACT_TEL_HREF = 'tel:+13802000288';
 const CONTACT_PHONE_DISPLAY = '+1 380-200-0288';
@@ -158,9 +163,9 @@ const FORBIDDEN_CLAIMS = [
 ];
 
 /**
- * Access claims that would be false about the demo destination. The host requires a
- * Perplexity sign-in — an anonymous request is answered with HTTP 401 — so the page
- * may not present the demo as open, anonymous, or guaranteed to work.
+ * Access claims the page should not make about the demo. The hosted demo is retired
+ * (2026-10-28); the list is kept so the page still never presents a demo as open,
+ * anonymous, or guaranteed to work.
  */
 const FORBIDDEN_ACCESS_CLAIMS = [
   'open to everyone',
@@ -214,7 +219,10 @@ const FORBIDDEN_COMMERCIAL = [
 
 const visibleText = () => {
   const clone = cheerio.load(html);
-  clone('script, style, .sr-only').remove();
+  // [data-attribution] marks the owner's own name as the credit on his first-person
+  // copy (2026-10-28, assembled home). It is checked separately below and is the only
+  // place that name may appear.
+  clone('script, style, .sr-only, [data-attribution]').remove();
   return clone('body').text().replace(/\s+/g, ' ');
 };
 
@@ -233,11 +241,11 @@ test('data: canonical strings are the exact approved wording', () => {
   assert.equal(canonical.demoUrl, DEMO_URL);
   assert.equal(canonical.demoCtaLabel, DEMO_LABEL);
   assert.equal(canonical.demoDisclosure, DEMO_DISCLOSURE);
-  assert.equal(canonical.demoSignIn, DEMO_SIGNIN);
-  assert.equal(canonical.leadershipUrl, LEADERSHIP_URL);
-  assert.equal(canonical.leadershipLabel, 'Signals');
-  assert.equal(canonical.libraryUrl, LIBRARY_URL);
-  assert.equal(canonical.libraryLabel, 'LIME Leadership');
+  assert.equal(canonical.demoAsk, DEMO_ASK);
+  assert.equal(canonical.demoSignIn, undefined, 'the sign-in line went with the hosted demo');
+  for (const retired of ['leadershipUrl', 'leadershipLabel', 'libraryUrl', 'libraryLabel']) {
+    assert.equal(canonical[retired], undefined, `${retired} is retired: the sister-site buttons are gone`);
+  }
   assert.equal(canonical.securitiesDisclaimer, SECURITIES_DISCLAIMER);
   assert.equal(canonical.evaluationDays, 33);
 });
@@ -246,9 +254,20 @@ test('data: the section order is the translated Site 1 order, with unique ids', 
   assert.deepEqual(
     sectionOrder.map((s) => s.id),
     [
+      // 2026-10-28 (content/assembled-home): the personal opening, life with Rosie,
+      // will and won't, evidence tiles, indicators and demo lead the page, in the
+      // owner's order; the existing sections follow unchanged.
+      'opening',
+      'life',
+      'will-wont',
+      'pros', // 2026-10-28: "Trading the way the pros do", after will-and-won't
+      'evidence',
+      'indicators',
+      'demo',
       'what-we-do',
       'how-it-works',
       'protection',
+      'phone',
       'markets',
       'evaluation',
       'pricing',
@@ -370,17 +389,35 @@ test('dom: html element ids are unique across the document', () => {
 /* ---------- the demo call to action and its disclosure ---------- */
 
 test('dom: exactly one demo call to action, with the approved label and target', () => {
-  const demoLinks = $(`a[href="${DEMO_URL}"]`);
-  assert.equal(demoLinks.length, 1, 'exactly one link to the demo environment');
-  const link = demoLinks.first();
-  assert.ok(link.hasClass('cta'), 'the demo link is the page call to action');
-  const label = norm(link.clone().find('.sr-only, .ext').remove().end().text());
-  assert.equal(label, DEMO_LABEL);
-  assert.equal(link.attr('target'), '_blank');
-  assert.equal(link.attr('rel'), 'noopener noreferrer');
+  const ctas = $('a.cta');
+  assert.equal(ctas.length, 1, 'exactly one page call to action');
+  const link = ctas.first();
+  assert.equal(link.attr('href'), DEMO_URL, 'the call to action opens the sample-data demo');
+  assert.equal(norm(link.text()), DEMO_LABEL);
+  assert.equal(link.attr('target'), undefined, 'the demo is on this site, so no new tab');
+  $('a[href*="rosie-demo"]').each((_, el) => {
+    assert.equal($(el).attr('href'), DEMO_URL, 'every demo link points at /rosie-demo/');
+  });
+});
+
+test('dom: the retired hosted demo leaves no trace on the home page', () => {
+  assert.equal($(`a[href="${RETIRED_DEMO_URL}"]`).length, 0, 'no link to the hosted demo');
+  assert.equal($('[data-demo-signin]').length, 0, 'no sign-in precondition line');
+  for (const term of ['perplexity', 'pplx', 'sign-in may be required']) {
+    assert.ok(!html.toLowerCase().includes(term), `retired demo wording left behind: "${term}"`);
+  }
+});
+
+test('dom: the full demo is offered on request through the existing contact block', () => {
+  const ask = $('[data-demo-ask]');
+  assert.equal(ask.length, 1, 'one offer next to the demo');
+  assert.ok(norm(ask.text()).startsWith(DEMO_ASK), 'the offer wording is exact');
+  assert.equal(ask.closest('section#demo').length, 1, 'the offer sits in the demo section');
+  assert.equal(ask.find('a[href="#contact"]').length, 1, 'the way to ask is the contact block');
+  assert.equal($('#contact[data-contact]').length, 1, 'the contact block it points to exists');
   assert.ok(
-    norm(link.find('.sr-only').text()).includes('opens in a new tab'),
-    'new-tab behaviour is announced',
+    /full demo, just ask/i.test(norm($('section#how-to-begin').text())),
+    'the section that discusses the demo repeats the offer',
   );
 });
 
@@ -390,7 +427,7 @@ test('dom: the disclosure is static markup adjacent to the call to action', () =
   assert.equal(norm(disclosure.text()), DEMO_DISCLOSURE, 'disclosure wording must be exact');
 
   // Immediately adjacent: same block, and the very next element after the link.
-  const link = $(`a[href="${DEMO_URL}"]`).first();
+  const link = $('a.cta').first();
   const block = link.parent();
   assert.ok(block.hasClass('cta-block'), 'the call to action sits in the disclosure block');
   assert.equal(block.find('[data-demo-disclosure]').length, 1, 'the disclosure shares the block');
@@ -413,48 +450,18 @@ test('dom: the disclosure is static markup adjacent to the call to action', () =
   );
 });
 
-test('dom: the sign-in precondition is stated adjacent to the call to action', () => {
-  const signin = $('[data-demo-signin]');
-  assert.equal(signin.length, 1, 'exactly one sign-in statement');
-  assert.equal(norm(signin.text()), DEMO_SIGNIN, 'sign-in wording must be exact');
-
-  // It shares the call-to-action block, immediately after the five-fact disclosure,
-  // so a visitor reads it before deciding to click.
-  const block = $(`a[href="${DEMO_URL}"]`).first().parent();
-  assert.equal(block.find('[data-demo-signin]').length, 1, 'the sign-in fact shares the block');
-  assert.equal(
-    $('[data-demo-disclosure]').next().get(0),
-    signin.get(0),
-    'the sign-in fact follows the disclosure directly',
-  );
-
-  // Static, visible, unscripted — the same standard the disclosure is held to.
-  assert.equal(signin.attr('hidden'), undefined, 'the sign-in fact is not hidden');
-  assert.equal(signin.attr('aria-hidden'), undefined, 'the sign-in fact is exposed to AT');
-  assert.equal(signin.closest('.sr-only').length, 0, 'the sign-in fact is visible');
-  assert.equal(signin.closest('details, dialog, [popover]').length, 0, 'not collapsed content');
-  const js = readFileSync(path.join(root, 'assets/js/app.js'), 'utf8');
-  assert.ok(!js.includes('data-demo-signin'), 'the sign-in fact must not depend on JavaScript');
-
-  // Restated wherever the demo is discussed in prose, not only at the button.
-  const howToBegin = norm($('section#how-to-begin').text());
-  assert.ok(
-    /sign-in may be required/i.test(howToBegin),
-    'the section that discusses the demo repeats the access precondition',
-  );
-});
-
 test('dom: the demo is never presented as open, anonymous, or guaranteed to work', () => {
   const haystack = `${visibleText()} ${metadataText()}`.toLowerCase();
   for (const claim of FORBIDDEN_ACCESS_CLAIMS) {
     assert.ok(!haystack.includes(claim), `false access claim about the demo: "${claim}"`);
   }
-  // The five original facts survive verbatim alongside the sixth.
+  // The demo stays labelled: sample data, a paper account, no real orders, not advice.
   for (const fact of [
-    'demonstration environment',
-    'simulated data',
+    'sample data',
+    'paper (practice) account',
     'no broker connection',
     'no real orders',
+    'nothing here is advice',
   ]) {
     assert.ok(haystack.includes(fact), `disclosure fact lost: "${fact}"`);
   }
@@ -584,42 +591,20 @@ test('dom: every mention of real-time data is negated', () => {
 /* ---------- links off this surface ---------- */
 
 const YOUTUBE_URL = 'https://www.youtube.com/@noelrini3882';
-test('dom: exactly four off-origin destinations exist — the demo, Site 1, the Leadership library, and YouTube', () => {
+test('dom: exactly one off-origin destination exists — YouTube (the demo is on this site)', () => {
   const hrefs = $('a[href^="http"]')
     .map((_, el) => $(el).attr('href'))
     .get();
-  assert.deepEqual([...new Set(hrefs)].sort(), [LEADERSHIP_URL, LIBRARY_URL, DEMO_URL, YOUTUBE_URL].sort());
-  assert.equal(hrefs.length, 4, 'no duplicate off-origin links');
+  assert.deepEqual([...new Set(hrefs)], [YOUTUBE_URL]);
+  assert.equal(hrefs.length, 1, 'no duplicate off-origin links');
 });
 
-test('dom: exactly two reciprocal links exist — Site 1 and the Leadership library, each singular', () => {
-  const links = $('[data-sibling-site]');
-  assert.equal(links.length, 2, 'exactly two reciprocal links — no alternate paths');
-
-  const leadership = $('[data-sibling-site="signals"]');
-  assert.equal(leadership.length, 1, 'exactly one link to Site 1');
-  assert.equal(leadership.attr('href'), LEADERSHIP_URL);
-  assert.equal(leadership.get(0).tagName, 'a', 'the reciprocal link is a real anchor');
-  const leadershipLabel = norm(leadership.text()).replace(/[↗\s]+$/, '').trim();
-  assert.equal(leadershipLabel, 'Signals', 'Site 1 reciprocal link label');
-  assert.equal(leadership.attr('rel'), 'noopener noreferrer');
-
-  const library = $('[data-sibling-site="library"]');
-  assert.equal(library.length, 1, 'exactly one link to the Leadership library');
-  assert.equal(library.attr('href'), LIBRARY_URL);
-  assert.equal(library.get(0).tagName, 'a', 'the library link is a real anchor');
-  const libraryLabel = norm(library.text()).replace(/[↗\s]+$/, '').trim();
-  assert.equal(libraryLabel, 'LIME Leadership', 'library reciprocal link label');
-  assert.equal(library.attr('rel'), 'noopener noreferrer');
-
-  for (const link of [leadership, library]) {
-    assert.equal(link.attr('hidden'), undefined, 'the reciprocal link is not hidden');
-    assert.equal(link.attr('aria-hidden'), undefined, 'the reciprocal link is exposed to AT');
-    assert.equal(link.closest('.sr-only').length, 0, 'the reciprocal link is visible, not sr-only');
-    assert.ok(!link.hasClass('anchor-link'), 'must not reuse the protected anchor-link class');
-  }
-  assert.equal($(`a[href^="${LEADERSHIP_URL}"]`).length, 1, 'no second path into Site 1');
-  assert.equal($(`a[href^="${LIBRARY_URL}"]`).length, 1, 'no second path into the library');
+test('dom: the Signals and LIME Leadership sister-site buttons are gone, with no leftover row', () => {
+  assert.equal($('[data-sibling-site]').length, 0, 'no sister-site links');
+  assert.equal($('.sibling-link').length, 0, 'no sister-site buttons');
+  assert.equal($('.foot__link-row').length, 0, 'no empty link row or dot separator');
+  assert.equal($(`a[href^="${LEADERSHIP_URL}"]`).length, 0, 'no link into the Signals site');
+  assert.equal($(`a[href^="${LIBRARY_URL}"]`).length, 0, 'no link into the Leadership library');
 });
 
 /* ---------- footer ---------- */
@@ -681,6 +666,39 @@ test('dom: no forbidden Site 1 or scriptural terminology in rendered text or met
   }
   for (const phrase of FORBIDDEN_PHRASES) {
     assert.ok(!haystack.includes(phrase), `forbidden phrase appears: "${phrase}"`);
+  }
+});
+
+test('dom: the pros block is the approved copy, right after will-and-won\'t, naming no one', () => {
+  const sec = $('section#pros');
+  assert.equal(sec.length, 1);
+  assert.equal(sec.prev('section').attr('id'), 'will-wont', 'it follows What Rosie will and won\'t do');
+  assert.equal(sec.next('section').attr('id'), 'evidence', 'it comes before Evidence');
+  assert.equal(norm(sec.find('h2').text()), 'Trading the way the pros do.');
+  assert.equal(norm(sec.find('.section__head > p:not(.label)').text()), data.pros.body);
+  assert.equal(
+    data.pros.body,
+    // 2026-10-28: recast in Rosie's own first person (owner decision: "I" = Rosie).
+    "The best traders in the world share a few habits: they trade by written rules, they decide what they can lose before they decide what they can win, and they stay consistent when it's hard. I'm built on those same habits. And unlike a big firm, I work for one person: you.",
+  );
+  const body = data.pros.body.toLowerCase();
+  for (const h of data.pros.habits) {
+    // Each habit tile only restates the body: no extra claims.
+    assert.ok(body.includes(h.text.replace(/\.$/, '').toLowerCase()), `habit not from the body: ${h.text}`);
+  }
+  const text = norm(sec.text()).toLowerCase();
+  for (const name of ['renaissance', 'citadel', 'bridgewater', 'two sigma', 'de shaw', 'jane street', 'simons', 'dalio', 'griffin', 'buffett']) {
+    assert.ok(!text.includes(name), `the pros block must not name "${name}"`);
+  }
+});
+
+test('dom: the owner credit appears only as a plain attribution', () => {
+  const credits = $('[data-attribution]')
+    .map((_, el) => norm($(el).text()))
+    .get();
+  assert.ok(credits.length <= 3, 'at most the opening label and the two pull-quote credits');
+  for (const credit of credits) {
+    assert.match(credit, /^(From )?Noal$/, `attribution must be the bare credit, got: "${credit}"`);
   }
 });
 
@@ -908,4 +926,85 @@ test('css: stylesheets reference only vendored, self-hosted font files', () => {
   ]) {
     assert.ok(existsSync(path.join(root, file)), `missing vendored font asset: ${file}`);
   }
+});
+
+/* ---------- whose voice: Noal or Rosie, never anyone else (2026-10-28) ---------- */
+
+// Owner decision, 2026-10-28: the public writing is in Rosie's own first person ("I" =
+// Rosie), except Noal's own words (the opening, his will-and-won't letter and the two
+// credited quotes). Every first-person line must sit inside a block that says whose
+// voice it is, so no invented speaker can appear, and Rosie never claims a past or a
+// result she does not have.
+const FIRST_PERSON = /\b(I|I'm|I’m|I'll|I’ll|I've|I’ve|I'd|I’d|me|my|mine|myself)\b/;
+const PLURAL_FIRST_PERSON = /\b(we|we'll|we’ll|we're|we’re|we've|we’ve|us|our|ours|ourselves|our team)\b/i;
+
+const leafBlocks = () =>
+  $('main p, main li, main h1, main h2, main h3, main dd, main blockquote, main figcaption, main td, main th')
+    .filter((_, el) => $(el).find('p, li, h1, h2, h3, dd, blockquote').length === 0)
+    .toArray();
+
+test('voice: every first-person line belongs to a labelled voice, Noal or Rosie', () => {
+  const unowned = [];
+  for (const el of leafBlocks()) {
+    const node = $(el);
+    // "StopWatcher I/II/III" are indicator part names, not a speaker.
+    const text = norm(node.clone().find('.sr-only').remove().end().text()).replace(/StopWatcher I{1,3}\b/g, '');
+    if (!FIRST_PERSON.test(text)) continue;
+    const owner = node.closest('[data-voice]').attr('data-voice');
+    if (owner !== 'noal' && owner !== 'rosie') unowned.push(text);
+  }
+  assert.deepEqual(unowned, [], `first person with no labelled speaker: ${unowned.join(' | ')}`);
+  // Noal's blocks are exactly his opening, his will-and-won't letter and the sleep quote.
+  assert.deepEqual(
+    $('[data-voice="noal"]').map((_, el) => $(el).closest('section').attr('id')).get(),
+    ['opening', 'life', 'will-wont'],
+  );
+  assert.equal($('#opening [data-voice="noal"] [data-attribution]').length, 1, 'the opening is credited');
+  assert.equal($('#sleep[data-voice="noal"] [data-attribution]').length, 1, 'the sleep quote is credited');
+  assert.equal($('#teammate [data-attribution]').length, 1, 'the teammate quote is credited');
+});
+
+test('voice: every section in Rosie\'s voice says so with a "From Rosie" tag', () => {
+  $('[data-voice="rosie"]').each((_, el) => {
+    const section = $(el).closest('section');
+    const tagged =
+      section.find('[data-voice-tag]').length > 0 || /^From me, Rosie:/.test(norm($(el).text()));
+    assert.ok(tagged, `Rosie speaks in #${section.attr('id')} without a "From Rosie" label`);
+  });
+  $('[data-voice-tag]').each((_, el) => {
+    assert.equal(norm($(el).text()), 'From Rosie');
+    assert.ok($(el).closest('section').find('[data-voice="rosie"]').length > 0 ||
+      $(el).closest('[data-voice="rosie"]').length > 0, 'a tag only where Rosie speaks');
+  });
+});
+
+test('voice: Rosie\'s lines use "I", never a "we" or "our team"', () => {
+  // Kept on purpose, word for word: the approved full-demo offer (canonical.demoAsk) is
+  // the company's offer, not Rosie's line.
+  for (const el of $('[data-voice="rosie"]').toArray()) {
+    const text = norm($(el).clone().find('[data-demo-ask]').remove().end().text());
+    assert.ok(!PLURAL_FIRST_PERSON.test(text), `plural first person in Rosie's voice: "${text.slice(0, 120)}"`);
+  }
+});
+
+test('voice: Rosie claims no invented past, track record, promise or advice', () => {
+  const text = norm($('[data-voice="rosie"]').text()).toLowerCase();
+  for (const phrase of [
+    "i've seen", 'i’ve seen', 'seen it all', "i've made", 'i’ve made', 'made money', 'track record',
+    'in my experience', 'years of experience', 'my results', 'my returns', 'i guarantee', 'i promise',
+    'never lose', 'never loses', "can't make a bad", 'cannot make a bad', 'no bad trades',
+    'you should buy', 'you should sell', 'i recommend', 'my advice',
+  ]) {
+    assert.ok(!text.includes(phrase), `invented or overclaiming first person: "${phrase}"`);
+  }
+});
+
+// 2026-10-29: Rosie's posture check reads a page that no longer carries a posture
+// line, so the claim that she reads it before every buy is not reliably true.
+// The market-report paragraph must not make that claim.
+test('market report: no claim that Rosie reads the posture before every buy', () => {
+  const text = $('#market-report').text().replace(/\s+/g, ' ');
+  assert.ok(text.includes('daily market report') || text.includes('market situation report'));
+  assert.ok(!/read the stated posture/i.test(text), 'posture-before-buy claim removed');
+  assert.ok(!/before I open any new buy/i.test(text), 'posture-before-buy claim removed');
 });

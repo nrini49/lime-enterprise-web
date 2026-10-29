@@ -3,18 +3,15 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <meta name="robots" content="noindex"><title>Demo — IB Keelwise — Operator Workstation</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet"/>
+  <meta name="robots" content="noindex">
+  <title>Demo (sample data) — Rosie IB — Operator Workstation</title>
   <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
   --bg:        #0b1020;
   --bg-2:      #0e1426;
-  --surface:   #121934;   /* panel */
-  --surface2:  #172046;   /* nested surface / header bar */
+  --surface:   #121934;   
+  --surface2:  #172046;   
   --border:    #2a356b;
   --accent:    #00FF7F;
   --accent-2:  #7ca6dc;
@@ -36,7 +33,6 @@
   --glow-bad:     rgba(255,69,0,0.14);
   --glow-white:   rgba(255,255,255,0.05);
 }
-
 html, body { height: 100%; }
 body {
   background:
@@ -50,15 +46,9 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 .wrap { max-width: 1480px; margin: 0 auto; padding: 18px 22px 60px; }
-
-/* ── HEADER ─────────────────────────────────────────────────────────────── */
-/* Two cells side by side: identity left, operator controls right. The lime
-   identity band that used to sit above this header was folded in on 2026-09-19,
-   reclaiming its entire height. align-items:flex-start so a tall right cell does
-   not drag the logo down with it. */
 header.topbar {
   display: flex; align-items: flex-start; justify-content: space-between;
-  gap: 16px 28px; flex-wrap: wrap; row-gap: 12px;
+  gap: 8px 20px; flex-wrap: wrap;
   border-bottom: 1px solid var(--border);
   padding-bottom: 14px; margin-bottom: 18px;
 }
@@ -73,32 +63,55 @@ header.topbar {
 }
 .topbar-id-word b { color: var(--lime); text-shadow: 0 0 10px var(--lime-glow); }
 .topbar-id-word:hover { color: #fff; }
-/* Row 1 right side: the Rosie IB title block, pushed right by auto margin so
-   identity and title sit at opposite ends of one row. */
 header.topbar > .brand { margin-left: auto; justify-content: flex-end; flex: 0 1 auto; }
-/* Row 2: the control cluster takes the FULL header width and centres its pills,
-   rather than hanging off the right edge under the title. flex-basis:100% forces
-   the wrap onto its own row without adding height, because these controls
-   occupied a second line either way. Centred at the operator's request
-   (2026-09-19): the pills read as a deliberate instrument row instead of a
-   right-aligned overflow.
-   .op-cluster stays ONE element with that class -- refreshData() replaces its
-   innerHTML every 30s. */
-header.topbar > .op-cluster { flex: 1 0 100%; justify-content: center; }
-header.topbar > .op-cluster .op-grid { justify-content: center; }
-/* Rosie's portrait spans both header rows on wide screens (2026-09-29, Noal):
-   at 40px she could not be seen clearly. The header reserves room on the right
-   so no control slides underneath her. Narrow screens keep the 40px inline tile. */
-header.topbar { position: relative; }
-@media (min-width: 901px) {
-  header.topbar { padding-right: 104px; }
-  header.topbar #rosie-portrait { position: absolute; right: 0; top: 0; width: 88px; height: 88px; border-radius: 14px; }
+header.topbar > .op-cluster { flex: 1 0 100%; align-items: center; }
+header.topbar > .op-cluster .op-grid,
+header.topbar > .op-cluster .op-status-row { justify-content: center; }
+header.topbar .op-status-row,
+header.topbar .op-status,
+header.topbar .op-links { column-gap: 6px; }
+header.topbar .op-status > .status-chip,
+header.topbar .op-links .status-chip { font-size: 11px; padding: 4px 8px; gap: 5px; }
+header.topbar {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--bg); padding-top: 10px;
+  box-shadow: 0 6px 12px -8px rgba(0,0,0,.65);
 }
-/* Narrow viewports: stack and left-align so nothing is pushed off screen. */
+.panel, [id^="panel-"], .group-label { scroll-margin-top: calc(var(--hdr-h, 140px) + 12px); }
+@media (min-width: 901px) {
+  header.topbar {
+    min-height: calc(92px + 25px);
+    padding-left: calc(var(--hdr-logo-w, 120px) + 16px);
+    padding-right: calc(var(--hdr-logo-w, 120px) + 16px);
+  }
+  header.topbar .topbar-mark,
+  header.topbar #rosie-portrait {
+    position: absolute; top: 10px; bottom: 14px; margin: auto 0;
+    height: calc(100% - 24px); width: auto; aspect-ratio: 1 / 1;
+    min-height: 92px; max-height: 170px;
+    object-fit: cover; border-radius: 14px;
+  }
+  header.topbar .topbar-mark { left: 0; }
+  header.topbar #rosie-portrait { right: 0; object-fit: contain; }
+  header.topbar > .topbar-id,
+  header.topbar > .brand { align-self: baseline; }
+}
+@media (max-width: 900px) {
+  header.topbar .topbar-mark,
+  header.topbar #rosie-portrait { width: 56px; height: 56px; }
+}
+@media (max-width: 600px) {
+  header.topbar .topbar-mark,
+  header.topbar #rosie-portrait { width: 48px; height: 48px; }
+}
+header.topbar #rosie-portrait { object-fit: contain; }
+@media (max-width: 600px) { header.topbar { position: relative; } }
 @media (max-width: 900px) {
   header.topbar { flex-direction: column; align-items: stretch; }
   header.topbar > .brand { margin-left: 0; justify-content: flex-start; }
-  header.topbar > .op-cluster .op-grid { justify-content: flex-start; }
+  header.topbar > .op-cluster { align-items: flex-start; }
+  header.topbar > .op-cluster .op-grid,
+  header.topbar > .op-cluster .op-status-row { justify-content: flex-start; }
 }
 .brand { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; row-gap: 6px; }
 .brand h1 {
@@ -109,49 +122,62 @@ header.topbar { position: relative; }
   color: var(--lime); font-size: 12px; font-weight: 700; letter-spacing: .16em;
   text-transform: uppercase; text-shadow: 0 0 10px var(--lime-glow);
 }
-/* Keeper portrait slot — reserved, empty placeholder. This surface (IB) has
-   no Keeper assignment yet, so it is intentionally left blank (no guessed
-   portrait). Fixed 1:1 aspect so it holds shape at any width. */
+.brand-env { display: contents; }
+@media (min-width: 1181px) {
+  header.topbar.topbar-compact {
+    display: grid;
+    grid-template-columns: minmax(max-content, 1fr) max-content minmax(max-content, 1fr);
+    column-gap: 16px; row-gap: 6px; align-items: center; align-content: center;
+    min-height: calc(72px + 25px);
+  }
+  header.topbar.topbar-compact > .topbar-id,
+  header.topbar.topbar-compact > .brand,
+  header.topbar.topbar-compact > .op-cluster { display: contents; }
+  header.topbar.topbar-compact .topbar-id-word { grid-column: 1; grid-row: 1; justify-self: start; align-self: baseline; }
+  header.topbar.topbar-compact .brand h1 { grid-column: 3; grid-row: 1; justify-self: end; align-self: baseline; }
+  header.topbar.topbar-compact .brand-env {
+    grid-column: 3; grid-row: 1; justify-self: end; align-self: center;
+    display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
+    margin-right: calc(var(--hdr-title-w, 100px) + 12px);
+  }
+  header.topbar.topbar-compact .op-controls { grid-column: 2; grid-row: 1; align-self: center; flex-wrap: nowrap; justify-content: center; }
+  header.topbar.topbar-compact .brand .sub { grid-column: 3; grid-row: 2; justify-self: end; align-self: center; text-align: right; white-space: nowrap; }
+  header.topbar.topbar-compact .op-status-row { grid-column: 1 / -1; grid-row: 2; flex-wrap: nowrap; justify-content: center; }
+  header.topbar.topbar-compact .op-status-row > .op-grid { flex: 0 0 auto; flex-wrap: nowrap; }
+  header.topbar.topbar-compact .op-status-row::before,
+  header.topbar.topbar-compact .op-status-row::after { content: ''; flex: 1 1 0; }
+  header.topbar.topbar-compact .op-status-row::after { min-width: calc(var(--hdr-sub-w, 200px) + 16px); }
+  header.topbar.topbar-compact.topbar-env-row2 .brand-env {
+    grid-column: 2 / -1; grid-row: 2; margin-right: calc(var(--hdr-sub-w, 200px) + 12px);
+  }
+  header.topbar.topbar-compact.topbar-env-row2 .op-status-row::after {
+    min-width: calc(var(--hdr-sub-w, 200px) + var(--hdr-env-w, 120px) + 12px + 16px);
+  }
+  header.topbar.topbar-compact .topbar-mark,
+  header.topbar.topbar-compact #rosie-portrait { min-height: 72px; max-height: 120px; }
+}
 .keeper-portrait-slot {
   flex: 0 0 auto; align-self: center;
   width: 40px; aspect-ratio: 1 / 1; border-radius: 10px;
   border: 1px solid var(--border); background-color: #fff;
   object-fit: cover; display: block;
 }
-/* Rosie's portrait (2026-09-29): cropped from the GoDaddy home-page line art. */
-.op-cluster { display: flex; align-items: center; }
-/* Flex, not a fixed 5-column grid. The previous rule was
-   grid-template-columns: repeat(2, auto) 18px repeat(2, auto), so column 3 was a
-   hard 18px lane. Item positions were coupled to the number of children: adding
-   the QUOTES chip on 2026-09-17 shifted ZERO NOISE into that 18px lane and
-   crushed its pill to one character wide while its text overflowed. Flex wrap
-   with non-shrinking children keeps every control at its own content width no
-   matter how many chips the cluster holds. */
+.op-cluster { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.op-status-row {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 5px 6px; max-width: 100%;
+}
 .op-grid {
   display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center;
 }
 .op-grid > * { flex: 0 0 auto; }
-/* A POST form wraps any control that changes server state. display:contents
-   removes the form's own box so the button remains a direct flex item of
-   .op-grid, preserving the header geometry fixed on 2026-09-17. The second
-   rule restates flex:0 0 auto because `.op-grid > *` still matches the form
-   element, not the promoted button. */
 .op-form { display: contents; }
-/* A <button> does not inherit line-height the way an <a> does, which is why
-   the GUARD pill measured 25px beside 29px link pills (logged 2026-09-20).
-   Stating it explicitly makes every pill the same box regardless of element,
-   so the discrepancy cannot come back as more controls become forms. */
 .op-btn { line-height: 1.5; }
-/* Same treatment for the small chips. display:contents removes the form's own
-   box so the button stays where the link was, and the three properties below
-   are the UA button defaults that an <a> never had. */
 .chip-form { display: contents; }
 button.status-chip {
   font: inherit; font-size: 12px; line-height: 1.5;
   cursor: pointer; appearance: none;
 }
 .op-grid > .op-form > .op-btn { flex: 0 0 auto; }
-.op-spacer { width: 18px; }
 .op-btn {
   display: inline-block; min-width: max-content;
   font-family: var(--font);
@@ -163,6 +189,9 @@ button.status-chip {
 .op-btn.state-on  { background: #10331d; color: #43e08a; border-color: #43e08a; box-shadow: 0 0 8px rgba(0,255,127,0.22); }
 .op-btn.state-off { background: #2f1512; color: #ff7a4d; border-color: #ff7a4d; }
 .op-btn.state-kill { background: #7a0d0d; color: #ffffff; border-color: #ff2d2d; font-weight: 700; }
+.op-btn.state-liveauto { background: #ff2d2d; color: #1a0000; border-color: #ff2d2d; box-shadow: 0 0 10px rgba(255,45,45,0.45); }
+.op-btn.state-flatten { background: #3a2a05; color: #ffc341; border-color: #ffc341; }
+.status-chip.guard-tripped { color: var(--fire); border-color: var(--fire); font-weight: 700; }
 .status-chip {
   display: inline-flex; align-items: center; gap: 7px; white-space: nowrap;
   background: var(--surface); border: 1px solid var(--border);
@@ -175,8 +204,6 @@ button.status-chip {
 .dot.warn { background: var(--warn); }
 .dot.bad  { background: var(--fire); box-shadow: 0 0 8px var(--fire-glow); }
 @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:.45;} }
-
-/* ── HERO (account overview — always visible) ───────────────────────────── */
 .hero {
   background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
   padding: 22px 24px; display: block; margin-bottom: 16px;
@@ -225,6 +252,37 @@ button.status-chip {
 .overview-body .stats { display: flex; flex-wrap: wrap; gap: 10px 14px; margin-top: 10px; }
 .overview-body .hero-sub { margin: 0 0 4px; }
 .stop-cell { white-space: normal; text-align: left; line-height: 1.5; }
+.ro-note { color: var(--muted); font-size: 12px; margin: 0 0 8px; }
+.ro-empty { color: var(--muted); font-size: 13px; margin: 0; }
+.ro-warn { color: var(--warn); font-size: 13px; font-weight: 700; margin: 0; }
+.wo-src { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 3px; text-transform: uppercase; letter-spacing: .06em; }
+.wo-src.rosie { background: var(--glow-accent); color: var(--accent); border: 1px solid var(--accent); }
+.wo-src.other { background: var(--glow-warn); color: var(--warn); border: 1px solid var(--warn); }
+.wo-ids { font-size: 11px; color: var(--muted); }
+.wo-table td, .wo-table th { padding-left: 6px; padding-right: 6px; }
+.wo-table th:first-child, .wo-table td:first-child { padding-left: 8px; }
+.wo-table th:last-child, .wo-table td:last-child { padding-right: 8px; }
+.wo-table td { vertical-align: top; }
+.wo-l1 { display: block; }
+.wo-l2 { display: block; font-size: 10.5px; color: var(--muted); margin-top: 2px; }
+@media (min-width: 1001px) and (max-width: 1120px) {
+  .wo-table { font-size: 11.5px; }
+  .wo-table td, .wo-table th { padding-left: 4px; padding-right: 4px; }
+  .wo-table th { letter-spacing: .04em; white-space: normal; }
+}
+.acct-sum-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px 14px; margin-top: 8px; }
+.acct-sum-grid .stat { min-width: 0; }
+.acct-sum-grid .stat-value { font-size: 16px; overflow-wrap: anywhere; }
+@media (max-width: 600px) {
+  .wo-table thead { display: none; }
+  .wo-table, .wo-table tbody, .wo-table tr, .wo-table td { display: block; width: 100%; }
+  .wo-table tr { border-bottom: 1px solid var(--border); padding: 6px 0; }
+  .wo-table td { display: flex; justify-content: space-between; gap: 12px; text-align: right;
+    padding: 3px 14px; border-bottom: none; white-space: normal; }
+  .wo-table td::before { content: attr(data-label); color: var(--muted); font-size: 10px;
+    text-transform: uppercase; letter-spacing: .07em; text-align: left; }
+  .acct-sum-grid { grid-template-columns: 1fr 1fr; }
+}
 .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
 .table-scroll > table { min-width: 100%; }
 .approval-banner { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
@@ -236,25 +294,19 @@ button.status-chip {
 .tag.enter { background: var(--glow-good); color: var(--good); border: 1px solid var(--good); }
 .tag.watch { background: var(--glow-warn); color: var(--warn); border: 1px solid var(--warn); }
 .tag.avoid { background: var(--glow-bad);  color: var(--bad);  border: 1px solid var(--bad); }
-/* No price arrived, so no classification exists. Deliberately muted and
-   deliberately NOT one of the three signal colours: an operator must be able to
-   tell "no reading" from "a reading of neutral" at a glance. (2026-09-19) */
 .tag.nodata { background: var(--glow-white); color: var(--muted); border: 1px dashed var(--border); }
-
-/* ── PANEL GRID ─────────────────────────────────────────────────────────── */
-/* align-items:start is required — otherwise a collapsed <details> leaves dead
-   space, because grid's default `stretch` forces every cell in a row to match
-   the tallest neighbor. */
 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
 .grid > .wide { grid-column: 1 / -1; }
 @media (max-width: 1000px) { .grid { grid-template-columns: 1fr; } }
+@media (min-width: 1001px) {
+  .grid > #panel-watchlist { grid-column: 1; }
+  .grid > #panel-watchlist-ii { grid-column: 2; }
+}
 .group-label {
   grid-column: 1 / -1; margin: 10px 0 0;
   font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em;
   color: var(--lime); text-shadow: 0 0 10px var(--lime-glow);
 }
-
-/* ── COLLAPSIBLE PANELS ─────────────────────────────────────────────────── */
 details.panel {
   display: block; background: var(--surface); border: 1px solid var(--border);
   border-radius: 10px; overflow: hidden;
@@ -277,15 +329,11 @@ details.panel[open] > summary.panel-head .chev { transform: rotate(180deg); }
 summary.panel-head:hover h2 { color: #fff; }
 .panel-body { padding: 8px 0; }
 .panel-inner { padding: 14px; }
-
-/* ── CARD (placeholder / misc) ──────────────────────────────────────────── */
 .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
 .card-title {
   font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
   padding: 10px 14px; border-bottom: 1px solid var(--border); background: var(--surface2); color: var(--accent);
 }
-
-/* ── TABLES ─────────────────────────────────────────────────────────────── */
 table { width: 100%; border-collapse: collapse; font-size: 13px; font-family: var(--mono); }
 th {
   text-align: right; padding: 7px 10px;
@@ -302,8 +350,6 @@ tr:hover td { background: rgba(0,255,127,0.06); }
 .good-val  { color: var(--good); background: var(--glow-good); border-radius: 3px; padding: 1px 4px; }
 .bad-val   { color: var(--bad);  background: var(--glow-bad);  border-radius: 3px; padding: 1px 4px; }
 .muted-val { color: var(--muted); }
-
-/* ── DIAGNOSTICS ────────────────────────────────────────────────────────── */
 .diag-row  { display: flex; gap: 10px; flex-wrap: wrap; padding: 4px 0; }
 .diag-chip {
   display: flex; gap: 6px; align-items: center;
@@ -315,8 +361,6 @@ tr:hover td { background: rgba(0,255,127,0.06); }
 .diag-v.bad   { color: var(--bad);  background: var(--glow-bad); }
 .diag-v.warn  { color: var(--warn); background: var(--glow-warn); }
 .diag-v.plain { color: var(--text); background: var(--glow-white); }
-
-/* ── ORDER ROUTE (safety control) ───────────────────────────────────────── */
 .route-box { background: var(--surface2); border: 2px solid var(--border); border-radius: 10px; padding: 16px; }
 .route-box.armed-on  { border-color: var(--lime); box-shadow: 0 0 16px rgba(0,255,127,0.22); }
 .route-box.armed-off { border-color: var(--fire); }
@@ -339,8 +383,6 @@ tr:hover td { background: rgba(0,255,127,0.06); }
 .big-btn:active { transform: scale(.98); }
 .big-btn.arm-btn    { background: var(--lime); color: #04140c; box-shadow: 0 0 14px rgba(0,255,127,0.30); }
 .big-btn.disarm-btn { background: var(--fire); color: #fff; box-shadow: 0 0 14px rgba(255,69,0,0.30); }
-
-/* ── NOTES / TIMELINE ───────────────────────────────────────────────────── */
 .note-box { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; }
 .note-box + .note-box { margin-top: 12px; }
 .note-title {
@@ -359,8 +401,6 @@ tr:hover td { background: rgba(0,255,127,0.06); }
   background: var(--glow-bad); border: 1px solid var(--fire);
   border-radius: 6px; padding: 8px 14px; color: var(--fire); font-size: 12px; margin-bottom: 12px;
 }
-
-/* ── REFRESH PULSE ──────────────────────────────────────────────────────── */
 #refresh-indicator {
   position: fixed; bottom: 12px; right: 16px;
   font-size: 10px; font-family: var(--mono); color: var(--muted);
@@ -368,15 +408,6 @@ tr:hover td { background: rgba(0,255,127,0.06); }
   border-radius: 20px; padding: 4px 12px; z-index: 100;
 }
 #refresh-indicator.pulsing { color: var(--lime); border-color: var(--lime); }
-
-/* ── PHASE BADGES + SORTABLE HEADERS ────────────────────────────────────── */
-/* These lived in a <style> block emitted inside _watchlist_body, so every
-   other panel that uses a phase badge or a sortable header -- Current
-   Observations, Signal Rank (removed 2026-09-21), Classification Board -- was
-   silently depending on the Watchlist being rendered. show_watchlist=False would have left their
-   badges unstyled and their headers without a pointer cursor. Moved here so a
-   panel's appearance does not depend on a different panel existing.
-   (2026-09-20) */
 .phase-badge { font-size:10px; font-weight:700; padding:2px 7px; border-radius:10px; border:1px solid currentColor; text-transform:uppercase; letter-spacing:.04em; white-space:nowrap; display:inline-block; }
 .sortable-th { cursor:pointer; user-select:none; white-space:nowrap; }
 .sortable-th:hover { color: var(--text); }
@@ -384,8 +415,6 @@ tr:hover td { background: rgba(0,255,127,0.06); }
 .sort-ind.active { opacity:1; color: var(--accent); }
 </style>
   <style>
-/* Canonical lime-web design tokens — namespaced names, no collision with the
-   operator palette above. Dark values on :root; light override via data-theme. */
 :root {
   --lgb-text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
   --lgb-text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
@@ -408,7 +437,6 @@ tr:hover td { background: rgba(0,255,127,0.06); }
   --lgb-primary: #4f7a1f; --lgb-primary-hover: #3d6017;
   --lgb-beam: #b07d1f;
 }
-
 .lime-globalbar {
   position: sticky; top: 0; z-index: 60;
   backdrop-filter: blur(12px);
@@ -442,113 +470,166 @@ tr:hover td { background: rgba(0,255,127,0.06); }
 .lime-globalbar .hdr-cta:hover { filter: brightness(1.08); }
 @media (max-width: 480px) { .lime-globalbar .hdr-cta { display: none; } }
 </style>
+<style>
+#demo-banner{position:sticky;top:0;z-index:60;background:#ffd24a;color:#1a1400;font:700 13px/1.35 Arial,Helvetica,sans-serif;text-align:center;padding:8px 12px}
+#demo-banner .demo-banner-sub{font-weight:400}
+.demo-inert{display:contents}
+button[disabled],input[disabled]{cursor:not-allowed}
+.op-btn[disabled]{opacity:1}
+.demo-inert-link{color:inherit}
+details.panel > summary .panel-meta::after{content:""}
+@media (max-width:760px){.grid{grid-template-columns:1fr !important}.wrap{padding:10px 10px 40px}
+ header.topbar{flex-direction:column;align-items:stretch}.table-scroll{overflow-x:auto}}
+</style>
 </head>
-<body><div id="demo-banner" style="position:sticky;top:0;z-index:50;background:#ffd24a;color:#1a1400;font:700 13px system-ui;text-align:center;padding:8px 12px;">DEMO · test data only · no broker connected · controls are display-only</div>
+<body>
+<div id="demo-banner" role="note">Demo with sample data. Paper (practice) account. Not real positions, not advice. <span class="demo-banner-sub">Buttons are display only; nothing connects to a broker.</span></div>
 <div class="wrap">
   <header class="topbar">
       <div class="topbar-id">
         <video class="topbar-mark" src="static/lighthouse-loop.mp4" autoplay muted loop playsinline aria-hidden="true"></video>
-        <a class="topbar-id-word" href="https://limesignalworks.com/" target="_blank" rel="noopener"
-           aria-label="Lime Signalworks home (opens in a new tab)">Lime&nbsp;<b>Signalworks</b> LLC</a>
+        <a class="topbar-id-word" href="/" aria-label="Lime Signalworks home">Lime&nbsp;<b>Signalworks</b> LLC</a>
       </div>
       <div class="brand">
-        <h1>IB Keelwise</h1>
+        <h1>Rosie IB</h1>
         <span class="sub">Operator Workstation</span>
-        <span class="trading-env-badge" style="display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;background:var(--lime, #9ad14a);color:#0a1320;font-weight:700;letter-spacing:.04em;" title="IB port 7497">PAPER</span> <form class="chip-form" method="post" action="/select-lane" style="display:inline" onsubmit="var v=prompt('Restart Keelwise on the LIVE account? Real money. TWS must already be logged in to live. Type LIVE to continue.'); if(v!=='LIVE'){return false;} this.confirm.value=v; return true;"><input type="hidden" name="lane" value="LIVE"><input type="hidden" name="confirm" value=""><button type="submit" class="status-chip link" id="lane-btn" style="color:#ff6b4a;border-color:#ff6b4a;" title="Restart Keelwise on the live account (asks you to type LIVE)">LIVE</button></form>
-        <img class="keeper-portrait-slot" id="rosie-portrait" src="static/rosie_portrait.png" alt="Keelwise" title="Keelwise" width="40" height="40">
+        <span class="brand-env"><span class="trading-env-badge" style="display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;background:var(--lime, #9ad14a);color:#0a1320;font-weight:700;letter-spacing:.04em;">PAPER</span> <div class="op-form demo-inert" style="display:inline"><button disabled aria-disabled="true" type="button" class="status-chip link" id="lane-btn" style="color:#ff6b4a;border-color:#ff6b4a;">LIVE</button></div></span>
+        <img class="keeper-portrait-slot" id="rosie-portrait" src="static/rosie_portrait.png" alt="Rosie" width="40" height="40">
       </div>
-      <div class="op-cluster"><div class="op-grid">
-        <form class="op-form" method="post" action="/power-off"><button type="submit" class="op-btn state-on">POWER: ON</button></form>
-        <form class="op-form" method="post" action="/rosie-off"><button type="submit" class="op-btn state-on">KEELWISE: ON</button></form>
-        <span class="op-spacer"></span>
-        <span class="status-chip" title="Socket open to ?:7497"><span class="dot live"></span>DEMO FEED</span>
-        <span class="status-chip" title="16 of 16 watchlist symbols returning real prices"><span class="dot live"></span>QUOTES 16/16</span>
-        <span class="status-chip"><span class="dot live"></span>MEM DATA</span>
-        <form class="op-form" method="post" action="/arm-route" onsubmit='return confirm("Arm the order route? This enables order placement in PAPER mode. Nothing is sent yet.")'><button type="submit" class="op-btn state-off">ROUTE: OFF</button></form>
-        <form class="op-form" method="post" action="/kill-switch"><button type="submit" class="op-btn state-kill" title="Disarm, power off, cancel pending buys. Stops at IBKR stay in place.">STOP ALL</button></form>
-        <span class="op-spacer"></span>
-        <span class="status-chip">tick <span style="color:var(--lime);">—</span></span>
-        <span style="display:flex;gap:6px;">
-          <!-- Save and Reset removed 2026-09-29: Save rewrote memory unchanged; Reset wiped the
-               whole view memory, including the Journal, behind a confirm that said "panel state". -->
-          <a class="status-chip link" id="harbor-top" href="https://signals.limesignalworks.com/harbor-now/" target="_blank" rel="noopener noreferrer" title="Harbor Now on the signals site: the latest market-weather report">Harbor Now ↗</a>
-          <form class="chip-form" method="post" action="/logout" title="Log out. Logging out also disarms the order route."><button type="submit" class="status-chip link" id="logout-btn">Log out</button></form>
-        </span>
+      <div class="op-cluster"><div class="op-grid op-controls">
+        <div class="op-form demo-inert"><button disabled aria-disabled="true" type="button" class="op-btn state-off">POWER: OFF</button></div>
+        <div class="op-form demo-inert"><button disabled aria-disabled="true" type="button" class="op-btn state-off">ROSIE: OFF</button></div>
+        <div class="op-form demo-inert"><button disabled aria-disabled="true" type="button" class="op-btn state-off">ROUTE: OFF</button></div>
+        <div class="op-form demo-inert"><button disabled aria-disabled="true" type="button" class="op-btn state-off" id="live-auto-btn">LIVE AUTO: OFF</button></div>
+        <div class="op-form demo-inert"><button disabled aria-disabled="true" type="button" class="op-btn state-flatten" id="flatten-btn">FLATTEN ALL</button></div>
+        <div class="op-form demo-inert"><button disabled aria-disabled="true" type="button" class="op-btn state-kill">STOP ALL</button></div>
+      </div>
+      <div class="op-status-row">
+        <div class="op-grid op-status">
+          <span class="status-chip"><span class="dot live"></span>SAMPLE FEED</span>
+          <span class="status-chip"><span class="dot live"></span>QUOTES 40/40</span>
+          <span class="status-chip"><span class="dot warn"></span>MEM CLEAN</span>
+          <span class="status-chip" id="auto-guard-chip">AUTO 0/20 · LOSSES 0/3 · CLOSE 16:00 ET</span>
+          <span class="status-chip">tick <span style="color:var(--lime);">—</span></span>
+        </div>
+        <div class="op-grid op-links">
+          
+          
+        </div>
       </div></div>
     </header>
   <main class="main">
-    
-    
     <div class="grid">
       <div class="group-label">Account</div>
-      <details class="panel" id="panel-account-overview" open><summary class="panel-head"><span class="panel-head-main"><h2>Account Overview</h2><span class="meta">Demo feed</span></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="panel-inner overview-body">
-        <p class="hero-sub">Last refresh: demo</p>
-        <p class="hero-sub" id="market-summary">Market: Demo feed — test data</p>
+      <details class="panel" id="panel-account-overview" open><summary class="panel-head"><span class="panel-head-main"><h2>Account Overview</h2><span class="meta">Sample data</span></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="panel-inner overview-body">
+        <p class="hero-sub">Last refresh: 2026-10-27 14:05:00</p>
+        <p class="hero-sub" id="market-summary">Market: SAMPLE feed: 40/40 sample symbols quoting</p>
         <div class="stats">
           <div class="stat">
             <span class="stat-label">Liquidation Value</span>
-            <span class="stat-value accent">$100,000.00</span>
+            <span class="stat-value accent">$32,839.80</span>
           </div>
           <div class="stat">
             <span class="stat-label">Cash Available</span>
-            <span class="stat-value accent2">$95,680.00</span>
+            <span class="stat-value accent2">$18,250.00</span>
           </div>
           <div class="stat">
             <span class="stat-label">Long Market Value</span>
-            <span class="stat-value accent2">$4,320.00</span>
+            <span class="stat-value accent2">$14,589.80</span>
           </div>
           <div class="stat">
             <span class="stat-label">Day P&amp;L</span>
-            <span class="stat-value good">$18.40 <small style="font-size:13px;">+0.02%</small></span>
+            <span class="stat-value good">$142.35 <small style="font-size:13px;">+0.43%</small></span>
           </div>
           <div class="stat">
             <span class="stat-label">Positions</span>
-            <span class="stat-value accent">4</span>
+            <span class="stat-value accent">5</span>
           </div>
           <div class="stat">
             <span class="stat-label">Account Number</span>
-            <span class="stat-value accent2">DEMO-0000</span>
+            <span class="stat-value accent2">SAMPLE-PAPER</span>
           </div>
         </div>
     </div></div></details>
-      <details class="panel" id="panel-positions" open><summary class="panel-head"><span class="panel-head-main"><h2>Positions</h2><span class="meta">4</span></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="table-scroll"><table><thead><tr><th>Symbol</th><th>Qty</th><th>Cost</th><th>Last</th><th>P&amp;L</th><th>P&amp;L %</th><th>Signal</th></tr></thead><tbody><tr data-sym="SPY"><td><span class="sym">SPY</span></td><td class="muted-val">4</td><td class="muted-val">$497.90</td><td class="muted-val">$500.00</td><td class="good-val">$8.40</td><td class="good-val">+0.42%</td><td><span class="tag enter" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">ENTER</span></td></tr><tr data-sym="QQQ"><td><span class="sym">QQQ</span></td><td class="muted-val">2</td><td class="muted-val">$427.60</td><td class="muted-val">$430.00</td><td class="good-val">$4.80</td><td class="good-val">+0.56%</td><td><span class="tag enter" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">ENTER</span></td></tr><tr data-sym="DIA"><td><span class="sym">DIA</span></td><td class="muted-val">2</td><td class="muted-val">$399.10</td><td class="muted-val">$400.00</td><td class="good-val">$1.80</td><td class="good-val">+0.23%</td><td><span class="tag watch" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">WATCH</span></td></tr><tr data-sym="IWM"><td><span class="sym">IWM</span></td><td class="muted-val">2</td><td class="muted-val">$211.20</td><td class="muted-val">$210.00</td><td class="bad-val">-$2.40</td><td class="bad-val">-0.57%</td><td><span class="tag avoid" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">AVOID</span></td></tr></tbody></table></div></div></details>
-      <details class="panel" id="panel-stops" open><summary class="panel-head"><span class="panel-head-main"><h2>Stops</h2></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="panel-inner"><table><thead><tr><th>Symbol</th><th>Qty</th><th>Stop Level</th></tr></thead><tbody><tr><td><span class="sym">SPY</span></td><td class="muted-val">4</td><td class="muted-val stop-cell">Held at IBKR:<br>1.60% trail x2 GTC<br>3.20% trail x2 GTC</td></tr><tr><td><span class="sym">QQQ</span></td><td class="muted-val">2</td><td class="muted-val stop-cell">Held at IBKR:<br>1.60% trail x1 GTC<br>3.20% trail x1 GTC</td></tr><tr><td><span class="sym">DIA</span></td><td class="muted-val">2</td><td class="muted-val stop-cell">Held at IBKR:<br>1.60% trail x1 GTC<br>3.20% trail x1 GTC</td></tr><tr><td><span class="sym">IWM</span></td><td class="muted-val">2</td><td class="muted-val stop-cell">Held at IBKR:<br>1.60% trail x1 GTC<br>3.20% trail x1 GTC</td></tr></tbody></table><p class="note-body" style="margin-top:10px;color:var(--muted);font-style:italic;font-size:12px;">After each buy, stop logic is required immediately.</p></div></div></details>
-      <details class="panel" id="panel-watchlist" open><summary class="panel-head"><span class="panel-head-main"><h2>Watchlist</h2><span class="meta">16/16</span></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="table-scroll"><table id="watchlist-table" class="sortable-table" data-renumber="0"><thead><tr><th class="sortable-th" data-sort-key="rank"># <span class="sort-ind" data-key="rank">⇅</span></th><th class="sortable-th" data-sort-key="symbol">Symbol <span class="sort-ind" data-key="symbol">⇅</span></th><th class="sortable-th" data-sort-key="last">Last <span class="sort-ind" data-key="last">⇅</span></th><th class="sortable-th" data-sort-key="change">Change <span class="sort-ind" data-key="change">⇅</span></th><th class="sortable-th" data-sort-key="percent">% <span class="sort-ind" data-key="percent">⇅</span></th><th class="sortable-th" data-sort-key="phaseOrd">Phase <span class="sort-ind" data-key="phaseOrd">⇅</span></th><th class="sortable-th" data-sort-key="signalOrd">Signal <span class="sort-ind" data-key="signalOrd">⇅</span></th><th class="sortable-th" data-sort-key="status">Status <span class="sort-ind" data-key="status">⇅</span></th></tr></thead><tbody><tr data-sym="SPY" data-symbol="SPY" data-last="500.0" data-change="2.1" data-percent="0.42" data-phase="Light Blue" data-rank="1" data-phase-ord="4" data-signal-ord="2"><td class="muted-val rank-cell">#1</td><td><span class="sym2">SPY</span></td><td class="muted-val">$500.00</td><td class="good-val">$2.10</td><td class="good-val">+0.42%</td><td><span class="phase-badge" style="color:#90caf9;border-color:#90caf9;background:#90caf922;">Light Blue</span></td><td><span class="tag enter" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="QQQ" data-symbol="QQQ" data-last="430.0" data-change="2.37" data-percent="0.55" data-phase="Light Blue" data-rank="2" data-phase-ord="4" data-signal-ord="2"><td class="muted-val rank-cell">#2</td><td><span class="sym2">QQQ</span></td><td class="muted-val">$430.00</td><td class="good-val">$2.37</td><td class="good-val">+0.55%</td><td><span class="phase-badge" style="color:#90caf9;border-color:#90caf9;background:#90caf922;">Light Blue</span></td><td><span class="tag enter" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="DIA" data-symbol="DIA" data-last="400.0" data-change="0.72" data-percent="0.18" data-phase="Neutral" data-rank="3" data-phase-ord="3" data-signal-ord="1"><td class="muted-val rank-cell">#3</td><td><span class="sym2">DIA</span></td><td class="muted-val">$400.00</td><td class="good-val">$0.72</td><td class="good-val">+0.18%</td><td><span class="phase-badge" style="color:#aaaaaa;border-color:#aaaaaa;background:#aaaaaa22;">Neutral</span></td><td><span class="tag watch" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">WATCH</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="IWM" data-symbol="IWM" data-last="210.0" data-change="-0.73" data-percent="-0.35" data-phase="Yellow" data-rank="4" data-phase-ord="2" data-signal-ord="0"><td class="muted-val rank-cell">#4</td><td><span class="sym2">IWM</span></td><td class="muted-val">$210.00</td><td class="bad-val">-$0.73</td><td class="bad-val">-0.35%</td><td><span class="phase-badge" style="color:#ffd54f;border-color:#ffd54f;background:#ffd54f22;">Yellow</span></td><td><span class="tag avoid" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">AVOID</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="AAPL" data-symbol="AAPL" data-last="190.0" data-change="1.8" data-percent="0.95" data-phase="Blue" data-rank="5" data-phase-ord="5" data-signal-ord="2"><td class="muted-val rank-cell">#5</td><td><span class="sym2">AAPL</span></td><td class="muted-val">$190.00</td><td class="good-val">$1.80</td><td class="good-val">+0.95%</td><td><span class="phase-badge" style="color:#2979ff;border-color:#2979ff;background:#2979ff22;">Blue</span></td><td><span class="tag enter" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="MSFT" data-symbol="MSFT" data-last="410.0" data-change="-0.49" data-percent="-0.12" data-phase="Neutral" data-rank="6" data-phase-ord="3" data-signal-ord="1"><td class="muted-val rank-cell">#6</td><td><span class="sym2">MSFT</span></td><td class="muted-val">$410.00</td><td class="bad-val">-$0.49</td><td class="bad-val">-0.12%</td><td><span class="phase-badge" style="color:#aaaaaa;border-color:#aaaaaa;background:#aaaaaa22;">Neutral</span></td><td><span class="tag watch" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">WATCH</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="NVDA" data-symbol="NVDA" data-last="120.0" data-change="1.92" data-percent="1.6" data-phase="Dark Blue" data-rank="7" data-phase-ord="6" data-signal-ord="2"><td class="muted-val rank-cell">#7</td><td><span class="sym2">NVDA</span></td><td class="muted-val">$120.00</td><td class="good-val">$1.92</td><td class="good-val">+1.60%</td><td><span class="phase-badge" style="color:#4a9eff;border-color:#4a9eff;background:#4a9eff22;">Dark Blue</span></td><td><span class="tag enter" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="AMZN" data-symbol="AMZN" data-last="180.0" data-change="0.56" data-percent="0.31" data-phase="Light Blue" data-rank="8" data-phase-ord="4" data-signal-ord="2"><td class="muted-val rank-cell">#8</td><td><span class="sym2">AMZN</span></td><td class="muted-val">$180.00</td><td class="good-val">$0.56</td><td class="good-val">+0.31%</td><td><span class="phase-badge" style="color:#90caf9;border-color:#90caf9;background:#90caf922;">Light Blue</span></td><td><span class="tag enter" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="GOOGL" data-symbol="GOOGL" data-last="160.0" data-change="-0.77" data-percent="-0.48" data-phase="Yellow" data-rank="9" data-phase-ord="2" data-signal-ord="0"><td class="muted-val rank-cell">#9</td><td><span class="sym2">GOOGL</span></td><td class="muted-val">$160.00</td><td class="bad-val">-$0.77</td><td class="bad-val">-0.48%</td><td><span class="phase-badge" style="color:#ffd54f;border-color:#ffd54f;background:#ffd54f22;">Yellow</span></td><td><span class="tag avoid" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">AVOID</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="META" data-symbol="META" data-last="500.0" data-change="0.4" data-percent="0.08" data-phase="Neutral" data-rank="10" data-phase-ord="3" data-signal-ord="1"><td class="muted-val rank-cell">#10</td><td><span class="sym2">META</span></td><td class="muted-val">$500.00</td><td class="good-val">$0.40</td><td class="good-val">+0.08%</td><td><span class="phase-badge" style="color:#aaaaaa;border-color:#aaaaaa;background:#aaaaaa22;">Neutral</span></td><td><span class="tag watch" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">WATCH</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="GLD" data-symbol="GLD" data-last="230.0" data-change="0.83" data-percent="0.36" data-phase="Light Blue" data-rank="11" data-phase-ord="4" data-signal-ord="2"><td class="muted-val rank-cell">#11</td><td><span class="sym2">GLD</span></td><td class="muted-val">$230.00</td><td class="good-val">$0.83</td><td class="good-val">+0.36%</td><td><span class="phase-badge" style="color:#90caf9;border-color:#90caf9;background:#90caf922;">Light Blue</span></td><td><span class="tag enter" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="TLT" data-symbol="TLT" data-last="95.0" data-change="-0.59" data-percent="-0.62" data-phase="Yellow" data-rank="12" data-phase-ord="2" data-signal-ord="0"><td class="muted-val rank-cell">#12</td><td><span class="sym2">TLT</span></td><td class="muted-val">$95.00</td><td class="bad-val">-$0.59</td><td class="bad-val">-0.62%</td><td><span class="phase-badge" style="color:#ffd54f;border-color:#ffd54f;background:#ffd54f22;">Yellow</span></td><td><span class="tag avoid" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">AVOID</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="XLF" data-symbol="XLF" data-last="42.0" data-change="0.09" data-percent="0.22" data-phase="Neutral" data-rank="13" data-phase-ord="3" data-signal-ord="1"><td class="muted-val rank-cell">#13</td><td><span class="sym2">XLF</span></td><td class="muted-val">$42.00</td><td class="good-val">$0.09</td><td class="good-val">+0.22%</td><td><span class="phase-badge" style="color:#aaaaaa;border-color:#aaaaaa;background:#aaaaaa22;">Neutral</span></td><td><span class="tag watch" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">WATCH</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="XLE" data-symbol="XLE" data-last="90.0" data-change="-0.99" data-percent="-1.1" data-phase="Orange" data-rank="14" data-phase-ord="1" data-signal-ord="0"><td class="muted-val rank-cell">#14</td><td><span class="sym2">XLE</span></td><td class="muted-val">$90.00</td><td class="bad-val">-$0.99</td><td class="bad-val">-1.10%</td><td><span class="phase-badge" style="color:#ff9800;border-color:#ff9800;background:#ff980022;">Orange</span></td><td><span class="tag avoid" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">AVOID</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="XLK" data-symbol="XLK" data-last="210.0" data-change="1.47" data-percent="0.7" data-phase="Light Blue" data-rank="15" data-phase-ord="4" data-signal-ord="2"><td class="muted-val rank-cell">#15</td><td><span class="sym2">XLK</span></td><td class="muted-val">$210.00</td><td class="good-val">$1.47</td><td class="good-val">+0.70%</td><td><span class="phase-badge" style="color:#90caf9;border-color:#90caf9;background:#90caf922;">Light Blue</span></td><td><span class="tag enter" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="JPM" data-symbol="JPM" data-last="200.0" data-change="-0.1" data-percent="-0.05" data-phase="Neutral" data-rank="16" data-phase-ord="3" data-signal-ord="1"><td class="muted-val rank-cell">#16</td><td><span class="sym2">JPM</span></td><td class="muted-val">$200.00</td><td class="bad-val">-$0.10</td><td class="bad-val">-0.05%</td><td><span class="phase-badge" style="color:#aaaaaa;border-color:#aaaaaa;background:#aaaaaa22;">Neutral</span></td><td><span class="tag watch" title="ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between.">WATCH</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr></tbody></table></div><p class="note-body" style="margin-top:8px;color:var(--muted);font-size:11px;">Signal: ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between. A symbol with no live price reads NO DATA and is never classified.</p></div></details>
-
+      <details class="panel" id="panel-account-summary" open><summary class="panel-head"><span class="panel-head-main"><h2>Account Summary</h2><span class="meta">USD</span></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="panel-inner"><p class="ro-note">Account SAMPLE-PAPER · sample snapshot: 2026-10-27 14:05:00. IB pushes these about every 3 minutes; P&amp;L updates live.</p><div class="acct-sum-grid"><div class="stat" data-field="net_liquidation"><span class="stat-label">Net Liquidation</span><span class="stat-value accent2">$32,839.80</span></div><div class="stat" data-field="total_cash"><span class="stat-label">Total Cash</span><span class="stat-value accent2">$18,250.00</span></div><div class="stat" data-field="buying_power"><span class="stat-label">Buying Power</span><span class="stat-value accent2">$73,000.00</span></div><div class="stat" data-field="available_funds"><span class="stat-label">Available Funds</span><span class="stat-value accent2">$18,250.00</span></div><div class="stat" data-field="excess_liquidity"><span class="stat-label">Excess Liquidity</span><span class="stat-value accent2">$17,337.50</span></div><div class="stat" data-field="maint_margin"><span class="stat-label">Maintenance Margin</span><span class="stat-value accent2">$3,647.45</span></div><div class="stat" data-field="init_margin"><span class="stat-label">Initial Margin</span><span class="stat-value accent2">$4,376.94</span></div><div class="stat" data-field="gross_position_value"><span class="stat-label">Gross Position Value</span><span class="stat-value accent2">$14,589.80</span></div><div class="stat" data-field="daily_pnl"><span class="stat-label">Daily P&amp;L</span><span class="stat-value good">$142.35</span></div><div class="stat" data-field="unrealized_pnl"><span class="stat-label">Unrealized P&amp;L</span><span class="stat-value good">$170.50</span></div><div class="stat" data-field="realized_pnl"><span class="stat-label">Realized P&amp;L</span><span class="stat-value good">$0.00</span></div><div class="stat" data-field="currency"><span class="stat-label">Currency</span><span class="stat-value">USD</span></div></div></div></div></details>
+      <details class="panel" id="panel-positions" open><summary class="panel-head"><span class="panel-head-main"><h2>Positions</h2><span class="meta">5</span></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="table-scroll"><table id="positions-table" class="sortable-table" data-sort-persist="1"><thead><tr><th class="sortable-th" data-sort-type="text" data-sort-key="symbol">Symbol <span class="sort-ind" data-key="symbol">⇅</span></th><th class="sortable-th" data-sort-type="num" data-sort-key="qty">Qty <span class="sort-ind" data-key="qty">⇅</span></th><th class="sortable-th" data-sort-type="num" data-sort-key="cost">Cost <span class="sort-ind" data-key="cost">⇅</span></th><th class="sortable-th" data-sort-type="num" data-sort-key="last">Last <span class="sort-ind" data-key="last">⇅</span></th><th class="sortable-th" data-sort-type="num" data-sort-key="pnl">P&amp;L <span class="sort-ind" data-key="pnl">⇅</span></th><th class="sortable-th" data-sort-type="num" data-sort-key="pnlPct">P&amp;L % <span class="sort-ind" data-key="pnlPct">⇅</span></th><th class="sortable-th" data-sort-type="num" data-sort-key="signalOrd">Signal <span class="sort-ind" data-key="signalOrd">⇅</span></th></tr></thead><tbody><tr data-sym="SPY" data-symbol="SPY" data-qty="10.0" data-cost="505.2" data-last="512.4" data-pnl="72.0" data-pnl-pct="1.43" data-signal-ord="2"><td><span class="sym">SPY</span></td><td class="muted-val">10.0</td><td class="muted-val">$505.20</td><td class="muted-val">$512.40</td><td class="good-val">$72.00</td><td class="good-val">+1.43%</td><td><span class="tag enter">ENTER</span></td></tr><tr data-sym="QQQ" data-symbol="QQQ" data-qty="8.0" data-cost="430.75" data-last="436.1" data-pnl="42.8" data-pnl-pct="1.24" data-signal-ord="2"><td><span class="sym">QQQ</span></td><td class="muted-val">8.0</td><td class="muted-val">$430.75</td><td class="muted-val">$436.10</td><td class="good-val">$42.80</td><td class="good-val">+1.24%</td><td><span class="tag enter">ENTER</span></td></tr><tr data-sym="XLE" data-symbol="XLE" data-qty="25.0" data-cost="84.1" data-last="86.44" data-pnl="58.5" data-pnl-pct="2.78" data-signal-ord="2"><td><span class="sym">XLE</span></td><td class="muted-val">25.0</td><td class="muted-val">$84.10</td><td class="muted-val">$86.44</td><td class="good-val">$58.50</td><td class="good-val">+2.78%</td><td><span class="tag enter">ENTER</span></td></tr><tr data-sym="AAPL" data-symbol="AAPL" data-qty="12.0" data-cost="226.4" data-last="224.6" data-pnl="-21.6" data-pnl-pct="-0.8" data-signal-ord="2"><td><span class="sym">AAPL</span></td><td class="muted-val">12.0</td><td class="muted-val">$226.40</td><td class="muted-val">$224.60</td><td class="bad-val">-$21.60</td><td class="bad-val">-0.80%</td><td><span class="tag enter">ENTER</span></td></tr><tr data-sym="SLV" data-symbol="SLV" data-qty="40.0" data-cost="27.55" data-last="28.02" data-pnl="18.8" data-pnl-pct="1.71" data-signal-ord="2"><td><span class="sym">SLV</span></td><td class="muted-val">40.0</td><td class="muted-val">$27.55</td><td class="muted-val">$28.02</td><td class="good-val">$18.80</td><td class="good-val">+1.71%</td><td><span class="tag enter">ENTER</span></td></tr></tbody></table></div></div></details>
+      <details class="panel" id="panel-stops" open><summary class="panel-head"><span class="panel-head-main"><h2>Stops</h2></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="panel-inner"><table><thead><tr><th>Symbol</th><th>Qty</th><th>Stop Level</th></tr></thead><tbody><tr><td><span class="sym">SPY</span></td><td class="muted-val">10.0</td><td class="muted-val stop-cell">Held at broker: protective stop STP 489.00 x10 GTC</td></tr><tr><td><span class="sym">QQQ</span></td><td class="muted-val">8.0</td><td class="muted-val stop-cell">Held at broker: protective stop STP 414.50 x8 GTC</td></tr><tr><td><span class="sym">XLE</span></td><td class="muted-val">25.0</td><td class="muted-val stop-cell">Held at broker: protective stop STP 80.90 x25 GTC</td></tr><tr><td><span class="sym">AAPL</span></td><td class="muted-val">12.0</td><td class="muted-val stop-cell">Held at broker: protective stop STP 215.00 x12 GTC</td></tr><tr><td><span class="sym">SLV</span></td><td class="muted-val">40.0</td><td class="muted-val stop-cell">Held at broker: protective stop STP 26.10 x40 GTC</td></tr></tbody></table><p class="note-body" style="margin-top:10px;color:var(--muted);font-style:italic;font-size:12px;">After each buy, stop logic is required immediately.</p></div></div></details>
+      <details class="panel" id="panel-working-orders" open><summary class="panel-head"><span class="panel-head-main"><h2>Working Orders</h2><span class="meta">5</span></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="panel-inner"><p class="ro-note">Read-only: every order IB reports as working on this account, including ones Rosie did not place. Nothing here can cancel or change an order. Sample snapshot: 2026-10-27 14:05:00.</p><div class="table-scroll"><table class="wo-table" id="working-orders-table"><thead><tr><th>Order</th><th>Type / Price</th><th>Filled / Qty</th><th>Status / TIF</th><th>By / Seen</th></tr></thead><tbody><tr data-perm=""><td data-label="Order"><span class="wo-cell"><span class="wo-l1"><span class="sym">SPY</span> <span class="bad-val">SELL</span></span><span class="wo-l2 wo-ids">#1001</span></span></td><td data-label="Type / Price" class="num">STP $489.00</td><td data-label="Filled / Qty" class="num"><span class="wo-cell"><span class="wo-l1">0/10</span><span class="wo-l2">10 rem</span></span></td><td data-label="Status / TIF"><span class="wo-cell"><span class="wo-l1">PreSubmitted</span><span class="wo-l2">GTC</span></span></td><td data-label="Placed by / Seen"><span class="wo-cell"><span class="wo-l1"><span class="wo-src rosie">Rosie</span></span><span class="wo-l2">seen 14:05:00</span></span></td></tr><tr data-perm=""><td data-label="Order"><span class="wo-cell"><span class="wo-l1"><span class="sym">QQQ</span> <span class="bad-val">SELL</span></span><span class="wo-l2 wo-ids">#1002</span></span></td><td data-label="Type / Price" class="num">STP $414.50</td><td data-label="Filled / Qty" class="num"><span class="wo-cell"><span class="wo-l1">0/8</span><span class="wo-l2">8 rem</span></span></td><td data-label="Status / TIF"><span class="wo-cell"><span class="wo-l1">PreSubmitted</span><span class="wo-l2">GTC</span></span></td><td data-label="Placed by / Seen"><span class="wo-cell"><span class="wo-l1"><span class="wo-src rosie">Rosie</span></span><span class="wo-l2">seen 14:05:00</span></span></td></tr><tr data-perm=""><td data-label="Order"><span class="wo-cell"><span class="wo-l1"><span class="sym">XLE</span> <span class="bad-val">SELL</span></span><span class="wo-l2 wo-ids">#1003</span></span></td><td data-label="Type / Price" class="num">STP $80.90</td><td data-label="Filled / Qty" class="num"><span class="wo-cell"><span class="wo-l1">0/25</span><span class="wo-l2">25 rem</span></span></td><td data-label="Status / TIF"><span class="wo-cell"><span class="wo-l1">PreSubmitted</span><span class="wo-l2">GTC</span></span></td><td data-label="Placed by / Seen"><span class="wo-cell"><span class="wo-l1"><span class="wo-src rosie">Rosie</span></span><span class="wo-l2">seen 14:05:00</span></span></td></tr><tr data-perm=""><td data-label="Order"><span class="wo-cell"><span class="wo-l1"><span class="sym">AAPL</span> <span class="bad-val">SELL</span></span><span class="wo-l2 wo-ids">#1004</span></span></td><td data-label="Type / Price" class="num">STP $215.00</td><td data-label="Filled / Qty" class="num"><span class="wo-cell"><span class="wo-l1">0/12</span><span class="wo-l2">12 rem</span></span></td><td data-label="Status / TIF"><span class="wo-cell"><span class="wo-l1">PreSubmitted</span><span class="wo-l2">GTC</span></span></td><td data-label="Placed by / Seen"><span class="wo-cell"><span class="wo-l1"><span class="wo-src rosie">Rosie</span></span><span class="wo-l2">seen 14:05:00</span></span></td></tr><tr data-perm=""><td data-label="Order"><span class="wo-cell"><span class="wo-l1"><span class="sym">SLV</span> <span class="bad-val">SELL</span></span><span class="wo-l2 wo-ids">#1005</span></span></td><td data-label="Type / Price" class="num">STP $26.10</td><td data-label="Filled / Qty" class="num"><span class="wo-cell"><span class="wo-l1">0/40</span><span class="wo-l2">40 rem</span></span></td><td data-label="Status / TIF"><span class="wo-cell"><span class="wo-l1">PreSubmitted</span><span class="wo-l2">GTC</span></span></td><td data-label="Placed by / Seen"><span class="wo-cell"><span class="wo-l1"><span class="wo-src rosie">Rosie</span></span><span class="wo-l2">seen 14:05:00</span></span></td></tr></tbody></table></div></div></div></details><details class="panel" id="panel-derivatives" open><summary class="panel-head"><span class="panel-head-main"><h2>Options &amp; Futures</h2><span class="meta">0</span></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><p class="ro-empty">Read only. Allowed: SPY options (sample). No buy ticket yet.</p><p class="ro-empty">No option/futures quotes yet.</p><p class="ro-empty">IB margin (account, read-only): initial —, maintenance —, excess liquidity —. Sizing stays risk-based.</p><p class="ro-empty">Sample panel: no contracts shown.</p></div></details>
+      <details class="panel" id="panel-watchlist" open><summary class="panel-head"><span class="panel-head-main"><h2>Watchlist</h2><span class="meta">40/40</span></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="table-scroll"><table id="watchlist-table" class="sortable-table" data-renumber="0"><thead><tr><th class="sortable-th" data-sort-key="rank"># <span class="sort-ind" data-key="rank">⇅</span></th><th class="sortable-th" data-sort-key="symbol">Symbol <span class="sort-ind" data-key="symbol">⇅</span></th><th class="sortable-th" data-sort-key="last">Last <span class="sort-ind" data-key="last">⇅</span></th><th class="sortable-th" data-sort-key="change">Change <span class="sort-ind" data-key="change">⇅</span></th><th class="sortable-th" data-sort-key="percent">% <span class="sort-ind" data-key="percent">⇅</span></th><th class="sortable-th" data-sort-key="phaseOrd">Phase <span class="sort-ind" data-key="phaseOrd">⇅</span></th><th class="sortable-th" data-sort-key="signalOrd">Signal <span class="sort-ind" data-key="signalOrd">⇅</span></th><th class="sortable-th" data-sort-key="status">Status <span class="sort-ind" data-key="status">⇅</span></th></tr></thead><tbody><tr data-sym="SPY" data-symbol="SPY" data-last="512.4" data-change="2.15" data-percent="0.42" data-phase="Light Blue" data-rank="1" data-phase-ord="4" data-signal-ord="2"><td class="muted-val rank-cell">#1</td><td><span class="sym2">SPY</span></td><td class="muted-val">$512.40</td><td class="good-val">$2.15</td><td class="good-val">+0.42%</td><td><span class="phase-badge" style="color:#90caf9;border-color:#90caf9;background:#90caf922;">Light Blue</span></td><td><span class="tag enter">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="QQQ" data-symbol="QQQ" data-last="436.1" data-change="2.66" data-percent="0.61" data-phase="Light Blue" data-rank="2" data-phase-ord="4" data-signal-ord="2"><td class="muted-val rank-cell">#2</td><td><span class="sym2">QQQ</span></td><td class="muted-val">$436.10</td><td class="good-val">$2.66</td><td class="good-val">+0.61%</td><td><span class="phase-badge" style="color:#90caf9;border-color:#90caf9;background:#90caf922;">Light Blue</span></td><td><span class="tag enter">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="DIA" data-symbol="DIA" data-last="389.75" data-change="0.47" data-percent="0.12" data-phase="Neutral" data-rank="3" data-phase-ord="3" data-signal-ord="1"><td class="muted-val rank-cell">#3</td><td><span class="sym2">DIA</span></td><td class="muted-val">$389.75</td><td class="good-val">$0.47</td><td class="good-val">+0.12%</td><td><span class="phase-badge" style="color:#aaaaaa;border-color:#aaaaaa;background:#aaaaaa22;">Neutral</span></td><td><span class="tag watch">WATCH</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="IWM" data-symbol="IWM" data-last="204.3" data-change="-0.72" data-percent="-0.35" data-phase="Yellow" data-rank="4" data-phase-ord="2" data-signal-ord="0"><td class="muted-val rank-cell">#4</td><td><span class="sym2">IWM</span></td><td class="muted-val">$204.30</td><td class="bad-val">-$0.72</td><td class="bad-val">-0.35%</td><td><span class="phase-badge" style="color:#ffd54f;border-color:#ffd54f;background:#ffd54f22;">Yellow</span></td><td><span class="tag avoid">AVOID</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="HYG" data-symbol="HYG" data-last="77.9" data-change="0.04" data-percent="0.05" data-phase="Neutral" data-rank="5" data-phase-ord="3" data-signal-ord="1"><td class="muted-val rank-cell">#5</td><td><span class="sym2">HYG</span></td><td class="muted-val">$77.90</td><td class="good-val">$0.04</td><td class="good-val">+0.05%</td><td><span class="phase-badge" style="color:#aaaaaa;border-color:#aaaaaa;background:#aaaaaa22;">Neutral</span></td><td><span class="tag watch">WATCH</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="XLF" data-symbol="XLF" data-last="44.88" data-change="-0.08" data-percent="-0.18" data-phase="Neutral" data-rank="6" data-phase-ord="3" data-signal-ord="1"><td class="muted-val rank-cell">#6</td><td><span class="sym2">XLF</span></td><td class="muted-val">$44.88</td><td class="bad-val">-$0.08</td><td class="bad-val">-0.18%</td><td><span class="phase-badge" style="color:#aaaaaa;border-color:#aaaaaa;background:#aaaaaa22;">Neutral</span></td><td><span class="tag watch">WATCH</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="TLT" data-symbol="TLT" data-last="88.15" data-change="0.24" data-percent="0.27" data-phase="Light Blue" data-rank="7" data-phase-ord="4" data-signal-ord="1"><td class="muted-val rank-cell">#7</td><td><span class="sym2">TLT</span></td><td class="muted-val">$88.15</td><td class="good-val">$0.24</td><td class="good-val">+0.27%</td><td><span class="phase-badge" style="color:#90caf9;border-color:#90caf9;background:#90caf922;">Light Blue</span></td><td><span class="tag watch">WATCH</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="BAC" data-symbol="BAC" data-last="39.6" data-change="-0.17" data-percent="-0.44" data-phase="Yellow" data-rank="8" data-phase-ord="2" data-signal-ord="0"><td class="muted-val rank-cell">#8</td><td><span class="sym2">BAC</span></td><td class="muted-val">$39.60</td><td class="bad-val">-$0.17</td><td class="bad-val">-0.44%</td><td><span class="phase-badge" style="color:#ffd54f;border-color:#ffd54f;background:#ffd54f22;">Yellow</span></td><td><span class="tag avoid">AVOID</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="XLE" data-symbol="XLE" data-last="86.44" data-change="0.97" data-percent="1.12" data-phase="Blue" data-rank="9" data-phase-ord="5" data-signal-ord="2"><td class="muted-val rank-cell">#9</td><td><span class="sym2">XLE</span></td><td class="muted-val">$86.44</td><td class="good-val">$0.97</td><td class="good-val">+1.12%</td><td><span class="phase-badge" style="color:#2979ff;border-color:#2979ff;background:#2979ff22;">Blue</span></td><td><span class="tag enter">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="TNA" data-symbol="TNA" data-last="41.15" data-change="-0.43" data-percent="-1.05" data-phase="Orange" data-rank="10" data-phase-ord="1" data-signal-ord="0"><td class="muted-val rank-cell">#10</td><td><span class="sym2">TNA</span></td><td class="muted-val">$41.15</td><td class="bad-val">-$0.43</td><td class="bad-val">-1.05%</td><td><span class="phase-badge" style="color:#ff9800;border-color:#ff9800;background:#ff980022;">Orange</span></td><td><span class="tag avoid">AVOID</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="SLV" data-symbol="SLV" data-last="28.02" data-change="0.21" data-percent="0.74" data-phase="Light Blue" data-rank="11" data-phase-ord="4" data-signal-ord="2"><td class="muted-val rank-cell">#11</td><td><span class="sym2">SLV</span></td><td class="muted-val">$28.02</td><td class="good-val">$0.21</td><td class="good-val">+0.74%</td><td><span class="phase-badge" style="color:#90caf9;border-color:#90caf9;background:#90caf922;">Light Blue</span></td><td><span class="tag enter">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="SMCI" data-symbol="SMCI" data-last="38.2" data-change="0.88" data-percent="2.31" data-phase="Dark Blue" data-rank="12" data-phase-ord="6" data-signal-ord="2"><td class="muted-val rank-cell">#12</td><td><span class="sym2">SMCI</span></td><td class="muted-val">$38.20</td><td class="good-val">$0.88</td><td class="good-val">+2.31%</td><td><span class="phase-badge" style="color:#4a9eff;border-color:#4a9eff;background:#4a9eff22;">Dark Blue</span></td><td><span class="tag enter">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="NVDA" data-symbol="NVDA" data-last="131.8" data-change="1.92" data-percent="1.46" data-phase="Blue" data-rank="13" data-phase-ord="5" data-signal-ord="2"><td class="muted-val rank-cell">#13</td><td><span class="sym2">NVDA</span></td><td class="muted-val">$131.80</td><td class="good-val">$1.92</td><td class="good-val">+1.46%</td><td><span class="phase-badge" style="color:#2979ff;border-color:#2979ff;background:#2979ff22;">Blue</span></td><td><span class="tag enter">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="ETN" data-symbol="ETN" data-last="322.1" data-change="1.22" data-percent="0.38" data-phase="Light Blue" data-rank="14" data-phase-ord="4" data-signal-ord="2"><td class="muted-val rank-cell">#14</td><td><span class="sym2">ETN</span></td><td class="muted-val">$322.10</td><td class="good-val">$1.22</td><td class="good-val">+0.38%</td><td><span class="phase-badge" style="color:#90caf9;border-color:#90caf9;background:#90caf922;">Light Blue</span></td><td><span class="tag enter">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="PWR" data-symbol="PWR" data-last="281.5" data-change="-0.62" data-percent="-0.22" data-phase="Neutral" data-rank="15" data-phase-ord="3" data-signal-ord="1"><td class="muted-val rank-cell">#15</td><td><span class="sym2">PWR</span></td><td class="muted-val">$281.50</td><td class="bad-val">-$0.62</td><td class="bad-val">-0.22%</td><td><span class="phase-badge" style="color:#aaaaaa;border-color:#aaaaaa;background:#aaaaaa22;">Neutral</span></td><td><span class="tag watch">WATCH</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="GEV" data-symbol="GEV" data-last="312.4" data-change="2.97" data-percent="0.95" data-phase="Blue" data-rank="16" data-phase-ord="5" data-signal-ord="2"><td class="muted-val rank-cell">#16</td><td><span class="sym2">GEV</span></td><td class="muted-val">$312.40</td><td class="good-val">$2.97</td><td class="good-val">+0.95%</td><td><span class="phase-badge" style="color:#2979ff;border-color:#2979ff;background:#2979ff22;">Blue</span></td><td><span class="tag enter">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="AMD" data-symbol="AMD" data-last="148.3" data-change="-0.98" data-percent="-0.66" data-phase="Yellow" data-rank="17" data-phase-ord="2" data-signal-ord="0"><td class="muted-val rank-cell">#17</td><td><span class="sym2">AMD</span></td><td class="muted-val">$148.30</td><td class="bad-val">-$0.98</td><td class="bad-val">-0.66%</td><td><span class="phase-badge" style="color:#ffd54f;border-color:#ffd54f;background:#ffd54f22;">Yellow</span></td><td><span class="tag avoid">AVOID</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="MU" data-symbol="MU" data-last="101.2" data-change="1.9" data-percent="1.88" data-phase="Dark Blue" data-rank="18" data-phase-ord="6" data-signal-ord="2"><td class="muted-val rank-cell">#18</td><td><span class="sym2">MU</span></td><td class="muted-val">$101.20</td><td class="good-val">$1.90</td><td class="good-val">+1.88%</td><td><span class="phase-badge" style="color:#4a9eff;border-color:#4a9eff;background:#4a9eff22;">Dark Blue</span></td><td><span class="tag enter">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="AAPL" data-symbol="AAPL" data-last="224.6" data-change="0.74" data-percent="0.33" data-phase="Light Blue" data-rank="19" data-phase-ord="4" data-signal-ord="2"><td class="muted-val rank-cell">#19</td><td><span class="sym2">AAPL</span></td><td class="muted-val">$224.60</td><td class="good-val">$0.74</td><td class="good-val">+0.33%</td><td><span class="phase-badge" style="color:#90caf9;border-color:#90caf9;background:#90caf922;">Light Blue</span></td><td><span class="tag enter">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="MSFT" data-symbol="MSFT" data-last="418.9" data-change="0.88" data-percent="0.21" data-phase="Neutral" data-rank="20" data-phase-ord="3" data-signal-ord="1"><td class="muted-val rank-cell">#20</td><td><span class="sym2">MSFT</span></td><td class="muted-val">$418.90</td><td class="good-val">$0.88</td><td class="good-val">+0.21%</td><td><span class="phase-badge" style="color:#aaaaaa;border-color:#aaaaaa;background:#aaaaaa22;">Neutral</span></td><td><span class="tag watch">WATCH</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="GOOGL" data-symbol="GOOGL" data-last="171.4" data-change="-0.21" data-percent="-0.12" data-phase="Neutral" data-rank="21" data-phase-ord="3" data-signal-ord="1"><td class="muted-val rank-cell">#21</td><td><span class="sym2">GOOGL</span></td><td class="muted-val">$171.40</td><td class="bad-val">-$0.21</td><td class="bad-val">-0.12%</td><td><span class="phase-badge" style="color:#aaaaaa;border-color:#aaaaaa;background:#aaaaaa22;">Neutral</span></td><td><span class="tag watch">WATCH</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="AMZN" data-symbol="AMZN" data-last="186.3" data-change="1.06" data-percent="0.57" data-phase="Light Blue" data-rank="22" data-phase-ord="4" data-signal-ord="2"><td class="muted-val rank-cell">#22</td><td><span class="sym2">AMZN</span></td><td class="muted-val">$186.30</td><td class="good-val">$1.06</td><td class="good-val">+0.57%</td><td><span class="phase-badge" style="color:#90caf9;border-color:#90caf9;background:#90caf922;">Light Blue</span></td><td><span class="tag enter">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="META" data-symbol="META" data-last="562.1" data-change="4.72" data-percent="0.84" data-phase="Blue" data-rank="23" data-phase-ord="5" data-signal-ord="2"><td class="muted-val rank-cell">#23</td><td><span class="sym2">META</span></td><td class="muted-val">$562.10</td><td class="good-val">$4.72</td><td class="good-val">+0.84%</td><td><span class="phase-badge" style="color:#2979ff;border-color:#2979ff;background:#2979ff22;">Blue</span></td><td><span class="tag enter">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="TSLA" data-symbol="TSLA" data-last="241.7" data-change="-3.92" data-percent="-1.62" data-phase="Red" data-rank="24" data-phase-ord="0" data-signal-ord="0"><td class="muted-val rank-cell">#24</td><td><span class="sym2">TSLA</span></td><td class="muted-val">$241.70</td><td class="bad-val">-$3.92</td><td class="bad-val">-1.62%</td><td><span class="phase-badge" style="color:#ef5350;border-color:#ef5350;background:#ef535022;">Red</span></td><td><span class="tag avoid">AVOID</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="AVGO" data-symbol="AVGO" data-last="168.2" data-change="1.73" data-percent="1.03" data-phase="Blue" data-rank="25" data-phase-ord="5" data-signal-ord="2"><td class="muted-val rank-cell">#25</td><td><span class="sym2">AVGO</span></td><td class="muted-val">$168.20</td><td class="good-val">$1.73</td><td class="good-val">+1.03%</td><td><span class="phase-badge" style="color:#2979ff;border-color:#2979ff;background:#2979ff22;">Blue</span></td><td><span class="tag enter">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="ORCL" data-symbol="ORCL" data-last="161.5" data-change="0.78" data-percent="0.48" data-phase="Light Blue" data-rank="26" data-phase-ord="4" data-signal-ord="2"><td class="muted-val rank-cell">#26</td><td><span class="sym2">ORCL</span></td><td class="muted-val">$161.50</td><td class="good-val">$0.78</td><td class="good-val">+0.48%</td><td><span class="phase-badge" style="color:#90caf9;border-color:#90caf9;background:#90caf922;">Light Blue</span></td><td><span class="tag enter">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="CRM" data-symbol="CRM" data-last="281.3" data-change="-0.82" data-percent="-0.29" data-phase="Yellow" data-rank="27" data-phase-ord="2" data-signal-ord="1"><td class="muted-val rank-cell">#27</td><td><span class="sym2">CRM</span></td><td class="muted-val">$281.30</td><td class="bad-val">-$0.82</td><td class="bad-val">-0.29%</td><td><span class="phase-badge" style="color:#ffd54f;border-color:#ffd54f;background:#ffd54f22;">Yellow</span></td><td><span class="tag watch">WATCH</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="ADBE" data-symbol="ADBE" data-last="498.7" data-change="-4.04" data-percent="-0.81" data-phase="Orange" data-rank="28" data-phase-ord="1" data-signal-ord="0"><td class="muted-val rank-cell">#28</td><td><span class="sym2">ADBE</span></td><td class="muted-val">$498.70</td><td class="bad-val">-$4.04</td><td class="bad-val">-0.81%</td><td><span class="phase-badge" style="color:#ff9800;border-color:#ff9800;background:#ff980022;">Orange</span></td><td><span class="tag avoid">AVOID</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="NFLX" data-symbol="NFLX" data-last="702.4" data-change="4.64" data-percent="0.66" data-phase="Light Blue" data-rank="29" data-phase-ord="4" data-signal-ord="2"><td class="muted-val rank-cell">#29</td><td><span class="sym2">NFLX</span></td><td class="muted-val">$702.40</td><td class="good-val">$4.64</td><td class="good-val">+0.66%</td><td><span class="phase-badge" style="color:#90caf9;border-color:#90caf9;background:#90caf922;">Light Blue</span></td><td><span class="tag enter">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="COST" data-symbol="COST" data-last="884.2" data-change="0.8" data-percent="0.09" data-phase="Neutral" data-rank="30" data-phase-ord="3" data-signal-ord="1"><td class="muted-val rank-cell">#30</td><td><span class="sym2">COST</span></td><td class="muted-val">$884.20</td><td class="good-val">$0.80</td><td class="good-val">+0.09%</td><td><span class="phase-badge" style="color:#aaaaaa;border-color:#aaaaaa;background:#aaaaaa22;">Neutral</span></td><td><span class="tag watch">WATCH</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="JPM" data-symbol="JPM" data-last="214.6" data-change="-0.32" data-percent="-0.15" data-phase="Neutral" data-rank="31" data-phase-ord="3" data-signal-ord="1"><td class="muted-val rank-cell">#31</td><td><span class="sym2">JPM</span></td><td class="muted-val">$214.60</td><td class="bad-val">-$0.32</td><td class="bad-val">-0.15%</td><td><span class="phase-badge" style="color:#aaaaaa;border-color:#aaaaaa;background:#aaaaaa22;">Neutral</span></td><td><span class="tag watch">WATCH</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="GS" data-symbol="GS" data-last="498.3" data-change="1.79" data-percent="0.36" data-phase="Light Blue" data-rank="32" data-phase-ord="4" data-signal-ord="2"><td class="muted-val rank-cell">#32</td><td><span class="sym2">GS</span></td><td class="muted-val">$498.30</td><td class="good-val">$1.79</td><td class="good-val">+0.36%</td><td><span class="phase-badge" style="color:#90caf9;border-color:#90caf9;background:#90caf922;">Light Blue</span></td><td><span class="tag enter">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="XOM" data-symbol="XOM" data-last="117.9" data-change="1.08" data-percent="0.92" data-phase="Blue" data-rank="33" data-phase-ord="5" data-signal-ord="2"><td class="muted-val rank-cell">#33</td><td><span class="sym2">XOM</span></td><td class="muted-val">$117.90</td><td class="good-val">$1.08</td><td class="good-val">+0.92%</td><td><span class="phase-badge" style="color:#2979ff;border-color:#2979ff;background:#2979ff22;">Blue</span></td><td><span class="tag enter">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="CVX" data-symbol="CVX" data-last="151.2" data-change="1.07" data-percent="0.71" data-phase="Light Blue" data-rank="34" data-phase-ord="4" data-signal-ord="2"><td class="muted-val rank-cell">#34</td><td><span class="sym2">CVX</span></td><td class="muted-val">$151.20</td><td class="good-val">$1.07</td><td class="good-val">+0.71%</td><td><span class="phase-badge" style="color:#90caf9;border-color:#90caf9;background:#90caf922;">Light Blue</span></td><td><span class="tag enter">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="LLY" data-symbol="LLY" data-last="842.5" data-change="-3.96" data-percent="-0.47" data-phase="Yellow" data-rank="35" data-phase-ord="2" data-signal-ord="0"><td class="muted-val rank-cell">#35</td><td><span class="sym2">LLY</span></td><td class="muted-val">$842.50</td><td class="bad-val">-$3.96</td><td class="bad-val">-0.47%</td><td><span class="phase-badge" style="color:#ffd54f;border-color:#ffd54f;background:#ffd54f22;">Yellow</span></td><td><span class="tag avoid">AVOID</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="UNH" data-symbol="UNH" data-last="571.8" data-change="1.03" data-percent="0.18" data-phase="Neutral" data-rank="36" data-phase-ord="3" data-signal-ord="1"><td class="muted-val rank-cell">#36</td><td><span class="sym2">UNH</span></td><td class="muted-val">$571.80</td><td class="good-val">$1.03</td><td class="good-val">+0.18%</td><td><span class="phase-badge" style="color:#aaaaaa;border-color:#aaaaaa;background:#aaaaaa22;">Neutral</span></td><td><span class="tag watch">WATCH</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="GLD" data-symbol="GLD" data-last="236.6" data-change="0.73" data-percent="0.31" data-phase="Light Blue" data-rank="37" data-phase-ord="4" data-signal-ord="2"><td class="muted-val rank-cell">#37</td><td><span class="sym2">GLD</span></td><td class="muted-val">$236.60</td><td class="good-val">$0.73</td><td class="good-val">+0.31%</td><td><span class="phase-badge" style="color:#90caf9;border-color:#90caf9;background:#90caf922;">Light Blue</span></td><td><span class="tag enter">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="ARKK" data-symbol="ARKK" data-last="52.7" data-change="-0.5" data-percent="-0.95" data-phase="Orange" data-rank="38" data-phase-ord="1" data-signal-ord="0"><td class="muted-val rank-cell">#38</td><td><span class="sym2">ARKK</span></td><td class="muted-val">$52.70</td><td class="bad-val">-$0.50</td><td class="bad-val">-0.95%</td><td><span class="phase-badge" style="color:#ff9800;border-color:#ff9800;background:#ff980022;">Orange</span></td><td><span class="tag avoid">AVOID</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="BTC" data-symbol="BTC" data-last="31.4" data-change="0.38" data-percent="1.21" data-phase="Blue" data-rank="39" data-phase-ord="5" data-signal-ord="2"><td class="muted-val rank-cell">#39</td><td><span class="sym2">BTC</span></td><td class="muted-val">$31.40</td><td class="good-val">$0.38</td><td class="good-val">+1.21%</td><td><span class="phase-badge" style="color:#2979ff;border-color:#2979ff;background:#2979ff22;">Blue</span></td><td><span class="tag enter">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr><tr data-sym="ETH" data-symbol="ETH" data-last="19.85" data-change="0.17" data-percent="0.88" data-phase="Blue" data-rank="40" data-phase-ord="5" data-signal-ord="2"><td class="muted-val rank-cell">#40</td><td><span class="sym2">ETH</span></td><td class="muted-val">$19.85</td><td class="good-val">$0.17</td><td class="good-val">+0.88%</td><td><span class="phase-badge" style="color:#2979ff;border-color:#2979ff;background:#2979ff22;">Blue</span></td><td><span class="tag enter">ENTER</span></td><td class="muted-val" style="font-size:10px;">LIVE</td></tr></tbody></table></div><p class="note-body" style="margin-top:8px;color:var(--muted);font-size:11px;">Signal: ENTER at or above +0.30%, AVOID at or below -0.30%, WATCH between. A symbol with no live price reads NO DATA and is never classified.</p></div></details><details class="panel" id="panel-watchlist-ii" open><summary class="panel-head"><span class="panel-head-main"><h2>Watchlist II</h2><span class="meta">2/5 measured</span></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><p class="note-body" style="margin:0 0 10px;color:var(--warn);font-size:12px;font-weight:600;">Candidates, not buy signals. A name here was mentioned by an outside source (some mentions are bearish setups); Rosie's loop never trades them.</p><div class="op-form demo-inert" style="display:flex;gap:6px;align-items:center;margin:0 0 10px;"><input disabled type="text" name="symbol" maxlength="6" required pattern="[A-Za-z.]{1,6}" placeholder="Symbol" aria-label="Add a symbol to Watchlist II" style="width:90px;padding:6px;text-transform:uppercase;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--mono);"><button disabled aria-disabled="true" type="button" class="status-chip link" id="wl2-add-btn">Add</button><span class="muted-val" style="font-size:11px;">Adds a candidate only; no BUY until measured.</span></div><div class="table-scroll"><table id="watchlist-ii-table"><thead><tr><th>Symbol</th><th>Source</th><th>Added</th><th>Status</th><th></th></tr></thead><tbody><tr data-sym="RKLB" data-rank="1" data-symbol="RKLB" data-measured="0" data-operator="0"><td><span class="sym2">RKLB</span></td><td>Sample outside source<div class="muted-val" style="font-size:10px;">sample: breakout watch</div></td><td class="muted-val">2026-10-26</td><td><span class="tag watch">NEEDS MEASUREMENT</span></td><td><span class="muted-val">—</span></td></tr><tr data-sym="IONQ" data-rank="2" data-symbol="IONQ" data-measured="1" data-operator="0"><td><span class="sym2">IONQ</span></td><td>Sample outside source<div class="muted-val" style="font-size:10px;">sample: pullback watch</div></td><td class="muted-val">2026-10-26</td><td><span class="tag enter">MEASURED</span></td><td><button disabled aria-disabled="true" type="button" class="status-chip link wl2-buy" data-sym="IONQ">BUY…</button></td></tr><tr data-sym="CELH" data-rank="3" data-symbol="CELH" data-measured="0" data-operator="0"><td><span class="sym2">CELH</span></td><td>Sample outside source<div class="muted-val" style="font-size:10px;">sample: bearish setup</div></td><td class="muted-val">2026-10-26</td><td><span class="tag watch">NEEDS MEASUREMENT</span></td><td><span class="muted-val">—</span></td></tr><tr data-sym="SOFI" data-rank="4" data-symbol="SOFI" data-measured="1" data-operator="0"><td><span class="sym2">SOFI</span></td><td>Sample outside source<div class="muted-val" style="font-size:10px;">sample: base watch</div></td><td class="muted-val">2026-10-26</td><td><span class="tag enter">MEASURED</span></td><td><button disabled aria-disabled="true" type="button" class="status-chip link wl2-buy" data-sym="SOFI">BUY…</button></td></tr><tr data-sym="HOOD" data-rank="5" data-symbol="HOOD" data-measured="0" data-operator="0"><td><span class="sym2">HOOD</span></td><td>Sample outside source<div class="muted-val" style="font-size:10px;">sample: range watch</div></td><td class="muted-val">2026-10-26</td><td><span class="tag watch">NEEDS MEASUREMENT</span></td><td><span class="muted-val">—</span></td></tr></tbody></table></div><p class="note-body" style="margin-top:8px;color:var(--muted);font-size:11px;">No live price: candidates get no IB market-data line (the main list uses 40). BUY only fills the Trade Ticket; PROPOSE and APPROVE still apply every gate (2% per trade, 6% total open risk, disaster stop, quantity cap). NEEDS MEASUREMENT rows are refused by the server. Symbols you add are candidates too (source "Operator, date"): NEEDS MEASUREMENT until measured, never orderable just by adding.</p></div></details>
       <div class="group-label">Trade</div>
-      <details class="panel" id="panel-trade-ticket" open><summary class="panel-head"><span class="panel-head-main"><h2>Trade Ticket</h2></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="panel-inner">
-<form method="get" action="/propose-trade" style="display:flex;flex-direction:column;gap:12px;max-width:360px;">
+      <details class="panel" id="panel-trade-ticket"><summary class="panel-head"><span class="panel-head-main"><h2>Trade Ticket</h2></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="panel-inner">
+<div class="op-form demo-inert" style="display:flex;flex-direction:column;gap:12px;max-width:360px;">
   <label style="font-size:11px;color:var(--muted);">Symbol
-    <select name="symbol" style="width:100%;margin-top:4px;padding:8px;background:var(--surface2);
+    <select disabled id="ticket-symbol" name="symbol" style="width:100%;margin-top:4px;padding:8px;background:var(--surface2);
       border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--mono);">
       <option value="SPY">SPY</option>
       <option value="QQQ">QQQ</option>
       <option value="DIA">DIA</option>
       <option value="IWM">IWM</option>
+      <option value="HYG">HYG</option>
+      <option value="XLF">XLF</option>
+      <option value="TLT">TLT</option>
+      <option value="BAC">BAC</option>
+      <option value="XLE">XLE</option>
+      <option value="TNA">TNA</option>
+      <option value="SLV">SLV</option>
+      <option value="SMCI">SMCI</option>
+      <option value="NVDA">NVDA</option>
+      <option value="ETN">ETN</option>
+      <option value="PWR">PWR</option>
+      <option value="GEV">GEV</option>
+      <option value="AAPL">AAPL</option>
+      <option value="MSFT">MSFT</option>
+      <option value="TSLA">TSLA</option>
+      <option value="AMZN">AMZN</option>
+      <option value="GOOGL">GOOGL</option>
+      <option value="META">META</option>
+      <option value="AMD">AMD</option>
+      <option value="AVGO">AVGO</option>
+      <option value="QCOM">QCOM</option>
+      <option value="MU">MU</option>
+      <option value="JPM">JPM</option>
+      <option value="GS">GS</option>
+      <option value="XLK">XLK</option>
+      <option value="XLI">XLI</option>
+      <option value="GLD">GLD</option>
+      <option value="ORCL">ORCL</option>
+      <option value="CRM">CRM</option>
+      <option value="SNOW">SNOW</option>
+      <option value="PLTR">PLTR</option>
+      <option value="UNH">UNH</option>
+      <option value="JNJ">JNJ</option>
+      <option value="BTC">BTC</option>
+      <option value="ETH">ETH</option>
+      <option value="XRP">XRP</option>
+      <optgroup label="Watchlist II (candidates, not signals)">
+        <option value="IONQ">IONQ</option>
+        <option value="SOFI">SOFI</option>
+      </optgroup>
     </select>
   </label>
   <label style="font-size:11px;color:var(--muted);">Action
     <div style="display:flex;gap:8px;margin-top:4px;">
-            <label style="flex:1;"><input type="radio" name="side" value="BUY" checked/> BUY</label>
-      <label style="flex:1;"><input type="radio" name="side" value="SELL"/> SELL</label>
+      <label style="flex:1;"><input disabled type="radio" name="side" value="BUY" checked/> BUY</label>
+      <label style="flex:1;"><input disabled type="radio" name="side" value="SELL"/> SELL</label>
     </div>
   </label>
   <label style="font-size:11px;color:var(--muted);">Qty
-    <input type="number" name="qty" min="1" step="1" value="1" style="width:100%;margin-top:4px;padding:8px;
+    <input disabled id="ticket-qty" type="number" name="qty" min="1" step="1" value="2" style="width:100%;margin-top:4px;padding:8px;
       background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);
       font-family:var(--mono);"/>
   </label>
-  <button type="submit" class="big-btn arm-btn" style="margin-top:4px;">PROPOSE</button>
-</form><p class="note-body" style="margin-top:10px;color:var(--muted);font-style:italic;font-size:12px;">Keelwise proposes — you decide. Review before arming.</p></div></div></details>
-      <details class="panel" id="panel-propose" open><summary class="panel-head"><span class="panel-head-main"><h2>Propose</h2></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="panel-inner"><p class="note-body" style="color:var(--muted);">No active proposal. Run classify and rank first.</p></div></div></details>
-
+  <button disabled aria-disabled="true" type="button" class="big-btn arm-btn" style="margin-top:4px;">PROPOSE</button>
+</div><p class="note-body" style="margin-top:10px;color:var(--muted);font-style:italic;font-size:12px;">Rosie proposes — the operator decides. Review before arming.</p></div></div></details>
+      <details class="panel" id="panel-propose"><summary class="panel-head"><span class="panel-head-main"><h2>Propose</h2></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="panel-inner"><p class="note-body" style="color:var(--muted);">No active proposal. Run classify and rank first.</p></div></div></details>
       <div class="group-label">System</div>
-      <details class="panel" id="panel-trade-record" open><summary class="panel-head"><span class="panel-head-main"><h2>Trade Record</h2></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="panel-inner"><div style="display:flex;flex-wrap:wrap;gap:20px;padding:12px 0;border-bottom:1px solid var(--border);margin-bottom:14px;align-items:center;"><div style="display:flex;flex-direction:column;gap:2px;min-width:96px;"><span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;">Signals logged</span><span style="font-family:var(--mono);font-size:15px;">0</span></div><div style="display:flex;flex-direction:column;gap:2px;min-width:96px;"><span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;">Closed trades</span><span style="font-family:var(--mono);font-size:15px;">0</span></div><div style="display:flex;flex-direction:column;gap:2px;min-width:96px;"><span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;">Win rate</span><span style="font-family:var(--mono);font-size:15px;">---</span></div><div style="display:flex;flex-direction:column;gap:2px;min-width:96px;"><span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;">Profit factor</span><span style="font-family:var(--mono);font-size:15px;">---</span></div><div style="display:flex;flex-direction:column;gap:2px;min-width:96px;"><span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;">Max drawdown</span><span style="font-family:var(--mono);font-size:15px;">---</span></div><div style="display:flex;flex-direction:column;gap:2px;min-width:96px;"><span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;">Rule compliance</span><span style="font-family:var(--mono);font-size:15px;">---</span></div><span style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:10px;border:1px solid var(--bad);color:var(--bad);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;margin-left:auto;">Gate: HOLD</span></div><p class="note-body" style="margin:0 0 14px;color:var(--muted);font-style:italic;font-size:12px;">Every signal the rolling-average-crossover loop finds is logged here automatically -- no clicking required. Use the form below only to log something by hand.</p><div style="margin-bottom:16px;"><form method="post" action="/evidence-log" style="display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;"><label style="font-size:11px;color:var(--muted);">Instrument<select name="instrument" style="display:block;margin-top:4px;padding:8px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--mono);"><option value="SPY">SPY</option><option value="QQQ">QQQ</option><option value="DIA">DIA</option><option value="IWM">IWM</option></select></label><label style="font-size:11px;color:var(--muted);">Signal<select name="signal_class" style="display:block;margin-top:4px;padding:8px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--mono);"><option value="Enter">Enter</option><option value="Watch">Watch</option><option value="Avoid">Avoid</option></select></label><label style="font-size:11px;color:var(--muted);">Entry<input type="number" step="0.01" name="entry_price" style="display:block;width:90px;margin-top:4px;padding:8px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--mono);"/></label><label style="font-size:11px;color:var(--muted);flex:1;min-width:160px;">Notes<input type="text" name="operator_notes" style="display:block;width:100%;margin-top:4px;padding:8px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--mono);"/></label><button type="submit" class="big-btn arm-btn">LOG SIGNAL</button></form></div><div style="display:flex;flex-direction:column;gap:8px;"><p class="note-body" style="color:var(--muted);">No evidence logged yet -- it appears here the moment the loop finds its first signal.</p></div></div></div></details>
-      <details class="panel" id="panel-journal" open><summary class="panel-head"><span class="panel-head-main"><h2>Journal</h2></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="panel-inner"><div style="display:flex;flex-direction:column;gap:8px;"><div class="tl-item" style="align-items:center;"><span class="tl-time">demo 09:58:12</span><span class="sym">TLT</span><span class="muted-val">PROPOSE BUY 1</span><span class="bad-val">REFUSED</span><span class="tl-msg">Refused: quote stale — entries need a fresh ask</span></div><div class="tl-item" style="align-items:center;"><span class="tl-time">demo 10:08:05</span><span class="sym">QQQ</span><span class="muted-val">BUY 2 (protected)</span><span class="bad-val">FILLED</span><span class="tl-msg">Operator approved; two broker-held trails placed</span></div><div class="tl-item" style="align-items:center;"><span class="tl-time">demo 10:09:38</span><span class="sym">DIA</span><span class="muted-val">BUY 2 (protected)</span><span class="bad-val">FILLED</span><span class="tl-msg">Operator approved; two broker-held trails placed</span></div><div class="tl-item" style="align-items:center;"><span class="tl-time">demo 10:10:47</span><span class="sym">IWM</span><span class="muted-val">BUY 2 (protected)</span><span class="bad-val">FILLED</span><span class="tl-msg">Operator approved Keelwise proposal; two broker-held trails placed</span></div></div></div></div></details>
-      <details class="panel" id="panel-operator" open><summary class="panel-head"><span class="panel-head-main"><h2>Operator</h2></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="panel-inner">
+      <details class="panel" id="panel-trade-record"><summary class="panel-head"><span class="panel-head-main"><h2>Trade Record</h2></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="panel-inner"><div style="display:flex;flex-wrap:wrap;gap:20px;padding:12px 0;border-bottom:1px solid var(--border);margin-bottom:14px;align-items:center;"><div style="display:flex;flex-direction:column;gap:2px;min-width:96px;"><span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;">Signals logged</span><span style="font-family:var(--mono);font-size:15px;">0</span></div><div style="display:flex;flex-direction:column;gap:2px;min-width:96px;"><span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;">Closed trades</span><span style="font-family:var(--mono);font-size:15px;">0</span></div><div style="display:flex;flex-direction:column;gap:2px;min-width:96px;"><span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;">Win rate</span><span style="font-family:var(--mono);font-size:15px;">---</span></div><div style="display:flex;flex-direction:column;gap:2px;min-width:96px;"><span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;">Profit factor</span><span style="font-family:var(--mono);font-size:15px;">---</span></div><div style="display:flex;flex-direction:column;gap:2px;min-width:96px;"><span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;">Max drawdown</span><span style="font-family:var(--mono);font-size:15px;">---</span></div><div style="display:flex;flex-direction:column;gap:2px;min-width:96px;"><span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;">Rule compliance</span><span style="font-family:var(--mono);font-size:15px;">---</span></div><span style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:10px;border:1px solid var(--bad);color:var(--bad);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;margin-left:auto;">Gate: HOLD</span></div><p class="note-body" style="margin:0 0 14px;color:var(--muted);font-style:italic;font-size:12px;">Every signal the rolling-average-crossover loop finds, and every order you approve, is logged here automatically -- no clicking required. Use the form below only to log something by hand.</p><div style="margin-bottom:16px;"><div class="op-form demo-inert" style="display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;"><label style="font-size:11px;color:var(--muted);">Instrument<select disabled name="instrument" style="display:block;margin-top:4px;padding:8px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--mono);"><option value="SPY">SPY</option><option value="QQQ">QQQ</option><option value="DIA">DIA</option><option value="IWM">IWM</option><option value="HYG">HYG</option><option value="XLF">XLF</option><option value="TLT">TLT</option><option value="BAC">BAC</option><option value="XLE">XLE</option><option value="TNA">TNA</option><option value="SLV">SLV</option><option value="SMCI">SMCI</option><option value="NVDA">NVDA</option><option value="ETN">ETN</option><option value="PWR">PWR</option><option value="GEV">GEV</option><option value="AAPL">AAPL</option><option value="MSFT">MSFT</option><option value="TSLA">TSLA</option><option value="AMZN">AMZN</option><option value="GOOGL">GOOGL</option><option value="META">META</option><option value="AMD">AMD</option><option value="AVGO">AVGO</option><option value="QCOM">QCOM</option><option value="MU">MU</option><option value="JPM">JPM</option><option value="GS">GS</option><option value="XLK">XLK</option><option value="XLI">XLI</option><option value="GLD">GLD</option><option value="ORCL">ORCL</option><option value="CRM">CRM</option><option value="SNOW">SNOW</option><option value="PLTR">PLTR</option><option value="UNH">UNH</option><option value="JNJ">JNJ</option><option value="BTC">BTC</option><option value="ETH">ETH</option><option value="XRP">XRP</option></select></label><label style="font-size:11px;color:var(--muted);">Signal<select disabled name="signal_class" style="display:block;margin-top:4px;padding:8px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--mono);"><option value="Enter">Enter</option><option value="Watch">Watch</option><option value="Avoid">Avoid</option></select></label><label style="font-size:11px;color:var(--muted);">Entry<input disabled type="number" step="0.01" name="entry_price" style="display:block;width:90px;margin-top:4px;padding:8px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--mono);"/></label><label style="font-size:11px;color:var(--muted);flex:1;min-width:160px;">Notes<input disabled type="text" name="operator_notes" style="display:block;width:100%;margin-top:4px;padding:8px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--mono);"/></label><button disabled aria-disabled="true" type="button" class="big-btn arm-btn">LOG SIGNAL</button></div></div><div style="display:flex;flex-direction:column;gap:8px;"><p class="note-body" style="color:var(--muted);">No evidence logged yet -- it appears here the moment the loop finds its first signal.</p></div></div></div></details>
+      <details class="panel" id="panel-journal"><summary class="panel-head"><span class="panel-head-main"><h2>Journal</h2></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="panel-inner"><p class="note-body" style="color:var(--muted);">Journal is clean. Log entries appear here after trades.</p></div></div></details>
+      <details class="panel" id="panel-activity-log"><summary class="panel-head"><span class="panel-head-main"><h2>Activity Log</h2></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="panel-inner"><p class="note-body" style="color:var(--muted);">No activity yet.</p><p class="note-body" style="margin-top:10px;color:var(--muted);font-style:italic;font-size:12px;">Every operator action this session, newest first. Cleared when the server restarts -- the Journal is the durable record.</p></div></div></details>
+      <details class="panel" id="panel-operator"><summary class="panel-head"><span class="panel-head-main"><h2>Operator</h2></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="panel-inner">
       <div class="note-box">
         <div class="note-title">Operator Posture</div>
-        <div class="note-body">Confirm Power → Keelwise → Arm before routing.</div>
+        <div class="note-body">Only SPY · QQQ · DIA · IWM are gated. Confirm Power → Rosie → Arm before routing.</div>
       </div>
       <div class="note-box">
         <div class="note-title">Alert Mode</div>
@@ -559,339 +640,19 @@ tr:hover td { background: rgba(0,255,127,0.06); }
         <div class="timeline"><div class="tl-item"><span class="tl-dot"></span><span class="tl-time">—</span><span class="tl-msg">last cycle</span></div><div class="tl-item"><span class="tl-dot"></span><span class="tl-time">action</span><span class="tl-msg">— → —</span></div></div>
       </div>
     </div></div></details>
-
       <div class="group-label">Administrator</div>
       <details class="panel" id="panel-administrator"><summary class="panel-head"><span class="panel-head-main"><h2>Administrator</h2></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="panel-inner">
-      <div class="note-box">
-        <div class="note-title">Route Arm File</div>
+      <div class="note-box"><div class="note-title">Route Arm</div>
         <div class="note-body"><span style="color:var(--bad);font-weight:700;">DISARMED</span></div>
-        <div class="note-body" style="font-size:11px;color:var(--muted);margin-top:4px;">rosie_route_arming.json &mdash; the file-level gate. ARMED means the gate is open; it does not by itself mean an order will fire.</div>
-      </div>
-      <div class="note-box">
-        <div class="note-title">Open Security Items</div>
-        <div class="note-body" style="color:var(--warn);font-weight:700;">1 open</div><div style="margin-top:8px;font-size:11px;line-height:1.5;"><div><span style="color:var(--warn);font-weight:700;">OPEN</span> &middot; <span style="color:var(--text);">Schwab OAuth credentials exposed in GitHub pull-request refs</span> &middot; <span style="color:var(--muted);">[SEC-2026-07-05-ENV]</span></div><div style="color:var(--muted);margin-top:3px;">A .env file was committed on 2026-07-05 in commit 7b5f85d, containing SCHWAB_APP_KEY, SCHWAB_APP_SECRET, SCHWAB_CALLBACK_URL and SCHWAB_TOKEN_PATH. It is NOT present on main or on any branch, and .env is correctly gitignored. It remains reachable on GitHub through refs/pull/1/head and refs/pull/2/head. Pull-request refs are not branches, so git filter-repo and force-push cannot remove them. Repository is private and secret scanning is disabled. CONFIRMED EXPOSED 2026-09-21: the operator regained developer-portal access and compared the live App Details pair against the committed pair. They are identical, so the credentials in use are the leaked ones. ROTATION IS NOT POSSIBLE. The Schwab developer portal offers no key or secret regeneration and no app deletion; deactivation is the only control, and retail individuals are limited to one app per API. Schwab support&#x27;s stated position is that app keys contain no personal information and cannot be used to reach brokerage account details, and that changing them requires their internal team to deactivate the app so a NEW developer-portal account can be registered under a DIFFERENT email address. Community-reported, not Schwab documentation -- see https://www.reddit.com/r/Schwab/comments/1pqxme7/schwab_api_cannot_delete_an_app_or_rotate/ -- but consistent with the controls visible in the portal UI. Worth one direct confirmation to TraderAPI@schwab.com before acting on it. These are OAuth app credentials, not account credentials: they cannot reach funds without a completed Schwab login and a listener on the callback URL https://127.0.0.1:8182. NO IBKR CREDENTIAL HAS EVER BEEN COMMITTED TO THIS REPOSITORY. An earlier version of this panel claimed live IB credentials were exposed; that claim was false and cost operator time on 2026-09-17.</div><div style="margin-top:3px;">Remedy: The original remedy -- rotate the key and secret, or have Schwab delete the app -- is impossible; see detail. The fix is therefore to remove the place the pair is readable rather than to change the pair. PRIMARY: ask GitHub Support to purge refs/pull/1/head and refs/pull/2/head. Targeted, free, and it preserves the app&#x27;s hard-won Ready For Use status. FALLBACK: push every branch to a fresh private repository and delete this one. PR refs die with the repository. Cost is the loss of pull-request history, which is the written record of why this code is the way it is. LAST RESORT: have Schwab deactivate the app and register a new developer-portal account under a different email. Zero residual risk, highest cost -- a new account, re-approval that has been reported to take weeks, and the loss of an app that took until 2026-09-21 to reach Ready For Use. DO NOT rewrite git history for this -- it cannot fix PR refs. HARDENING that costs nothing and applies regardless: run the callback listener only during the OAuth flow, never leave port 8182 listening. AND NOTE: once the OAuth flow is completed, the resulting token file is more sensitive than the app key, because it DOES reach the account. It must live outside the repository alongside .env, and must never be committed. No longer blocked on Schwab portal access -- that was resolved 2026-09-21, which is why this item moved from BLOCKED to OPEN. Not required for any IBKR paper work.</div><div style="margin-top:3px;color:var(--muted);">Last verified: 2026-09-21</div></div>
-      </div>
-      <div class="note-box">
-        <div class="note-title">Links</div>
-        <div class="note-body">
-          <a class="status-chip link" href="https://github.com/nrini49/interactive" target="_blank" rel="noopener">Repo &rarr;</a>
-          <a class="status-chip link" href="https://github.com/nrini49/interactive/blob/main/README.md" target="_blank" rel="noopener">README &rarr;</a>
-        </div>
-      </div>
+        <div class="note-body" style="font-size:11px;color:var(--muted);margin-top:4px;">Sample. The order route is a separate gate; in this demo it can never be armed.</div></div>
+      <div class="note-box"><div class="note-title">Administrator tools</div>
+        <div class="note-body" style="font-size:12px;color:var(--muted);">Not shown in the public demo.</div></div>
     </div></div></details>
-      <details class="panel" id="panel-diagnostics" open><summary class="panel-head"><span class="panel-head-main"><h2>Diagnostics</h2></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="panel-inner"><div class="diag-row"><div class="diag-chip"><span class="diag-k">ROUTE</span><span class="diag-v bad">DISARM</span></div><div class="diag-chip"><span class="diag-k">POWER</span><span class="diag-v good">ON</span></div><div class="diag-chip"><span class="diag-k">KEELWISE</span><span class="diag-v good">ON</span></div><div class="diag-chip"><span class="diag-k">HB</span><span class="diag-v plain">—</span></div><div class="diag-chip"><span class="diag-k">CYCLE</span><span class="diag-v plain">—</span></div><div class="diag-chip"><span class="diag-k">DEMO</span><span class="diag-v good">OK</span></div><div class="diag-chip" style="flex:1;min-width:200px;"><span class="diag-k">NOTE</span><span class="diag-v plain" style="font-size:11px;">—</span></div></div></div></div></details>
+      <details class="panel" id="panel-diagnostics"><summary class="panel-head"><span class="panel-head-main"><h2>Diagnostics</h2></span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="panel-body"><div class="panel-inner"><div class="diag-row"><div class="diag-chip"><span class="diag-k">ROUTE</span><span class="diag-v bad">DISARM</span></div><div class="diag-chip"><span class="diag-k">POWER</span><span class="diag-v warn">OFF</span></div><div class="diag-chip"><span class="diag-k">ROSIE</span><span class="diag-v warn">OFF</span></div><div class="diag-chip"><span class="diag-k">HB</span><span class="diag-v plain">—</span></div><div class="diag-chip"><span class="diag-k">CYCLE</span><span class="diag-v plain">—</span></div><div class="diag-chip"><span class="diag-k">SAMPLE</span><span class="diag-v good">OK</span></div><div class="diag-chip" style="flex:1;min-width:200px;"><span class="diag-k">NOTE</span><span class="diag-v plain" style="font-size:11px;">—</span></div></div></div></div></details>
     </div>
   </main>
 </div>
 <div id="action-receipt-host" data-receipt-id="0" data-receipt-boot="" hidden></div>
-<div id="refresh-indicator">⏱ live</div>
 
-<script>
-const REFRESH_MS      = 30000;
-const ENTER_THRESHOLD = 0.3;
-const AVOID_THRESHOLD = -0.3;
-
-// ── SYMBOL SEARCH FILTER ──────────────────────────────────────────────────────
-// The symbol filter input was removed on 2026-09-19 along with its listener and
-// its re-apply-after-refresh call. It filtered rows carrying data-sym, which only
-// _watchlist_body emits, so it reached Watchlist and Current Observations while
-// Signal Rank (removed 2026-09-21) and Classification Board silently showed
-// everything. It also cost a
-// full header row: flex-wrap plus margin-left:auto pushed it onto a line of its
-// own. Sorting now covers the need it was reaching for.
-
-// ── ACTION RECEIPTS — dismissable, persistent, cannot re-pop ───────────────────
-// 2026-09-19: the operator cancelled a live order and the page said nothing. The
-// cancel had already succeeded; the only confirmation sat at the bottom of the
-// document. He clicked twice more, which is what anyone does when an action
-// appears to do nothing. Cancel is idempotent so it cost nothing. APPROVE is not.
-//
-// The server cannot decide whether to show a receipt, because it does not know
-// what this operator has already seen. So the server always renders the last
-// action with a monotonic id, hidden, and the browser decides:
-//
-//   show it only if its id is greater than the last id dismissed here.
-//
-// Without that comparison the receipt would reappear on every 30s refresh after
-// being dismissed, forever, until another action happened -- worse than silence.
-// BUG FOUND BY THE OPERATOR, 2026-09-19 14:28: storing only the dismissed
-// counter was wrong. The server's counter restarts at 0 on every launch, while
-// localStorage survives. After dismissing id 9 and restarting the server,
-// actions 1..9 all looked "already dismissed" and vanished silently -- this
-// feature's own defect, rebuilt inside its dismissal memory. It presented as a
-// random misfire and was fully deterministic.
-//
-// A dismissal is therefore scoped to the server run that produced it: we store
-// "<boot_id>:<action_id>" and only suppress a receipt when the boot id matches.
-// A restarted server always shows its receipts again, which is the safe
-// direction -- showing a receipt twice costs a click, hiding one costs the
-// operator the truth.
-const RECEIPT_KEY = 'rosie.action.dismissed';
-
-function readDismissed() {
-  try {
-    const raw = localStorage.getItem(RECEIPT_KEY) || '';
-    const cut = raw.lastIndexOf(':');
-    if (cut < 0) return {boot: '', id: 0};      // legacy bare number -> ignore
-    const n = parseInt(raw.slice(cut + 1), 10);
-    return {boot: raw.slice(0, cut), id: isNaN(n) ? 0 : n};
-  } catch (err) {
-    return {boot: '', id: 0};                   // unreadable -> show it
-  }
-}
-
-function applyActionReceipt() {
-  const host = document.getElementById('action-receipt-host');
-  if (!host) return;
-  const id   = parseInt(host.getAttribute('data-receipt-id') || '0', 10) || 0;
-  const boot = host.getAttribute('data-receipt-boot') || '';
-  if (!id) { host.hidden = true; return; }      // no action this server run
-  const seen = readDismissed();
-  // Only a dismissal from THIS server run can suppress anything.
-  host.hidden = (seen.boot === boot && id <= seen.id);
-}
-
-// Delegated on document so it survives every innerHTML swap, and because the
-// receipt markup is replaced wholesale on each refresh.
-document.addEventListener('click', (ev) => {
-  const btn = ev.target && ev.target.closest ? ev.target.closest('[data-receipt-dismiss]') : null;
-  if (!btn) return;
-  const host = document.getElementById('action-receipt-host');
-  if (!host) return;
-  const id = parseInt(host.getAttribute('data-receipt-id') || '0', 10) || 0;
-  const boot = host.getAttribute('data-receipt-boot') || '';
-  try { localStorage.setItem(RECEIPT_KEY, boot + ':' + id); } catch (err) { /* non-fatal */ }
-  host.hidden = true;
-});
-
-applyActionReceipt();
-
-// ── PANEL OPEN/CLOSED STATE — persisted in localStorage ───────────────────────
-// Every operator control (POWER, ROSIE, GUARD, PROPOSE, APPROVE, Save, Reset,
-// symbol select) is a link or form submit that hits its route, redirects to /,
-// and causes a FULL page load. The server renders every panel open, so any panel
-// the operator had collapsed sprang back open the moment he touched any control.
-// Panel state was only ever remembered for the lifetime of one page.
-//
-// localStorage is now the single source of truth. It is read on load and after
-// each refresh swap, and written whenever the operator toggles a panel. The old
-// in-memory openIds capture was removed so two mechanisms cannot disagree.
-//
-// The toggle listener is delegated at document level: panels live inside <main>,
-// and the refresh below replaces main via innerHTML, so a listener bound to the
-// panels themselves would be orphaned on the first refresh -- exactly the defect
-// that killed table sorting until 2026-09-18.
-//
-// The operator decides what is open. The code does not. (2026-09-18)
-//
-// CLEAN START, 2026-09-28 (operator request). Remembered state is scoped to ONE
-// server run, keyed by boot_id, exactly like the action-receipt dismissal above.
-// A new Rosie start (watchdog restart, nightly TWS cycle, manual restart) opens
-// with EVERY panel collapsed, so the operator exposes only the panel he needs
-// instead of closing a dozen he doesn't. Within a run, open/closed state still
-// survives refreshes and control clicks. Stored as {boot, open:[ids]}; a legacy
-// bare array, a missing boot, or a different boot all mean "new run -> collapse".
-const PANEL_STATE_KEY = 'rosie.panels.open';
-
-function currentBoot() {
-  const host = document.getElementById('action-receipt-host');
-  return host ? (host.getAttribute('data-receipt-boot') || '') : '';
-}
-
-function readPanelState() {
-  try {
-    const boot = currentBoot();
-    const raw = localStorage.getItem(PANEL_STATE_KEY);
-    const saved = raw ? JSON.parse(raw) : null;
-    if (saved && !Array.isArray(saved) && saved.boot === boot
-        && Array.isArray(saved.open)) {
-      return new Set(saved.open);                // same run -> operator's layout
-    }
-    return new Set();                            // new run / legacy / none -> all collapsed
-  } catch (err) {
-    return new Set();                            // unreadable -> all collapsed
-  }
-}
-
-function writePanelState() {
-  try {
-    const open = [];
-    document.querySelectorAll('details.panel[id], details.hero-fold[id]').forEach(d => {
-      if (d.open) open.push(d.id);
-    });
-    localStorage.setItem(PANEL_STATE_KEY, JSON.stringify({boot: currentBoot(), open: open}));
-  } catch (err) {
-    /* storage disabled or full -- panels still work, they just stop persisting */
-  }
-}
-
-function applyPanelState() {
-  const stored = readPanelState();              // always a Set; empty on a new run
-  document.querySelectorAll('details.panel[id], details.hero-fold[id]').forEach(d => {
-    d.open = stored.has(d.id);
-  });
-  // Record this run's layout so the next refresh reads "same run" and keeps it.
-  writePanelState();
-}
-
-// Delegated: survives every innerHTML swap of <main>.
-document.addEventListener('toggle', (ev) => {
-  const d = ev.target;
-  if (d && d.tagName === 'DETAILS' && (d.classList.contains('panel') || d.classList.contains('hero-fold')) && d.id) {
-    writePanelState();
-  }
-}, true);                                       // capture phase -- toggle does not bubble
-
-applyPanelState();
-
-// ── TABLE SORTING — delegated, attached ONCE, outside <main> ───────────────────
-// Every sortable table used to emit its own <script> next to the table. Those
-// scripts sat inside <main>, and the refresh below replaces main via innerHTML,
-// which never executes inserted <script> elements. So sorting worked until the
-// first refresh (30s) and was dead thereafter until a full page reload. This
-// listener is attached once to document, so it keeps working no matter how many
-// times the table markup is swapped out. Found by the operator 2026-09-18.
-const sortStates = new Map();   // stable table id -> { key, dir }
-const NUMERIC_SORT_KEYS = ['last', 'change', 'percent', 'phaseOrd', 'signalOrd', 'rank'];
-
-function applySort(table, key, dir) {
-  const tbody = table.querySelector('tbody');
-  if (!tbody) return;
-  const rows = Array.from(tbody.querySelectorAll('tr[data-sym]'));
-  if (!rows.length) return;
-  rows.sort((a, b) => {
-    // Pinning removed 2026-09-21. Holding four rows above every sort meant a
-    // sort by % did not show the biggest movers at the top, which is the main
-    // thing the column is clicked for.
-    let av = a.dataset[key] || '';
-    let bv = b.dataset[key] || '';
-    if (NUMERIC_SORT_KEYS.includes(key)) {
-      // A row with no quote carries no data attribute for this column. It used
-      // to become 0, which sorted unanswered symbols into the middle of the %
-      // column between the decliners and the gainers. Missing sorts last in
-      // BOTH directions -- dir is deliberately not applied -- because the
-      // bottom is the only honest place for a row that says nothing.
-      const aMissing = av === '' || isNaN(parseFloat(av));
-      const bMissing = bv === '' || isNaN(parseFloat(bv));
-      if (aMissing && bMissing) return 0;
-      if (aMissing) return 1;
-      if (bMissing) return -1;
-      return (parseFloat(av) - parseFloat(bv)) * dir;
-    }
-    return String(av).localeCompare(String(bv)) * dir;
-  });
-  rows.forEach(r => tbody.appendChild(r));
-
-  // A positional column must renumber, or it lies. The # cell says "#1" for
-  // the first row; after a sort by Symbol that row can sit in the middle of the
-  // table still claiming #1. data-renumber names the cell index to rewrite from
-  // the row's new position. Tables without the attribute are untouched.
-  // (2026-09-20; moved from Signal Rank to the Watchlist 2026-09-21)
-  if (table.dataset.renumber !== undefined) {
-    const cellIdx = parseInt(table.dataset.renumber, 10) || 0;
-    rows.forEach((r, i) => {
-      const cell = r.cells[cellIdx];
-      if (cell) cell.textContent = '#' + (i + 1);
-    });
-  }
-
-  table.querySelectorAll('.sort-ind').forEach(ind => {
-    ind.classList.remove('active');
-    ind.textContent = '⇅';
-  });
-  const activeInd = table.querySelector('.sort-ind[data-key="' + key + '"]');
-  if (activeInd) {
-    activeInd.classList.add('active');
-    activeInd.textContent = dir === 1 ? '▲' : '▼';
-  }
-}
-
-document.addEventListener('click', (ev) => {
-  const th = ev.target.closest('.sortable-th[data-sort-key]');
-  if (!th) return;
-  const table = th.closest('table');
-  if (!table || !table.id) return;
-  const key  = th.dataset.sortKey;
-  const prev = sortStates.get(table.id);
-  const dir  = (prev && prev.key === key) ? prev.dir * -1 : 1;
-  sortStates.set(table.id, { key: key, dir: dir });
-  applySort(table, key, dir);
-});
-
-// Re-apply the operator's chosen sort after a refresh swap. Without this the
-// handler would survive but the rows would silently snap back to server order
-// every 30s, which looks just as broken as no sorting at all.
-function reapplySorts() {
-  sortStates.forEach((state, tableId) => {
-    const table = document.getElementById(tableId);
-    if (table) applySort(table, state.key, state.dir);
-  });
-}
-
-// ── LIVE REFRESH — fetch HTML, swap <main> + operator cluster in place ─────────
-// Collapsible <details> open/closed state is restored from localStorage after the
-// swap -- see applyPanelState() above. It also survives full page loads, which the
-// old in-page-only mechanism did not.
-async function refreshData() {
-  const ind = document.getElementById('refresh-indicator');
-  if (ind) { ind.classList.add('pulsing'); ind.textContent = '↻ refreshing…'; }
-  try {
-    const res  = await fetch(window.location.href, {cache: 'no-store'});
-    // Session expired or logged out elsewhere: go to the login page instead of
-    // silently keeping a stale screen (2026-09-29, operator login).
-    if (res.status === 401 || (res.redirected && new URL(res.url).pathname === '/login')) {
-      window.location.href = '/login'; return;
-    }
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const text = await res.text();
-    const doc  = new DOMParser().parseFromString(text, 'text/html');
-
-    const newMain = doc.querySelector('.main');
-    const oldMain = document.querySelector('.main');
-    if (newMain && oldMain) oldMain.innerHTML = newMain.innerHTML;
-
-    const newOps = doc.querySelector('.op-cluster');
-    const oldOps = document.querySelector('.op-cluster');
-    if (newOps && oldOps) oldOps.innerHTML = newOps.innerHTML;
-
-    // Action receipt lives OUTSIDE <main>, so the swap above does not touch it.
-    // Replace it explicitly, carry the new id across, then let the browser decide
-    // whether it should be visible. (2026-09-19)
-    const newRcp = doc.getElementById('action-receipt-host');
-    const oldRcp = document.getElementById('action-receipt-host');
-    if (newRcp && oldRcp) {
-      oldRcp.innerHTML = newRcp.innerHTML;
-      oldRcp.setAttribute('data-receipt-id', newRcp.getAttribute('data-receipt-id') || '0');
-      oldRcp.setAttribute('data-receipt-blocks', newRcp.getAttribute('data-receipt-blocks') || '0');
-    }
-    applyActionReceipt();
-
-    // restore panel open/closed state from localStorage, the single source of truth
-    applyPanelState();
-
-    // re-apply any active column sort after swap
-    reapplySorts();
-
-    if (ind) ind.textContent = '✓ ' + new Date().toLocaleTimeString();
-  } catch(err) {
-    console.warn('Refresh failed:', err);
-    if (ind) ind.textContent = '⚠ ' + new Date().toLocaleTimeString();
-  } finally {
-    if (ind) setTimeout(() => ind.classList.remove('pulsing'), 600);
-  }
-}
-
-setInterval(refreshData, REFRESH_MS);
-</script>
-<script>
-// Public demo: nothing on this page can act. Every form and control is inert.
-document.addEventListener('submit', function(e){ e.preventDefault(); demoNote(); }, true);
-document.addEventListener('click', function(e){
-  var a = e.target.closest('a'); if (a && a.id === 'harbor-top') return;      // Harbor Now link stays live
-  if (e.target.closest('button, a')) { e.preventDefault(); demoNote(); }
-}, true);
-function demoNote(){ var b=document.getElementById('demo-banner'); if(!b) return;
-  b.textContent='DEMO · controls are display-only here · in Keelwise, every action needs your login and approval';
-  b.style.background='#00ff7f'; setTimeout(function(){ b.textContent='DEMO · test data only · no broker connected · controls are display-only'; b.style.background='#ffd24a'; }, 2600); }
-</script></body>
+</body>
 </html>

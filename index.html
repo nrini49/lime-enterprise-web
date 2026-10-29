@@ -64,7 +64,10 @@
           >
         </a>
 
-        <nav class="masthead__nav" aria-label="Sections"><a href="#what-we-do">What Rosie does</a>
+        <nav class="masthead__nav" aria-label="Sections"><a href="#life">Life with Rosie</a>
+          <a href="#evidence">Evidence</a>
+          <a href="#indicators">Indicators</a>
+          <a href="#demo">Demo</a>
           <a href="#how-it-works">How it works</a>
           <a href="#protection">Protection</a>
           <a href="#markets">Markets</a>
@@ -80,114 +83,257 @@
     </header>
 
     <main id="main">
-      <section class="hero">
-        <div class="shell hero__grid">
-          <div>
-            <p class="label rule-after">Rosie / Keelwise · Operator Workstation</p>
-            <h1>Meet Rosie, also known as Keelwise. She trades your rules, so you don’t have to watch every tick.</h1>
-            <p class="hero__lede">
-              Rosie is an automated, rules-based trading operator from Lime Signalworks. She watches
-              the markets, applies your risk rules and places the trades those rules call for. Once
-              she is set up, your job is to supervise. And she is built to protect your account
-              first: a stop on every position, hard limits on every trade, and one button that stops
-              everything.
-            </p>
-
-            <div class="hero__actions">
-              <a class="hero-action" href="#contact">Book a guided setup</a>
-              <a class="hero-action hero-action--quiet" href="#how-it-works">See how Rosie works</a>
-            </div>
-
-            <!-- E1 call to action. Both facts below are static markup, rendered before any
-                 click, and neither is a toast, a tooltip, or collapsed content. The second
-                 states the access precondition: the destination is not anonymously
-                 reachable, so a visitor learns that before spending a click on it. -->
-            <div class="cta-block" id="demo">
-              <a class="cta" href="https://limesignalworks.pplx.app/" target="_blank" rel="noopener noreferrer">Open the Rosie demo<span class="ext" aria-hidden="true">&#8599;</span><span class="sr-only"> (opens in a new tab)</span></a>
-              <p class="cta-block__disclosure" data-demo-disclosure>Demonstration environment. Simulated data. No broker connection and no real orders.</p>
-              <p class="cta-block__signin" data-demo-signin>Perplexity sign-in may be required.</p>
-            </div>
-
-            <dl class="hero__meta">
-              <div>
-                <dt>What she does</dt>
-                <dd>Watches, sizes, places and protects trades by your rules. You supervise</dd>
-              </div>
-              <div>
-                <dt>Protection</dt>
-                <dd>Disaster stop on every position, 2% risk per trade, 6% total open-risk cap</dd>
-              </div>
-              <div>
-                <dt>Markets</dt>
-                <dd>Stocks and ETFs today. Options, futures, crypto and forex in development</dd>
-              </div>
-              <div>
-                <dt>Status</dt>
-                <dd>Interactive Brokers version running in paper mode today</dd>
-              </div>
-              <div>
-                <dt>Prove it first</dt>
-                <dd>Free for 33 days in paper mode, with guided setup</dd>
-              </div>
-            </dl>
-            <p class="hero__risk">Trading involves risk of loss. Rosie enforces your limits; she cannot remove market risk.</p>
-          </div>
-          <div>
-            <svg
-              class="figure-line"
-              viewBox="0 0 320 240"
-              role="img"
-              aria-label="Abstract line diagram: an index line moving up and down above a lower threshold band, with a marked point where the line falls toward the band."
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.25"
-              stroke-linecap="square"
-            >
-              <path d="M8 200h304" stroke-width="1" opacity="0.45" />
-              <path d="M8 216h304" stroke-width="1" opacity="0.2" />
-              <path d="M8 232h304" stroke-width="1" opacity="0.12" />
-              <rect
-                x="8"
-                y="150"
-                width="304"
-                height="34"
-                opacity="0.28"
-                stroke-dasharray="3 4"
-              />
-              <path d="M8 128 56 96 104 118 152 62 200 84 248 44 312 70" stroke-width="1.75" />
-              <path d="M248 44 280 128 312 156" opacity="0.55" stroke-dasharray="4 4" />
-              <circle cx="248" cy="44" r="3.5" fill="currentColor" stroke="none" />
-              <path d="M248 44v106" opacity="0.35" stroke-dasharray="2 5" />
-              <path d="M20 150h24M20 184h24" opacity="0.5" />
-            </svg>
+      <!-- Opening — personal, single column (from the /preview/evidence/ study, PR #13) -->
+      <section class="hero opening" id="opening" aria-labelledby="opening-title">
+        <svg class="opening__rings" viewBox="0 0 360 360" aria-hidden="true" fill="none">
+          <circle class="ring" cx="180" cy="180" r="60" />
+          <circle class="ring ring--b" cx="180" cy="180" r="110" />
+          <circle class="ring ring--c" cx="180" cy="180" r="160" />
+          <circle class="ring__core" cx="180" cy="180" r="8" />
+        </svg>
+        <div class="shell">
+          <div class="opening__col" data-voice="noal">
+            <p class="label opening__label" data-attribution>From Noal</p>
+            <h1 id="opening-title">I built Rosie (Keelwise) so I could stop watching, relax and enjoy my life.</h1>
+            <p>Picture an ordinary Tuesday. I'm at my daughter's recital, then out for a walk, then at a long lunch with an old friend, phone face-down on the table. I'm not checking anything, and I'm not worried.</p>
+            <p>Rosie is on the job. Before anything I own is ever at risk, she's already placed a protective stop with my broker, so it's there whether I'm watching or not. She keeps the risk small, the rules plain, and she tells me the truth, even on the days that don't go well.</p>
+            <p>Once she's set up, my job is done for the most part. Now I watch and supervise a little.</p>
+            <p>Knowing she's on watch gives me my time back, and I spend it on what the money was for in the first place: being fully present with the people I love, taking care of my health, staying curious, and feeling looked after.</p>
+            <p class="opening__sign">I built her for me, and I built her so you can have it too.</p>
+            <p class="warm-note">Today Rosie runs in a paper (practice) account.</p>
           </div>
         </div>
       </section>
 
-      <!-- E2 — what Rosie does for you -->
-      <section class="section" id="what-we-do" aria-labelledby="what-we-do-title">
+      <!-- Your life with Rosie — six vignettes and the sleep pull-quote (PR #13) -->
+      <section class="life" id="life" aria-labelledby="life-title">
+        <div class="shell">
+          <div class="life__head">
+            <p class="label">Your life with Rosie</p>
+            <p class="label voice-tag" data-voice-tag>From Rosie</p>
+            <h2 id="life-title">What changes for you when Rosie is on watch.</h2>
+            <p>Six small things, in plain words. None of them is about the numbers. They&rsquo;re about your day.</p>
+          </div>
+          <ul class="vgrid" data-voice="rosie">
+            <li class="vcard"><svg class="vcard__art" viewBox="0 0 84 84" aria-hidden="true" fill="none"><circle cx="42" cy="42" r="14" /><circle class="vcard__art-outer" cx="42" cy="42" r="28" /><circle class="vcard__art-core" cx="42" cy="42" r="4" /></svg><h3>Hours back.</h3><p>No checking at lunch, in the car, or at 3 a.m. I take the watching off your plate, so your attention can go to the people and things you love.</p></li>
+            <li class="vcard"><svg class="vcard__art" viewBox="0 0 84 84" aria-hidden="true" fill="none"><circle cx="42" cy="42" r="14" /><circle class="vcard__art-outer" cx="42" cy="42" r="28" /><circle class="vcard__art-core" cx="42" cy="42" r="4" /></svg><h3>A quieter mind.</h3><p>I place a protective stop with your broker on every position, from the moment it opens. So “what if something happens while I’m away?” has an answer.</p><p class="vcard__care">A stop is a safeguard, not a guarantee; a fast market can fill below it.</p></li>
+            <li class="vcard"><svg class="vcard__art" viewBox="0 0 84 84" aria-hidden="true" fill="none"><circle cx="42" cy="42" r="14" /><circle class="vcard__art-outer" cx="42" cy="42" r="28" /><circle class="vcard__art-core" cx="42" cy="42" r="4" /></svg><h3>Better sleep.</h3><p>No lying awake with overnight dread. I plan the worst case on each trade before I ever place it, so there’s nothing to decide in the dark.</p></li>
+            <li class="vcard"><svg class="vcard__art" viewBox="0 0 84 84" aria-hidden="true" fill="none"><circle cx="42" cy="42" r="14" /><circle class="vcard__art-outer" cx="42" cy="42" r="28" /><circle class="vcard__art-core" cx="42" cy="42" r="4" /></svg><h3>No regret trades.</h3><p>I follow the same written rules in a panic and in a boom. Fear and excitement don’t get to make the calls, so you’re not left wondering why you did that.</p></li>
+            <li class="vcard"><svg class="vcard__art" viewBox="0 0 84 84" aria-hidden="true" fill="none"><circle cx="42" cy="42" r="14" /><circle class="vcard__art-outer" cx="42" cy="42" r="28" /><circle class="vcard__art-core" cx="42" cy="42" r="4" /></svg><h3>Confidence to say yes.</h3><p>Travel, family, a new project, an afternoon off. You can say yes without first checking what the market is doing, because the watching isn’t on you.</p></li>
+            <li class="vcard"><svg class="vcard__art" viewBox="0 0 84 84" aria-hidden="true" fill="none"><circle cx="42" cy="42" r="14" /><circle class="vcard__art-outer" cx="42" cy="42" r="28" /><circle class="vcard__art-core" cx="42" cy="42" r="4" /></svg><h3>A sense of order.</h3><p>I keep the risk small, written down, and checked before every order. Your money feels looked after rather than gambled.</p></li>
+          </ul>
+          <figure class="sleep" id="sleep" data-voice="noal">
+            <blockquote>I sleep like a baby now, and not only because I found the right device. I know Rosie is on watch, with my stops already in place. I can't promise how every trade ends, but I know what's protecting me while I rest.</blockquote>
+            <figcaption data-attribution>Noal</figcaption>
+          </figure>
+          <div class="life__close" data-voice="rosie"><p>I do the watching, you do the living.</p></div>
+          <p class="warm-note life__note">Today Rosie runs in a paper (practice) account. Trading involves risk of loss, and nothing here is a promise of results.</p>
+        </div>
+      </section>
+
+      <!-- What Rosie will and won't do — single column, warm first person (PR #13) -->
+      <section class="ww" id="will-wont" aria-labelledby="will-wont-title">
+        <div class="shell">
+          <div class="ww__col" data-voice="noal">
+            <p class="label">What Rosie will and won't do</p>
+            <h2 id="will-wont-title">What Rosie will and won't do</h2>
+            <p>I'll tell you what I love about her, because it's the reason I trust her.</p>
+            <p>Rosie is all for you. She works in your account, for you, and nobody else. She has no way to move your money out. All she can do is place orders with your broker, inside the limits you set. There are no nefarious bones in this baby.</p>
+            <p>She's consistent. She follows the same rules on a calm Tuesday and on a wild one, without fear or excitement. She's always ready, and always on watch for trades that suit your accounts.</p>
+            <p>And she's honest. She can't promise good trades, and no one can. Markets move, and a stop can fill below its price. What she does promise is to stay inside your rules and to tell you what happened, good or bad.</p>
+            <p class="ww__pull">My favorite thing about Rosie is where she's headed: watching the markets around the clock and around the world, while I only look in casually or give her a nudge one way or the other. She's mine, and she works entirely for my benefit. She's the most remarkable relationship I've had in life.</p>
+            <p class="ww__phone"><span class="soon">COMING SOON</span> <span><strong>Follow along from your phone.</strong> Phone viewing is on its way for everyone; I already check in on mine.</span></p>
+            <p class="ww__sign">Her only job is to help me with my funds, and I like her more and more.</p>
+            <figure class="sleep ww__quote" id="teammate">
+              <blockquote>Rosie is the primo teammate. There's no one I'd rather have on my team than Rosie, because she's the only team member I can truly trust.</blockquote>
+              <figcaption data-attribution>Noal</figcaption>
+            </figure>
+            <p class="warm-note">Today Rosie runs in a paper (practice) account. Around-the-clock and worldwide markets, including crypto, forex and futures, are coming and not live. Trading involves risk of loss, and nothing here is a promise of results.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Trading the way the pros do — copy and habits live in data/homepage.json (pros) -->
+      <section class="section pros" id="pros" aria-labelledby="pros-title" data-voice="rosie">
         <div class="shell">
           <div class="section__head">
-            <p class="label rule-after">Section 01</p>
-            <h2 id="what-we-do-title">What Rosie does for you</h2>
+            <p class="label rule-after">Section 04</p>
+            <p class="label voice-tag" data-voice-tag>From Rosie</p>
+            <h2 id="pros-title">Trading the way the pros do.</h2>
+            <p>The best traders in the world share a few habits: they trade by written rules, they decide what they can lose before they decide what they can win, and they stay consistent when it's hard. I'm built on those same habits. And unlike a big firm, I work for one person: you.</p>
           </div>
-          <div class="section__grid">
-            <div class="prose">
-              <p class="prose__lead">
-                Rosie does the watching, the sizing, the order entry and the protection. You set the
-                rules and stay in charge.
+          <div class="tiles pros__habits">
+            <div class="tile"><p class="label">Written rules</p><p>They trade by written rules.</p></div>
+            <div class="tile"><p class="label">Risk first</p><p>They decide what they can lose before they decide what they can win.</p></div>
+            <div class="tile"><p class="label">Consistency</p><p>They stay consistent when it's hard.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Evidence — layout A (rule tiles) only. Layouts B–D stay on /preview/evidence/. -->
+      <section class="section evidence" id="evidence" aria-labelledby="evidence-title" data-voice="rosie">
+        <div class="shell">
+          <div class="section__head">
+            <p class="label rule-after">Rosie / Keelwise · Evidence</p>
+            <p class="label voice-tag" data-voice-tag>From Rosie</p>
+            <h2 id="evidence-title">What Rosie does, and the rules that hold her to it.</h2>
+            <p>I trade a <strong>paper account only</strong> today, and I don't publish profit figures. Here are the rules every order of mine has to pass, how they're tested, and what I won't do. Options, futures, crypto and forex are <span class="soon">COMING</span>. None of them is live.</p>
+          </div>
+          <h3 class="evidence__sub">Five numbers, each with its source</h3>
+          <div class="tiles">
+            <div class="tile"><p class="label">Disaster stop</p><p class="tile__big">10<small>% default</small></p><p><strong>I place a protective stop at the broker on every position.</strong> I send it with the buy order, for the same number of shares, and it stays in place until the position is closed. I set its price at entry and don't move it. I never set it tighter than three times the stock's usual overnight gap, so jumpier stocks get more room.</p><p class="tile__src">Source: my written protection rules</p></div>
+            <div class="tile"><p class="label">Risk per trade</p><p class="tile__big">2<small>% of equity</small></p><p>I size each position so that if its stop is hit, the loss <em>at the stop price</em> is at most 2% of the account. A fast market can still fill below the stop.</p><p class="tile__src">Source: my written sizing rules</p></div>
+            <div class="tile"><p class="label">Total open risk</p><p class="tile__big">6<small>% of equity</small></p><p><strong>Every order I send passes the same safety checks first.</strong> All my open positions and pending orders together can't put more than 6% of the account at risk, about three full-size trades. I refuse any order that would go over.</p><p class="tile__src">Source: my written risk limits</p></div>
+            <div class="tile"><p class="label">Trailing stops</p><p class="tile__big">0</p><p>Trailing stops came out of my rules on 21 October 2026. My entries, partial sales and exits come from my signal rules instead, and an automated check makes sure I never create a trailing stop.</p><p class="tile__src">Source: the Lime Signalworks decision of 21 Oct 2026, checked by an automated test</p></div>
+            <div class="tile"><p class="label">Automated tests</p><p class="tile__big">0<small> failed</small></p><p>My rules are checked by an automated test suite. In the latest full run, on 27 October 2026, none of the tests that ran failed. A few were skipped because they need a web browser the test machine didn't have.</p><p class="tile__src">Source: the Lime Signalworks automated test suite, full run of 27 Oct 2026</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- E5b — the TradingView indicators -->
+      <section class="section" id="indicators" aria-labelledby="indicators-title">
+        <div class="shell">
+          <div class="section__head">
+            <p class="label rule-after">Section 06</p>
+            <h2 id="indicators-title">Our TradingView indicators</h2>
+            <p>
+              Lime Signalworks also offers its own TradingView indicators: rule-based tools that
+              turn the chart into plain readings you can check, instead of a guess. They work on
+              their own, on your TradingView chart. This is the one slightly technical corner of
+              the page: each one is shown with the problem it was made to solve.
+            </p>
+          </div>
+          <ul class="gallery">
+            <li class="artwork">
+              <svg class="artwork__canvas" viewBox="0 0 240 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none">
+                <rect class="art__fill-a" x="0" y="0" width="240" height="38" />
+                <rect class="art__fill-b" x="0" y="38" width="240" height="38" />
+                <rect class="art__fill-c" x="0" y="76" width="240" height="38" />
+                <rect class="art__fill-d" x="0" y="114" width="240" height="36" />
+                <path class="art__line" d="M0 112 C40 96 60 60 96 66 S150 30 180 44 S224 88 240 80" />
+              </svg>
+              <p class="artwork__no label">No. 1</p>
+              <h3>Lime Color Weather</h3>
+              <p class="artwork__problem"><span class="label">The problem it solves</span> You trade the same way whether the market is friendly or stormy, and only find out which it was afterwards.</p>
+              <p class="artwork__answer">Shows the market’s current “weather” as colour bands, so you can see whether conditions favour buying, holding or staying small.</p>
+              <p class="artwork__tech"><span class="label">A little technical</span> Conditions are drawn as colour bands with readings such as “bull cooling” or “strong bull rising”. The same read appears in more than one pane, and the middle pane shows whether a tiring move is forming with or against the larger trend.</p>
+            </li>
+            <li class="artwork">
+              <svg class="artwork__canvas" viewBox="0 0 240 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none">
+                <path class="art__rule" d="M20 40h200M20 75h200M20 110h200" />
+                <circle class="art__dot" cx="70" cy="40" r="11" />
+                <circle class="art__dot art__dot--soft" cx="120" cy="75" r="11" />
+                <circle class="art__dot art__dot--hollow" cx="170" cy="110" r="11" />
+              </svg>
+              <p class="artwork__no label">No. 2</p>
+              <h3>Lime Notify</h3>
+              <p class="artwork__problem"><span class="label">The problem it solves</span> There are so many signals on your screen that you can’t tell what you’re actually supposed to do.</p>
+              <p class="artwork__answer">Reduces the noise to three readings only: Buy, Trim and Exit, each checked on the 1-day, 6-hour and 3-hour time frames.</p>
+              <p class="artwork__tech"><span class="label">A little technical</span> The published reading is Alignment + Momentum − Exhaustion − Risk: Buy when it is strong, Trim when it softens, Exit when it breaks down. Tiredness and risk count against a Buy.</p>
+            </li>
+            <li class="artwork">
+              <svg class="artwork__canvas" viewBox="0 0 240 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none">
+                <path class="art__rule" d="M16 132h208" />
+                <path class="art__line" d="M16 130 C60 126 90 110 116 76 S170 26 196 30 S220 44 224 52" />
+                <circle class="art__ring" cx="196" cy="30" r="9" />
+                <circle class="art__ring art__ring--b" cx="196" cy="30" r="20" />
+              </svg>
+              <p class="artwork__no label">No. 3</p>
+              <h3>Lime Exhaustion</h3>
+              <p class="artwork__problem"><span class="label">The problem it solves</span> You keep getting in too late, buying right as the move runs out of steam.</p>
+              <p class="artwork__answer">Shows whether a move is fresh, mid-journey or worn out, so you can avoid buying the last gasp of a move.</p>
+              <p class="artwork__tech"><span class="label">A little technical</span> The published reading is Stretch from Trend + Momentum Extremes + Volatility Expansion − Fresh Support. The further price stretches from its trend, the more tired the move reads.</p>
+            </li>
+            <li class="artwork">
+              <svg class="artwork__canvas" viewBox="0 0 240 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none">
+                <path class="art__line" d="M16 120 L60 96 L96 104 L140 64 L176 70 L224 30" />
+                <path class="art__step" d="M16 132h60v-14h56v-26h52v-22h40" />
+                <path class="art__rule" d="M184 20v116" />
+              </svg>
+              <p class="artwork__no label">No. 4</p>
+              <h3>Lime StopWatcher</h3>
+              <p class="artwork__problem"><span class="label">The problem it solves</span> You never know where to put your stop, so you either get shaken out or give back what you made.</p>
+              <p class="artwork__answer">Three tools for the life of a trade: a first stop level at entry, a trailing guard as the trade moves your way, and a line that marks where a mature move may be ending.</p>
+              <p class="artwork__tech"><span class="label">A little technical</span> Three parts: StopWatcher I (First Stop), StopWatcher II (Trailing Guard) and StopWatcher III (Harvest Line), which gives its final read as CAND, AVOID, WATCH or HOLD.</p>
+            </li>
+            <li class="artwork">
+              <svg class="artwork__canvas" viewBox="0 0 240 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none">
+                <rect class="art__layer" x="40" y="22" width="160" height="14" rx="3" />
+                <rect class="art__layer" x="48" y="42" width="144" height="14" rx="3" />
+                <rect class="art__layer" x="56" y="62" width="128" height="14" rx="3" />
+                <rect class="art__layer" x="64" y="82" width="112" height="14" rx="3" />
+                <rect class="art__layer art__layer--open" x="72" y="102" width="96" height="14" rx="3" />
+                <path class="art__rule" d="M120 120v18" />
+              </svg>
+              <p class="artwork__no label">No. 5</p>
+              <h3>Lime 8 Filter Stack</h3>
+              <p class="artwork__problem"><span class="label">The problem it solves</span> When the signals are mixed, it’s easy to talk yourself into the trade anyway.</p>
+              <p class="artwork__answer">Combines several safety checks into one pass or fail view, so you can stand aside when the signals are mixed.</p>
+            </li>
+          </ul>
+          <ul class="ticks">
+            <li>The indicators show their logic. They support your decisions and do not make them for you.</li>
+            <li>Indicators do not predict the market, and no indicator removes the risk of loss.</li>
+            <li><a href="#how-to-begin">Ask Lime Signalworks how to get them</a>.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Demo — the static sample-data demo at /rosie-demo/ (PR #15) is the only demo link.
+           The hosted demo was retired on 2026-10-28 at the owner's direction;
+           the full demo is offered on request through the contact block. -->
+      <section class="section demo" id="demo" aria-labelledby="demo-title" data-voice="rosie">
+        <div class="shell">
+          <div class="section__head">
+            <p class="label rule-after">Section 07</p>
+            <p class="label voice-tag" data-voice-tag>From Rosie</p>
+            <h2 id="demo-title">Meet Rosie, also known as Keelwise. She trades your rules, so you don’t have to watch every tick.</h2>
+          </div>
+          <div class="section__grid demo__grid">
+            <div>
+              <p class="hero__lede">
+                I&rsquo;m Rosie, an automated, rules-based trading operator from Lime Signalworks. I watch
+                the markets, apply your risk rules and place the trades those rules call for. Once
+                I&rsquo;m set up, your job is to supervise. And I&rsquo;m built to protect your account
+                first: a stop on every position, hard limits on every trade, and one button that stops
+                everything.
               </p>
-              <p>
-                Most people cannot watch the market all day, and most people who try end up breaking
-                their own rules under pressure. Rosie is built to follow the rules you set: no impulse
-                buys, no oversized positions, no skipped stops.
-              </p>
-              <p>
-                She samples prices through the session, checks every idea against your risk limits,
-                sizes the position, sends the order to your broker and attaches protection the moment
-                it fills. Everything she does shows up on the Operator Workstation, where you can step
-                in, pause her or shut everything down at any time.
-              </p>
+              <!-- E1 call to action. The labelling below is static markup, rendered before any
+                   click: never a toast, a tooltip, or collapsed content. -->
+              <div class="cta-block">
+                <a class="cta" href="/rosie-demo/">Open the Rosie demo</a>
+                <p class="cta-block__disclosure" data-demo-disclosure>Sample data in a paper (practice) account. No broker connection, no real orders, and nothing here is advice.</p>
+              </div>
+              <p class="demo-ask" data-demo-ask>If you'd like the full demo, just ask. We'll set you up with the whole thing, for free, no strings attached. <a class="anchor-link" href="#contact">Ask for the full demo</a></p>
+
+              <div class="hero__actions">
+                <a class="hero-action hero-action--quiet" href="#contact">Book a guided setup</a>
+                <a class="hero-action hero-action--quiet" href="#how-it-works">See how I work</a>
+              </div>
+
+              <dl class="hero__meta">
+                <div>
+                  <dt>What she does</dt>
+                  <dd>Watches, sizes, places and protects trades by your rules. You supervise</dd>
+                </div>
+                <div>
+                  <dt>Protection</dt>
+                  <dd>Disaster stop on every position, 2% risk per trade, 6% total open-risk cap</dd>
+                </div>
+                <div>
+                  <dt>Markets</dt>
+                  <dd>Stocks and ETFs today. Options, futures, crypto and forex in development</dd>
+                </div>
+                <div>
+                  <dt>Status</dt>
+                  <dd>Interactive Brokers version running in paper mode today</dd>
+                </div>
+                <div>
+                  <dt>Prove it first</dt>
+                  <dd>Free for 33 days in paper mode, with guided setup</dd>
+                </div>
+              </dl>
+              <p class="hero__risk">Trading involves risk of loss. I enforce your limits; I can&rsquo;t remove market risk.</p>
             </div>
             <figure class="product-shot">
               <img
@@ -195,22 +341,51 @@
                 width="1200"
                 height="750"
                 loading="lazy"
-                alt="Rosie IB Operator Workstation, demo with test data: header controls, Account Overview, Positions with the Signal column, and broker-held Stops"
+                alt="Rosie IB Operator Workstation, demo with sample data: header controls, Account Overview, Positions with the Signal column, and broker-held Stops"
               />
-              <figcaption>The Rosie IB Operator Workstation, shown here with test data. <a href="/rosie-demo/">Open the interactive demo</a>.</figcaption>
+              <figcaption>The Rosie IB Operator Workstation, shown here with sample data. <a href="/rosie-demo/">Open the interactive demo</a>.</figcaption>
             </figure>
           </div>
         </div>
       </section>
 
-      <!-- E3 — how Rosie works -->
-      <section class="section" id="how-it-works" aria-labelledby="how-it-works-title">
+      <!-- E2 — what Rosie does for you -->
+      <section class="section" id="what-we-do" aria-labelledby="what-we-do-title" data-voice="rosie">
         <div class="shell">
           <div class="section__head">
-            <p class="label rule-after">Section 02</p>
+            <p class="label rule-after">Section 08</p>
+            <p class="label voice-tag" data-voice-tag>From Rosie</p>
+            <h2 id="what-we-do-title">What Rosie does for you</h2>
+          </div>
+          <div class="prose">
+              <p class="prose__lead">
+                I do the watching, the sizing, the order entry and the protection. You set the
+                rules and stay in charge.
+              </p>
+              <p>
+                Most people cannot watch the market all day, and most people who try end up breaking
+                their own rules under pressure. I&rsquo;m built to follow the rules you set: no impulse
+                buys, no oversized positions, no skipped stops.
+              </p>
+              <p>
+                I sample prices through the session, check every idea against your risk limits,
+                size the position, send the order to your broker and attach protection the moment
+                it fills. Everything I do shows up on the Operator Workstation, where you can step
+                in, pause me or shut everything down at any time.
+              </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- E3 — how Rosie works -->
+      <section class="section" id="how-it-works" aria-labelledby="how-it-works-title" data-voice="rosie">
+        <div class="shell">
+          <div class="section__head">
+            <p class="label rule-after">Section 09</p>
+            <p class="label voice-tag" data-voice-tag>From Rosie</p>
             <h2 id="how-it-works-title">How Rosie works, in three steps</h2>
             <p>
-              Set her up once. Let her run. Keep watch.
+              You set me up once. I run. You keep watch.
             </p>
           </div>
           <ol class="stages">
@@ -218,24 +393,25 @@
               <p class="label">Step one</p>
               <h3>You set the rules</h3>
               <p>
-                Pick your markets, your risk per trade and your daily loss limit. We set Rosie up with
-                you on a paper account first, so you see her work before any real money is involved.
+                You pick your markets, your risk per trade and your daily loss limit. Lime Signalworks
+                sets me up with you on a paper account first, so you see me work before any real money
+                is involved.
               </p>
             </li>
             <li>
               <p class="label">Step two</p>
               <h3>Rosie watches and trades</h3>
               <p>
-                She tracks prices against their recent averages and reads the day’s stated market
-                posture. When your rules say enter or exit, she sizes the position and places the
-                order. On a defensive day, new buys are blocked.
+                I track prices against their recent averages and read the day’s stated market
+                posture. When your rules say enter or exit, I size the position and place the
+                order. On a defensive day, I block new buys.
               </p>
             </li>
             <li>
               <p class="label">Step three</p>
               <h3>You supervise</h3>
               <p>
-                Every position, stop and order is on your screen, and every decision is written to a
+                Every position, stop and order is on your screen, and I write every decision to a
                 Journal and Trade Record you keep. Live trading runs only when you switch it on, and
                 one click stops it all.
               </p>
@@ -245,58 +421,95 @@
       </section>
 
       <!-- E4 — what Rosie protects -->
-      <section class="section" id="protection" aria-labelledby="protection-title">
+      <section class="section" id="protection" aria-labelledby="protection-title" data-voice="rosie">
         <div class="shell">
           <div class="section__head">
-            <p class="label rule-after">Section 03</p>
+            <p class="label rule-after">Section 10</p>
+            <p class="label voice-tag" data-voice-tag>From Rosie</p>
             <h2 id="protection-title">Built to protect the account first</h2>
             <p>
-              Before Rosie chases a gain, she limits what a single trade, or a single bad day, can
+              Before I go after a gain, I limit what a single trade, or a single bad day, can
               cost you.
             </p>
           </div>
           <ul class="guards">
             <li>
               <h3>A disaster stop on every position</h3>
-              <p>No position runs without a fixed protective stop. Stops are held at the broker, so they keep working even if your computer is off.</p>
+              <p>I keep a fixed protective stop on every position. My stops are held at the broker, so they keep working even if your computer is off.</p>
             </li>
             <li>
               <h3>2% risk per trade</h3>
-              <p>Each position is sized so that, at its stop, it risks no more than 2% of the account.</p>
+              <p>I size each position so that, at its stop, it risks no more than 2% of the account.</p>
             </li>
             <li>
               <h3>6% total open-risk cap</h3>
-              <p>Add up the risk on everything open: Rosie will not let it pass 6%.</p>
+              <p>Add up the risk on everything open, and I won&rsquo;t let it pass 6%.</p>
             </li>
             <li>
               <h3>Daily loss limit and kill switch</h3>
-              <p>Hit the day’s loss limit and new trading halts. No chasing losses.</p>
+              <p>When the day’s loss limit is hit, I stop opening new trades. No chasing losses.</p>
             </li>
             <li>
               <h3>STOP ALL and FLATTEN ALL</h3>
-              <p>One button halts Rosie. One button closes every open position. You can take over at any moment.</p>
+              <p>One button halts me. One button closes every open position. You can take over at any moment.</p>
             </li>
             <li>
               <h3>Paper mode to prove it first</h3>
-              <p>Run Rosie on a paper account with real market prices before a single real dollar is at stake.</p>
+              <p>You can run me on a paper account with real market prices before a single real dollar is at stake.</p>
             </li>
           </ul>
           <ul class="ticks">
-            <li>A symbol without measured price history is refused, never given a guessed stop.</li>
-            <li>Rosie runs on your own computer. Your broker login stays with your broker.</li>
+            <li>I refuse a symbol without measured price history; I never give it a guessed stop.</li>
+            <li>I run on your own computer. Your broker login stays with your broker.</li>
             <li>Limits reduce how much a trade or a day can cost. They do not eliminate losses.</li>
           </ul>
         </div>
       </section>
 
-      <!-- E5 — markets roadmap -->
-      <section class="section" id="markets" aria-labelledby="markets-title">
+      <!-- E4b — follow Rosie from a phone or small tablet -->
+      <section class="section" id="phone" aria-labelledby="phone-title" data-voice="rosie">
         <div class="shell">
           <div class="section__head">
-            <p class="label rule-after">Section 04</p>
+            <p class="label rule-after">Section 11</p>
+            <p class="label voice-tag" data-voice-tag>From Rosie</p>
+            <h2 id="phone-title">Follow Rosie from your phone or a small tablet</h2>
+            <p>
+              I run on your own computer, and you will be able to keep an eye on me from
+              wherever you are, on a cell phone or a small tablet.
+            </p>
+          </div>
+          <ul class="guards">
+            <li>
+              <p class="flag">Coming · in development</p>
+              <h3>See what she is doing</h3>
+              <p>Account, positions, stops and working orders in a layout made for a small screen.</p>
+            </li>
+            <li>
+              <p class="flag">Coming · in development</p>
+              <h3>Stop everything from anywhere</h3>
+              <p>A STOP ALL button within reach, so you can halt me without going back to your desk.</p>
+            </li>
+            <li>
+              <p class="flag">Coming · in development</p>
+              <h3>Private by design</h3>
+              <p>Sign-in is required, and the dashboard is not opened to the public internet.</p>
+            </li>
+          </ul>
+          <ul class="ticks">
+            <li>Phone and tablet access is being built. It is not available yet.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- E5 — markets roadmap -->
+      <section class="section" id="markets" aria-labelledby="markets-title" data-voice="rosie">
+        <div class="shell">
+          <div class="section__head">
+            <p class="label rule-after">Section 12</p>
+            <p class="label voice-tag" data-voice-tag>From Rosie</p>
             <h2 id="markets-title">One operator. A wide range of markets.</h2>
             <p>
-              Rosie is being built to cover stocks, ETFs, options, futures, cryptocurrency and forex:
+              I&rsquo;m being built to cover stocks, ETFs, options, futures, cryptocurrency and forex:
               a range of markets ordinary traders rarely get from a single tool.
             </p>
           </div>
@@ -314,7 +527,7 @@
             <li>
               <p class="flag">Coming after that · in development</p>
               <h3>Cryptocurrency and forex</h3>
-              <p>Rosie’s discipline, brought to crypto and currency markets.</p>
+              <p>The same written rules I follow, brought to crypto and currency markets.</p>
             </li>
           </ol>
         </div>
@@ -324,7 +537,7 @@
       <section class="section" id="evaluation" aria-labelledby="evaluation-title">
         <div class="shell">
           <div class="section__head">
-            <p class="label rule-after">Section 05</p>
+            <p class="label rule-after">Section 13</p>
             <h2 id="evaluation-title">Prove her on paper: free for 33 days</h2>
             <p>
               Every new user starts with a free 33-day evaluation on an Interactive Brokers
@@ -333,19 +546,21 @@
             </p>
           </div>
 
-          <ol class="stages">
+          <p class="label voice-tag voice-tag--block" data-voice-tag>From Rosie</p>
+          <ol class="stages" data-voice="rosie">
             <li>
               <p class="label">Stage one</p>
               <h3>Set up together</h3>
               <p>
-                We install Rosie with you, walk through the Operator Workstation and set your rules.
+                Lime Signalworks installs me with you, walks you through the Operator Workstation and
+                sets your rules.
               </p>
             </li>
             <li>
               <p class="label">Stage two</p>
               <h3>Watch her work</h3>
               <p>
-                Rosie trades the paper account each day. You see every order, stop and journal entry.
+                I trade the paper account each day. You see every order, stop and journal entry.
               </p>
             </li>
             <li>
@@ -366,7 +581,7 @@
       <section class="section" id="pricing" aria-labelledby="pricing-title">
         <div class="shell">
           <div class="section__head">
-            <p class="label rule-after">Section 06</p>
+            <p class="label rule-after">Section 14</p>
             <h2 id="pricing-title">One price. Then Rosie is yours.</h2>
             <p>
               Start with the free 33-day paper evaluation. If you continue, there is one
@@ -431,16 +646,16 @@
       </section>
 
       <!-- E8 — daily market situation report -->
-      <section class="section" id="market-report" aria-labelledby="market-report-title">
+      <section class="section" id="market-report" aria-labelledby="market-report-title" data-voice="rosie">
         <div class="shell">
           <div class="section__head">
-            <p class="label rule-after">Section 07</p>
+            <p class="label rule-after">Section 15</p>
+            <p class="label voice-tag" data-voice-tag>From Rosie</p>
             <h2 id="market-report-title">The daily market report Rosie reads</h2>
             <p>
-              Our market situation report is a plain-language summary of conditions: index-level
+              The Lime Signalworks market situation report is a plain-language summary of conditions: index-level
               moves, volatility, and a stated risk posture. It is written after the close, dated, and
-              published on our Signals site. Rosie reads the stated posture before opening any new
-              buy. The table below shows the report format.
+              published on the Lime Signalworks Signals site. The table below shows the report format.
             </p>
           </div>
 
@@ -510,17 +725,18 @@
       <section class="section" id="commitments" aria-labelledby="commitments-title">
         <div class="shell">
           <div class="section__head">
-            <p class="label rule-after">Section 08</p>
+            <p class="label rule-after">Section 16</p>
             <h2 id="commitments-title">Straight talk</h2>
           </div>
           <div class="prose">
             <p class="prose__lead">
               We do not guarantee profits and we cannot eliminate risk. No honest provider can.
             </p>
-            <p>
-              What we do commit to is discipline you can see: a rules-based operator, hard risk limits,
-              a stop on every position, and a full record of every decision. Markets move in every
-              direction. The rules Rosie runs, and the decisions about your account, stay yours.
+            <p data-voice="rosie">
+              <span>From me, Rosie: what I commit to is discipline you can see. I trade by
+              written rules, I keep hard risk limits, I place a stop on every position, and I keep a
+              full record of every decision. Markets move in every direction. The rules I run, and the
+              decisions about your account, stay yours.</span>
             </p>
           </div>
         </div>
@@ -530,20 +746,21 @@
       <section class="section" id="partners" aria-labelledby="partners-title">
         <div class="shell">
           <div class="section__head">
-            <p class="label rule-after">Section 09</p>
+            <p class="label rule-after">Section 17</p>
+            <p class="label voice-tag" data-voice-tag>From Rosie</p>
             <h2 id="partners-title">For brokers and partners</h2>
           </div>
-          <div class="prose">
+          <div class="prose" data-voice="rosie">
             <p>
-              Rosie is built to sit alongside a broker, not in place of one. She runs on the
-              customer’s own computer, sends orders through the broker’s own API, and leaves the
-              broker login with the broker. Protective stops live at the broker, where your systems
+              I&rsquo;m built to sit alongside a broker, not in place of one. I run on the
+              customer’s own computer, send orders through the broker’s own API, and leave the
+              broker login with the broker. My protective stops live at the broker, where your systems
               can see them.
             </p>
             <p>
-              Rosie is available to brokers and educators who want to offer her to their customers.
-              On request we share a security overview of how Rosie handles data and orders, and we
-              welcome your security review.
+              I&rsquo;m available to brokers and educators who want to offer me to their customers.
+              On request, Lime Signalworks shares a security overview of how I handle data and
+              orders, and welcomes your security review.
             </p>
           </div>
           <div class="notice" data-security-standards>
@@ -562,14 +779,15 @@
       </section>
 
       <!-- E11 — how to begin -->
-      <section class="section section--cta" id="how-to-begin" aria-labelledby="how-to-begin-title">
+      <section class="section section--cta" id="how-to-begin" aria-labelledby="how-to-begin-title" data-voice="rosie">
         <div class="shell">
           <div class="section__head">
-            <p class="label rule-after">Section 10</p>
+            <p class="label rule-after">Section 18</p>
+            <p class="label voice-tag" data-voice-tag>From Rosie</p>
             <h2 id="how-to-begin-title">Put Rosie to work</h2>
             <p>
-              Call or email us today. We will have Rosie running on a paper account with you and
-              start your free 33-day evaluation.
+              Call or email Lime Signalworks today. They&rsquo;ll have me running on a paper account
+              with you and start your free 33-day evaluation.
             </p>
           </div>
           <ol class="stages">
@@ -577,29 +795,30 @@
               <p class="label">Individuals</p>
               <h3>Book a guided setup</h3>
               <p>
-                We set Rosie up with you on an Interactive Brokers paper account and start your
-                33-day evaluation.
+                Lime Signalworks sets me up with you on an Interactive Brokers paper account and starts
+                your 33-day evaluation.
               </p>
             </li>
             <li>
               <p class="label">Brokers and firms</p>
               <h3>Start a partner conversation</h3>
               <p>
-                We walk you through Rosie, share the security overview, and talk about offering her
-                to the people you serve.
+                Lime Signalworks walks you through how I work, shares the security overview, and talks
+                about offering me to the people you serve.
               </p>
             </li>
             <li>
               <p class="label">Just looking</p>
               <h3>Open the demo</h3>
               <p>
-                See the real dashboard with test data, or watch our short videos on YouTube. A
-                Perplexity sign-in may be required to open the demo.
+                See my dashboard with sample data, or watch the short Lime Signalworks videos on
+                YouTube. If you'd like the full demo, just ask: Lime Signalworks will set the whole
+                thing up for you, for free, no strings attached.
               </p>
             </li>
           </ol>
           <p class="anchor-row">
-            <a class="anchor-link" href="#contact">Call or email us</a>
+            <a class="anchor-link" href="#contact">Call or email Lime Signalworks</a>
             <a class="anchor-link" href="#demo">Open the demo</a>
             <a class="anchor-link" href="https://www.youtube.com/@noelrini3882" target="_blank" rel="noopener noreferrer">Watch on YouTube<span class="sr-only"> (opens in a new tab)</span></a>
           </p>
@@ -636,7 +855,6 @@
               <dd>By appointment.</dd>
             </div>
           </dl>
-          <p class="foot__link-row"><a class="sibling-link" href="https://signals.limesignalworks.com" rel="noopener noreferrer" data-sibling-site="signals">Signals<span class="ext" aria-hidden="true">&#8599;</span></a> &middot; <a class="sibling-link" href="https://leadership.limesignalworks.com" rel="noopener noreferrer" data-sibling-site="library">LIME Leadership<span class="ext" aria-hidden="true">&#8599;</span></a></p>
           <p class="foot__copyright">© 2026 Lime Signalworks LLC.</p>
         </div>
         <div>

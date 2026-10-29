@@ -4,7 +4,7 @@ Static enterprise homepage for the LIME Enterprise surface. Root route `/` only,
 anchor navigation.
 
 This repository is **not** Site 1 (`lime-web-public`, `limesignalworks.com`). Nothing here deploys
-to, reads from, or links into Site 1 beyond the single approved reciprocal link.
+to, reads from, or links into Site 1; the sister-site link buttons were removed.
 
 ## What this surface is
 
@@ -37,6 +37,11 @@ Zero-framework static build. No bundler, no CSS preprocessor, no client framewor
 - `scripts/fetch-fonts.mjs` — one-off vendoring helper; regenerates `assets/fonts/` (never run by
   the site)
 - `index.html` — **generated artifact**, committed so the site works with no build step
+- `rosie-demo/` — the public Rosie demo: a static, script-free snapshot of the current Rosie IB
+  Operator Workstation layout filled with **sample data** (paper account, invented numbers). Every
+  control is disabled, there are no forms or network calls, and `tests/rosie-demo.test.mjs`
+  enforces that, the sample-data banner, `noindex`, and broker-held (never trailing) stops.
+  `assets/img/rosie-dashboard-preview.png` on the homepage is a 1200×750 screenshot of it.
 
 `data/operating-roles.json` and `data/principles.json` are retained source from the earlier
 content-integration preview. They are deliberately **not rendered** on this homepage, and a test
@@ -57,7 +62,7 @@ npm run serve        # serve the repo root on http://localhost:4173
    `npm run build`. The build throws on an unreplaced token, on section-order drift against the
    data file, on a duplicate element id, and on an in-page anchor with no target.
 2. **Canonical strings live in `data/homepage.json`.** The demo CTA label, its disclosure, the
-   securities disclaimer, the reciprocal-link label, and the evaluation length are asserted
+   securities disclaimer, and the evaluation length are asserted
    character-for-character by the tests. Change them in the data file, never in the template.
 3. **Add a test with every content rule.** The two suites are the enforcement surface: section
    order, forbidden vocabulary, non-translatable claims, commercial-copy bans, the adjacency of the
@@ -77,16 +82,15 @@ npm run serve        # serve the repo root on http://localhost:4173
   JavaScript is disabled. `data-theme="light"` ships in the markup, `<meta name="color-scheme">`
   declares light, and no `prefers-color-scheme: dark` rule exists. The dark toggle is optional,
   fully functional, and never persisted to any browser storage.
-- **Exactly one demo call to action**, labelled "Open the Rosie Server Demo", pointing at
-  `https://limesignalworks.pplx.app/`, with its disclosure rendered as the immediately following
-  static element — never a tooltip, toast, modal, or collapsed content.
-- **Six static pre-click facts accompany that call to action**: the five-fact disclosure
-  (demonstration environment, simulated data, no broker connection, no real orders, not
-  production-ready) and the access precondition, "Perplexity sign-in may be required." Access is
-  controlled by the destination's host, so the page must never describe the demo as open,
-  anonymous, or certain to work, and must not call it the only route that works.
-- **Exactly one reciprocal link**, labelled "LIME Leadership", pointing at
-  `https://limesignalworks.com`. Those two URLs are the only off-origin destinations on the page.
+- **Exactly one demo call to action**, labelled "Open the Rosie demo", pointing at the static
+  sample-data demo `/rosie-demo/` on this site, with its labelling rendered as the immediately
+  following static element (never a tooltip, toast, modal, or collapsed content): sample data,
+  a paper (practice) account, no broker connection, no real orders, not advice. The hosted demo
+  and its sign-in line were retired from the home page on 2026-10-28; the full demo is offered on
+  request ("just ask") through the existing contact block. The page must never describe a demo
+  as open, anonymous, or certain to work.
+- **No sister-site links.** The former "Signals" and "LIME Leadership" footer buttons are gone;
+  YouTube is the only off-origin destination on the page.
 - The evaluation is stated as **33 days, demo and paper mode only**, with no live capital and no
   real orders. There is no ninety-day or no-pay claim on this surface.
 - Prices ($20 weekly, $85 monthly, $245 quarterly, $925 annually) are labelled **planned

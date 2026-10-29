@@ -1,10 +1,10 @@
 {
-  "revision": "site2-rosie-bolder-2026-10-26",
+  "revision": "site2-assembled-home-2026-10-28d",
   "canonical": {
-    "demoUrl": "https://limesignalworks.pplx.app/",
+    "demoUrl": "/rosie-demo/",
     "demoCtaLabel": "Open the Rosie demo",
-    "demoDisclosure": "Demonstration environment. Simulated data. No broker connection and no real orders.",
-    "demoSignIn": "Perplexity sign-in may be required.",
+    "demoDisclosure": "Sample data in a paper (practice) account. No broker connection, no real orders, and nothing here is advice.",
+    "demoAsk": "If you'd like the full demo, just ask. We'll set you up with the whole thing, for free, no strings attached.",
     "contact": {
       "email": "contact@limesignalworks.com",
       "phone": "+1 380-200-0288",
@@ -12,10 +12,6 @@
       "address": "2722 Erie Ave, Suite 219, Cincinnati, OH 45208",
       "availability": "By appointment."
     },
-    "leadershipUrl": "https://signals.limesignalworks.com",
-    "leadershipLabel": "Signals",
-    "libraryUrl": "https://leadership.limesignalworks.com",
-    "libraryLabel": "LIME Leadership",
     "securitiesDisclaimer": "Lime Signalworks provides educational tools and analysis, not personalized investment advice. Securities trading involves risk of loss. Your decisions and results are your own. Nothing here is an offer to sell or a solicitation to buy any security.",
     "evaluationDays": 33,
     "copyright": "© 2026 Lime Signalworks LLC.",
@@ -23,56 +19,114 @@
   },
   "sectionOrder": [
     {
-      "id": "what-we-do",
-      "eyebrow": "Section 01",
-      "nav": "What Rosie does"
-    },
-    {
-      "id": "how-it-works",
-      "eyebrow": "Section 02",
-      "nav": "How it works"
-    },
-    {
-      "id": "protection",
-      "eyebrow": "Section 03",
-      "nav": "Protection"
-    },
-    {
-      "id": "markets",
-      "eyebrow": "Section 04",
-      "nav": "Markets"
-    },
-    {
-      "id": "evaluation",
-      "eyebrow": "Section 05",
-      "nav": "Evaluation"
-    },
-    {
-      "id": "pricing",
-      "eyebrow": "Section 06",
-      "nav": "Pricing"
-    },
-    {
-      "id": "market-report",
-      "eyebrow": "Section 07",
+      "id": "opening",
+      "eyebrow": "From Noal",
       "nav": null
     },
     {
-      "id": "commitments",
+      "id": "life",
+      "eyebrow": "Your life with Rosie",
+      "nav": "Life with Rosie"
+    },
+    {
+      "id": "will-wont",
+      "eyebrow": "What Rosie will and won't do",
+      "nav": null
+    },
+    {
+      "id": "pros",
+      "eyebrow": "Section 04",
+      "nav": null
+    },
+    {
+      "id": "evidence",
+      "eyebrow": "Rosie / Keelwise · Evidence",
+      "nav": "Evidence"
+    },
+    {
+      "id": "indicators",
+      "eyebrow": "Section 06",
+      "nav": "Indicators"
+    },
+    {
+      "id": "demo",
+      "eyebrow": "Section 07",
+      "nav": "Demo"
+    },
+    {
+      "id": "what-we-do",
       "eyebrow": "Section 08",
       "nav": null
     },
     {
-      "id": "partners",
+      "id": "how-it-works",
       "eyebrow": "Section 09",
+      "nav": "How it works"
+    },
+    {
+      "id": "protection",
+      "eyebrow": "Section 10",
+      "nav": "Protection"
+    },
+    {
+      "id": "phone",
+      "eyebrow": "Section 11",
+      "nav": null
+    },
+    {
+      "id": "markets",
+      "eyebrow": "Section 12",
+      "nav": "Markets"
+    },
+    {
+      "id": "evaluation",
+      "eyebrow": "Section 13",
+      "nav": "Evaluation"
+    },
+    {
+      "id": "pricing",
+      "eyebrow": "Section 14",
+      "nav": "Pricing"
+    },
+    {
+      "id": "market-report",
+      "eyebrow": "Section 15",
+      "nav": null
+    },
+    {
+      "id": "commitments",
+      "eyebrow": "Section 16",
+      "nav": null
+    },
+    {
+      "id": "partners",
+      "eyebrow": "Section 17",
       "nav": "Partners"
     },
     {
       "id": "how-to-begin",
-      "eyebrow": "Section 10",
+      "eyebrow": "Section 18",
       "nav": "How to begin"
     }
   ],
+  "pros": {
+    "heading": "Trading the way the pros do.",
+    "body": "The best traders in the world share a few habits: they trade by written rules, they decide what they can lose before they decide what they can win, and they stay consistent when it's hard. I'm built on those same habits. And unlike a big firm, I work for one person: you.",
+    "habits": [
+      {
+        "label": "Written rules",
+        "text": "They trade by written rules."
+      },
+      {
+        "label": "Risk first",
+        "text": "They decide what they can lose before they decide what they can win."
+      },
+      {
+        "label": "Consistency",
+        "text": "They stay consistent when it's hard."
+      }
+    ]
+  },
   "marketReport": {
     "asOfLabel": "As of the close of Thursday, July 23, 2026",
     "exampleNotice": "This table shows the report format using figures from a past report; it is not current market data. Reports are written after the close and dated, never in real time.",
@@ -141,5 +195,42 @@
       "Not hands-off: you supervise Rosie and can stop her at any time."
     ]
   },
-  "startCards": []
+  "startCards": [],
+  "indicators": [
+    {
+      "name": "Lime Color Weather",
+      "art": "weather",
+      "problem": "You trade the same way whether the market is friendly or stormy, and only find out which it was afterwards.",
+      "answer": "Shows the market’s current “weather” as colour bands, so you can see whether conditions favour buying, holding or staying small.",
+      "technical": "Conditions are drawn as colour bands with readings such as “bull cooling” or “strong bull rising”. The same read appears in more than one pane, and the middle pane shows whether a tiring move is forming with or against the larger trend."
+    },
+    {
+      "name": "Lime Notify",
+      "art": "notify",
+      "problem": "There are so many signals on your screen that you can’t tell what you’re actually supposed to do.",
+      "answer": "Reduces the noise to three readings only: Buy, Trim and Exit, each checked on the 1-day, 6-hour and 3-hour time frames.",
+      "technical": "The published reading is Alignment + Momentum − Exhaustion − Risk: Buy when it is strong, Trim when it softens, Exit when it breaks down. Tiredness and risk count against a Buy."
+    },
+    {
+      "name": "Lime Exhaustion",
+      "art": "exhaustion",
+      "problem": "You keep getting in too late, buying right as the move runs out of steam.",
+      "answer": "Shows whether a move is fresh, mid-journey or worn out, so you can avoid buying the last gasp of a move.",
+      "technical": "The published reading is Stretch from Trend + Momentum Extremes + Volatility Expansion − Fresh Support. The further price stretches from its trend, the more tired the move reads."
+    },
+    {
+      "name": "Lime StopWatcher",
+      "art": "stopwatcher",
+      "problem": "You never know where to put your stop, so you either get shaken out or give back what you made.",
+      "answer": "Three tools for the life of a trade: a first stop level at entry, a trailing guard as the trade moves your way, and a line that marks where a mature move may be ending.",
+      "technical": "Three parts: StopWatcher I (First Stop), StopWatcher II (Trailing Guard) and StopWatcher III (Harvest Line), which gives its final read as CAND, AVOID, WATCH or HOLD."
+    },
+    {
+      "name": "Lime 8 Filter Stack",
+      "art": "filters",
+      "problem": "When the signals are mixed, it’s easy to talk yourself into the trade anyway.",
+      "answer": "Combines several safety checks into one pass or fail view, so you can stand aside when the signals are mixed.",
+      "technical": null
+    }
+  ]
 }
