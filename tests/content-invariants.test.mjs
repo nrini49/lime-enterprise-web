@@ -645,8 +645,8 @@ test('dom: markets not yet supported are labelled as coming, never as available'
     assert.match(norm(item.text()), /not live/i, `${later} says plainly it is not live`);
   }
   const live = norm(items.first().text());
-  assert.ok(/interactive brokers/i.test(live) && /schwab/i.test(live), 'both brokers are named for stocks and ETFs');
-  assert.ok(/paper mode/i.test(live), 'the evaluation paper status is stated');
+  assert.ok(/paper \(practice\) account/i.test(live), 'the evaluation paper status is stated');
+  assert.doesNotMatch(live, /schwab/i, 'the paper line does not tie the paper account to Schwab');
 });
 
 test('voice: no beta or in-development wording for the brokers, and a clean hero', () => {
