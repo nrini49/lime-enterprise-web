@@ -628,7 +628,10 @@ test('dom: the footer carries the plain risk disclosure', () => {
   assert.equal(el.closest('footer').length, 1, 'the risk disclosure sits in the footer');
 });
 
-test('dom: markets not yet supported are labelled as in development, never as available', () => {
+// 2026-10-29 (content/rosie-queen-voice): owner direction. Interactive Brokers and Schwab
+// are both presented as working for stocks and ETFs; markets that are not live are
+// labelled "Coming" (no "in development" wording) and say plainly that they are not live.
+test('dom: markets not yet supported are labelled as coming, never as available', () => {
   const items = $('section#markets .roadmap li');
   assert.equal(items.length, 3);
   const byTitle = Object.fromEntries(
@@ -636,10 +639,34 @@ test('dom: markets not yet supported are labelled as in development, never as av
   );
   assert.match(byTitle['Stocks and ETFs'], /available today/i);
   for (const later of ['Options and futures', 'Cryptocurrency and forex']) {
-    assert.match(byTitle[later], /in development/i, `${later} must be labelled in development`);
-    assert.doesNotMatch(byTitle[later], /available/i, `${later} must not read as available`);
+    assert.match(byTitle[later], /coming/i, `${later} must be labelled coming`);
+    assert.doesNotMatch(byTitle[later], /available|live/i, `${later} must not read as available`);
+    const item = items.filter((_, el) => norm($(el).find('h3').text()) === later);
+    assert.match(norm(item.text()), /not live/i, `${later} says plainly it is not live`);
   }
-  assert.ok(/paper mode today/i.test(visibleText()), 'the Interactive Brokers paper status is stated');
+  const live = norm(items.first().text());
+  assert.ok(/interactive brokers/i.test(live) && /schwab/i.test(live), 'both brokers are named for stocks and ETFs');
+  assert.ok(/paper mode/i.test(live), 'the evaluation paper status is stated');
+});
+
+test('voice: no beta or in-development wording for the brokers, and a clean hero', () => {
+  const text = visibleText();
+  for (const word of [/\bbeta\b/i, /in development/i, /\bpreview\b/i]) {
+    assert.doesNotMatch(text, word, `unfinished-product wording on the page: ${word}`);
+  }
+  const hero = norm($('section#demo .section__head').text() + ' ' + $('section#demo .hero__lede').text() +
+    ' ' + $('section#demo .hero__meta').text());
+  assert.doesNotMatch(hero, /coming|options|futures|crypto|forex|around the clock/i,
+    'the hero shows only what is live');
+  assert.ok(/Rosie \(Keelwise\)/.test(hero), 'Rosie (Keelwise) stays in the headline area');
+  assert.ok(/interactive brokers/i.test(hero) && /schwab/i.test(hero), 'the hero names both brokers');
+});
+
+test('voice: Rosie never sounds like advice', () => {
+  const text = norm($('main').text()).toLowerCase();
+  for (const phrase of ['protect first', 'protect-first', 'size down', 'you should', 'we recommend', 'i recommend']) {
+    assert.ok(!text.includes(phrase), `advice-sounding wording on the page: "${phrase}"`);
+  }
 });
 
 test('dom: no promise of profit, perfection, or full replacement of the operator', () => {
