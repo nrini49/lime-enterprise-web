@@ -218,9 +218,10 @@ const FORBIDDEN_COMMERCIAL = [
 const visibleText = () => {
   const clone = cheerio.load(html);
   // [data-attribution] marks the owner's own name as the credit on his first-person
-  // copy (2026-10-28, assembled home). It is checked separately below and is the only
-  // place that name may appear.
-  clone('script, style, .sr-only, [data-attribution]').remove();
+  // copy (2026-10-28, assembled home). Since 2026-11-01 Rosie also names him in the
+  // opening, marked [data-owner-name]. Both are checked separately below and are the
+  // only places that name may appear.
+  clone('script, style, .sr-only, [data-attribution], [data-owner-name]').remove();
   return clone('body').text().replace(/\s+/g, ' ');
 };
 
@@ -801,10 +802,29 @@ test('dom: the owner credit appears only as a plain attribution', () => {
   const credits = $('[data-attribution]')
     .map((_, el) => norm($(el).text()))
     .get();
-  assert.ok(credits.length <= 3, 'at most the opening label and the two pull-quote credits');
+  // 2026-11-01: the opening is Rosie's now, so only the two pull-quote credits remain.
+  assert.ok(credits.length <= 2, 'at most the two pull-quote credits');
   for (const credit of credits) {
-    assert.match(credit, /^(From )?Noal$/, `attribution must be the bare credit, got: "${credit}"`);
+    assert.match(credit, /^Noal$/, `attribution must be the bare credit, got: "${credit}"`);
   }
+});
+
+// 2026-11-01 (owner direction): the opening is told by Rosie about Noal, so the praise
+// comes from her. His name may appear there, and only there, as a bare marked name.
+test('dom: Rosie names Noal only in the opening, as a bare marked name', () => {
+  const names = $('[data-owner-name]');
+  assert.ok(names.length >= 1, 'the opening names him');
+  names.each((_, el) => {
+    assert.equal(norm($(el).text()), 'Noal');
+    assert.equal($(el).closest('section').attr('id'), 'opening', 'his name is marked only in the opening');
+    assert.equal($(el).closest('[data-voice]').attr('data-voice'), 'rosie', 'Rosie is the one naming him');
+  });
+  const h1 = norm($('#opening h1').text());
+  assert.match(h1, /^Noal, my developer, built Rosie Keelwise, which is me, so he could stop watching/);
+  const opening = norm($('#opening .opening__col').clone().find('[data-brokers]').remove().end().text());
+  assert.ok(!/\b(I built|I'm at my|my daughter)\b/.test(opening), 'Noal no longer speaks for himself in the opening');
+  assert.match(opening, /protective stop with his broker/);
+  assert.match(opening, /tell him the truth, even on the days that don't go well/);
 });
 
 test('dom: no non-translatable Site 1 claim appears', () => {
@@ -1038,8 +1058,8 @@ test('css: stylesheets reference only vendored, self-hosted font files', () => {
 /* ---------- whose voice: Noal or Rosie, never anyone else (2026-10-28) ---------- */
 
 // Owner decision, 2026-10-28: the public writing is in Rosie's own first person ("I" =
-// Rosie), except Noal's own words (the opening, his will-and-won't letter and the two
-// credited quotes). Every first-person line must sit inside a block that says whose
+// Rosie), except Noal's own words (his will-and-won't letter and the two credited
+// quotes; the opening became Rosie's on 2026-11-01). Every first-person line must sit inside a block that says whose
 // voice it is, so no invented speaker can appear, and Rosie never claims a past or a
 // result she does not have.
 const FIRST_PERSON = /\b(I|I'm|I’m|I'll|I’ll|I've|I’ve|I'd|I’d|me|my|mine|myself)\b/;
@@ -1061,12 +1081,14 @@ test('voice: every first-person line belongs to a labelled voice, Noal or Rosie'
     if (owner !== 'noal' && owner !== 'rosie') unowned.push(text);
   }
   assert.deepEqual(unowned, [], `first person with no labelled speaker: ${unowned.join(' | ')}`);
-  // Noal's blocks are exactly his opening, his will-and-won't letter and the sleep quote.
+  // Noal's blocks are exactly his will-and-won't letter and the sleep quote. Since
+  // 2026-11-01 the opening is Rosie's, telling his story, with a "From Rosie" tag.
   assert.deepEqual(
     $('[data-voice="noal"]').map((_, el) => $(el).closest('section').attr('id')).get(),
-    ['opening', 'life', 'will-wont'],
+    ['life', 'will-wont'],
   );
-  assert.equal($('#opening [data-voice="noal"] [data-attribution]').length, 1, 'the opening is credited');
+  assert.equal($('#opening [data-voice="noal"]').length, 0, 'the opening is no longer in Noal\'s voice');
+  assert.equal($('#opening > .shell > .opening__col[data-voice="rosie"] > [data-voice-tag]').length, 1, 'the opening is labelled From Rosie');
   assert.equal($('#sleep[data-voice="noal"] [data-attribution]').length, 1, 'the sleep quote is credited');
   assert.equal($('#teammate [data-attribution]').length, 1, 'the teammate quote is credited');
 });

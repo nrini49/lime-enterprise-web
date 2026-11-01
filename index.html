@@ -106,14 +106,18 @@
           <circle class="ring__core" cx="180" cy="180" r="8" />
         </svg>
         <div class="shell">
-          <div class="opening__col" data-voice="noal">
-            <p class="label opening__label" data-attribution>From Noal</p>
-            <h1 id="opening-title">I built Rosie Keelwise so I could stop watching, relax and enjoy my life.</h1>
-            <p>Picture an ordinary Tuesday. I'm at my daughter's recital, then out for a walk, then at a long lunch with an old friend, phone face-down on the table. I'm not checking anything, and I'm not worried.</p>
-            <p>Rosie is on the job. Before anything I own is ever at risk, she's already placed a protective stop with my broker, so it's there whether I'm watching or not. She keeps the risk small, the rules plain, and she tells me the truth, even on the days that don't go well.</p>
-            <p>Once she's set up, my job is done for the most part. Now I watch and supervise a little.</p>
-            <p>Knowing she's on watch gives me my time back, and I spend it on what the money was for in the first place: being fully present with the people I love, taking care of my health, staying curious, and feeling looked after.</p>
-            <p class="opening__sign">I built her for me, and I built her so you can have it too.</p>
+          <!-- Opening (2026-11-01, owner direction): Rosie tells Noal's story, so the praise
+               comes from her and he does not speak for himself. His name is marked with
+               data-owner-name, like the data-attribution credits, so the tests can pin where
+               it may appear. -->
+          <div class="opening__col" data-voice="rosie">
+            <p class="label opening__label voice-tag" data-voice-tag>From Rosie</p>
+            <h1 id="opening-title"><span class="owner-name" data-owner-name>Noal</span>, my developer, built Rosie Keelwise, which is me, so he could stop watching, relax and enjoy his life.</h1>
+            <p>Picture an ordinary Tuesday. <span class="owner-name" data-owner-name>Noal</span> is at his daughter's recital, then out for a walk, then at a long lunch with an old friend, phone face-down on the table. He isn't checking anything, and he isn't worried. That calm is the whole point of me.</p>
+            <p>I'm on the job. Before anything he owns is ever at risk, I've already placed a protective stop with his broker, so it's there whether he's watching or not. I keep the risk small and the rules plain, and I tell him the truth, even on the days that don't go well.</p>
+            <p>Once I'm set up, his job is done for the most part. Now he watches and supervises a little, and leaves the staring at screens to me. I never blink; he was always going to lose that contest.</p>
+            <p>Knowing I'm on watch gives him his time back, and he spends it on what the money was for in the first place: being fully present with the people he loves, taking care of his health, staying curious, and feeling looked after. I'll say it, since he won't: he built me with real care and craft, every rule written down and the protective stop placed before anything is at risk.</p>
+            <p class="opening__sign">He built me for himself, and he built me so you can have me too.</p>
             <p class="video-row" data-video-row="opening"><a class="video-cta" href="https://www.youtube.com/@noelrini3882" target="_blank" rel="noopener noreferrer" data-video="tour" data-video-placeholder><svg class="video-cta__icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor" opacity="0.16" /><path d="M10 8.2v7.6L16 12z" fill="currentColor" /></svg><span class="video-cta__label">Watch the short videos on YouTube</span><span class="ext" aria-hidden="true">&#8599;</span><span class="sr-only"> (opens in a new tab)</span></a></p>
             <!-- Brokers (2026-11-01, owner direction): the two brokers Rosie works with now,
                  in her own voice. Only Interactive Brokers and Schwab are named. -->
