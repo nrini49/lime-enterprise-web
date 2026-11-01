@@ -1,4 +1,4 @@
-/* Site 2 behaviour: the theme toggle, and nothing else.
+/* Site 2 behaviour: the theme toggle, and starting the header lighthouse loop.
    The page is complete and readable with JavaScript disabled. The toggle is created
    here rather than served in the markup, so a visitor without JavaScript is never
    shown a control that cannot act. */
@@ -38,4 +38,25 @@
   toggle.addEventListener('click', function () {
     applyTheme(mode === 'dark' ? 'light' : 'dark');
   });
+})();
+
+/* The header lighthouse (2026-11-01) is served as a still poster with no autoplay
+   attribute. It starts its quiet loop here, and only when the visitor has not asked
+   for reduced motion; without JavaScript it simply stays a still logo. */
+(function () {
+  'use strict';
+  var mark = document.querySelector('video[data-header-logo="lighthouse"]');
+  if (!mark || typeof mark.play !== 'function') return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+  function sync() {
+    if (reduce && reduce.matches) {
+      mark.pause();
+      return;
+    }
+    mark.muted = true;
+    var started = mark.play();
+    if (started && typeof started.catch === 'function') started.catch(function () {});
+  }
+  sync();
+  if (reduce && typeof reduce.addEventListener === 'function') reduce.addEventListener('change', sync);
 })();

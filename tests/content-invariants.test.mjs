@@ -218,9 +218,10 @@ const FORBIDDEN_COMMERCIAL = [
 const visibleText = () => {
   const clone = cheerio.load(html);
   // [data-attribution] marks the owner's own name as the credit on his first-person
-  // copy (2026-10-28, assembled home). It is checked separately below and is the only
-  // place that name may appear.
-  clone('script, style, .sr-only, [data-attribution]').remove();
+  // copy (2026-10-28, assembled home). Since 2026-11-01 Rosie also names him in the
+  // opening, marked [data-owner-name]. Both are checked separately below and are the
+  // only places that name may appear.
+  clone('script, style, .sr-only, [data-attribution], [data-owner-name]').remove();
   return clone('body').text().replace(/\s+/g, ' ');
 };
 
@@ -589,12 +590,90 @@ test('dom: every mention of real-time data is negated', () => {
 /* ---------- links off this surface ---------- */
 
 const YOUTUBE_URL = 'https://www.youtube.com/@noelrini3882';
-test('dom: exactly one off-origin destination exists — YouTube (the demo is on this site)', () => {
-  const hrefs = $('a[href^="http"]')
-    .map((_, el) => $(el).attr('href'))
-    .get();
-  assert.deepEqual([...new Set(hrefs)], [YOUTUBE_URL]);
-  assert.equal(hrefs.length, 1, 'no duplicate off-origin links');
+// 2026-11-01: the "Watch the tour" buttons in the opening and the demo join the
+// how-to-begin YouTube link. Every off-origin link still goes to YouTube only (the
+// channel, or a real video URL once one is set in canonical.videos), and opens in a new
+// window with noopener noreferrer.
+test('dom: the only off-origin destination is YouTube (the demo is on this site)', () => {
+  const links = $('a[href^="http"]');
+  const hrefs = links.map((_, el) => $(el).attr('href')).get();
+  assert.ok(hrefs.includes(YOUTUBE_URL), 'the channel link is present');
+  for (const href of hrefs) {
+    assert.match(href, /^https:\/\/www\.youtube\.com\//, `off-origin link that is not YouTube: ${href}`);
+  }
+  assert.ok(hrefs.length <= 3, 'only the channel link and the two tour buttons go off-site');
+  links.each((_, el) => {
+    assert.equal($(el).attr('target'), '_blank', 'off-site links open in a new window');
+    assert.equal($(el).attr('rel'), 'noopener noreferrer');
+  });
+});
+
+test('dom: the tour button is in the opening and the demo, from the one video config', () => {
+  const { videos } = canonical;
+  assert.equal(videos.channelUrl, YOUTUBE_URL, 'the channel link is the existing one');
+  for (const where of ['#opening', '#demo']) {
+    const btn = $(`${where} a.video-cta[data-video="tour"]`);
+    assert.equal(btn.length, 1, `one tour button in ${where}`);
+    assert.equal(btn.attr('target'), '_blank');
+    assert.equal(btn.attr('rel'), 'noopener noreferrer');
+    if (videos.tour.url) {
+      assert.equal(btn.attr('href'), videos.tour.url);
+      assert.equal(norm(btn.find('.video-cta__label').text()), videos.tour.label);
+    } else {
+      // No real tour video yet: the button goes to the channel, says so, and is marked.
+      assert.equal(btn.attr('href'), videos.channelUrl);
+      assert.equal(norm(btn.find('.video-cta__label').text()), videos.tour.fallbackLabel);
+      assert.equal(btn.attr('data-video-placeholder'), '', 'placeholder-marked');
+    }
+  }
+  // The Harbor Now how-to video is never shown on the home page.
+  assert.equal($('a[data-video="harbor-how-to"]').length, 0);
+});
+
+test('dom: the opening names the two brokers in Rosie\'s voice, paper during the evaluation', () => {
+  const note = $('#opening [data-brokers]');
+  assert.equal(note.length, 1);
+  assert.equal(note.attr('data-voice'), 'rosie');
+  const text = norm(note.text());
+  assert.match(text, /Interactive Brokers/);
+  assert.match(text, /Schwab/);
+  assert.ok(
+    text.includes(
+      'I connect only to brokers that hand customers a real, public trading API, so your software can place its own orders.',
+    ),
+  );
+  assert.match(text, /paper \(practice\) account/);
+  for (const other of [/tastytrade/i, /tradestation/i, /webull/i, /alpaca/i, /next on my list/i, /\bbeta\b/i, /coming soon/i]) {
+    assert.doesNotMatch(text, other);
+  }
+  assert.doesNotMatch(visibleText() + ' ' + metadataText(), /tastytrade|tradestation|webull|alpaca/i);
+});
+
+test('dom: the header carries the lighthouse logo left and Rosie\'s portrait right', () => {
+  const inner = $('header.masthead .masthead__inner');
+  const kids = inner.children().toArray();
+  const lighthouse = inner.children('video[data-header-logo="lighthouse"]');
+  const rosie = inner.children('img[data-header-logo="rosie"]');
+  assert.equal(lighthouse.length, 1);
+  assert.equal(rosie.length, 1);
+  assert.equal(kids[0], lighthouse[0], 'the lighthouse is first (left)');
+  assert.equal(kids[kids.length - 1], rosie[0], 'Rosie is last in the markup (right, before the toggle)');
+  assert.equal(norm(inner.find('.brand__name').contents().first().text()), 'Lime Signalworks', 'brand text kept');
+  assert.ok((lighthouse.attr('aria-label') || '').length > 20, 'the lighthouse has a text alternative');
+  assert.equal(lighthouse.attr('autoplay'), undefined, 'no autoplay attribute (app.js starts it)');
+  assert.ok(lighthouse.attr('poster'), 'a still poster for no-JS and reduced motion');
+  for (const f of ['assets/img/lighthouse-loop.mp4', 'assets/img/lighthouse-poster.png', 'assets/img/rosie-portrait.png']) {
+    assert.ok(existsSync(path.join(root, f)), `missing header asset ${f}`);
+  }
+});
+
+test('naming: "Rosie Keelwise" introduces her once up top; "Rosie" after that', () => {
+  assert.match($('title').text(), /Rosie Keelwise/);
+  assert.match($('meta[name="description"]').attr('content'), /^Rosie Keelwise /);
+  assert.match(norm($('#opening h1').text()), /Rosie Keelwise/);
+  const body = norm($('main').text());
+  assert.equal(body.split('Keelwise').length - 1, 1, 'Keelwise appears once in the page body, in the opening');
+  assert.doesNotMatch(html, /Rosie \/ Keelwise|Rosie \(Keelwise\)|also called Keelwise/);
 });
 
 test('dom: the Signals and LIME Leadership sister-site buttons are gone, with no leftover row', () => {
@@ -658,7 +737,9 @@ test('voice: no beta or in-development wording for the brokers, and a clean hero
     ' ' + $('section#demo .hero__meta').text());
   assert.doesNotMatch(hero, /coming|options|futures|crypto|forex|around the clock/i,
     'the hero shows only what is live');
-  assert.ok(/Rosie \(Keelwise\)/.test(hero), 'Rosie (Keelwise) stays in the headline area');
+  // 2026-11-01: the "Rosie (Keelwise)" label left the demo; "Rosie Keelwise" is introduced
+  // once, in the opening (see the naming test). The demo says "Rosie".
+  assert.ok(/\bRosie\b/.test(hero) && !/Keelwise/.test(hero), 'the demo headline area says "Rosie"');
   assert.ok(/interactive brokers/i.test(hero) && /schwab/i.test(hero), 'the hero names both brokers');
 });
 
@@ -721,10 +802,29 @@ test('dom: the owner credit appears only as a plain attribution', () => {
   const credits = $('[data-attribution]')
     .map((_, el) => norm($(el).text()))
     .get();
-  assert.ok(credits.length <= 3, 'at most the opening label and the two pull-quote credits');
+  // 2026-11-01: the opening is Rosie's now, so only the two pull-quote credits remain.
+  assert.ok(credits.length <= 2, 'at most the two pull-quote credits');
   for (const credit of credits) {
-    assert.match(credit, /^(From )?Noal$/, `attribution must be the bare credit, got: "${credit}"`);
+    assert.match(credit, /^Noal$/, `attribution must be the bare credit, got: "${credit}"`);
   }
+});
+
+// 2026-11-01 (owner direction): the opening is told by Rosie about Noal, so the praise
+// comes from her. His name may appear there, and only there, as a bare marked name.
+test('dom: Rosie names Noal only in the opening, as a bare marked name', () => {
+  const names = $('[data-owner-name]');
+  assert.ok(names.length >= 1, 'the opening names him');
+  names.each((_, el) => {
+    assert.equal(norm($(el).text()), 'Noal');
+    assert.equal($(el).closest('section').attr('id'), 'opening', 'his name is marked only in the opening');
+    assert.equal($(el).closest('[data-voice]').attr('data-voice'), 'rosie', 'Rosie is the one naming him');
+  });
+  const h1 = norm($('#opening h1').text());
+  assert.match(h1, /^Noal, my developer, built Rosie Keelwise, which is me, so he could stop watching/);
+  const opening = norm($('#opening .opening__col').clone().find('[data-brokers]').remove().end().text());
+  assert.ok(!/\b(I built|I'm at my|my daughter)\b/.test(opening), 'Noal no longer speaks for himself in the opening');
+  assert.match(opening, /protective stop with his broker/);
+  assert.match(opening, /tell him the truth, even on the days that don't go well/);
 });
 
 test('dom: no non-translatable Site 1 claim appears', () => {
@@ -795,8 +895,10 @@ test('dom: accessibility scaffolding is present', () => {
   // change to the original vector-only rule — not a regression. Every <img> on
   // the surface must still be real product imagery with a real, descriptive alt
   // attribute; this guards against silently proliferating raster images later.
+  // 2026-11-01: plus Rosie's portrait in the header (the workstation header pair; the
+  // lighthouse half is a <video> with an aria-label, checked in the header test).
   const images = $('img');
-  assert.equal(images.length, 1, 'exactly one deliberate product screenshot is used on this surface');
+  assert.equal(images.length, 2, 'the product screenshot and the header portrait, nothing else');
   images.each((_, el) => {
     const alt = $(el).attr('alt');
     assert.ok(alt && alt.length > 20, 'every raster image has a real, descriptive alt attribute');
@@ -956,8 +1058,8 @@ test('css: stylesheets reference only vendored, self-hosted font files', () => {
 /* ---------- whose voice: Noal or Rosie, never anyone else (2026-10-28) ---------- */
 
 // Owner decision, 2026-10-28: the public writing is in Rosie's own first person ("I" =
-// Rosie), except Noal's own words (the opening, his will-and-won't letter and the two
-// credited quotes). Every first-person line must sit inside a block that says whose
+// Rosie), except Noal's own words (his will-and-won't letter and the two credited
+// quotes; the opening became Rosie's on 2026-11-01). Every first-person line must sit inside a block that says whose
 // voice it is, so no invented speaker can appear, and Rosie never claims a past or a
 // result she does not have.
 const FIRST_PERSON = /\b(I|I'm|I’m|I'll|I’ll|I've|I’ve|I'd|I’d|me|my|mine|myself)\b/;
@@ -979,12 +1081,14 @@ test('voice: every first-person line belongs to a labelled voice, Noal or Rosie'
     if (owner !== 'noal' && owner !== 'rosie') unowned.push(text);
   }
   assert.deepEqual(unowned, [], `first person with no labelled speaker: ${unowned.join(' | ')}`);
-  // Noal's blocks are exactly his opening, his will-and-won't letter and the sleep quote.
+  // Noal's blocks are exactly his will-and-won't letter and the sleep quote. Since
+  // 2026-11-01 the opening is Rosie's, telling his story, with a "From Rosie" tag.
   assert.deepEqual(
     $('[data-voice="noal"]').map((_, el) => $(el).closest('section').attr('id')).get(),
-    ['opening', 'life', 'will-wont'],
+    ['life', 'will-wont'],
   );
-  assert.equal($('#opening [data-voice="noal"] [data-attribution]').length, 1, 'the opening is credited');
+  assert.equal($('#opening [data-voice="noal"]').length, 0, 'the opening is no longer in Noal\'s voice');
+  assert.equal($('#opening > .shell > .opening__col[data-voice="rosie"] > [data-voice-tag]').length, 1, 'the opening is labelled From Rosie');
   assert.equal($('#sleep[data-voice="noal"] [data-attribution]').length, 1, 'the sleep quote is credited');
   assert.equal($('#teammate [data-attribution]').length, 1, 'the teammate quote is credited');
 });

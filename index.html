@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>LIME Enterprise — Rosie / Keelwise, the automated trading operator who never blinks</title>
+    <title>LIME Enterprise — Rosie Keelwise, the automated trading operator who never blinks</title>
     <meta
       name="description"
-      content="Rosie, also called Keelwise, is an automated, rules-based trading operator from Lime Signalworks. She watches the markets while you live your life, holds to your rules and keeps a protective stop at your broker on every position, while you supervise. Try her free for one month in a paper (practice) account."
+      content="Rosie Keelwise is an automated, rules-based trading operator from Lime Signalworks. She watches the markets while you live your life, holds to your rules and keeps a protective stop at your broker on every position, while you supervise. Try her free for one month in a paper (practice) account."
     />
     <meta name="robots" content="index, follow" />
     <!-- Declares light as the default rendering scheme so a dark operating system does
@@ -44,21 +44,26 @@
     <!-- E1 — header and primary call to action -->
     <header class="masthead">
       <div class="shell masthead__inner">
+        <!-- Header logos (2026-11-01), the same two as the Rosie Operator Workstation header:
+             the lighthouse mark on the left and Rosie's portrait on the right, equal squares
+             (92px wide screens, 56px tablets, 48px phones, as on the workstation). The
+             lighthouse is the workstation's own looping video; it shows its first frame as a
+             still poster and only plays when app.js starts it (never under reduced motion). -->
+        <video
+          class="masthead__logo masthead__lighthouse"
+          src="assets/img/lighthouse-loop.mp4"
+          poster="assets/img/lighthouse-poster.png"
+          width="92"
+          height="92"
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          role="img"
+          aria-label="Lime Signalworks logo: a lighthouse shining over the sea"
+          data-header-logo="lighthouse"
+        ></video>
         <a class="brand" href="#main">
-          <svg
-            class="brand__mark"
-            width="28"
-            height="28"
-            viewBox="0 0 32 32"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="square"
-            aria-hidden="true"
-          >
-            <path d="M4 22l8-8 5 5 9-9" />
-            <path d="M4 27h24" />
-          </svg>
           <span class="brand__name"
             >Lime Signalworks<span class="brand__unit" data-site-unit>LIME Enterprise</span></span
           >
@@ -76,6 +81,15 @@
           <a href="#partners">Partners</a>
           <a href="#how-to-begin">How to begin</a></nav>
 
+        <img
+          class="masthead__logo masthead__rosie"
+          src="assets/img/rosie-portrait.png"
+          width="92"
+          height="92"
+          alt="Rosie: a line-art portrait of a woman beside a small multicolored bar chart"
+          data-header-logo="rosie"
+        />
+
         <!-- The theme toggle is created by assets/js/app.js, the same script that makes it
              work. It is deliberately absent from the served markup so that a visitor with
              JavaScript disabled is never shown a control that cannot do anything. -->
@@ -92,15 +106,27 @@
           <circle class="ring__core" cx="180" cy="180" r="8" />
         </svg>
         <div class="shell">
-          <div class="opening__col" data-voice="noal">
-            <p class="label opening__label" data-attribution>From Noal</p>
-            <h1 id="opening-title">I built Rosie (Keelwise) so I could stop watching, relax and enjoy my life.</h1>
-            <p>Picture an ordinary Tuesday. I'm at my daughter's recital, then out for a walk, then at a long lunch with an old friend, phone face-down on the table. I'm not checking anything, and I'm not worried.</p>
-            <p>Rosie is on the job. Before anything I own is ever at risk, she's already placed a protective stop with my broker, so it's there whether I'm watching or not. She keeps the risk small, the rules plain, and she tells me the truth, even on the days that don't go well.</p>
-            <p>Once she's set up, my job is done for the most part. Now I watch and supervise a little.</p>
-            <p>Knowing she's on watch gives me my time back, and I spend it on what the money was for in the first place: being fully present with the people I love, taking care of my health, staying curious, and feeling looked after.</p>
-            <p class="opening__sign">I built her for me, and I built her so you can have it too.</p>
-            <p class="warm-note">During the free one-month evaluation, Rosie runs in a paper (practice) account.</p>
+          <!-- Opening (2026-11-01, owner direction): Rosie tells Noal's story, so the praise
+               comes from her and he does not speak for himself. His name is marked with
+               data-owner-name, like the data-attribution credits, so the tests can pin where
+               it may appear. -->
+          <div class="opening__col" data-voice="rosie">
+            <p class="label opening__label voice-tag" data-voice-tag>From Rosie</p>
+            <h1 id="opening-title"><span class="owner-name" data-owner-name>Noal</span>, my developer, built Rosie Keelwise, which is me, so he could stop watching, relax and enjoy his life.</h1>
+            <p>Picture an ordinary Tuesday. <span class="owner-name" data-owner-name>Noal</span> is at his daughter's recital, then out for a walk, then at a long lunch with an old friend, phone face-down on the table. He isn't checking anything, and he isn't worried. That calm is the whole point of me.</p>
+            <p>I'm on the job. Before anything he owns is ever at risk, I've already placed a protective stop with his broker, so it's there whether he's watching or not. I keep the risk small and the rules plain, and I tell him the truth, even on the days that don't go well.</p>
+            <p>Once I'm set up, his job is done for the most part. Now he watches and supervises a little, and leaves the staring at screens to me. I never blink; he was always going to lose that contest.</p>
+            <p>Knowing I'm on watch gives him his time back, and he spends it on what the money was for in the first place: being fully present with the people he loves, taking care of his health, staying curious, and feeling looked after. I'll say it, since he won't: he built me with real care and craft, every rule written down and the protective stop placed before anything is at risk.</p>
+            <p class="opening__sign">He built me for himself, and he built me so you can have me too.</p>
+            <p class="video-row" data-video-row="opening"><a class="video-cta" href="https://www.youtube.com/@noelrini3882" target="_blank" rel="noopener noreferrer" data-video="tour" data-video-placeholder><svg class="video-cta__icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor" opacity="0.16" /><path d="M10 8.2v7.6L16 12z" fill="currentColor" /></svg><span class="video-cta__label">Watch the short videos on YouTube</span><span class="ext" aria-hidden="true">&#8599;</span><span class="sr-only"> (opens in a new tab)</span></a></p>
+            <!-- Brokers (2026-11-01, owner direction): the two brokers Rosie works with now,
+                 in her own voice. Only Interactive Brokers and Schwab are named. -->
+            <div class="brokers-note" data-voice="rosie" data-brokers>
+              <p class="label voice-tag" data-voice-tag>From Rosie</p>
+              <p class="brokers-note__line">I work with <strong>Interactive Brokers</strong> and <strong>Schwab</strong> today.</p>
+              <p class="brokers-note__line">I connect only to brokers that hand customers a real, public trading API, so your software can place its own orders.</p>
+              <p class="brokers-note__line brokers-note__paper">During the free one-month evaluation, I run in a paper (practice) account.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -174,7 +200,7 @@
       <section class="section evidence" id="evidence" aria-labelledby="evidence-title" data-voice="rosie">
         <div class="shell">
           <div class="section__head">
-            <p class="label rule-after">Rosie / Keelwise · Evidence</p>
+            <p class="label rule-after">Rosie · Evidence</p>
             <p class="label voice-tag" data-voice-tag>From Rosie</p>
             <h2 id="evidence-title">Rules I keep. Receipts I show.</h2>
             <p>During your free evaluation I trade a <strong>paper account only</strong>, and I don't publish profit figures; I'd rather show you my rules than flatter you with numbers. Here is what every order of mine has to pass, how it's checked, and what I won't do.</p>
@@ -289,7 +315,6 @@
           <div class="section__head">
             <p class="label rule-after">Section 07</p>
             <p class="label voice-tag" data-voice-tag>From Rosie</p>
-            <p class="label demo__aka">Rosie (Keelwise)</p>
             <h2 id="demo-title">I&rsquo;m Rosie, and I never blink.</h2>
           </div>
           <div class="section__grid demo__grid">
@@ -308,6 +333,7 @@
                 <p class="cta-block__disclosure" data-demo-disclosure>Sample data in a paper (practice) account. No broker connection, no real orders, and nothing here is advice.</p>
               </div>
               <p class="demo-ask" data-demo-ask>If you'd like the full demo, just ask. We'll set you up with the whole thing, for free, no strings attached. <a class="anchor-link" href="#contact">Ask for the full demo</a></p>
+              <p class="video-row" data-video-row="demo"><a class="video-cta" href="https://www.youtube.com/@noelrini3882" target="_blank" rel="noopener noreferrer" data-video="tour" data-video-placeholder><svg class="video-cta__icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor" opacity="0.16" /><path d="M10 8.2v7.6L16 12z" fill="currentColor" /></svg><span class="video-cta__label">Watch the short videos on YouTube</span><span class="ext" aria-hidden="true">&#8599;</span><span class="sr-only"> (opens in a new tab)</span></a></p>
 
               <div class="hero__actions">
                 <a class="hero-action hero-action--quiet" href="#what-we-do">Meet me</a>
