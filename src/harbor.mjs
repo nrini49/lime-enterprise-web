@@ -503,13 +503,13 @@ function page({ title, description, canonicalPath, body, canonical }) {
     <header class="masthead">
       <div class="shell masthead__inner">
         <video class="masthead__logo masthead__lighthouse" src="/assets/img/lighthouse-loop.mp4" poster="/assets/img/lighthouse-poster.png" width="92" height="92" muted loop playsinline preload="metadata" role="img" aria-label="Lime Signalworks logo: a lighthouse shining over the sea" data-header-logo="lighthouse"></video>
-        <a class="brand" href="/">
+        <a class="brand" href="/" target="_blank" rel="noopener noreferrer">
           <span class="brand__name">Lime Signalworks<span class="brand__unit">LIME Enterprise</span></span>
         </a>
         <nav class="masthead__nav" aria-label="Harbor Now">
-          <a href="/">Home</a>
-          <a href="/harbor-now/" data-harbor-nav>Daily market report</a>
-          <a href="/harbor-now/#archive">Archive</a>
+          <a href="/" target="_blank" rel="noopener noreferrer">Home</a>
+          <a href="/harbor-now/" target="_blank" rel="noopener noreferrer" data-harbor-nav>Daily market report</a>
+          <a href="/harbor-now/#archive" target="_blank" rel="noopener noreferrer">Archive</a>
         </nav>
         <img class="masthead__logo masthead__rosie" src="/assets/img/rosie-portrait.png" width="92" height="92" alt="Rosie: a line-art portrait of a woman beside a small multicolored bar chart" data-header-logo="rosie" />
       </div>
@@ -526,7 +526,7 @@ ${body}
         <div>
           <p class="label">Lime Signalworks LLC · LIME Enterprise</p>
           <p class="foot__note">Harbor Now is the daily market report from Lime Signalworks: a dated, plain-language summary written after the close.</p>
-          <p class="foot__harbor"><a class="anchor-link hn-foot-link" href="/">Back to the home page</a></p>
+          <p class="foot__harbor"><a class="anchor-link hn-foot-link" href="/" target="_blank" rel="noopener noreferrer">Back to the home page</a></p>
           <p class="foot__copyright">${esc(canonical.copyright)}</p>
         </div>
         <div>
@@ -577,7 +577,7 @@ export async function buildHarbor(root, canonical) {
   const archive = newestFirst
     .map(
       (ed) => `
-            <li><a href="/harbor-now/${ed.date}/"><time class="hn-arch__date" datetime="${ed.date}">${esc(shortDate(ed.date))}</time><span class="hn-arch__title">${esc(ed.title)}</span></a></li>`,
+            <li><a href="/harbor-now/${ed.date}/" target="_blank" rel="noopener noreferrer"><time class="hn-arch__date" datetime="${ed.date}">${esc(shortDate(ed.date))}</time><span class="hn-arch__title">${esc(ed.title)}</span></a></li>`,
     )
     .join('');
 
@@ -591,7 +591,7 @@ export async function buildHarbor(root, canonical) {
           ${notice()}
           <p class="label hn-latest-label">Latest edition</p>
           ${renderEditionBody(latest, 'h2')}
-          <p class="anchor-row"><a class="anchor-link" href="/harbor-now/${latest.date}/">Open the ${esc(prettyDate(latest.date))} edition</a></p>
+          <p class="anchor-row"><a class="anchor-link" href="/harbor-now/${latest.date}/" target="_blank" rel="noopener noreferrer">Open the ${esc(prettyDate(latest.date))} edition</a></p>
           ${renderGuide(canonical)}
           <h2 class="hn-h" id="archive">Archive</h2>
           <p class="hn-count">${editions.length} editions, ${esc(prettyDate(editions[0].date))} to ${esc(prettyDate(latest.date))}.</p>
@@ -615,12 +615,12 @@ export async function buildHarbor(root, canonical) {
     const prev = editions[i - 1];
     const next = editions[i + 1];
     const pager = [
-      prev ? `<a class="anchor-link" href="/harbor-now/${prev.date}/" rel="prev">&larr; ${esc(prettyDate(prev.date))}</a>` : '',
-      `<a class="anchor-link" href="/harbor-now/#archive">All editions</a>`,
-      next ? `<a class="anchor-link" href="/harbor-now/${next.date}/" rel="next">${esc(prettyDate(next.date))} &rarr;</a>` : '',
+      prev ? `<a class="anchor-link" href="/harbor-now/${prev.date}/" target="_blank" rel="prev noopener noreferrer">&larr; ${esc(prettyDate(prev.date))}</a>` : '',
+      `<a class="anchor-link" href="/harbor-now/#archive" target="_blank" rel="noopener noreferrer">All editions</a>`,
+      next ? `<a class="anchor-link" href="/harbor-now/${next.date}/" target="_blank" rel="next noopener noreferrer">${esc(prettyDate(next.date))} &rarr;</a>` : '',
     ].filter(Boolean).join('\n            ');
     const body = `          <div class="hn-head">
-            <p class="label rule-after"><a href="/harbor-now/">Harbor Now</a> · ${esc(prettyDate(ed.date))}</p>
+            <p class="label rule-after"><a href="/harbor-now/" target="_blank" rel="noopener noreferrer">Harbor Now</a> · ${esc(prettyDate(ed.date))}</p>
             <p class="label voice-tag" data-voice-tag>From Rosie</p>
             ${stale(latest.date, today)}
           </div>

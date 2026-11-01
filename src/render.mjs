@@ -49,6 +49,15 @@ function videoLink(video, channelUrl, kind) {
   );
 }
 
+/**
+ * New window (2026-11-01): every link that leaves the current page opens in a new window
+ * with noopener noreferrer, so focus stays put and both windows stay open for reference.
+ * Same-page anchors (#...), mailto: and tel: links are left alone.
+ */
+const NEW_WINDOW = ' target="_blank" rel="noopener noreferrer"';
+const leavesPage = (href) => !/^(#|mailto:|tel:)/i.test(String(href));
+const newWindow = (href) => (leavesPage(href) ? NEW_WINDOW : '');
+
 /** A working contact channel: a real mailto:/tel: anchor, never a form. */
 const contactLink = (href, label, marker) =>
   `<a class="contact__link" href="${esc(href)}" data-${esc(marker)}>${esc(label)}</a>`;
@@ -125,7 +134,7 @@ function renderCards(cards) {
   return cards
     .map(
       (card) => `
-            <a class="card" href="${esc(card.href)}">
+            <a class="card" href="${esc(card.href)}"${newWindow(card.href)}>
               <h3>${esc(card.title)}</h3>
               <p>${esc(card.body)}</p>
               <span class="card__go" aria-hidden="true">&#8594;</span>
@@ -254,7 +263,7 @@ async function main() {
     .replaceAll('{{NAV}}', renderNav(sectionOrder))
     .replaceAll(
       '{{DEMO_CTA}}',
-      `<a class="cta" href="${esc(canonical.demoUrl)}">${esc(canonical.demoCtaLabel)}</a>`,
+      `<a class="cta" href="${esc(canonical.demoUrl)}"${newWindow(canonical.demoUrl)}>${esc(canonical.demoCtaLabel)}</a>`,
     )
     .replaceAll('{{TOUR_LINK}}', videoLink(canonical.videos.tour, canonical.videos.channelUrl, 'tour'))
     .replaceAll('{{YOUTUBE_CHANNEL_URL}}', esc(canonical.videos.channelUrl))
