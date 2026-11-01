@@ -393,7 +393,9 @@ test('dom: exactly one demo call to action, with the approved label and target',
   const link = ctas.first();
   assert.equal(link.attr('href'), DEMO_URL, 'the call to action opens the sample-data demo');
   assert.equal(norm(link.text()), DEMO_LABEL);
-  assert.equal(link.attr('target'), undefined, 'the demo is on this site, so no new tab');
+  // 2026-11-01: every link that leaves the page opens in a new window, the demo included.
+  assert.equal(link.attr('target'), '_blank', 'the demo opens in a new window');
+  assert.equal(link.attr('rel'), 'noopener noreferrer');
   $('a[href*="rosie-demo"]').each((_, el) => {
     assert.equal($(el).attr('href'), DEMO_URL, 'every demo link points at /rosie-demo/');
   });

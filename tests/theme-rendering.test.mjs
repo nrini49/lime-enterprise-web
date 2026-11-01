@@ -602,7 +602,8 @@ test('rendered: the demo disclosure is visible next to the call to action before
         // 2026-10-28: the call to action is the on-site sample-data demo; the hosted
         // demo and its sign-in line are retired from the home page.
         assert.equal(await cta.getAttribute('href'), '/rosie-demo/');
-        assert.equal(await cta.getAttribute('target'), null, 'on-site demo, same tab');
+        // 2026-11-01: every link that leaves the page opens in a new window.
+        assert.equal(await cta.getAttribute('target'), '_blank', 'the demo opens in a new window');
         assert.equal(await page.locator('[data-demo-signin]').count(), 0, 'no sign-in line');
 
         await context.close();
