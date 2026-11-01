@@ -669,11 +669,23 @@ test('dom: the header carries the lighthouse logo left and Rosie\'s portrait rig
   }
 });
 
+const ROSIE_INTRO =
+  "Hi, I'm Rosie Keelwise. I help you place trades under the risk rules you set, and I attach one " +
+  'broker-held stop to every buy. This guide walks you through your first days with me, in plain ' +
+  'language. Nothing here is a recommendation to buy or sell anything, and I never promise a result.';
+
 test('naming: "Rosie Keelwise" introduces her once up top; "Rosie" after that', () => {
   assert.match($('title').text(), /Rosie Keelwise/);
   assert.match($('meta[name="description"]').attr('content'), /^Rosie Keelwise /);
   assert.match(norm($('#opening h1').text()), /Rosie Keelwise/);
-  const body = norm($('main').text());
+  // 2026-11-01 (owner direction): Rosie's approved introduction from the Operator Guide
+  // opens the page body and names her "Rosie Keelwise". Only that exact paragraph is set
+  // aside here; everywhere else in the body Keelwise still appears once, in the opening h1.
+  const intro = $('main [data-rosie-intro] .rosie-intro__text');
+  assert.equal(intro.length, 1, 'one Rosie introduction');
+  assert.equal(norm(intro.text()), ROSIE_INTRO, 'the introduction is word for word as approved');
+  assert.equal($('main p').not('.label').first()[0], intro[0], 'the introduction is the first paragraph of the page body');
+  const body = norm($('main').clone().find('[data-rosie-intro]').remove().end().text());
   assert.equal(body.split('Keelwise').length - 1, 1, 'Keelwise appears once in the page body, in the opening');
   assert.doesNotMatch(html, /Rosie \/ Keelwise|Rosie \(Keelwise\)|also called Keelwise/);
 });
