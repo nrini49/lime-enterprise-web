@@ -140,6 +140,80 @@ export const adviceHits = (s) => ADVICE_BANNED.filter((r) => r.test(neutral(s)))
 
 export class HarborVoiceError extends Error {}
 
+/* ---------- "How to use Harbor Now well" (2026-11-01) ---------- */
+
+/**
+ * A short reading guide on the Harbor Now index, in Rosie's first person. It is about how
+ * to READ the report, never about what to do in the market, and it goes through the same
+ * advice gate as the editions (ADVICE_BANNED, no "we/our/us"): buildHarbor fails if a line
+ * slips. The stale date is not written here; the page's own restart note shows it.
+ */
+export const HARBOR_GUIDE = {
+  heading: 'How to use Harbor Now well',
+  intro:
+    'Harbor Now is my dated, after-the-close read of the market. It describes conditions; it ' +
+    'recommends nothing. It is a lighthouse, not a steering wheel. These six habits make it read best.',
+  habits: [
+    ['The date comes first.',
+      'Every edition is stamped with the close it describes. Last Tuesday\'s report is history, not ' +
+      'news. When the newest edition is more than a few days old, the page says so right at the top.'],
+    ['Mood before numbers.',
+      'The headline and its one-line summary give the shape of the day in a single breath: broad ' +
+      'green, broad red, mixed, calm or jumpy. I take in the mood before any single figure.'],
+    ['Four funds, side by side.',
+      'SPY, QQQ, DIA and IWM together show whether a move was broad or narrow. One green fund among ' +
+      'four red ones is a narrow day, and the report says so plainly.'],
+    ['Volatility is the room temperature.',
+      'VIX rising or easing shows how nervous the market felt. It colours the day; it predicts nothing.'],
+    ['A week tells a story.',
+      'One edition is a snapshot. Five in a row, from the archive, show whether calm is settling in ' +
+      'or jitters are building.'],
+    ['Context for the rules, never a signal.',
+      'Harbor Now sits beside the written rules and my Operator Workstation as background. It is ' +
+      'never a signal to trade, never a recommendation and never personal advice. The decisions ' +
+      'belong to the person who owns the account.'],
+  ],
+  close:
+    'Read that way, Harbor Now is good company: a clear, honest, dated picture of the day, and ' +
+    'nothing pretending to be more.',
+};
+
+export const guideText = (g = HARBOR_GUIDE) =>
+  [g.heading, g.intro, ...g.habits.flat(), g.close].join(' ');
+
+/** Fails the build if the guide ever reads as advice or slips into "we". */
+export function checkGuide(g = HARBOR_GUIDE) {
+  const text = guideText(g);
+  const hits = adviceHits(text);
+  if (hits.length) throw new HarborVoiceError(`Harbor guide reads as advice: ${hits.join(', ')}`);
+  if (pluralVoice(text)) throw new HarborVoiceError('Harbor guide says "we/our/us"; Rosie says "I"');
+}
+
+/**
+ * The optional "how to use Harbor Now" video link. Rendered only when
+ * canonical.videos.harborHowTo.url holds a real URL; until then nothing shows.
+ */
+function guideVideo(canonical) {
+  const v = canonical && canonical.videos && canonical.videos.harborHowTo;
+  if (!v || typeof v.url !== 'string' || !v.url) return '';
+  return `
+            <p class="video-row"><a class="video-cta" href="${esc(v.url)}" target="_blank" rel="noopener noreferrer" data-video="harbor-how-to"><span class="video-cta__label">${esc(v.label)}</span><span class="ext" aria-hidden="true">&#8599;</span><span class="sr-only"> (opens in a new tab)</span></a></p>`;
+}
+
+function renderGuide(canonical, g = HARBOR_GUIDE) {
+  const items = g.habits
+    .map(([title, body]) => `
+              <li><strong>${esc(title)}</strong> ${esc(body)}</li>`)
+    .join('');
+  return `<div class="hn-guide" id="how-to-use" data-harbor-guide>
+            <h2 class="hn-h">${esc(g.heading)}</h2>
+            <p>${esc(g.intro)}</p>
+            <ol class="hn-guide__list">${items}
+            </ol>
+            <p class="hn-guide__close">${esc(g.close)}</p>${guideVideo(canonical)}
+          </div>`;
+}
+
 const EMPTY_VOICE = Object.freeze({ rewrites: {}, descriptive: [] });
 
 export async function loadVoice(root, date) {
@@ -428,8 +502,8 @@ function page({ title, description, canonicalPath, body, canonical }) {
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="masthead">
       <div class="shell masthead__inner">
+        <video class="masthead__logo masthead__lighthouse" src="/assets/img/lighthouse-loop.mp4" poster="/assets/img/lighthouse-poster.png" width="92" height="92" muted loop playsinline preload="metadata" role="img" aria-label="Lime Signalworks logo: a lighthouse shining over the sea" data-header-logo="lighthouse"></video>
         <a class="brand" href="/">
-          <svg class="brand__mark" width="28" height="28" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M4 22l8-8 5 5 9-9" /><path d="M4 27h24" /></svg>
           <span class="brand__name">Lime Signalworks<span class="brand__unit">LIME Enterprise</span></span>
         </a>
         <nav class="masthead__nav" aria-label="Harbor Now">
@@ -437,6 +511,7 @@ function page({ title, description, canonicalPath, body, canonical }) {
           <a href="/harbor-now/" data-harbor-nav>Daily market report</a>
           <a href="/harbor-now/#archive">Archive</a>
         </nav>
+        <img class="masthead__logo masthead__rosie" src="/assets/img/rosie-portrait.png" width="92" height="92" alt="Rosie: a line-art portrait of a woman beside a small multicolored bar chart" data-header-logo="rosie" />
       </div>
     </header>
     <main id="main">
@@ -489,6 +564,7 @@ export async function loadEditions(root) {
 
 export async function buildHarbor(root, canonical) {
   checkCanon();
+  checkGuide();
   const editions = await loadEditions(root);
   if (!editions.length) throw new Error('no Harbor Now editions in data/harbor/');
   const today = todayIso();
@@ -516,6 +592,7 @@ export async function buildHarbor(root, canonical) {
           <p class="label hn-latest-label">Latest edition</p>
           ${renderEditionBody(latest, 'h2')}
           <p class="anchor-row"><a class="anchor-link" href="/harbor-now/${latest.date}/">Open the ${esc(prettyDate(latest.date))} edition</a></p>
+          ${renderGuide(canonical)}
           <h2 class="hn-h" id="archive">Archive</h2>
           <p class="hn-count">${editions.length} editions, ${esc(prettyDate(editions[0].date))} to ${esc(prettyDate(latest.date))}.</p>
           <ol class="hn-arch" reversed data-harbor-archive>${archive}

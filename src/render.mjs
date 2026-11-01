@@ -25,6 +25,30 @@ const externalLink = (url, label, className) =>
   `${esc(label)}<span class="ext" aria-hidden="true">&#8599;</span>` +
   `<span class="sr-only"> (opens in a new tab)</span></a>`;
 
+/**
+ * Video links (2026-11-01). Every URL comes from canonical.videos in data/homepage.json,
+ * the one place to change them. A video whose url is still null never renders a link of
+ * its own: the tour button falls back to the existing YouTube channel with an honest
+ * label, so a visitor never meets a broken or invented video link. Always a new window.
+ */
+const PLAY_ICON =
+  '<svg class="video-cta__icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">' +
+  '<circle cx="12" cy="12" r="11" fill="currentColor" opacity="0.16" />' +
+  '<path d="M10 8.2v7.6L16 12z" fill="currentColor" /></svg>';
+
+function videoLink(video, channelUrl, kind) {
+  const real = typeof video.url === 'string' && video.url.length > 0;
+  const href = real ? video.url : channelUrl;
+  const label = real ? video.label : video.fallbackLabel || video.label;
+  return (
+    `<a class="video-cta" href="${esc(href)}" target="_blank" rel="noopener noreferrer" ` +
+    `data-video="${esc(kind)}"${real ? '' : ' data-video-placeholder'}>` +
+    `${PLAY_ICON}<span class="video-cta__label">${esc(label)}</span>` +
+    `<span class="ext" aria-hidden="true">&#8599;</span>` +
+    `<span class="sr-only"> (opens in a new tab)</span></a>`
+  );
+}
+
 /** A working contact channel: a real mailto:/tel: anchor, never a form. */
 const contactLink = (href, label, marker) =>
   `<a class="contact__link" href="${esc(href)}" data-${esc(marker)}>${esc(label)}</a>`;
@@ -232,6 +256,8 @@ async function main() {
       '{{DEMO_CTA}}',
       `<a class="cta" href="${esc(canonical.demoUrl)}">${esc(canonical.demoCtaLabel)}</a>`,
     )
+    .replaceAll('{{TOUR_LINK}}', videoLink(canonical.videos.tour, canonical.videos.channelUrl, 'tour'))
+    .replaceAll('{{YOUTUBE_CHANNEL_URL}}', esc(canonical.videos.channelUrl))
     .replaceAll('{{DEMO_DISCLOSURE}}', esc(canonical.demoDisclosure))
     .replaceAll('{{DEMO_ASK}}', esc(canonical.demoAsk))
     .replaceAll('{{CONTACT_EMAIL}}', contactLink(`mailto:${canonical.contact.email}`, canonical.contact.email, 'contact-email'))

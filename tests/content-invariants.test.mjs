@@ -589,12 +589,90 @@ test('dom: every mention of real-time data is negated', () => {
 /* ---------- links off this surface ---------- */
 
 const YOUTUBE_URL = 'https://www.youtube.com/@noelrini3882';
-test('dom: exactly one off-origin destination exists — YouTube (the demo is on this site)', () => {
-  const hrefs = $('a[href^="http"]')
-    .map((_, el) => $(el).attr('href'))
-    .get();
-  assert.deepEqual([...new Set(hrefs)], [YOUTUBE_URL]);
-  assert.equal(hrefs.length, 1, 'no duplicate off-origin links');
+// 2026-11-01: the "Watch the tour" buttons in the opening and the demo join the
+// how-to-begin YouTube link. Every off-origin link still goes to YouTube only (the
+// channel, or a real video URL once one is set in canonical.videos), and opens in a new
+// window with noopener noreferrer.
+test('dom: the only off-origin destination is YouTube (the demo is on this site)', () => {
+  const links = $('a[href^="http"]');
+  const hrefs = links.map((_, el) => $(el).attr('href')).get();
+  assert.ok(hrefs.includes(YOUTUBE_URL), 'the channel link is present');
+  for (const href of hrefs) {
+    assert.match(href, /^https:\/\/www\.youtube\.com\//, `off-origin link that is not YouTube: ${href}`);
+  }
+  assert.ok(hrefs.length <= 3, 'only the channel link and the two tour buttons go off-site');
+  links.each((_, el) => {
+    assert.equal($(el).attr('target'), '_blank', 'off-site links open in a new window');
+    assert.equal($(el).attr('rel'), 'noopener noreferrer');
+  });
+});
+
+test('dom: the tour button is in the opening and the demo, from the one video config', () => {
+  const { videos } = canonical;
+  assert.equal(videos.channelUrl, YOUTUBE_URL, 'the channel link is the existing one');
+  for (const where of ['#opening', '#demo']) {
+    const btn = $(`${where} a.video-cta[data-video="tour"]`);
+    assert.equal(btn.length, 1, `one tour button in ${where}`);
+    assert.equal(btn.attr('target'), '_blank');
+    assert.equal(btn.attr('rel'), 'noopener noreferrer');
+    if (videos.tour.url) {
+      assert.equal(btn.attr('href'), videos.tour.url);
+      assert.equal(norm(btn.find('.video-cta__label').text()), videos.tour.label);
+    } else {
+      // No real tour video yet: the button goes to the channel, says so, and is marked.
+      assert.equal(btn.attr('href'), videos.channelUrl);
+      assert.equal(norm(btn.find('.video-cta__label').text()), videos.tour.fallbackLabel);
+      assert.equal(btn.attr('data-video-placeholder'), '', 'placeholder-marked');
+    }
+  }
+  // The Harbor Now how-to video is never shown on the home page.
+  assert.equal($('a[data-video="harbor-how-to"]').length, 0);
+});
+
+test('dom: the opening names the two brokers in Rosie\'s voice, paper during the evaluation', () => {
+  const note = $('#opening [data-brokers]');
+  assert.equal(note.length, 1);
+  assert.equal(note.attr('data-voice'), 'rosie');
+  const text = norm(note.text());
+  assert.match(text, /Interactive Brokers/);
+  assert.match(text, /Schwab/);
+  assert.ok(
+    text.includes(
+      'I connect only to brokers that hand customers a real, public trading API, so your software can place its own orders.',
+    ),
+  );
+  assert.match(text, /paper \(practice\) account/);
+  for (const other of [/tastytrade/i, /tradestation/i, /webull/i, /alpaca/i, /next on my list/i, /\bbeta\b/i, /coming soon/i]) {
+    assert.doesNotMatch(text, other);
+  }
+  assert.doesNotMatch(visibleText() + ' ' + metadataText(), /tastytrade|tradestation|webull|alpaca/i);
+});
+
+test('dom: the header carries the lighthouse logo left and Rosie\'s portrait right', () => {
+  const inner = $('header.masthead .masthead__inner');
+  const kids = inner.children().toArray();
+  const lighthouse = inner.children('video[data-header-logo="lighthouse"]');
+  const rosie = inner.children('img[data-header-logo="rosie"]');
+  assert.equal(lighthouse.length, 1);
+  assert.equal(rosie.length, 1);
+  assert.equal(kids[0], lighthouse[0], 'the lighthouse is first (left)');
+  assert.equal(kids[kids.length - 1], rosie[0], 'Rosie is last in the markup (right, before the toggle)');
+  assert.equal(norm(inner.find('.brand__name').contents().first().text()), 'Lime Signalworks', 'brand text kept');
+  assert.ok((lighthouse.attr('aria-label') || '').length > 20, 'the lighthouse has a text alternative');
+  assert.equal(lighthouse.attr('autoplay'), undefined, 'no autoplay attribute (app.js starts it)');
+  assert.ok(lighthouse.attr('poster'), 'a still poster for no-JS and reduced motion');
+  for (const f of ['assets/img/lighthouse-loop.mp4', 'assets/img/lighthouse-poster.png', 'assets/img/rosie-portrait.png']) {
+    assert.ok(existsSync(path.join(root, f)), `missing header asset ${f}`);
+  }
+});
+
+test('naming: "Rosie Keelwise" introduces her once up top; "Rosie" after that', () => {
+  assert.match($('title').text(), /Rosie Keelwise/);
+  assert.match($('meta[name="description"]').attr('content'), /^Rosie Keelwise /);
+  assert.match(norm($('#opening h1').text()), /Rosie Keelwise/);
+  const body = norm($('main').text());
+  assert.equal(body.split('Keelwise').length - 1, 1, 'Keelwise appears once in the page body, in the opening');
+  assert.doesNotMatch(html, /Rosie \/ Keelwise|Rosie \(Keelwise\)|also called Keelwise/);
 });
 
 test('dom: the Signals and LIME Leadership sister-site buttons are gone, with no leftover row', () => {
@@ -658,7 +736,9 @@ test('voice: no beta or in-development wording for the brokers, and a clean hero
     ' ' + $('section#demo .hero__meta').text());
   assert.doesNotMatch(hero, /coming|options|futures|crypto|forex|around the clock/i,
     'the hero shows only what is live');
-  assert.ok(/Rosie \(Keelwise\)/.test(hero), 'Rosie (Keelwise) stays in the headline area');
+  // 2026-11-01: the "Rosie (Keelwise)" label left the demo; "Rosie Keelwise" is introduced
+  // once, in the opening (see the naming test). The demo says "Rosie".
+  assert.ok(/\bRosie\b/.test(hero) && !/Keelwise/.test(hero), 'the demo headline area says "Rosie"');
   assert.ok(/interactive brokers/i.test(hero) && /schwab/i.test(hero), 'the hero names both brokers');
 });
 
@@ -795,8 +875,10 @@ test('dom: accessibility scaffolding is present', () => {
   // change to the original vector-only rule — not a regression. Every <img> on
   // the surface must still be real product imagery with a real, descriptive alt
   // attribute; this guards against silently proliferating raster images later.
+  // 2026-11-01: plus Rosie's portrait in the header (the workstation header pair; the
+  // lighthouse half is a <video> with an aria-label, checked in the header test).
   const images = $('img');
-  assert.equal(images.length, 1, 'exactly one deliberate product screenshot is used on this surface');
+  assert.equal(images.length, 2, 'the product screenshot and the header portrait, nothing else');
   images.each((_, el) => {
     const alt = $(el).attr('alt');
     assert.ok(alt && alt.length > 20, 'every raster image has a real, descriptive alt attribute');

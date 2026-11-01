@@ -488,3 +488,23 @@ test('voice: the build fails on a rewrite that slips back into "we"', async () =
   assert.match(err.message, /we\/our\/us" would render/);
   assert.ok(err.message.includes(`${VOICE_DIR}/${d}.json`), err.message);
 });
+
+/* ---------- "How to use Harbor Now well" (2026-11-01) ---------- */
+
+test('harbor guide: the index carries the reading guide, six habits, no advice, no video until one exists', async () => {
+  const { HARBOR_GUIDE, guideText } = await import('../src/harbor.mjs');
+  const $ = load('harbor-now/index.html');
+  const guide = $('[data-harbor-guide]');
+  assert.equal(guide.length, 1, 'one guide on the index');
+  assert.equal(norm(guide.find('h2').text()), 'How to use Harbor Now well');
+  assert.equal(guide.find('ol > li').length, HARBOR_GUIDE.habits.length);
+  assert.ok(HARBOR_GUIDE.habits.length >= 5 && HARBOR_GUIDE.habits.length <= 6);
+  assert.deepEqual(adviceHits(guideText()), []);
+  assert.match(guideText(), /never a signal to trade/);
+  const home = JSON.parse(readFileSync(path.join(root, 'data', 'homepage.json'), 'utf8'));
+  const how = home.canonical.videos.harborHowTo;
+  assert.equal(guide.find('a[data-video="harbor-how-to"]').length, how.url ? 1 : 0, 'video link only with a real URL');
+  for (const d of dates) {
+    assert.equal(load(`harbor-now/${d}/index.html`)('[data-harbor-guide]').length, 0, `${d}: guide only on the index`);
+  }
+});

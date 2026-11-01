@@ -15,7 +15,20 @@
     "securitiesDisclaimer": "Lime Signalworks provides educational tools and analysis, not personalized investment advice. Securities trading involves risk of loss. Your decisions and results are your own. Nothing here is an offer to sell or a solicitation to buy any security.",
     "evaluationTerm": "one month",
     "copyright": "© 2026 Lime Signalworks LLC.",
-    "riskDisclosure": "Trading involves risk of loss. Past performance, including paper-trading results, does not guarantee future results. Nothing on this site is investment advice."
+    "riskDisclosure": "Trading involves risk of loss. Past performance, including paper-trading results, does not guarantee future results. Nothing on this site is investment advice.",
+    "videos": {
+      "_comment": "The ONE place for video links. channelUrl is the existing Lime Signalworks YouTube channel. Each video's url stays null until a real video is published; while it is null, the tour button links to the channel with fallbackLabel, and the Harbor Now how-to link is not rendered at all, so visitors never see a broken or invented link. To go live, paste the real watch URL into url.",
+      "channelUrl": "https://www.youtube.com/@noelrini3882",
+      "tour": {
+        "url": null,
+        "label": "Watch the 2-minute tour",
+        "fallbackLabel": "Watch the short videos on YouTube"
+      },
+      "harborHowTo": {
+        "url": null,
+        "label": "Watch: how to use Harbor Now"
+      }
+    }
   },
   "sectionOrder": [
     {
@@ -40,7 +53,7 @@
     },
     {
       "id": "evidence",
-      "eyebrow": "Rosie / Keelwise · Evidence",
+      "eyebrow": "Rosie · Evidence",
       "nav": "Evidence"
     },
     {

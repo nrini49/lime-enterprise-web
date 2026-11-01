@@ -318,6 +318,35 @@ a:hover {
   border-color: var(--color-primary);
 }
 
+/* Header logos (2026-11-01): the Rosie Operator Workstation header pair. The lighthouse
+   mark sits at the far left, Rosie's portrait at the right, as two equal squares: 92px on
+   wide screens (the workstation's own minimum), 56px on tablets and 48px on phones, the
+   same steps the workstation uses. The lighthouse is cropped to its square (cover); Rosie
+   is never cropped (contain, on white), so her colour bars stay whole. */
+html {
+  scroll-padding-top: 8rem;
+}
+
+.masthead__logo {
+  flex: none;
+  display: block;
+  width: 92px;
+  height: 92px;
+  aspect-ratio: 1 / 1;
+  border-radius: 14px;
+  border: 1px solid var(--color-border);
+}
+
+.masthead__lighthouse {
+  object-fit: cover;
+  background: #ffffff;
+}
+
+.masthead__rosie {
+  object-fit: contain;
+  background: #ffffff;
+}
+
 @media (max-width: 61.99rem) {
   .masthead__nav {
     order: 3;
@@ -333,6 +362,168 @@ a:hover {
   .theme-toggle {
     margin-inline-start: auto;
   }
+  /* Rosie leads the right-hand group on narrower screens; the toggle sits beside her. */
+  .masthead__rosie {
+    margin-inline-start: auto;
+    width: 56px;
+    height: 56px;
+  }
+  .masthead__rosie ~ .theme-toggle {
+    margin-inline-start: 0;
+  }
+  .masthead__lighthouse {
+    width: 56px;
+    height: 56px;
+  }
+}
+
+/* Wide screens: like the workstation header, the two logos span the header's two rows,
+   with the brand on the first row and the section links on the second, between them. */
+@media (min-width: 62rem) {
+  .masthead__inner {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
+    grid-template-rows: auto auto;
+    column-gap: var(--space-5);
+    row-gap: 0;
+    align-items: center;
+  }
+  .masthead__lighthouse {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+  .masthead__inner > .brand {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .masthead__nav {
+    grid-column: 2 / span 2;
+    grid-row: 2;
+    margin-inline-start: 0;
+    column-gap: var(--space-3);
+  }
+  /* A little wider than the page text, so the section links keep to one line beside
+     the two logos on common laptop widths. */
+  .masthead .masthead__inner {
+    max-width: 84rem;
+  }
+  .masthead__inner > .theme-toggle {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+  }
+  .masthead__rosie {
+    grid-column: 4;
+    grid-row: 1 / span 2;
+  }
+}
+
+@media (min-width: 90rem) {
+  .masthead__nav {
+    column-gap: var(--space-5);
+  }
+}
+
+@media (max-width: 37.5rem) {
+  .masthead__logo {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 10px;
+  }
+  .masthead__inner {
+    column-gap: var(--space-3);
+  }
+}
+
+/* ---------- Video buttons (2026-11-01) ----------
+   "Watch the tour" style link: always opens a new window, URL from canonical.videos. */
+.video-row {
+  margin: var(--space-6) 0 0;
+}
+
+.video-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 3rem;
+  padding: var(--space-2) var(--space-5) var(--space-2) var(--space-3);
+  border-radius: 999px;
+  background: var(--color-surface);
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+  max-width: 100%;
+}
+
+.video-cta:hover {
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+}
+
+[data-theme='dark'] .video-cta:hover {
+  color: var(--color-bg);
+}
+
+.video-cta__icon {
+  flex: none;
+}
+
+.video-cta .ext {
+  font-size: 0.9em;
+  opacity: 0.75;
+}
+
+/* ---------- Brokers note in the opening (2026-11-01) ---------- */
+.brokers-note {
+  margin-top: var(--space-8);
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--color-border);
+  border-inline-start: 4px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  max-width: 40rem;
+}
+
+.brokers-note .voice-tag {
+  margin-bottom: var(--space-2);
+}
+
+.brokers-note > p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---------- Harbor Now reading guide (2026-11-01) ---------- */
+.hn-guide {
+  margin-top: var(--space-12);
+  padding: var(--space-6);
+  border: 1px solid var(--color-border);
+  border-inline-start: 4px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  max-width: 48rem;
+}
+
+.hn-guide > h2.hn-h {
+  margin-top: 0;
+}
+
+.hn-guide__list {
+  margin: var(--space-4) 0;
+  padding-inline-start: 1.4em;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.hn-guide__list strong {
+  color: var(--color-primary);
+}
+
+.hn-guide__close {
+  font-weight: 600;
 }
 
 /* ---------- Hero ---------- */
