@@ -534,6 +534,7 @@ ul.setup__list {
   font-weight: 700;
 }
 
+.responsibility > p:last-child,
 .multi-pc > p:last-child {
   margin-bottom: 0;
 }

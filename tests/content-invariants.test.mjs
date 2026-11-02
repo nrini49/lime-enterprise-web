@@ -694,6 +694,24 @@ test('dom: How it works explains licensing in plain policy terms, with no key or
   assert.match(norm($('#pricing .section__head').text()), /yours to keep, on up to 3 of your own PCs/);
 });
 
+test('dom: Straight talk sets out what stays the customer\'s responsibility, honestly', () => {
+  const box = $('#commitments [data-responsibility]');
+  assert.equal(box.length, 1);
+  assert.equal(box.attr('data-voice'), 'rosie');
+  assert.equal(box.find('[data-voice-tag]').length, 1);
+  const text = norm(box.text());
+  assert.match(text, /What stays your responsibility/);
+  assert.match(text, /TWS app \(or its Gateway\) restarts by itself, including a restart every night/);
+  assert.match(text, /sign-in expires about every 7 days/);
+  assert.match(text, /check that my dashboard shows me connected again/);
+  assert.match(text, /software, its rules or its API without notice/);
+  assert.match(text, /switched on, powered and online is your job/);
+  assert.match(text, /battery backup \(a UPS\)/);
+  assert.match(text, /can’t promise I’ll be running every minute, or that every order will fill/);
+  assert.match(text, /protective stops are held at your broker/);
+  assert.doesNotMatch(text, /guarantee|uptime of|99|always (on|connected|running)/i);
+});
+
 test('dom: How it works recommends one Rosie per PC for more than one broker or account', () => {
   const box = $('#how-it-works [data-multi-pc]');
   assert.equal(box.length, 1);
