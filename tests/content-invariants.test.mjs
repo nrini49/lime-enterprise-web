@@ -669,6 +669,18 @@ test('dom: the header carries the lighthouse logo left and Rosie\'s portrait rig
   }
 });
 
+test('dom: How it works says what setup takes, Windows only, paper first, no installer claimed', () => {
+  const box = $('#how-it-works [data-setup]');
+  assert.equal(box.length, 1);
+  assert.equal(box.next('[data-multi-pc]').length, 1, 'the setup box sits just before the one-Rosie-per-PC note');
+  assert.equal(box.find('.setup__list > li').length, 6);
+  const text = norm(box.text());
+  assert.match(text, /Windows is the only system I run on today; Mac and Linux are coming later/);
+  assert.match(text, /I always begin in paper \(practice\) mode/);
+  assert.match(text, /typing the word LIVE/);
+  assert.doesNotMatch(text, /one-click|installer|automatic(ally)? install/i, 'no installer is claimed');
+});
+
 test('dom: How it works recommends one Rosie per PC for more than one broker or account', () => {
   const box = $('#how-it-works [data-multi-pc]');
   assert.equal(box.length, 1);

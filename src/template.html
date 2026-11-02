@@ -365,6 +365,21 @@
               </p>
             </li>
           </ol>
+          <!-- Getting Rosie installed (2026-11-02, owner direction): what it takes on the
+               customer's part. Facts only from the IB and Schwab repos (README, DEPLOYMENT.md,
+               docs/GO-LIVE.md). There is no one-click installer yet, so none is claimed. -->
+          <div class="setup" data-setup>
+            <h3>Getting me installed: what it takes on your part</h3>
+            <p>Setup is hands-on for now, and Lime Signalworks works through it with you. Here&rsquo;s your side of it:</p>
+            <ol class="setup__list">
+              <li><strong>A Windows PC that stays on.</strong> Windows is the only system I run on today; Mac and Linux are coming later.</li>
+              <li><strong>Your own brokerage account</strong> at Interactive Brokers or Schwab. On Schwab, that includes your own access to Schwab&rsquo;s trading API.</li>
+              <li><strong>Install me on that PC</strong>, along with Python 3.14, the free software I run on. On Interactive Brokers, you also install IB&rsquo;s own TWS app (or its Gateway) and keep it signed in on the same PC, approving the sign-in on your phone.</li>
+              <li><strong>Connect me to your broker.</strong> On Schwab, you sign in through your web browser each time I start, and refresh that sign-in about every 7 days.</li>
+              <li><strong>Start on paper.</strong> I always begin in paper (practice) mode. You set your risk limits, and I practice with you through the free month.</li>
+              <li><strong>Go live only when you choose.</strong> Real-money trading starts only when you deliberately switch it on. On Schwab, that means typing the word LIVE and setting a risk tier for each account.</li>
+            </ol>
+          </div>
           <!-- More than one broker or account (2026-11-02, owner direction): one Rosie per PC,
                each with its own server, dashboard and risk limits; a UPS for each PC. -->
           <div class="multi-pc" data-multi-pc>
