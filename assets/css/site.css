@@ -496,9 +496,9 @@ html {
   margin-bottom: 0;
 }
 
-/* ---------- Rosie's introduction, top of the page body (2026-11-01) ---------- */
-.rosie-intro {
-  margin-bottom: var(--space-8);
+/* ---------- One Rosie per PC, in How it works (2026-11-02) ---------- */
+.multi-pc {
+  margin-top: var(--space-8);
   padding: var(--space-4) var(--space-5);
   border: 1px solid var(--color-border);
   border-inline-start: 4px solid var(--color-accent);
@@ -507,11 +507,15 @@ html {
   max-width: 40rem;
 }
 
-.rosie-intro .voice-tag {
+.multi-pc h3 {
   margin-bottom: var(--space-2);
 }
 
-.rosie-intro > p:last-child {
+.multi-pc p {
+  margin: 0 0 var(--space-4);
+}
+
+.multi-pc > p:last-child {
   margin-bottom: 0;
 }
 
@@ -1375,6 +1379,13 @@ html {
   color: var(--color-text);
   margin: 0 0 1.3rem;
   max-width: 36em;
+}
+
+/* Noal's story begins after Rosie's three opening paragraphs (2026-11-02). */
+.opening p.opening__story-lead {
+  font: 700 var(--text-xl)/1.35 var(--font-display);
+  color: var(--color-primary);
+  margin-top: 2.25rem;
 }
 
 .opening p.opening__sign,

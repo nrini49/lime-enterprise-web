@@ -101,15 +101,16 @@
                data-owner-name, like the data-attribution credits, so the tests can pin where
                it may appear. -->
           <div class="opening__col" data-voice="rosie">
-            <!-- Rosie's introduction (2026-11-01, owner direction): the first paragraph of the
-                 page body, from the Operator Guide with "Rosie" changed to "Rosie Keelwise".
-                 Word for word from canonical.rosieIntro in data/homepage.json. -->
-            <div class="rosie-intro" data-voice="rosie" data-rosie-intro>
-              <p class="label voice-tag" data-voice-tag>From Rosie</p>
-              <p class="rosie-intro__text">{{ROSIE_INTRO}}</p>
-            </div>
+            <!-- Opening (2026-11-02, owner direction): the first paragraphs say, in this order,
+                 what Rosie Keelwise is, what she does for the visitor, and why it matters. This
+                 replaces the boxed "Hi, I'm Rosie Keelwise" introduction (PR #23) so she is
+                 introduced once, in the h1. Noal's story follows, told by Rosie. -->
             <p class="label opening__label voice-tag" data-voice-tag>From Rosie</p>
-            <h1 id="opening-title"><span class="owner-name" data-owner-name>Noal</span>, my developer, built Rosie Keelwise, which is me, so he could stop watching, relax and enjoy his life.</h1>
+            <h1 id="opening-title">I&rsquo;m Rosie Keelwise. I keep watch, so you can get on with your life.</h1>
+            <p class="opening__what" data-opening="what">I&rsquo;m an automated, rules-based trading operator from Lime Signalworks. I run on your own computer, connect to your own brokerage account at Interactive Brokers or Schwab, and trade stocks and ETFs by written rules, the same rules on a quiet day as on a wild one.</p>
+            <p class="opening__for-you" data-opening="for-you">Here&rsquo;s what I do for you. I sample prices through the trading session, check every idea against your risk limits, size the position and place the order with your broker. Every buy goes out with a protective stop attached and held at your broker, set 10% below what I paid. I size each trade so a loss at its stop is no more than 2% of your account, and I won&rsquo;t let the risk on everything I have open pass 6%. You see every order on your dashboard, and one button stops me.</p>
+            <p class="opening__why" data-opening="why">Why care? Because staring at screens costs you what the money was for in the first place: your time, your sleep, your attention to the people you love. And pressure bends even good rules; I&rsquo;m built not to bend. I give you back your hours and a quieter mind, with discipline you can see in every order. I can&rsquo;t promise a profit, nobody honest can, and a fast market can fill below a stop. What I will do is keep to your rules and tell you plainly what happened, on the good days and the bad. Try me free for one month in a paper (practice) account, and judge me for yourself.</p>
+            <p class="opening__story-lead" data-opening="story"><span class="owner-name" data-owner-name>Noal</span>, my developer, built me so he could stop watching, relax and enjoy his life.</p>
             <p>Picture an ordinary Tuesday. <span class="owner-name" data-owner-name>Noal</span> is at his daughter's recital, then out for a walk, then at a long lunch with an old friend, phone face-down on the table. He isn't checking anything, and he isn't worried. That calm is the whole point of me.</p>
             <p>I'm on the job. Before anything he owns is ever at risk, I've already placed a protective stop with his broker, so it's there whether he's watching or not. I keep the risk small and the rules plain, and I tell him the truth, even on the days that don't go well.</p>
             <p>Once I'm set up, his job is done for the most part. Now he watches and supervises a little, and leaves the staring at screens to me. I never blink; he was always going to lose that contest.</p>
@@ -287,7 +288,7 @@
                 width="1200"
                 height="750"
                 loading="lazy"
-                alt="Rosie IB Operator Workstation, demo with sample data: header controls, Account Overview, Positions with the Signal column, and broker-held Stops"
+                alt="Rosie Operator Workstation (Interactive Brokers version), demo with sample data: header controls, Account Overview, Positions with the Signal column, and broker-held Stops"
               />
               <figcaption>My Operator Workstation (the Interactive Brokers version), shown here with sample data. <a href="/rosie-demo/" target="_blank" rel="noopener noreferrer">Open the interactive demo</a>.</figcaption>
             </figure>
@@ -364,6 +365,13 @@
               </p>
             </li>
           </ol>
+          <!-- More than one broker or account (2026-11-02, owner direction): one Rosie per PC,
+               each with its own server, dashboard and risk limits; a UPS for each PC. -->
+          <div class="multi-pc" data-multi-pc>
+            <h3>More than one broker or account? One Rosie per PC.</h3>
+            <p>If you have accounts at two or more brokers, or more accounts than one copy of me is set up to look after, the setup is simple: one Rosie per PC. I go on a second computer (or a third), with one server on each PC. Each PC has its own dashboard and its own risk limits, and each copy of me checks only its own. So set the limits on every PC so that the combined total across all of them stays within what you&rsquo;re comfortable with.</p>
+            <p>A battery backup (a UPS) for each PC that runs me is a good idea, so a short power cut is less likely to interrupt me. My protective stops live at your broker either way.</p>
+          </div>
         </div>
       </section>
 

@@ -669,23 +669,27 @@ test('dom: the header carries the lighthouse logo left and Rosie\'s portrait rig
   }
 });
 
-const ROSIE_INTRO =
-  "Hi, I'm Rosie Keelwise. I help you place trades under the risk rules you set, and I attach one " +
-  'broker-held stop to every buy. This guide walks you through your first days with me, in plain ' +
-  'language. Nothing here is a recommendation to buy or sell anything, and I never promise a result.';
+test('dom: How it works recommends one Rosie per PC for more than one broker or account', () => {
+  const box = $('#how-it-works [data-multi-pc]');
+  assert.equal(box.length, 1);
+  const text = norm(box.text());
+  assert.match(text, /One Rosie per PC/);
+  assert.match(text, /own dashboard and its own risk limits/);
+  assert.match(text, /combined total across all of them/);
+  assert.match(text, /battery backup \(a UPS\)/);
+});
 
 test('naming: "Rosie Keelwise" introduces her once up top; "Rosie" after that', () => {
   assert.match($('title').text(), /Rosie Keelwise/);
   assert.match($('meta[name="description"]').attr('content'), /^Rosie Keelwise /);
   assert.match(norm($('#opening h1').text()), /Rosie Keelwise/);
-  // 2026-11-01 (owner direction): Rosie's approved introduction from the Operator Guide
-  // opens the page body and names her "Rosie Keelwise". Only that exact paragraph is set
-  // aside here; everywhere else in the body Keelwise still appears once, in the opening h1.
-  const intro = $('main [data-rosie-intro] .rosie-intro__text');
-  assert.equal(intro.length, 1, 'one Rosie introduction');
-  assert.equal(norm(intro.text()), ROSIE_INTRO, 'the introduction is word for word as approved');
-  assert.equal($('main p').not('.label').first()[0], intro[0], 'the introduction is the first paragraph of the page body');
-  const body = norm($('main').clone().find('[data-rosie-intro]').remove().end().text());
+  // 2026-11-02 (owner direction): the boxed introduction from PR #23 is gone; the opening
+  // h1 introduces her once, and the first paragraphs of the page body say, in order, what
+  // she is, what she does for the visitor, and why it matters.
+  assert.equal($('main [data-rosie-intro]').length, 0, 'no second, boxed introduction');
+  const firstParas = $('main p').not('.label').slice(0, 3).map((_, el) => $(el).attr('data-opening')).get();
+  assert.deepEqual(firstParas, ['what', 'for-you', 'why'], 'what she is, what she does for you, why care');
+  const body = norm($('main').text());
   assert.equal(body.split('Keelwise').length - 1, 1, 'Keelwise appears once in the page body, in the opening');
   assert.doesNotMatch(html, /Rosie \/ Keelwise|Rosie \(Keelwise\)|also called Keelwise/);
 });
@@ -833,8 +837,8 @@ test('dom: Rosie names Noal only in the opening, as a bare marked name', () => {
     assert.equal($(el).closest('section').attr('id'), 'opening', 'his name is marked only in the opening');
     assert.equal($(el).closest('[data-voice]').attr('data-voice'), 'rosie', 'Rosie is the one naming him');
   });
-  const h1 = norm($('#opening h1').text());
-  assert.match(h1, /^Noal, my developer, built Rosie Keelwise, which is me, so he could stop watching/);
+  const lead = norm($('#opening [data-opening="story"]').text());
+  assert.match(lead, /^Noal, my developer, built me so he could stop watching/);
   const opening = norm($('#opening .opening__col').clone().find('[data-brokers]').remove().end().text());
   assert.ok(!/\b(I built|I'm at my|my daughter)\b/.test(opening), 'Noal no longer speaks for himself in the opening');
   assert.match(opening, /protective stop with his broker/);

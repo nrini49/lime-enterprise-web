@@ -261,7 +261,6 @@ async function main() {
 
   const html = template
     .replaceAll('{{NAV}}', renderNav(sectionOrder))
-    .replaceAll('{{ROSIE_INTRO}}', esc(canonical.rosieIntro))
     .replaceAll(
       '{{DEMO_CTA}}',
       `<a class="cta" href="${esc(canonical.demoUrl)}"${newWindow(canonical.demoUrl)}>${esc(canonical.demoCtaLabel)}</a>`,
