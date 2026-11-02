@@ -1,0 +1,117 @@
+{
+  "section": {
+    "title": "Tech Tips",
+    "path": "/tech-tips/",
+    "metaTitle": "Tech Tips: practical how-tos for running Rosie Keelwise on Windows | Lime Signalworks",
+    "description": "Plain, practical how-tos from Lime Signalworks for running Rosie Keelwise on your own Windows PC: broker app restarts, reconnecting, and clean start and stop.",
+    "intro": "Short, practical how-tos for keeping the computer side of things tidy: broker apps, Windows, start and stop. Technology only. No market talk here.",
+    "rosie": "From me, Rosie: I run on your own PC, so a little know-how about that PC goes a long way. These are the fixes I'd want you to have to hand when something on the computer side gets in my way."
+  },
+  "footerNote": "General information only, not financial or investment advice. These tips are about running software on your own computer. Your broker's own documentation and support are the final word on its apps and settings. Lime Signalworks provides educational tools and analysis, not personalized investment advice.",
+  "posts": [
+    {
+      "slug": "broker-update-reconnect-restart-order",
+      "title": "Why your trading app stops reconnecting after a broker update, and how to restart in the right order",
+      "shortTitle": "Reconnecting after a broker update: the right restart order",
+      "description": "Broker apps such as Interactive Brokers' TWS and IB Gateway update and restart themselves. What to check, and the order to restart things in, so Rosie Keelwise can connect again.",
+      "published": "2026-11-02",
+      "updated": "2026-11-02",
+      "rosie": "From me, Rosie: I talk to Interactive Brokers through IB's own app, TWS or IB Gateway. When that app updates or restarts, my line to it drops until it's back and fully signed in. Here's how to get me reconnected.",
+      "sections": [
+        {
+          "heading": "What's going on",
+          "paragraphs": [
+            "Broker apps update and restart on their own. Interactive Brokers' Trader Workstation (TWS) and IB Gateway install updates and restart themselves, including a scheduled daily restart. After a restart they can come back with a sign-in screen, a pop-up or a changed setting.",
+            "While the broker app is closed, waiting at a sign-in screen, or holding a pop-up open, Rosie can't connect, even though Rosie herself is running fine.",
+            "Brokers can change their apps without notice. Knowing when your broker app updates or restarts, and staying aware of version changes, is your responsibility as the account holder.",
+            "Protective stops that are already placed are held at your broker, so they don't depend on this connection."
+          ]
+        },
+        {
+          "heading": "Check these first",
+          "steps": [
+            "<strong>Look for a window waiting on you.</strong> Check the taskbar for a TWS or Gateway window asking you to sign in, approve a two-factor (2FA) prompt on your phone, accept a notice, or confirm an update. A window hidden behind others is a common culprit.",
+            "<strong>Check the API settings came through the update.</strong> In TWS, open Global Configuration, then API, then Settings. <em>Enable ActiveX and Socket Clients</em> must be ticked, and <em>Read-Only API</em> must be off, because Rosie places orders.",
+            "<strong>Check the port.</strong> The socket port in the broker app has to match the one Rosie uses: <code>7497</code> for TWS paper, <code>7496</code> for TWS live, <code>4002</code> for IB Gateway paper and <code>4001</code> for IB Gateway live.",
+            "<strong>Match paper and live.</strong> TWS (or Gateway) must be signed in to the same mode as Rosie: a paper login when Rosie runs on paper, a live login when she runs live.",
+            "<strong>One program per client id.</strong> Every program that connects to TWS or Gateway uses an API client id, and only one program can use a given id at a time. A second copy of Rosie, or another tool using the same id, gets turned away. Close the extra one."
+          ]
+        },
+        {
+          "heading": "Restart in the right order",
+          "steps": [
+            "<strong>Broker app first.</strong> Start TWS or IB Gateway and let it finish signing in completely: approve the 2FA prompt, close any pop-ups, and wait until it shows your account.",
+            "<strong>Then Rosie.</strong> Start Rosie with her start launcher (the <code>.bat</code> file, or the desktop shortcut made from it).",
+            "<strong>Check the dashboard.</strong> Make sure Rosie shows connected again."
+          ],
+          "after": "If Rosie was already running, restarting the broker app alone is usually enough: once TWS or Gateway is back and signed in, she reconnects by herself. If she still doesn't show connected, stop her with her stop launcher and start her again, broker app first."
+        },
+        {
+          "heading": "See what's using a port",
+          "steps": [
+            "Open Command Prompt (press the Windows key, type <code>cmd</code>, press Enter).",
+            "Type <code>netstat -ano | findstr :7497</code> and press Enter. Use <code>7496</code>, <code>4002</code> or <code>4001</code> instead if that's your setup.",
+            "A line that says <code>LISTENING</code> means a program is waiting for connections on that port. The number at the end of the line is its process ID (PID).",
+            "Open Task Manager, go to the Details tab, and find that PID to see which program owns the port.",
+            "If nothing comes back at all, the broker app isn't listening yet: it's closed, still signing in, or its API setting is off. Go back to the checks above."
+          ]
+        },
+        {
+          "heading": "On Schwab",
+          "paragraphs": [
+            "There's no desktop broker app to restart. Rosie signs in to Schwab through your web browser each time she starts, and that sign-in is refreshed about every 7 days. If she shows disconnected, stop her, start her again and complete the browser sign-in."
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "clean-start-stop-windows-without-scary-prompts",
+      "title": "Clean start and stop: how to run Windows trading helpers without scary prompts",
+      "shortTitle": "Clean start and stop on Windows, without scary prompts",
+      "description": "What PowerShell's \"Execution Policy Change\" prompt means in plain words, when to answer N, and how to start and stop Rosie Keelwise with her .bat launchers instead.",
+      "published": "2026-11-02",
+      "updated": "2026-11-02",
+      "rosie": "From me, Rosie: I'd much rather start quietly than greet you with an alarming question. Here's what that PowerShell prompt is, and how to start and stop me without it.",
+      "sections": [
+        {
+          "heading": "What the prompt means",
+          "code": "Execution Policy Change\nThe execution policy helps protect you from scripts that you do not trust. ...\nDo you want to change the execution policy?\n[Y] Yes  [A] Yes to All  [N] No  [L] No to All  [S] Suspend  [?] Help (default is \"N\"):",
+          "paragraphs": [
+            "In plain words: Windows is asking whether to change the rule that decides which PowerShell scripts are allowed to run. Depending on how the change is made, that rule can cover the whole computer, not just one program.",
+            "The prompt appears when the <code>Set-ExecutionPolicy</code> command runs."
+          ]
+        },
+        {
+          "heading": "What to answer",
+          "steps": [
+            "<strong>Didn't type <code>Set-ExecutionPolicy</code> yourself just now?</strong> Answer <kbd>N</kbd>, or just press Enter: N is the default.",
+            "<strong>Did type it yourself?</strong> Answer <kbd>Y</kbd> only when you know exactly which change it makes. The one shown further down, with <code>-Scope Process</code>, affects only that one window.",
+            "<strong>Not sure?</strong> Answer <kbd>N</kbd>. Nothing breaks by saying no; the script simply doesn't run."
+          ],
+          "after": "To see the current rules without changing anything, type <code>Get-ExecutionPolicy -List</code>."
+        },
+        {
+          "heading": "Start and stop with the .bat launchers",
+          "steps": [
+            "<strong>Start:</strong> double-click Rosie's start launcher (the <code>.bat</code> file, or the desktop shortcut made from it). On Interactive Brokers, start TWS or IB Gateway first and let it finish signing in.",
+            "<strong>Stop:</strong> double-click Rosie's stop launcher. It stops only Rosie. It doesn't close your broker app, and it doesn't cancel orders already at your broker.",
+            "<strong>That's it.</strong> The <code>.bat</code> launchers don't ask to change any PowerShell rule, so there's no prompt to answer."
+          ]
+        },
+        {
+          "heading": "If a PowerShell script really must run",
+          "paragraphs": [
+            "Use a rule that lasts only as long as one PowerShell window. It resets by itself when the window closes, and the rest of the computer is untouched."
+          ],
+          "steps": [
+            "Open a new PowerShell window.",
+            "Type <code>Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass</code> and press Enter. The prompt appears; because you typed this yourself and it says <code>-Scope Process</code>, answering <kbd>Y</kbd> changes this window only.",
+            "Run the script from that same window. Only run scripts that came with Rosie, or that you know and trust.",
+            "Close the window when you're done. The rule goes back to what it was."
+          ],
+          "after": "For a single script, this one line does the same job with no prompt and no lasting change: <code>powershell -ExecutionPolicy Bypass -File \"C:\\path\\to\\script.ps1\"</code>"
+        }
+      ]
+    }
+  ]
+}

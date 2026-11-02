@@ -4,12 +4,16 @@
  * data/homepage.json is the single source of truth for canonical strings, the
  * section order, the market-report example, pricing, the indicators, and the start cards.
  * index.html is generated output.
- * It also renders Harbor Now (data/harbor/*.data.json) into harbor-now/ via src/harbor.mjs.
+ * It also renders Harbor Now (data/harbor/*.data.json) into harbor-now/ via src/harbor.mjs,
+ * Tech Tips (data/tech-tips.json) into tech-tips/ via src/tech-tips.mjs, and sitemap.xml
+ * plus robots.txt via src/seo.mjs.
  */
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { buildHarbor } from './harbor.mjs';
+import { buildTechTips, loadTips } from './tech-tips.mjs';
+import { buildSeo } from './seo.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -308,6 +312,11 @@ async function main() {
     `built harbor-now/ — ${harbor.count} editions, latest ${harbor.latest}` +
       (harbor.stale ? ' (stale: restart note shown)' : ''),
   );
+
+  const tips = await buildTechTips(root, canonical);
+  console.log(`built tech-tips/ — ${tips.count} posts`);
+  const seo = await buildSeo(root, { origin: tips.origin, tips: await loadTips(root) });
+  console.log(`built sitemap.xml (${seo.urls} URLs) and robots.txt`);
 }
 
 main().catch((err) => {
