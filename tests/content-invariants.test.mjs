@@ -681,6 +681,19 @@ test('dom: How it works says what setup takes, Windows only, paper first, no ins
   assert.doesNotMatch(text, /one-click|installer|automatic(ally)? install/i, 'no installer is claimed');
 });
 
+test('dom: How it works explains licensing in plain policy terms, with no key or registration system claimed', () => {
+  const box = $('#how-it-works [data-licensing]');
+  assert.equal(box.length, 1);
+  assert.equal(box.prev('[data-multi-pc]').length, 1, 'the licensing box follows the one-Rosie-per-PC note');
+  const text = norm(box.text());
+  assert.match(text, /One license covers me on up to 3 of your own PCs/);
+  assert.match(text, /half the price of the first license/);
+  assert.match(text, /Take me off the old one first/);
+  assert.match(text, /sharing me with friends isn’t allowed/);
+  assert.doesNotMatch(text, /licen[cs]e key|activation code|register|registration|check-in|tracking/i, 'no unbuilt system is described');
+  assert.match(norm($('#pricing .section__head').text()), /yours to keep, on up to 3 of your own PCs/);
+});
+
 test('dom: How it works recommends one Rosie per PC for more than one broker or account', () => {
   const box = $('#how-it-works [data-multi-pc]');
   assert.equal(box.length, 1);

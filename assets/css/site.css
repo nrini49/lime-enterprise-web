@@ -525,6 +525,10 @@ html {
   gap: var(--space-2);
 }
 
+ul.setup__list {
+  list-style: disc;
+}
+
 .setup__list li::marker {
   color: var(--color-accent);
   font-weight: 700;
