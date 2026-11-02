@@ -1,6 +1,7 @@
 {
   "revision": "site2-rosie-queen-voice-2026-10-29",
   "canonical": {
+    "rosieIntro": "Hi, I'm Rosie Keelwise. I help you place trades under the risk rules you set, and I attach one broker-held stop to every buy. This guide walks you through your first days with me, in plain language. Nothing here is a recommendation to buy or sell anything, and I never promise a result.",
     "demoUrl": "/rosie-demo/",
     "demoCtaLabel": "Open the Rosie demo",
     "demoDisclosure": "Sample data in a paper (practice) account. No broker connection, no real orders, and nothing here is advice.",
