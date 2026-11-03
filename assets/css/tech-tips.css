@@ -1,0 +1,137 @@
+/* Tech Tips pages only. Kept out of site.css on purpose: site.css on main contains
+   unresolved merge-conflict markers (around .foot__harbor / .voice-tag) that leave a block
+   unclosed, so rules appended after it are ignored by browsers. */
+/* ============================================================
+   Tech Tips (/tech-tips/), rendered by src/tech-tips.mjs from
+   data/tech-tips.json. Reuses the Harbor Now head, heading, notice
+   and footer pieces; only the pieces below are new.
+   ============================================================ */
+
+.tt-section .hn-head {
+  margin-bottom: var(--space-6);
+  max-width: 68ch;
+}
+
+.tt-section .hn-head a {
+  color: inherit;
+}
+
+.tt-post,
+.tt-list {
+  max-width: 68ch;
+}
+
+.tt-h1 {
+  font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem);
+  line-height: 1.2;
+}
+
+.tt-rosie {
+  border-left: 4px solid var(--color-accent);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+}
+
+.tt-block {
+  margin-top: var(--space-8);
+}
+
+.tt-block p {
+  margin: 0 0 var(--space-3);
+  color: var(--color-text-muted);
+}
+
+.tt-steps {
+  display: grid;
+  gap: var(--space-3);
+  padding-left: 1.5em;
+  margin: var(--space-3) 0;
+}
+
+.tt-steps li::marker {
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+.tt-steps strong,
+.tt-block p strong {
+  color: var(--color-text);
+}
+
+.tt-after {
+  margin-top: var(--space-4) !important;
+}
+
+.tt-section code,
+.tt-section kbd {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--color-surface-offset);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 0.05em 0.35em;
+  overflow-wrap: anywhere;
+}
+
+.tt-code {
+  margin: var(--space-3) 0 var(--space-4);
+  padding: var(--space-4);
+  background: var(--color-surface-offset);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  white-space: pre-wrap;
+  font-size: var(--text-sm);
+}
+
+.tt-code code {
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+.tt-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--space-5);
+}
+
+.tt-list li {
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-5);
+}
+
+.tt-list a {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.tt-list__title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.tt-list a:hover .tt-list__title {
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent);
+}
+
+.tt-list__desc {
+  margin: var(--space-2) 0 var(--space-1);
+  color: var(--color-text-muted);
+}
+
+.tt-meta {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.tt-notice {
+  margin-top: var(--space-10, var(--space-8));
+}
