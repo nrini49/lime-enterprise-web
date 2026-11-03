@@ -121,6 +121,21 @@ test('tips: post 1 covers the broker-restart checks and the restart order', () =
   assert.ok(order.indexOf('Check these first') < order.indexOf('Restart in the right order'));
 });
 
+test('tips: post 1 says Schwab asks for a new sign-in at every start, and carries the broker-messages note', () => {
+  const t = postText(tips.posts[0]);
+  assert.match(t, /asks for a new Schwab sign-in through your web browser each time she starts/);
+  assert.match(t, /each sign-in lasts at most about 7 days/);
+  assert.match(t, /no separate re-login button/);
+  assert.doesNotMatch(t, /refreshed about every 7 days/);
+  // The same note, word for word, as in the Rosie IB and Rosie Schwab operator docs.
+  const note = 'Messages from your broker are between you and your broker. You are responsible for the notices, ' +
+    'sign-ins, 2-step approvals, access settings and emails your broker sends. ' +
+    "I can't tell you what to do about them, so please use your broker's own help or support.";
+  assert.ok(tips.posts[0].rosie.endsWith(` ${note}`));
+  const $ = load(`tech-tips/${tips.posts[0].slug}/index.html`);
+  assert.ok(norm($('[data-voice="rosie"]').text()).endsWith(note));
+});
+
 test('tips: post 2 explains the prompt, answers N, and never loosens machine-wide policy', () => {
   const t = postText(tips.posts[1]);
   assert.match(t, /Execution Policy Change/);

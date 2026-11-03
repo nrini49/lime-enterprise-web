@@ -15,8 +15,8 @@
       "shortTitle": "Reconnecting after a broker update: the right restart order",
       "description": "Broker apps such as Interactive Brokers' TWS and IB Gateway update and restart themselves. What to check, and the order to restart things in, so Rosie Keelwise can connect again.",
       "published": "2026-11-02",
-      "updated": "2026-11-02",
-      "rosie": "From me, Rosie: I talk to Interactive Brokers through IB's own app, TWS or IB Gateway. When that app updates or restarts, my line to it drops until it's back and fully signed in. Here's how to get me reconnected.",
+      "updated": "2026-11-03",
+      "rosie": "From me, Rosie: I talk to Interactive Brokers through IB's own app, TWS or IB Gateway. When that app updates or restarts, my line to it drops until it's back and fully signed in. Here's how to get me reconnected. Messages from your broker are between you and your broker. You are responsible for the notices, sign-ins, 2-step approvals, access settings and emails your broker sends. I can't tell you what to do about them, so please use your broker's own help or support.",
       "sections": [
         {
           "heading": "What's going on",
@@ -59,7 +59,7 @@
         {
           "heading": "On Schwab",
           "paragraphs": [
-            "There's no desktop broker app to restart. Rosie signs in to Schwab through your web browser each time she starts, and that sign-in is refreshed about every 7 days. If she shows disconnected, stop her, start her again and complete the browser sign-in."
+            "There's no desktop broker app to restart. Rosie asks for a new Schwab sign-in through your web browser each time she starts, and each sign-in lasts at most about 7 days. She has no separate re-login button: if she shows disconnected, or her sign-in has run out, stop her, start her again and complete the browser sign-in."
           ]
         }
       ]
