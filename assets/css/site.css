@@ -1256,6 +1256,19 @@ html {
   border-bottom: 1px solid currentColor;
 }
 
+/* The email address is one unbreakable string wider than a two-column cell at
+   roughly 650-1100px viewports, where it ran into the telephone number. Let it wrap
+   inside its own cell instead (2026-11-04). */
+.contact > div,
+.contact dd {
+  min-width: 0;
+}
+
+.contact__link {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
 .contact__link:hover {
   color: var(--color-primary-hover);
 }
