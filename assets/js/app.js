@@ -20,10 +20,10 @@
   toggle.setAttribute('data-theme-toggle', '');
   host.appendChild(toggle);
 
-  /* Light is the unconditional default for this surface: the operating system
-     preference is deliberately not consulted, and the choice is never persisted to any
-     browser storage. Every load starts light; the toggle changes the palette for the
-     current page view only. */
+  /* The starting palette is whatever the markup declares (dark on the homepage, light
+     on Harbor Now): the operating system preference is deliberately not consulted, and
+     the choice is never persisted to any browser storage. The toggle changes the
+     palette for the current page view only. */
   var mode = root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
 
   function applyTheme(next) {

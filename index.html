@@ -1,7 +1,8 @@
 <!doctype html>
-<!-- data-theme is set in the markup so the light palette is the default even with
-     JavaScript disabled and even when the operating system prefers dark. -->
-<html lang="en" data-theme="light">
+<!-- data-theme is set in the markup so the dark palette is the default on first paint
+     (no flash of light), even with JavaScript disabled and whatever the operating
+     system prefers. The toggle switches to light for the current page view. -->
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -11,10 +12,11 @@
       content="Rosie Keelwise is an automated, rules-based trading operator from Lime Signalworks. She watches the markets while you live your life, holds to your rules and keeps a protective stop at your broker on every position, while you supervise. Try her free for one month in a paper (practice) account."
     />
     <meta name="robots" content="index, follow" />
-    <!-- Declares light as the default rendering scheme so a dark operating system does
-         not paint the canvas or form controls dark before the stylesheet applies. The
-         dark palette is reached only through the toggle, via the color-scheme property. -->
-    <meta name="color-scheme" content="light" />
+    <!-- Declares dark as the default rendering scheme so a light operating system does
+         not paint the canvas or form controls light before the stylesheet applies. The
+         light palette is reached only through the toggle, via the color-scheme property. -->
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0b1416" />
     <link
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231f6b45'/%3E%3Cg stroke='%23f4f6f4' stroke-width='2.5' fill='none' stroke-linecap='square'%3E%3Cpath d='M6 21l7-7 5 5 8-8'/%3E%3Cpath d='M6 26h20'/%3E%3C/g%3E%3C/svg%3E"

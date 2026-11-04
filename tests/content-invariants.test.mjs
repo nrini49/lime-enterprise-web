@@ -972,11 +972,12 @@ test('dom: the masthead names this unit "LIME Enterprise" and keeps the wordmark
   );
 });
 
-/* ---------- light default and no persistence ---------- */
+/* ---------- dark default and no persistence ---------- */
 
-test('dom: light is the default theme in the served markup', () => {
-  assert.equal($('html').attr('data-theme'), 'light', 'root ships data-theme="light"');
-  assert.equal($('meta[name="color-scheme"]').attr('content'), 'light');
+test('dom: dark is the default theme in the served markup', () => {
+  assert.equal($('html').attr('data-theme'), 'dark', 'root ships data-theme="dark"');
+  assert.equal($('meta[name="color-scheme"]').attr('content'), 'dark');
+  assert.equal($('meta[name="theme-color"]').attr('content'), '#0b1416', 'theme-color matches the dark canvas');
 });
 
 test('css: no prefers-color-scheme rule can force this surface dark', () => {
