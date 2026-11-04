@@ -105,9 +105,9 @@
   --shadow-md: 0 4px 14px oklch(0 0 0 / 0.45);
 }
 
-/* The dark palette is opt-in through the toggle only. This surface has no
- * prefers-color-scheme rule, so an operating system set to dark still receives
- * the light palette on first paint. */
+/* The starting palette is set by the data-theme attribute in each page's markup
+ * (dark on the homepage). This surface has no prefers-color-scheme rule, so the
+ * operating system preference never overrides it; the toggle switches per view. */
 
 /* ---------- Theme painting ----------
  * Every full-width surface paints its own background from the active palette.
@@ -1254,6 +1254,19 @@ html {
   font-weight: 600;
   text-decoration: none;
   border-bottom: 1px solid currentColor;
+}
+
+/* The email address is one unbreakable string wider than a two-column cell at
+   roughly 650-1100px viewports, where it ran into the telephone number. Let it wrap
+   inside its own cell instead (2026-11-04). */
+.contact > div,
+.contact dd {
+  min-width: 0;
+}
+
+.contact__link {
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .contact__link:hover {

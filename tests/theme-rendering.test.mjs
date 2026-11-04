@@ -8,9 +8,9 @@
  * surfaces and at sample points down the page, at mobile, desktop and wide-desktop
  * widths, in both directions of the toggle.
  *
- * Every context here emulates prefers-color-scheme: dark, because Site 2 must open on
- * the light palette regardless of the visitor's operating-system preference, and must
- * not persist the toggle choice to any browser storage.
+ * Contexts emulate prefers-color-scheme: light (and, where stated, dark), because the
+ * homepage must open on the dark palette regardless of the visitor's operating-system
+ * preference, and must not persist the toggle choice to any browser storage.
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -140,11 +140,11 @@ test('rendered theme: every surface follows the palette at 1920, 1440, 1280, 414
   try {
     for (const { width, height, label } of WIDTHS) {
       await t.test(`${label} (${width}px)`, async () => {
-        // A dark operating system is emulated throughout: the default state must
-        // still be light, and the toggle must still reach both palettes.
+        // A light operating system is emulated throughout: the default state must
+        // still be dark, and the toggle must still reach both palettes.
         const context = await browser.newContext({
           viewport: { width, height },
-          colorScheme: 'dark',
+          colorScheme: 'light',
         });
         const page = await context.newPage();
         const failures = [];
@@ -153,22 +153,7 @@ test('rendered theme: every surface follows the palette at 1920, 1440, 1280, 414
         await page.evaluate(() => document.fonts.ready);
         await page.evaluate(PAGE_PROBE);
 
-        // Light theme is the default state, despite the dark OS preference.
-        for (const [selector, description] of SURFACES) {
-          const probe = await page.evaluate((s) => window.__themeProbe.surface(s), selector);
-          assert.ok(!probe.missing, `${description} missing at ${width}px`);
-          assert.ok(
-            probe.luminance !== null && probe.luminance > LIGHT_MIN_LUMINANCE,
-            `light theme: ${description} painted ${JSON.stringify(probe.rgb)} (luminance ${probe.luminance}) at ${width}px`,
-          );
-        }
-
-        // Toggle through the real control, exactly as a visitor would.
-        await page.click('[data-theme-toggle]');
-        await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
-        await page.waitForTimeout(400);
-        await page.evaluate(PAGE_PROBE);
-
+        // Dark theme is the default state, despite the light OS preference.
         for (const [selector, description] of SURFACES) {
           const probe = await page.evaluate((s) => window.__themeProbe.surface(s), selector);
           assert.ok(
@@ -206,7 +191,7 @@ test('rendered theme: every surface follows the palette at 1920, 1440, 1280, 414
           `dark theme: document end paints ${JSON.stringify(bottom.rgb)} at ${width}px`,
         );
 
-        // Toggling back must restore the light palette, not a mixed state.
+        // Toggle through the real control to light, exactly as a visitor would.
         await page.evaluate(() => window.scrollTo(0, 0));
         await page.click('[data-theme-toggle]');
         await page.waitForFunction(() => document.documentElement.dataset.theme === 'light');
@@ -214,9 +199,23 @@ test('rendered theme: every surface follows the palette at 1920, 1440, 1280, 414
         await page.evaluate(PAGE_PROBE);
         for (const [selector, description] of SURFACES) {
           const probe = await page.evaluate((s) => window.__themeProbe.surface(s), selector);
+          assert.ok(!probe.missing, `${description} missing at ${width}px`);
           assert.ok(
             probe.luminance !== null && probe.luminance > LIGHT_MIN_LUMINANCE,
-            `restored light theme: ${description} painted ${JSON.stringify(probe.rgb)} at ${width}px`,
+            `light theme: ${description} painted ${JSON.stringify(probe.rgb)} (luminance ${probe.luminance}) at ${width}px`,
+          );
+        }
+
+        // Toggling back must restore the dark palette, not a mixed state.
+        await page.click('[data-theme-toggle]');
+        await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
+        await page.waitForTimeout(400);
+        await page.evaluate(PAGE_PROBE);
+        for (const [selector, description] of SURFACES) {
+          const probe = await page.evaluate((s) => window.__themeProbe.surface(s), selector);
+          assert.ok(
+            probe.luminance !== null && probe.luminance < DARK_MAX_LUMINANCE,
+            `restored dark theme: ${description} painted ${JSON.stringify(probe.rgb)} at ${width}px`,
           );
         }
 
@@ -230,20 +229,21 @@ test('rendered theme: every surface follows the palette at 1920, 1440, 1280, 414
   }
 });
 
-test('rendered theme: light is the default even when the OS prefers dark', async (t) => {
+test('rendered theme: dark is the default whatever the OS prefers', async (t) => {
   // The regression this guards: the surface previously read
   // matchMedia('(prefers-color-scheme: dark)') in JS and carried a
   // @media (prefers-color-scheme: dark) block in CSS, so a visitor whose operating
-  // system was set to dark landed on the dark palette. Site 2 must open light for
-  // everyone. Every context below emulates a dark operating system.
+  // system was set to dark landed on the dark palette. The homepage now opens dark for
+  // everyone (2026-11-04), and the OS preference is still not consulted in either
+  // direction. Contexts below emulate both a light and a dark operating system.
   const server = await startServer();
   const browser = await chromium.launch();
   try {
-    for (const { width, height, label } of WIDTHS) {
-      await t.test(`dark OS preference, ${label} (${width}px)`, async () => {
+    for (const os of ['light', 'dark']) for (const { width, height, label } of WIDTHS) {
+      await t.test(`${os} OS preference, ${label} (${width}px)`, async () => {
         const context = await browser.newContext({
           viewport: { width, height },
-          colorScheme: 'dark',
+          colorScheme: os,
         });
         const page = await context.newPage();
         await page.goto(ORIGIN, { waitUntil: 'networkidle' });
@@ -252,19 +252,19 @@ test('rendered theme: light is the default even when the OS prefers dark', async
         // The emulation really is in effect, otherwise this test proves nothing.
         assert.equal(
           await page.evaluate(() => window.matchMedia('(prefers-color-scheme: dark)').matches),
-          true,
-          'the browser must be emulating a dark operating system',
+          os === 'dark',
+          `the browser must be emulating a ${os} operating system`,
         );
 
         assert.equal(
           await page.evaluate(() => document.documentElement.dataset.theme),
-          'light',
-          `initial theme attribute must be light at ${width}px`,
+          'dark',
+          `initial theme attribute must be dark at ${width}px`,
         );
         assert.equal(
           await page.evaluate(() => getComputedStyle(document.documentElement).colorScheme),
-          'light',
-          `initial color-scheme must be light at ${width}px`,
+          'dark',
+          `initial color-scheme must be dark at ${width}px`,
         );
 
         await page.evaluate(PAGE_PROBE);
@@ -272,8 +272,8 @@ test('rendered theme: light is the default even when the OS prefers dark', async
           const probe = await page.evaluate((s) => window.__themeProbe.surface(s), selector);
           assert.ok(!probe.missing, `${description} missing at ${width}px`);
           assert.ok(
-            probe.luminance !== null && probe.luminance > LIGHT_MIN_LUMINANCE,
-            `dark OS: ${description} painted ${JSON.stringify(probe.rgb)} (luminance ${probe.luminance}) at ${width}px`,
+            probe.luminance !== null && probe.luminance < DARK_MAX_LUMINANCE,
+            `${os} OS: ${description} painted ${JSON.stringify(probe.rgb)} (luminance ${probe.luminance}) at ${width}px`,
           );
         }
         for (const [name, x, y] of samplePoints(width, height)) {
@@ -283,8 +283,8 @@ test('rendered theme: light is the default even when the OS prefers dark', async
           );
           assert.ok(!probe.missing, `no element at ${name} point at ${width}px`);
           assert.ok(
-            probe.luminance !== null && probe.luminance > LIGHT_MIN_LUMINANCE,
-            `dark OS: ${name} point paints ${JSON.stringify(probe.rgb)} at ${width}px`,
+            probe.luminance !== null && probe.luminance < DARK_MAX_LUMINANCE,
+            `${os} OS: ${name} point paints ${JSON.stringify(probe.rgb)} at ${width}px`,
           );
         }
 
@@ -303,13 +303,13 @@ test('rendered theme: light is the default even when the OS prefers dark', async
   }
 });
 
-test('rendered theme: light default survives with JavaScript disabled under a dark OS', async () => {
+test('rendered theme: dark default survives with JavaScript disabled under a light OS', async () => {
   const server = await startServer();
   const browser = await chromium.launch();
   try {
     const context = await browser.newContext({
       viewport: { width: 1440, height: 900 },
-      colorScheme: 'dark',
+      colorScheme: 'light',
       javaScriptEnabled: false,
     });
     const page = await context.newPage();
@@ -318,8 +318,8 @@ test('rendered theme: light default survives with JavaScript disabled under a da
       const s = getComputedStyle(document.documentElement);
       return { theme: document.documentElement.dataset.theme, scheme: s.colorScheme };
     });
-    assert.equal(probe.theme, 'light', 'markup itself must declare the light theme');
-    assert.equal(probe.scheme, 'light');
+    assert.equal(probe.theme, 'dark', 'markup itself must declare the dark theme');
+    assert.equal(probe.scheme, 'dark');
     await context.close();
   } finally {
     await browser.close();
@@ -327,23 +327,19 @@ test('rendered theme: light default survives with JavaScript disabled under a da
   }
 });
 
-test('rendered theme: toggling light→dark→light writes no browser storage', async () => {
+test('rendered theme: toggling dark→light→dark writes no browser storage', async () => {
   const server = await startServer();
   const browser = await chromium.launch();
   try {
     const context = await browser.newContext({
       viewport: { width: 1440, height: 900 },
-      colorScheme: 'dark',
+      colorScheme: 'light',
     });
     const page = await context.newPage();
     await page.goto(ORIGIN, { waitUntil: 'networkidle' });
 
     const readTheme = () => page.evaluate(() => document.documentElement.dataset.theme);
-    assert.equal(await readTheme(), 'light', 'starts light under a dark OS');
-
-    await page.click('[data-theme-toggle]');
-    await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
-    assert.equal(await readTheme(), 'dark', 'toggle reaches dark');
+    assert.equal(await readTheme(), 'dark', 'starts dark under a light OS');
     assert.equal(
       await page.evaluate(() => document.querySelector('[data-theme-toggle]').getAttribute('aria-label')),
       'Switch to light mode',
@@ -352,7 +348,16 @@ test('rendered theme: toggling light→dark→light writes no browser storage', 
 
     await page.click('[data-theme-toggle]');
     await page.waitForFunction(() => document.documentElement.dataset.theme === 'light');
-    assert.equal(await readTheme(), 'light', 'toggle returns to light');
+    assert.equal(await readTheme(), 'light', 'toggle reaches light');
+    assert.equal(
+      await page.evaluate(() => document.querySelector('[data-theme-toggle]').getAttribute('aria-label')),
+      'Switch to dark mode',
+      'toggle label tracks the active theme',
+    );
+
+    await page.click('[data-theme-toggle]');
+    await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
+    assert.equal(await readTheme(), 'dark', 'toggle returns to dark');
 
     // Nothing may be persisted: no cookies and no web storage entries.
     assert.deepEqual(await context.cookies(), [], 'no cookies are set');
@@ -365,11 +370,11 @@ test('rendered theme: toggling light→dark→light writes no browser storage', 
     assert.deepEqual(storage.session, [], 'sessionStorage must stay empty');
     assert.equal(storage.cookie, '', 'document.cookie must stay empty');
 
-    // A fresh load must therefore come back light, not remember dark.
+    // A fresh load must therefore come back dark, not remember light.
     await page.click('[data-theme-toggle]');
-    await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
+    await page.waitForFunction(() => document.documentElement.dataset.theme === 'light');
     await page.reload({ waitUntil: 'networkidle' });
-    assert.equal(await readTheme(), 'light', 'reload returns to the light default');
+    assert.equal(await readTheme(), 'dark', 'reload returns to the dark default');
 
     await context.close();
   } finally {
@@ -392,7 +397,7 @@ test('rendered: the contact channels are visible, sized and keyboard reachable',
       await t.test(`${label} (${width}px)`, async () => {
         const context = await browser.newContext({
           viewport: { width, height },
-          colorScheme: 'dark',
+          colorScheme: 'light',
         });
         const page = await context.newPage();
         await page.goto(ORIGIN, { waitUntil: 'networkidle' });
@@ -480,20 +485,20 @@ test('rendered theme: the toggle does not rely on background propagation', async
     });
     const page = await context.newPage();
     await page.goto(ORIGIN, { waitUntil: 'networkidle' });
-    const light = await page.evaluate(() => {
-      const s = getComputedStyle(document.documentElement);
-      return { bg: s.backgroundColor, scheme: s.colorScheme };
-    });
-    assert.notEqual(light.bg, 'rgba(0, 0, 0, 0)', 'root element must paint its own background');
-    assert.equal(light.scheme, 'light');
-    await page.click('[data-theme-toggle]');
-    await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
     const dark = await page.evaluate(() => {
       const s = getComputedStyle(document.documentElement);
       return { bg: s.backgroundColor, scheme: s.colorScheme };
     });
     assert.equal(dark.bg, 'rgb(11, 20, 22)', 'root element paints the dark surface');
-    assert.equal(dark.scheme, 'dark', 'color-scheme follows the chosen theme');
+    assert.equal(dark.scheme, 'dark');
+    await page.click('[data-theme-toggle]');
+    await page.waitForFunction(() => document.documentElement.dataset.theme === 'light');
+    const light = await page.evaluate(() => {
+      const s = getComputedStyle(document.documentElement);
+      return { bg: s.backgroundColor, scheme: s.colorScheme };
+    });
+    assert.notEqual(light.bg, 'rgba(0, 0, 0, 0)', 'root element must paint its own background');
+    assert.equal(light.scheme, 'light', 'color-scheme follows the chosen theme');
     await context.close();
   } finally {
     await browser.close();
@@ -532,14 +537,14 @@ test('rendered: nothing overflows horizontally in either palette', async (t) => 
           });
 
         let m = await measure();
-        assert.ok(m.doc <= 1, `light: horizontal overflow of ${m.doc}px at ${width}px`);
-        assert.deepEqual(m.wide, [], `light: elements outside the viewport at ${width}px`);
-
-        await page.click('[data-theme-toggle]');
-        await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
-        m = await measure();
         assert.ok(m.doc <= 1, `dark: horizontal overflow of ${m.doc}px at ${width}px`);
         assert.deepEqual(m.wide, [], `dark: elements outside the viewport at ${width}px`);
+
+        await page.click('[data-theme-toggle]');
+        await page.waitForFunction(() => document.documentElement.dataset.theme === 'light');
+        m = await measure();
+        assert.ok(m.doc <= 1, `light: horizontal overflow of ${m.doc}px at ${width}px`);
+        assert.deepEqual(m.wide, [], `light: elements outside the viewport at ${width}px`);
 
         await context.close();
       });
@@ -707,9 +712,9 @@ test('rendered: keyboard order reaches every control, each with a visible focus 
     // The toggle is operable from the keyboard, not the mouse alone.
     await page.focus('[data-theme-toggle]');
     await page.keyboard.press('Enter');
-    await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
-    await page.keyboard.press(' ');
     await page.waitForFunction(() => document.documentElement.dataset.theme === 'light');
+    await page.keyboard.press(' ');
+    await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
 
     await context.close();
   } finally {
@@ -756,7 +761,7 @@ test('rendered: reduced motion is honoured and the toggle still works', async ()
     );
 
     await page.click('[data-theme-toggle]');
-    await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
+    await page.waitForFunction(() => document.documentElement.dataset.theme === 'light');
     await context.close();
   } finally {
     await browser.close();
