@@ -29,7 +29,7 @@ Zero-framework static build. No bundler, no CSS preprocessor, no client framewor
 - `assets/fonts/` — vendored woff2 subsets plus the OFL licence text for each family
 - `assets/css/base.css` — shared reset, focus-visible, reduced-motion, `.sr-only`
 - `assets/css/site.css` — light enterprise design tokens and all component styles
-- `assets/js/app.js` — the theme toggle, and nothing else
+- `assets/js/app.js` — the theme toggle, the header lighthouse loop, and the narrow-screen masthead menu
 - `tests/content-invariants.test.mjs` — `node:test` + cheerio content and structure checks
 - `tests/theme-rendering.test.mjs` — Playwright checks for painted palette, overflow, keyboard
   order, reduced motion, and the no-JavaScript state
