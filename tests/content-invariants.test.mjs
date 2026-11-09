@@ -247,6 +247,7 @@ test('data: canonical strings are the exact approved wording', () => {
   }
   assert.equal(canonical.securitiesDisclaimer, SECURITIES_DISCLAIMER);
   assert.equal(canonical.evaluationTerm, "one month");
+  assert.deepEqual(canonical.openingStake, OPENING_STAKE);
 });
 
 test('data: the section order is the translated Site 1 order, with unique ids', () => {
@@ -293,9 +294,15 @@ test('data: prices are the locked figures (2026-10-07)', () => {
 
 test('dom: no retired price appears anywhere', () => {
   const text = visibleText();
-  for (const old of ['$200', '$1,000', '$20 ']) {
+  for (const old of ['$200', '$20 ']) {
     assert.ok(!text.includes(old), `retired price on the page: ${old}`);
   }
+  // $1,000 was a retired price. The opening stake is the one agreed use of that
+  // figure, as starting capital, not as a price. Anywhere else it is still banned.
+  const clone = cheerio.load(html);
+  clone('script, style, .sr-only, [data-attribution], [data-owner-name], [data-opening-stake]').remove();
+  const rest = clone('body').text().replace(/\s+/g, ' ');
+  assert.ok(!rest.includes('$1,000'), 'retired $1,000 price outside the opening stake');
 });
 
 test('data: the market example carries figures and a dated as-of label', () => {
@@ -674,6 +681,11 @@ const ROSIE_INTRO =
   'broker-held stop to every buy. This guide walks you through your first days with me, in plain ' +
   'language. Nothing here is a recommendation to buy or sell anything, and I never promise a result.';
 
+const OPENING_STAKE = [
+  'Start with casual money, $1,000 to $10,000, and leave the rest with your current advisor. I am a trading sideline, not a place to move your savings.',
+  'After the first month, if the evidence has earned your confidence, you can add another $1,000 or $10,000 and keep going from there. The size grows in steps, with proof, not with a leap of faith.',
+];
+
 test('naming: "Rosie Keelwise" introduces her once up top; "Rosie" after that', () => {
   assert.match($('title').text(), /Rosie Keelwise/);
   assert.match($('meta[name="description"]').attr('content'), /^Rosie Keelwise /);
@@ -688,6 +700,25 @@ test('naming: "Rosie Keelwise" introduces her once up top; "Rosie" after that', 
   const body = norm($('main').clone().find('[data-rosie-intro]').remove().end().text());
   assert.equal(body.split('Keelwise').length - 1, 1, 'Keelwise appears once in the page body, in the opening');
   assert.doesNotMatch(html, /Rosie \/ Keelwise|Rosie \(Keelwise\)|also called Keelwise/);
+});
+
+test('dom: the opening stake sits immediately under the introduction', () => {
+  assert.deepEqual(canonical.openingStake, OPENING_STAKE);
+  const blocks = $('[data-opening-stake]');
+  assert.equal(blocks.length, 1, 'the stake appears once');
+  const stake = blocks.first();
+  assert.equal(stake.closest('section').attr('id'), 'opening', 'it stays in the opening section');
+  assert.equal(stake.closest('[data-voice]').attr('data-voice'), 'rosie', 'it stays in Rosie\'s voice');
+  const intro = $('main [data-rosie-intro]');
+  assert.ok(intro.next().is('[data-opening-stake]'), 'it follows the introduction with nothing between');
+  assert.equal(stake.nextAll('h1').first().attr('id'), 'opening-title', 'the Noal story heading is next');
+  const paras = stake.children('p');
+  assert.equal(paras.length, 2);
+  assert.equal(norm(paras.eq(0).text()), OPENING_STAKE[0]);
+  assert.equal(norm(paras.eq(1).text()), OPENING_STAKE[1]);
+  assert.equal(paras.eq(0).find('*').length, 0, 'plain paragraph, not a card or control');
+  assert.equal(paras.eq(1).find('*').length, 0, 'plain paragraph, not a card or control');
+  assert.doesNotMatch(stake.text(), /\bRosie is\b/, 'third-person Rosie is shifted to first person here');
 });
 
 test('dom: the Signals and LIME Leadership sister-site buttons are gone, with no leftover row', () => {

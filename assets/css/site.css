@@ -626,6 +626,17 @@ html {
   margin-bottom: 0;
 }
 
+/* Two agreed paragraphs immediately under the introduction. Same type and
+   measure as the opening body copy: no card, border, or fill. The space
+   below them is the pause before the story heading. */
+.opening__stake {
+  margin-bottom: var(--space-8);
+}
+
+.opening__stake > p:last-child {
+  margin-bottom: 0;
+}
+
 /* ---------- Harbor Now reading guide (2026-11-01) ---------- */
 .hn-guide {
   margin-top: var(--space-12);

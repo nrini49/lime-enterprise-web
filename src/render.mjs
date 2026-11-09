@@ -259,9 +259,15 @@ async function main() {
   const data = JSON.parse(dataRaw);
   const { canonical, sectionOrder, marketReport, pricing, startCards, indicators, pros } = data;
 
+  if (!Array.isArray(canonical.openingStake) || canonical.openingStake.length !== 2) {
+    throw new Error('canonical.openingStake must be exactly two paragraphs');
+  }
+
   const html = template
     .replaceAll('{{NAV}}', renderNav(sectionOrder))
     .replaceAll('{{ROSIE_INTRO}}', esc(canonical.rosieIntro))
+    .replaceAll('{{OPENING_STAKE_1}}', esc(canonical.openingStake[0]))
+    .replaceAll('{{OPENING_STAKE_2}}', esc(canonical.openingStake[1]))
     .replaceAll(
       '{{DEMO_CTA}}',
       `<a class="cta" href="${esc(canonical.demoUrl)}"${newWindow(canonical.demoUrl)}>${esc(canonical.demoCtaLabel)}</a>`,
