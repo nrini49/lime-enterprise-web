@@ -113,15 +113,16 @@
                data-owner-name, like the data-attribution credits, so the tests can pin where
                it may appear. -->
           <div class="opening__col" data-voice="rosie">
-            <!-- Rosie's introduction (2026-11-01, owner direction): the first paragraph of the
-                 page body, from the Operator Guide with "Rosie" changed to "Rosie Keelwise".
-                 Word for word from canonical.rosieIntro in data/homepage.json. -->
-            <div class="rosie-intro" data-voice="rosie" data-rosie-intro>
-              <p class="label voice-tag" data-voice-tag>From Rosie</p>
-              <p class="rosie-intro__text">Hi, I'm Rosie Keelwise. I help you place trades under the risk rules you set, and I attach one broker-held stop to every buy. This guide walks you through your first days with me, in plain language. Nothing here is a recommendation to buy or sell anything, and I never promise a result.</p>
-            </div>
+            <!-- Opening (2026-11-02, owner direction): the first paragraphs say, in this order,
+                 what Rosie Keelwise is, what she does for the visitor, and why it matters. This
+                 replaces the boxed "Hi, I'm Rosie Keelwise" introduction (PR #23) so she is
+                 introduced once, in the h1. Noal's story follows, told by Rosie. -->
             <p class="label opening__label voice-tag" data-voice-tag>From Rosie</p>
-            <h1 id="opening-title"><span class="owner-name" data-owner-name>Noal</span>, my developer, built Rosie Keelwise, which is me, so he could stop watching, relax and enjoy his life.</h1>
+            <h1 id="opening-title">I&rsquo;m Rosie Keelwise. I keep watch, so you can get on with your life.</h1>
+            <p class="opening__what" data-opening="what">I&rsquo;m an automated, rules-based trading operator from Lime Signalworks. I run on your own computer, connect to your own brokerage account at Interactive Brokers or Schwab, and trade stocks and ETFs by written rules, the same rules on a quiet day as on a wild one.</p>
+            <p class="opening__for-you" data-opening="for-you">Here&rsquo;s what I do for you. I sample prices through the trading session, check every idea against your risk limits, size the position and place the order with your broker. Every buy goes out with a protective stop attached and held at your broker, set 10% below what I paid. I size each trade so a loss at its stop is no more than 2% of your account, and I won&rsquo;t let the risk on everything I have open pass 6%. You see every order on your dashboard, and one button stops me.</p>
+            <p class="opening__why" data-opening="why">Why care? Because staring at screens costs you what the money was for in the first place: your time, your sleep, your attention to the people you love. And pressure bends even good rules; I&rsquo;m built not to bend. I give you back your hours and a quieter mind, with discipline you can see in every order. I can&rsquo;t promise a profit, nobody honest can, and a fast market can fill below a stop. What I will do is keep to your rules and tell you plainly what happened, on the good days and the bad. Try me free for one month in a paper (practice) account, and judge me for yourself.</p>
+            <p class="opening__story-lead" data-opening="story"><span class="owner-name" data-owner-name>Noal</span>, my developer, built me so he could stop watching, relax and enjoy his life.</p>
             <p>Picture an ordinary Tuesday. <span class="owner-name" data-owner-name>Noal</span> is at his daughter's recital, then out for a walk, then at a long lunch with an old friend, phone face-down on the table. He isn't checking anything, and he isn't worried. That calm is the whole point of me.</p>
             <p>I'm on the job. Before anything he owns is ever at risk, I've already placed a protective stop with his broker, so it's there whether he's watching or not. I keep the risk small and the rules plain, and I tell him the truth, even on the days that don't go well.</p>
             <p>Once I'm set up, his job is done for the most part. Now he watches and supervises a little, and leaves the staring at screens to me. I never blink; he was always going to lose that contest.</p>
@@ -379,7 +380,7 @@
                 width="1200"
                 height="750"
                 loading="lazy"
-                alt="Rosie IB Operator Workstation, demo with sample data: header controls, Account Overview, Positions with the Signal column, and broker-held Stops"
+                alt="Rosie Operator Workstation (Interactive Brokers version), demo with sample data: header controls, Account Overview, Positions with the Signal column, and broker-held Stops"
               />
               <figcaption>My Operator Workstation (the Interactive Brokers version), shown here with sample data. <a href="/rosie-demo/" target="_blank" rel="noopener noreferrer">Open the interactive demo</a>.</figcaption>
             </figure>
@@ -456,6 +457,42 @@
               </p>
             </li>
           </ol>
+          <!-- Getting Rosie installed (2026-11-02, owner direction): what it takes on the
+               customer's part. Facts only from the IB and Schwab repos (README, DEPLOYMENT.md,
+               docs/GO-LIVE.md). There is no one-click installer yet, so none is claimed. -->
+          <div class="setup" data-setup>
+            <h3>Getting me installed: what it takes on your part</h3>
+            <p>Setup is hands-on for now, and Lime Signalworks works through it with you. Here&rsquo;s your side of it:</p>
+            <ol class="setup__list">
+              <li><strong>A Windows PC that stays on.</strong> Windows is the only system I run on today; Mac and Linux are coming later.</li>
+              <li><strong>Your own brokerage account</strong> at Interactive Brokers or Schwab. On Schwab, that includes your own access to Schwab&rsquo;s trading API.</li>
+              <li><strong>Install me on that PC</strong>, along with Python 3.14, the free software I run on. On Interactive Brokers, you also install IB&rsquo;s own TWS app (or its Gateway) and keep it signed in on the same PC, approving the sign-in on your phone.</li>
+              <li><strong>Connect me to your broker.</strong> On Schwab, you sign in through your web browser each time I start, and refresh that sign-in about every 7 days.</li>
+              <li><strong>Start on paper.</strong> I always begin in paper (practice) mode. You set your risk limits, and I practice with you through the free month.</li>
+              <li><strong>Go live only when you choose.</strong> Real-money trading starts only when you deliberately switch it on. On Schwab, that means typing the word LIVE and setting a risk tier for each account.</li>
+            </ol>
+          </div>
+          <!-- More than one broker or account (2026-11-02, owner direction): one Rosie per PC,
+               each with its own server, dashboard and risk limits; a UPS for each PC. -->
+          <div class="multi-pc" data-multi-pc>
+            <h3>More than one broker or account? One Rosie per PC.</h3>
+            <p>If you have accounts at two or more brokers, or more accounts than one copy of me is set up to look after, the setup is simple: one Rosie per PC. I go on a second computer (or a third), with one server on each PC. Each PC has its own dashboard and its own risk limits, and each copy of me checks only its own. So set the limits on every PC so that the combined total across all of them stays within what you&rsquo;re comfortable with.</p>
+            <p>A battery backup (a UPS) for each PC that runs me is a good idea, so a short power cut is less likely to interrupt me. My protective stops live at your broker either way.</p>
+          </div>
+          <!-- Licensing and installs (2026-11-02, owner direction). Noal's PROPOSED terms, pending
+               his confirmation and legal review: one license = up to 3 installs on the customer's
+               own PCs; extra seats at half the price of the first; move a license to a new PC;
+               own PCs and accounts only, no sharing. No license-key or registration system exists
+               yet, so none is described here. -->
+          <div class="setup licensing" data-licensing>
+            <h3>Licensing and installs: how it works in practice</h3>
+            <ul class="setup__list">
+              <li><strong>One license, up to 3 PCs.</strong> One license covers me on up to 3 of your own PCs. That&rsquo;s room for, say, one PC for each of two brokers, plus a spare you keep ready in case one needs replacing.</li>
+              <li><strong>Extra seats at half price.</strong> If you&rsquo;d like me on more than 3 PCs, each extra seat is half the price of the first license.</li>
+              <li><strong>Move me when you change PCs.</strong> Getting a new computer? Take me off the old one first, then set me up on the new one. Your license comes with you.</li>
+              <li><strong>Your own PCs and your own accounts only.</strong> I work for you and nobody else, so sharing me with friends isn&rsquo;t allowed. Anyone who&rsquo;d like me can have a license of their own.</li>
+            </ul>
+          </div>
         </div>
       </section>
 
@@ -627,7 +664,7 @@
             <h2 id="pricing-title">One price. Then I&rsquo;m yours.</h2>
             <p>
               It starts with the free one-month paper evaluation. If you&rsquo;d like to continue,
-              there is one price: $3,300 paid over 18 months, and then I&rsquo;m yours to keep. I
+              there is one price: $3,300 paid over 18 months, and then I&rsquo;m yours to keep, on up to 3 of your own PCs. I
               find surprises in pricing terribly vulgar.
             </p>
           </div>
@@ -782,6 +819,16 @@
               keep a full record of every decision. Markets move in every direction; I don&rsquo;t
               pretend to rule them. The rules I run, and the decisions about your account, stay yours.</span>
             </p>
+            <!-- What stays your responsibility (2026-11-02, owner direction). Placed in Straight
+                 talk because this section already sets out what is and isn't committed to. -->
+            <div class="setup responsibility" data-voice="rosie" data-responsibility>
+              <p class="label voice-tag" data-voice-tag>From Rosie</p>
+              <h3>What stays your responsibility</h3>
+              <p><strong>Broker apps update and restart on their own.</strong> On Interactive Brokers, IB&rsquo;s TWS app (or its Gateway) restarts by itself, including a restart every night. On Schwab, your sign-in expires about every 7 days, and you sign in again each time I start. After any broker update or restart, check that my dashboard shows me connected again, and if IB asks, approve the sign-in on your phone.</p>
+              <p><strong>Brokers change things.</strong> A broker can change its software, its rules or its API without notice. Keeping an eye on those changes is your responsibility; I can only work with what your broker offers on the day.</p>
+              <p><strong>My PC is in your care.</strong> Keeping the PC that runs me switched on, powered and online is your job, and a battery backup (a UPS) helps through short power cuts. So is checking my dashboard regularly: I keep watch, but you supervise me.</p>
+              <p><strong>Plainly put:</strong> I can&rsquo;t promise I&rsquo;ll be running every minute, or that every order will fill. What doesn&rsquo;t change is that my protective stops are held at your broker, so they keep working either way.</p>
+            </div>
           </div>
         </div>
       </section>
