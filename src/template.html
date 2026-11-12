@@ -110,6 +110,13 @@
               <p class="label voice-tag" data-voice-tag>From Rosie</p>
               <p class="rosie-intro__text">{{ROSIE_INTRO}}</p>
             </div>
+            <!-- Opening stake (agreed copy): immediately under the introduction, still
+                 inside this first-person section, so "Rosie is" is said as "I am".
+                 Word for word from canonical.openingStake in data/homepage.json. -->
+            <div class="opening__stake" data-opening-stake>
+              <p>{{OPENING_STAKE_1}}</p>
+              <p>{{OPENING_STAKE_2}}</p>
+            </div>
             <p class="label opening__label voice-tag" data-voice-tag>From Rosie</p>
             <h1 id="opening-title"><span class="owner-name" data-owner-name>Noal</span>, my developer, built Rosie Keelwise, which is me, so he could stop watching, relax and enjoy his life.</h1>
             <p>Picture an ordinary Tuesday. <span class="owner-name" data-owner-name>Noal</span> is at his daughter's recital, then out for a walk, then at a long lunch with an old friend, phone face-down on the table. He isn't checking anything, and he isn't worried. That calm is the whole point of me.</p>
@@ -650,8 +657,17 @@
       </section>
 
       <!-- E11 — how to begin -->
-      <section class="section section--cta" id="how-to-begin" aria-labelledby="how-to-begin-title" data-voice="rosie">
+      <section class="section section--cta" id="how-to-begin" aria-labelledby="how-to-begin-title">
         <div class="shell">
+          <!-- Companion lead-in (site voice): immediately before Rosie's invitation
+               to begin. Word for word from canonical.companion in data/homepage.json.
+               The existing "Call or email Lime Signalworks" link remains the call to
+               action; this block adds no form, button, or extra contact link. -->
+          <div class="companion" data-companion>
+            <h2 class="companion__headline" id="companion-title">{{COMPANION_HEADLINE}}</h2>
+            <p class="companion__text">{{COMPANION_BODY}}</p>
+          </div>
+          <div data-voice="rosie">
           <div class="section__head">
             <p class="label rule-after">Section 18</p>
             <p class="label voice-tag" data-voice-tag>From Rosie</p>
@@ -692,6 +708,7 @@
             <a class="anchor-link" href="#demo">See me in action</a>
             <a class="anchor-link" href="{{YOUTUBE_CHANNEL_URL}}" target="_blank" rel="noopener noreferrer">Watch on YouTube<span class="sr-only"> (opens in a new tab)</span></a>
           </p>
+          </div>
         </div>
       </section>
     </main>

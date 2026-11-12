@@ -259,9 +259,20 @@ async function main() {
   const data = JSON.parse(dataRaw);
   const { canonical, sectionOrder, marketReport, pricing, startCards, indicators, pros } = data;
 
+  if (!Array.isArray(canonical.openingStake) || canonical.openingStake.length !== 2) {
+    throw new Error('canonical.openingStake must be exactly two paragraphs');
+  }
+  if (!canonical.companion?.headline || !canonical.companion?.body) {
+    throw new Error('canonical.companion must have a headline and a body');
+  }
+
   const html = template
     .replaceAll('{{NAV}}', renderNav(sectionOrder))
     .replaceAll('{{ROSIE_INTRO}}', esc(canonical.rosieIntro))
+    .replaceAll('{{OPENING_STAKE_1}}', esc(canonical.openingStake[0]))
+    .replaceAll('{{OPENING_STAKE_2}}', esc(canonical.openingStake[1]))
+    .replaceAll('{{COMPANION_HEADLINE}}', esc(canonical.companion.headline))
+    .replaceAll('{{COMPANION_BODY}}', esc(canonical.companion.body))
     .replaceAll(
       '{{DEMO_CTA}}',
       `<a class="cta" href="${esc(canonical.demoUrl)}"${newWindow(canonical.demoUrl)}>${esc(canonical.demoCtaLabel)}</a>`,

@@ -626,6 +626,17 @@ html {
   margin-bottom: 0;
 }
 
+/* Two agreed paragraphs immediately under the introduction. Same type and
+   measure as the opening body copy: no card, border, or fill. The space
+   below them is the pause before the story heading. */
+.opening__stake {
+  margin-bottom: var(--space-8);
+}
+
+.opening__stake > p:last-child {
+  margin-bottom: 0;
+}
+
 /* ---------- Harbor Now reading guide (2026-11-01) ---------- */
 .hn-guide {
   margin-top: var(--space-12);
@@ -1173,6 +1184,32 @@ html {
 
 .section--cta {
   background-color: var(--color-surface-offset);
+}
+
+/* Companion lead-in at the top of How to begin. Same display type as
+   section headings; not a card, banner, or new call to action. A rule
+   under the block is the pause before Rosie says "Put me to work." */
+.companion {
+  max-width: 66ch;
+  margin-bottom: var(--space-10);
+  padding-bottom: var(--space-10);
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.companion__headline {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  margin: 0 0 var(--space-5);
+  color: var(--color-text);
+}
+
+.companion__text {
+  color: var(--color-text-muted);
+  margin: 0;
+  max-width: 56ch;
 }
 
 /* ---------- Start cards ---------- */
