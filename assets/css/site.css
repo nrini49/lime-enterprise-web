@@ -1186,6 +1186,32 @@ html {
   background-color: var(--color-surface-offset);
 }
 
+/* Companion lead-in at the top of How to begin. Same display type as
+   section headings; not a card, banner, or new call to action. A rule
+   under the block is the pause before Rosie says "Put me to work." */
+.companion {
+  max-width: 66ch;
+  margin-bottom: var(--space-10);
+  padding-bottom: var(--space-10);
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.companion__headline {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  margin: 0 0 var(--space-5);
+  color: var(--color-text);
+}
+
+.companion__text {
+  color: var(--color-text-muted);
+  margin: 0;
+  max-width: 56ch;
+}
+
 /* ---------- Start cards ---------- */
 
 .cards {

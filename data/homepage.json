@@ -6,6 +6,10 @@
       "Start with casual money, $1,000 to $10,000, and leave the rest with your current advisor. I am a trading sideline, not a place to move your savings.",
       "After the first month, if the evidence has earned your confidence, you can add another $1,000 or $10,000 and keep going from there. The size grows in steps, with proof, not with a leap of faith."
     ],
+    "companion": {
+      "headline": "More than an AI experience. A companion.",
+      "body": "Rosie is the unexpected relationship we're building with a new kind of AI: a steady teammate that keeps to the rules, so you don't have to rely on willpower."
+    },
     "demoUrl": "/rosie-demo/",
     "demoCtaLabel": "Open the Rosie demo",
     "demoDisclosure": "Sample data in a paper (practice) account. No broker connection, no real orders, and nothing here is advice.",

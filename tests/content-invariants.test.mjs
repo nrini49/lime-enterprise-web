@@ -686,6 +686,12 @@ const OPENING_STAKE = [
   'After the first month, if the evidence has earned your confidence, you can add another $1,000 or $10,000 and keep going from there. The size grows in steps, with proof, not with a leap of faith.',
 ];
 
+const COMPANION = {
+  headline: 'More than an AI experience. A companion.',
+  body:
+    "Rosie is the unexpected relationship we're building with a new kind of AI: a steady teammate that keeps to the rules, so you don't have to rely on willpower.",
+};
+
 test('naming: "Rosie Keelwise" introduces her once up top; "Rosie" after that', () => {
   assert.match($('title').text(), /Rosie Keelwise/);
   assert.match($('meta[name="description"]').attr('content'), /^Rosie Keelwise /);
@@ -719,6 +725,36 @@ test('dom: the opening stake sits immediately under the introduction', () => {
   assert.equal(paras.eq(0).find('*').length, 0, 'plain paragraph, not a card or control');
   assert.equal(paras.eq(1).find('*').length, 0, 'plain paragraph, not a card or control');
   assert.doesNotMatch(stake.text(), /\bRosie is\b/, 'third-person Rosie is shifted to first person here');
+});
+
+test('dom: the companion lead-in sits at the top of How to begin', () => {
+  assert.deepEqual(canonical.companion, COMPANION);
+  const block = $('[data-companion]');
+  assert.equal(block.length, 1, 'the companion copy appears once');
+  assert.equal(block.closest('section').attr('id'), 'how-to-begin', 'it sits in How to begin');
+  assert.ok(block.parent().is('.shell'), 'it lives in the section shell');
+  assert.equal(block.parent().children().first()[0], block[0], 'it opens the section, immediately before Put me to work');
+  assert.equal(norm(block.find('#companion-title').text()), COMPANION.headline);
+  assert.equal(norm(block.find('p.companion__text').text()), COMPANION.body);
+  assert.equal(block.closest('[data-voice]').length, 0, 'it is site voice, not Rosie first person');
+  assert.equal(block.find('a, button, form, input').length, 0, 'no new call to action, form, or control');
+  assert.equal(
+    $('section#how-to-begin a[href="#contact"]').length,
+    1,
+    'the existing contact link remains the only call to action',
+  );
+  assert.equal(
+    norm($('section#how-to-begin a[href="#contact"]').text()),
+    'Call or email Lime Signalworks',
+  );
+  assert.equal(norm($('#how-to-begin-title').text()), 'Put me to work');
+  assert.ok(
+    block.nextAll().find('#how-to-begin-title').length === 1 ||
+      block.next().find('#how-to-begin-title').length === 1,
+    'Put me to work still follows the lead-in',
+  );
+  assert.doesNotMatch(block.text(), /Keelwise/, 'after the opening, she is Rosie, not Rosie Keelwise');
+  assert.doesNotMatch(block.text(), /super\s*AI/i, 'no hyped superAI wording');
 });
 
 test('dom: the Signals and LIME Leadership sister-site buttons are gone, with no leftover row', () => {

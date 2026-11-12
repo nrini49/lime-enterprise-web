@@ -657,8 +657,17 @@
       </section>
 
       <!-- E11 — how to begin -->
-      <section class="section section--cta" id="how-to-begin" aria-labelledby="how-to-begin-title" data-voice="rosie">
+      <section class="section section--cta" id="how-to-begin" aria-labelledby="how-to-begin-title">
         <div class="shell">
+          <!-- Companion lead-in (site voice): immediately before Rosie's invitation
+               to begin. Word for word from canonical.companion in data/homepage.json.
+               The existing "Call or email Lime Signalworks" link remains the call to
+               action; this block adds no form, button, or extra contact link. -->
+          <div class="companion" data-companion>
+            <h2 class="companion__headline" id="companion-title">{{COMPANION_HEADLINE}}</h2>
+            <p class="companion__text">{{COMPANION_BODY}}</p>
+          </div>
+          <div data-voice="rosie">
           <div class="section__head">
             <p class="label rule-after">Section 18</p>
             <p class="label voice-tag" data-voice-tag>From Rosie</p>
@@ -699,6 +708,7 @@
             <a class="anchor-link" href="#demo">See me in action</a>
             <a class="anchor-link" href="{{YOUTUBE_CHANNEL_URL}}" target="_blank" rel="noopener noreferrer">Watch on YouTube<span class="sr-only"> (opens in a new tab)</span></a>
           </p>
+          </div>
         </div>
       </section>
     </main>
