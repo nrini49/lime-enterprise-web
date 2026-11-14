@@ -1152,3 +1152,27 @@ test('market report: no claim that Rosie reads the posture before every buy', ()
   assert.ok(!/read the stated posture/i.test(text), 'posture-before-buy claim removed');
   assert.ok(!/before I open any new buy/i.test(text), 'posture-before-buy claim removed');
 });
+
+/* ---------- 2026-11-13 claim audit: match the live IB and Schwab servers ---------- */
+
+test('dom: risk choices, approve flow, and STOP ALL match the current servers', () => {
+  const text = visibleText();
+  assert.match(text, /Conservative/i);
+  assert.match(text, /Normal/i);
+  assert.match(text, /Aggressive/i);
+  assert.match(text, /2 shares and \$500/);
+  assert.match(text, /5 shares and \$1,250/);
+  assert.match(text, /10 shares and \$2,500/);
+  assert.match(text, /Conservative cap/i);
+  assert.match(text, /Trading In row/i);
+  assert.match(text, /APPROVE/i);
+  assert.match(text, /LIVE AUTO/);
+  assert.match(text, /STOP ALL turns me off and cancels pending buys/i);
+  assert.match(text, /leaves the protective stops/i);
+  assert.doesNotMatch(text, /One button halts me\. One button closes every open position/i);
+  assert.doesNotMatch(text, /27 October 2026|27 Oct 2026/);
+  assert.match(text, /casual-money sideline/i);
+  assert.match(text, /a thousand to ten thousand dollars/);
+  assert.match(text, /does not give Rosie a paper-trading API/i);
+  assert.match(text, /no self-serve download/i);
+});

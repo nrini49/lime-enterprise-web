@@ -134,7 +134,8 @@
               <p class="label voice-tag" data-voice-tag>From Rosie</p>
               <p class="brokers-note__line">I work with <strong>Interactive Brokers</strong> and <strong>Schwab</strong> today.</p>
               <p class="brokers-note__line">I connect only to brokers that hand customers a real, public trading API, so your software can place its own orders.</p>
-              <p class="brokers-note__line brokers-note__paper">During the free one-month evaluation, I run in a paper (practice) account.</p>
+              <p class="brokers-note__line">I'm built as a small, casual-money sideline, for an account of about a thousand to ten thousand dollars, not as a professional trading desk.</p>
+              <p class="brokers-note__line brokers-note__paper">During the free one-month evaluation, I run in practice mode, with no real-money orders. With Interactive Brokers, that is a paper (practice) account at the broker, using real market prices. With Schwab, practice mode is a dry run on your computer: I go through the same checks and keep a record, but orders are not sent to Schwab, because Schwab does not give Rosie a paper-trading API.</p>
             </div>
           </div>
         </div>
@@ -162,7 +163,7 @@
             <figcaption data-attribution>Noal</figcaption>
           </figure>
           <div class="life__close" data-voice="rosie"><p>I do the watching. You do the living. Everyone gets the part they do best.</p></div>
-          <p class="warm-note life__note">During the free one-month evaluation, Rosie runs in a paper (practice) account. Trading involves risk of loss, and nothing here is a promise of results.</p>
+          <p class="warm-note life__note">During the free one-month evaluation, Rosie runs in practice mode, with no real-money orders. Trading involves risk of loss, and nothing here is a promise of results.</p>
         </div>
       </section>
 
@@ -183,7 +184,7 @@
               <blockquote>Rosie is the primo teammate. There's no one I'd rather have on my team than Rosie, because she's the only team member I can truly trust.</blockquote>
               <figcaption data-attribution>Noal</figcaption>
             </figure>
-            <p class="warm-note">During the free one-month evaluation, Rosie runs in a paper (practice) account. Around-the-clock and worldwide markets, including crypto, forex and futures, are coming and not live. Trading involves risk of loss, and nothing here is a promise of results.</p>
+            <p class="warm-note">During the free one-month evaluation, Rosie runs in practice mode, with no real-money orders. Around-the-clock and worldwide markets, including crypto, forex and futures, are coming and not live. Trading involves risk of loss, and nothing here is a promise of results.</p>
           </div>
         </div>
       </section>
@@ -212,15 +213,16 @@
             <p class="label rule-after">Rosie · Evidence</p>
             <p class="label voice-tag" data-voice-tag>From Rosie</p>
             <h2 id="evidence-title">Rules I keep. Receipts I show.</h2>
-            <p>During your free evaluation I trade a <strong>paper account only</strong>, and I don't publish profit figures; I'd rather show you my rules than flatter you with numbers. Here is what every order of mine has to pass, how it's checked, and what I won't do.</p>
+            <p>During your free evaluation I run in <strong>practice mode only</strong>, and I don't publish profit figures; I'd rather show you my rules than flatter you with numbers. Here is what every order of mine has to pass, how it's checked, and what I won't do.</p>
           </div>
-          <h3 class="evidence__sub">A beauty in digits: five numbers, each with its source</h3>
+          <h3 class="evidence__sub">A beauty in digits: the rules every order has to pass</h3>
           <div class="tiles">
-            <div class="tile"><p class="label">Disaster stop</p><p class="tile__big">10<small>% below entry</small></p><p><strong>I place a protective stop at your broker on every position.</strong> I send it with the buy order, for the same number of shares, and it stays in place until the position is closed. I set its price at entry, 10% below what I paid, and I don't fiddle with it afterwards.</p><p class="tile__src">Source: my written protection rules</p></div>
-            <div class="tile"><p class="label">Risk per trade</p><p class="tile__big">2<small>% of equity</small></p><p>I size every position so that, if its stop is reached, the loss <em>at the stop price</em> is no more than 2% of the account. A fast market can still fill below the stop; I won't pretend otherwise.</p><p class="tile__src">Source: my written sizing rules</p></div>
-            <div class="tile"><p class="label">Total open risk</p><p class="tile__big">6<small>% of equity</small></p><p><strong>Every order I send passes the same safety checks first.</strong> Everything I have open, plus anything pending, may put no more than 6% of the account at risk, about three full-size trades. An order that would go over is refused, politely and absolutely.</p><p class="tile__src">Source: my written risk limits</p></div>
+            <div class="tile"><p class="label">Disaster stop</p><p class="tile__big">10<small>% below entry</small></p><p><strong>I place a protective stop at your broker on every position.</strong> I send it with the buy order, for the same number of shares. Its price starts at 10% below the entry. On some symbols I may set it wider so an ordinary overnight gap is less likely to take it out; I never tighten it or turn it into a trailing stop. If you sell only part of a position, I reduce the stop to the shares you still hold, at the same price.</p><p class="tile__src">Source: my written protection rules</p></div>
+            <div class="tile"><p class="label">Per-buy caps</p><p class="tile__big">2 / $500</p><p>You choose Conservative, Normal or Aggressive. Conservative allows up to 2 shares and $500 per buy; Normal 5 shares and $1,250; Aggressive 10 shares and $2,500. Automatic buys, if you turn them on, always use the Conservative cap. These sit on top of the 2% and 6% limits; whichever is tighter wins.</p><p class="tile__src">Source: my written risk-choice rules, on both Interactive Brokers and Schwab</p></div>
+            <div class="tile"><p class="label">Risk per trade</p><p class="tile__big">2<small>% of equity</small></p><p>I also size every position so that, if its stop is reached, the loss <em>at the stop price</em> is no more than 2% of the account. A fast market can still fill below the stop; I won't pretend otherwise.</p><p class="tile__src">Source: my written sizing rules</p></div>
+            <div class="tile"><p class="label">Total open risk</p><p class="tile__big">6<small>% of equity</small></p><p><strong>Every order I send passes the same safety checks first.</strong> Everything I have open, plus anything pending, may put no more than 6% of the account at risk. An order that would go over is refused, politely and absolutely.</p><p class="tile__src">Source: my written risk limits</p></div>
             <div class="tile"><p class="label">Trailing stops</p><p class="tile__big">0</p><p>Trailing stops came out of my rules on 21 October 2026. My entries, partial sales and exits come from my signal rules instead, and an automated check makes sure I never create a trailing stop. I'm consistent like that.</p><p class="tile__src">Source: the Lime Signalworks decision of 21 Oct 2026, checked by an automated test</p></div>
-            <div class="tile"><p class="label">Automated tests</p><p class="tile__big">0<small> failed</small></p><p>My rules are checked by an automated test suite. In the latest full run, on 27 October 2026, none of the tests that ran failed. A few were skipped because they need a web browser the test machine didn't have.</p><p class="tile__src">Source: the Lime Signalworks automated test suite, full run of 27 Oct 2026</p></div>
+            <div class="tile"><p class="label">Automated tests</p><p class="tile__big">Checked</p><p>My rules are checked by an automated test suite before a change is shipped. I don't print a dated scoreboard here, because a stale date would be a poor receipt.</p><p class="tile__src">Source: the Lime Signalworks automated test suite</p></div>
           </div>
         </div>
       </section>
@@ -329,11 +331,11 @@
           <div class="section__grid demo__grid">
             <div>
               <p class="hero__lede">
-                I&rsquo;m the automated, rules-based trading operator from Lime Signalworks. I watch
+                I&rsquo;m the rules-based trading operator from Lime Signalworks. I watch
                 the markets while you live your life. I hold to your rules, every order, every day.
-                Every position I open gets a protective stop at your broker. And there&rsquo;s one
-                button that stops everything: it&rsquo;s always yours, and I wouldn&rsquo;t have it
-                any other way.
+                I propose trades for you to approve, and I trade automatically only when you turn that on.
+                Every position I open gets a protective stop at your broker. And STOP ALL is always
+                yours: it halts me and cancels pending buys, while leaving protective stops in place.
               </p>
               <!-- E1 call to action. The labelling below is static markup, rendered before any
                    click: never a toast, a tooltip, or collapsed content. -->
@@ -356,7 +358,7 @@
                 </div>
                 <div>
                   <dt>Protection</dt>
-                  <dd>A protective stop at your broker on every position, 2% risk per trade, 6% cap on total open risk</dd>
+                  <dd>A protective stop at your broker on every position; Conservative, Normal or Aggressive per-buy caps; 2% risk per trade; 6% cap on total open risk</dd>
                 </div>
                 <div>
                   <dt>Markets</dt>
@@ -407,10 +409,11 @@
               </p>
               <p>
                 I sample prices through the session, check every idea against your risk limits,
-                size the position, and send the order to your broker with its protective stop.
-                Everything I do appears on the Operator Workstation, in full view. You can step in,
-                pause me or shut everything down at any moment; I do my best work with an attentive
-                audience.
+                and size the position. I put the trade on the Propose panel; APPROVE sends that
+                exact order to your broker, protective stop included. I send orders on my own only
+                when you have turned automatic trading on. Everything I do appears on the Operator
+                Workstation, in full view. You can step in, pause me or shut everything down at any
+                moment; I do my best work with an attentive audience.
               </p>
           </div>
         </div>
@@ -424,7 +427,7 @@
             <p class="label voice-tag" data-voice-tag>From Rosie</p>
             <h2 id="how-it-works-title">How I work, in three steps</h2>
             <p>
-              You set me up once. I run the room. You look in whenever you like.
+              You set me up once. I watch and I prepare the trades. You stay in charge.
             </p>
           </div>
           <ol class="stages">
@@ -432,18 +435,22 @@
               <p class="label">Step one</p>
               <h3>You set the rules</h3>
               <p>
-                You choose your markets, your risk per trade and your daily loss limit. Lime
-                Signalworks sets me up with you on a paper account first, so you watch me work before
-                any real money is involved.
+                On the Trading In row you pick up to four symbols, and you choose Conservative,
+                Normal or Aggressive, which caps how many shares and how many dollars each buy
+                can be. Lime Signalworks sets me up with you in practice mode first, so you watch
+                me work before any real money is involved. There is no self-serve download yet;
+                Lime Signalworks installs me with you on your computer.
               </p>
             </li>
             <li>
               <p class="label">Step two</p>
-              <h3>I watch, and I trade</h3>
+              <h3>I watch, and I propose</h3>
               <p>
                 I track prices against their recent averages. When your rules say enter or exit, I
-                size the position and place the order, protective stop included. When your rules say
-                nothing, I do nothing, gracefully.
+                size the position and put it on the Propose panel. APPROVE sends that order
+                immediately, protective stop included. I trade on my own only if you turn LIVE AUTO
+                on, and even then automatic buys stay at the Conservative cap (2 shares and $500).
+                When your rules say nothing, I do nothing, gracefully.
               </p>
             </li>
             <li>
@@ -451,8 +458,9 @@
               <h3>You supervise</h3>
               <p>
                 Every position, stop and order is on your screen, and I write every decision into a
-                Journal and Trade Record that you keep. Live trading runs only when you switch it on, and
-                one click stops it all.
+                Journal and Trade Record that you keep. Live trading and automatic trading each take
+                one click from you, and they stay off until you turn them on. STOP ALL halts me and
+                cancels pending buys, and leaves the protective stops in place.
               </p>
             </li>
           </ol>
@@ -477,8 +485,12 @@
               <p>Every position I hold has a fixed protective stop, and it lives at your broker, so it keeps working even with your computer switched off.</p>
             </li>
             <li>
+              <h3>Conservative, Normal or Aggressive</h3>
+              <p>Each buy is capped by the choice you set: Conservative 2 shares and $500, Normal 5 shares and $1,250, Aggressive 10 shares and $2,500. Automatic buys always use the Conservative cap.</p>
+            </li>
+            <li>
               <h3>2% risk per trade</h3>
-              <p>I size each position so that, at its stop, it risks no more than 2% of the account. Not a hair more.</p>
+              <p>I also size each position so that, at its stop, it risks no more than 2% of the account. If the per-buy cap is tighter, the cap wins.</p>
             </li>
             <li>
               <h3>6% total open-risk cap</h3>
@@ -490,11 +502,11 @@
             </li>
             <li>
               <h3>STOP ALL and FLATTEN ALL</h3>
-              <p>One button halts me. One button closes every open position. Both are always yours, and you can take over at any moment.</p>
+              <p>STOP ALL turns me off and cancels pending buys, and leaves the protective stops on positions you already hold. FLATTEN ALL is separate: it closes every open position, and you type a confirmation first. Both are always yours.</p>
             </li>
             <li>
-              <h3>Paper first, so you can judge me</h3>
-              <p>In your free one-month evaluation I trade a paper account with real market prices, before a single real dollar is involved.</p>
+              <h3>Practice first, so you can judge me</h3>
+              <p>In your free one-month evaluation I run in practice mode, with no live capital and no real-money orders, before a single real dollar is involved.</p>
             </li>
           </ul>
           <ul class="ticks">
@@ -580,10 +592,13 @@
             <p class="label voice-tag" data-voice-tag>From Rosie</p>
             <h2 id="evaluation-title">Judge me on paper, free for one month</h2>
             <p>
-              Every new user starts with a free one-month evaluation in a paper account: the real
-              me and real market prices, with no live capital and no real-money orders. Lime
-              Signalworks sets it up with you. Whether I stay afterwards is entirely your call;
-              I&rsquo;m confident, not clingy.
+              Every new user starts with a free one-month evaluation in practice mode: the real
+              me, with no live capital and no real-money orders. Lime Signalworks sets it up
+              with you. With Interactive Brokers, practice orders go to IB&rsquo;s paper account
+              and use real market prices. With Schwab, practice mode is a dry run on your
+              computer: I go through the same checks and records, but nothing is sent to Schwab,
+              because Schwab does not give Rosie a paper-trading API. Whether I stay afterwards
+              is entirely your call; I&rsquo;m confident, not clingy.
             </p>
           </div>
 
@@ -592,16 +607,16 @@
               <p class="label">Stage one</p>
               <h3>Set up together</h3>
               <p>
-                Lime Signalworks installs me with you, shows you around the Operator Workstation and
-                sets your rules in place.
+                Lime Signalworks installs me with you on your computer (there is no self-serve
+                download yet), shows you around the Operator Workstation and sets your rules in place.
               </p>
             </li>
             <li>
               <p class="label">Stage two</p>
               <h3>Watch me work</h3>
               <p>
-                I trade the paper account each day. Every order, stop and journal entry is there for
-                you to see.
+                You watch me work in practice mode. Every proposal, order, stop and journal entry
+                is there for you to see. Nothing is sent as a real-money order.
               </p>
             </li>
             <li>
@@ -669,9 +684,9 @@
               <div data-voice="rosie">
                 <h3>What comes with me</h3>
                 <ul class="ticks">
-                <li>Rosie, the automated trading operator, installed on your computer.</li>
+                <li>Rosie, the rules-based trading operator, installed on your computer.</li>
                 <li>A broker-held protective stop on every position.</li>
-                <li>Built-in risk limits: 2% per trade, 6% total open risk, a daily loss limit.</li>
+                <li>Built-in risk limits: Conservative, Normal and Aggressive per-buy caps (2 shares / $500, 5 / $1,250, 10 / $2,500), automatic buys at the Conservative cap, 2% per trade, 6% total open risk, and a daily loss limit.</li>
                 <li>The daily market situation report.</li>
                 <li>Guided setup and support.</li></ul>
               </div>

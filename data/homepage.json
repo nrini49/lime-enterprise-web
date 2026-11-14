@@ -1,5 +1,5 @@
 {
-  "revision": "site2-rosie-queen-voice-2026-10-29",
+  "revision": "site2-claim-audit-2026-11-13",
   "canonical": {
     "rosieIntro": "Hi, I'm Rosie Keelwise. I help you place trades under the risk rules you set, and I attach one broker-held stop to every buy. This guide walks you through your first days with me, in plain language. Nothing here is a recommendation to buy or sell anything, and I never promise a result.",
     "demoUrl": "/rosie-demo/",
@@ -15,7 +15,7 @@
     },
     "securitiesDisclaimer": "Lime Signalworks provides educational tools and analysis, not personalized investment advice. Securities trading involves risk of loss. Your decisions and results are your own. Nothing here is an offer to sell or a solicitation to buy any security.",
     "evaluationTerm": "one month",
-    "copyright": "© 2026 Lime Signalworks LLC.",
+    "copyright": "\u00a9 2026 Lime Signalworks LLC.",
     "riskDisclosure": "Trading involves risk of loss. Past performance, including paper-trading results, does not guarantee future results. Nothing on this site is investment advice.",
     "videos": {
       "_comment": "The ONE place for video links. channelUrl is the existing Lime Signalworks YouTube channel. Each video's url stays null until a real video is published; while it is null, the tour button links to the channel with fallbackLabel, and the Harbor Now how-to link is not rendered at all, so visitors never see a broken or invented link. To go live, paste the real watch URL into url.",
@@ -54,7 +54,7 @@
     },
     {
       "id": "evidence",
-      "eyebrow": "Rosie · Evidence",
+      "eyebrow": "Rosie \u00b7 Evidence",
       "nav": "Evidence"
     },
     {
@@ -196,9 +196,9 @@
       }
     ],
     "includes": [
-      "Rosie, the automated trading operator, installed on your computer.",
+      "Rosie, the rules-based trading operator, installed on your computer.",
       "A broker-held protective stop on every position.",
-      "Built-in risk limits: 2% per trade, 6% total open risk, a daily loss limit.",
+      "Built-in risk limits: Conservative, Normal and Aggressive per-buy caps (2 shares / $500, 5 / $1,250, 10 / $2,500), automatic buys at the Conservative cap, 2% per trade, 6% total open risk, and a daily loss limit.",
       "The daily market situation report.",
       "Guided setup and support."
     ],
@@ -215,22 +215,22 @@
       "name": "Lime Color Weather",
       "art": "weather",
       "problem": "You trade the same way whether the market is friendly or stormy, and only find out which it was afterwards.",
-      "answer": "Shows the market’s current “weather” as colour bands, so you can see whether conditions favour buying, holding or staying small.",
-      "technical": "Conditions are drawn as colour bands with readings such as “bull cooling” or “strong bull rising”. The same read appears in more than one pane, and the middle pane shows whether a tiring move is forming with or against the larger trend."
+      "answer": "Shows the market\u2019s current \u201cweather\u201d as colour bands, so you can see whether conditions favour buying, holding or staying small.",
+      "technical": "Conditions are drawn as colour bands with readings such as \u201cbull cooling\u201d or \u201cstrong bull rising\u201d. The same read appears in more than one pane, and the middle pane shows whether a tiring move is forming with or against the larger trend."
     },
     {
       "name": "Lime Notify",
       "art": "notify",
-      "problem": "There are so many signals on your screen that you can’t tell what you’re actually supposed to do.",
+      "problem": "There are so many signals on your screen that you can\u2019t tell what you\u2019re actually supposed to do.",
       "answer": "Reduces the noise to three readings only: Buy, Trim and Exit, each checked on the 1-day, 6-hour and 3-hour time frames.",
-      "technical": "The published reading is Alignment + Momentum − Exhaustion − Risk: Buy when it is strong, Trim when it softens, Exit when it breaks down. Tiredness and risk count against a Buy."
+      "technical": "The published reading is Alignment + Momentum \u2212 Exhaustion \u2212 Risk: Buy when it is strong, Trim when it softens, Exit when it breaks down. Tiredness and risk count against a Buy."
     },
     {
       "name": "Lime Exhaustion",
       "art": "exhaustion",
       "problem": "You keep getting in too late, buying right as the move runs out of steam.",
       "answer": "Shows whether a move is fresh, mid-journey or worn out, so you can avoid buying the last gasp of a move.",
-      "technical": "The published reading is Stretch from Trend + Momentum Extremes + Volatility Expansion − Fresh Support. The further price stretches from its trend, the more tired the move reads."
+      "technical": "The published reading is Stretch from Trend + Momentum Extremes + Volatility Expansion \u2212 Fresh Support. The further price stretches from its trend, the more tired the move reads."
     },
     {
       "name": "Lime StopWatcher",
@@ -242,7 +242,7 @@
     {
       "name": "Lime 8 Filter Stack",
       "art": "filters",
-      "problem": "When the signals are mixed, it’s easy to talk yourself into the trade anyway.",
+      "problem": "When the signals are mixed, it\u2019s easy to talk yourself into the trade anyway.",
       "answer": "Combines several safety checks into one pass or fail view, so you can stand aside when the signals are mixed.",
       "technical": null
     }
