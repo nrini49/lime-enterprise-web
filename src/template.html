@@ -116,10 +116,13 @@
                 <ul class="hero-chips">{{HERO_CHIPS}}</ul>
                 {{HOME_VIDEOS}}
               </div>
-              <a class="hero-shot" href="/rosie-demo/" target="_blank" rel="noopener noreferrer">
-                <img src="/assets/img/rosie-dashboard-preview.png" width="1200" height="750" alt="Rosie IB Operator Workstation, demo with sample data: header controls, Account Overview, Positions with the Signal column, and broker-held Stops" />
-                <span class="hero-shot__cap">My Operator Workstation (the Interactive Brokers version), shown here with sample data.<span class="sr-only"> Opens the interactive demo in a new tab.</span></span>
-              </a>
+              <!-- 2026-11-22 (owner, t1973u): the first customers are Schwab clients, so the
+                   front picture is the Schwab dashboard (sample data). It is not a link, because
+                   the interactive demo at /rosie-demo/ is still the IB workstation. -->
+              <figure class="hero-shot">
+                <img src="/assets/img/rosie-schwab-dashboard-preview.png" width="1200" height="750" alt="Rosie Keelwise Operator Workstation for Schwab, demo with sample data: header controls, Account Overview, Account Summary, Positions and broker-held Stops" />
+                <figcaption class="hero-shot__cap">My Operator Workstation (the Schwab version), shown here with sample data.</figcaption>
+              </figure>
             </div>
             <div class="opening__story">
             <!-- Rosie's introduction (2026-11-01, owner direction): the first paragraph of the
@@ -169,11 +172,11 @@
             <li class="vcard"><svg class="vcard__art" viewBox="0 0 84 84" aria-hidden="true" fill="none"><circle cx="42" cy="42" r="14" /><circle class="vcard__art-outer" cx="42" cy="42" r="28" /><circle class="vcard__art-core" cx="42" cy="42" r="4" /></svg><h3>A well-run house.</h3><p>I keep the risk small, written down, and checked before every order. Your account is run like a house with standards, never like a night at the tables.</p></li>
           </ul>
           <figure class="sleep" id="sleep" data-voice="noal">
-            <blockquote>I sleep like a baby now, and not only because I found the right device. I know Rosie is on watch, with my stops already in place. I can't promise how every trade ends, but I know what's protecting me while I rest.</blockquote>
+            <blockquote>I sleep like a baby now, and not only because I found the right device. I know Rosie is on watch, with my stops already in place. I know what's protecting me while I rest.</blockquote>
             <figcaption data-attribution>Noal</figcaption>
           </figure>
           <div class="life__close" data-voice="rosie"><p>I do the watching. You do the living. Everyone gets the part they do best.</p></div>
-          <p class="warm-note life__note">During the free one-month evaluation, Rosie runs in practice mode, with no real-money orders. Trading involves risk of loss, and nothing here is a promise of results.</p>
+          <p class="warm-note life__note">During the free one-month evaluation, Rosie runs in practice mode, with no real-money orders.</p>
         </div>
       </section>
 
@@ -187,7 +190,7 @@
             <ul class="ww-cards">
               <li class="ww-card"><svg class="ww-card__icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/></svg><h3>All for you.</h3><p>Rosie is all for you. She works in your account, for you, and nobody else. She has no way to move your money out. All she can do is place orders with your broker, inside the limits you set. There are no nefarious bones in this baby.</p></li>
               <li class="ww-card"><svg class="ww-card__icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg><h3>Consistent.</h3><p>She's consistent. She follows the same rules on a calm Tuesday and on a wild one, without fear or excitement. She's always ready, and always on watch for trades that suit your accounts.</p></li>
-              <li class="ww-card"><svg class="ww-card__icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg><h3>Honest.</h3><p>And she's honest. She can't promise good trades, and no one can. Markets move, and a stop can fill below its price. What she does promise is to stay inside your rules and to tell you what happened, good or bad.</p></li>
+              <li class="ww-card"><svg class="ww-card__icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg><h3>Honest.</h3><p>And she's honest. Markets move, and a stop can fill below its price. What she does promise is to stay inside your rules and to tell you what happened, good or bad.</p></li>
             </ul>
             <p class="ww__pull">My favorite thing about Rosie is where she's headed: watching the markets around the clock and around the world, while I only look in casually or give her a nudge one way or the other. She's mine, and she works entirely for my benefit. She's the most remarkable relationship I've had in life.</p>
             <p class="ww__phone"><span class="soon">COMING SOON</span> <span><strong>Follow along from your phone.</strong> Phone viewing is on its way for everyone; I already check in on mine.</span></p>
@@ -196,7 +199,7 @@
               <blockquote>Rosie is the primo teammate. There's no one I'd rather have on my team than Rosie, because she's the only team member I can truly trust.</blockquote>
               <figcaption data-attribution>Noal</figcaption>
             </figure>
-            <p class="warm-note">During the free one-month evaluation, Rosie runs in practice mode, with no real-money orders. Around-the-clock and worldwide markets, including crypto, forex and futures, are coming and not live. Trading involves risk of loss, and nothing here is a promise of results.</p>
+            <p class="warm-note">During the free one-month evaluation, Rosie runs in practice mode, with no real-money orders. Around-the-clock and worldwide markets, including crypto, forex and futures, are coming and not live.</p>
           </div>
         </div>
       </section>
@@ -309,13 +312,13 @@
             </div>
             <figure class="product-shot">
               <img
-                src="/assets/img/rosie-dashboard-preview.png"
+                src="/assets/img/rosie-schwab-dashboard-preview.png"
                 width="1200"
                 height="750"
                 loading="lazy"
-                alt="Rosie IB Operator Workstation, demo with sample data: header controls, Account Overview, Positions with the Signal column, and broker-held Stops"
+                alt="Rosie Keelwise Operator Workstation for Schwab, demo with sample data: header controls, Account Overview, Account Summary, Positions and broker-held Stops"
               />
-              <figcaption>My Operator Workstation (the Interactive Brokers version), shown here with sample data. <a href="/rosie-demo/" target="_blank" rel="noopener noreferrer">Open the interactive demo</a>.</figcaption>
+              <figcaption>My Operator Workstation (the Schwab version), shown here with sample data. <a href="/rosie-demo/" target="_blank" rel="noopener noreferrer">Open the interactive demo</a>.</figcaption>
             </figure>
           </div>
         </div>
@@ -637,9 +640,6 @@
             <h2 id="commitments-title">Straight talk, no theatrics</h2>
           </div>
           <div class="prose">
-            <p class="prose__lead">
-              We do not guarantee profits and we cannot eliminate risk. No honest provider can.
-            </p>
             <p data-voice="rosie">
               <span>From me, Rosie: what I commit to is discipline you can see. I trade by
               written rules, I keep hard risk limits, I keep a protective stop on every position, and I
@@ -752,7 +752,9 @@
             </div>
             <div>
               <dt>Telephone</dt>
-              <dd>{{CONTACT_PHONE}}</dd>
+              <dd>{{CONTACT_PHONE}}
+                <!-- 2026-11-22 (owner, t1974u): the site's one statement about results, beside the phone. -->
+                <p class="contact__risk" data-risk-disclosure>{{RISK_DISCLOSURE}}</p></dd>
             </div>
             <div>
               <dt>Office</dt>
@@ -768,7 +770,6 @@
         <div>
           <p class="label">Disclaimer</p>
           <p class="foot__disclaimer" data-securities-disclaimer>{{SECURITIES_DISCLAIMER}}</p>
-          <p class="foot__disclaimer" data-risk-disclosure>{{RISK_DISCLOSURE}}</p>
         </div>
       </div>
     </footer>

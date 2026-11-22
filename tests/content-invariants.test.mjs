@@ -706,7 +706,9 @@ test('dom: the header carries the lighthouse logo left and Rosie\'s portrait rig
 const ROSIE_INTRO =
   "Hi, I'm Rosie Keelwise. I help you place trades under the risk rules you set, and I attach one " +
   'broker-held stop to every buy. This guide walks you through your first days with me, in plain ' +
-  'language. Nothing here is a recommendation to buy or sell anything, and I never promise a result.';
+  'language. Nothing here is a recommendation to buy or sell anything.';
+// 2026-11-22 (owner, t1974u): ", and I never promise a result" was dropped from the intro; the
+// site's one statement about results sits beside the telephone number in the footer.
 
 test('naming: "Rosie Keelwise" introduces her once up top; "Rosie" after that', () => {
   assert.match($('title').text(), /Rosie Keelwise/);
@@ -743,9 +745,11 @@ test('dom: the footer carries the exact securities disclaimer', () => {
 
 /* ---------- risk disclosure and roadmap honesty (2026-10-26 rewrite) ---------- */
 
+// 2026-11-22 (owner, t1974u): ONE statement about results, beside the telephone number. Every
+// other no-promise / no-guarantee line was removed because repeating it broadcasts doubt.
 const RISK_DISCLOSURE =
-  'Trading involves risk of loss. Past performance, including paper-trading results, does not ' +
-  'guarantee future results. Nothing on this site is investment advice.';
+  'Rosie is a tool for disciplined trading, not a promise of results. Trading involves risk, ' +
+  'including loss of money.';
 
 test('dom: the footer carries the plain risk disclosure', () => {
   assert.equal(canonical.riskDisclosure, RISK_DISCLOSURE);
@@ -753,6 +757,11 @@ test('dom: the footer carries the plain risk disclosure', () => {
   assert.equal(el.length, 1);
   assert.equal(norm(el.text()), RISK_DISCLOSURE);
   assert.equal(el.closest('footer').length, 1, 'the risk disclosure sits in the footer');
+  assert.equal(el.closest('dd').find('[data-contact-phone]').length, 1, 'it sits beside the telephone number');
+  const text = visibleText().replace(RISK_DISCLOSURE, '');
+  for (const re of [/promise of (results|profit)/i, /never promise/i, /can't promise/i, /guarantee (profits|future)/i, /do not predict future/i]) {
+    assert.doesNotMatch(text, re, 'no other no-promise or no-guarantee line repeats it');
+  }
 });
 
 // 2026-10-29 (content/rosie-queen-voice): owner direction. Interactive Brokers and Schwab
@@ -906,8 +915,9 @@ test('dom: no unsupported commercial, security or superiority claim', () => {
 
 test('dom: the limits of the offer are stated, not softened', () => {
   const text = visibleText();
-  assert.ok(/do not guarantee profits/i.test(text), 'the no-guarantee statement is present');
-  assert.ok(/cannot eliminate risk/i.test(text), 'the risk statement is present');
+  // 2026-11-22 (owner, t1974u): the one statement about results sits beside the phone number.
+  assert.ok(/not a promise of results/i.test(text), 'the one no-promise statement is present');
+  assert.ok(/involves risk, including loss of money/i.test(text), 'the risk statement is present');
   assert.ok(/decisions/i.test(text) && /yours/i.test(text), 'decision ownership is stated');
 });
 
@@ -958,7 +968,7 @@ test('dom: accessibility scaffolding is present', () => {
   const images = $('img').not('a.video-card img');
   assert.deepEqual(
     [...new Set(images.map((_, el) => $(el).attr('src')).get())].sort(),
-    ['/assets/img/rosie-dashboard-preview.png', '/assets/img/rosie-portrait.png'].sort(),
+    ['/assets/img/rosie-schwab-dashboard-preview.png', '/assets/img/rosie-portrait.png'].sort(),
     'the product screenshot and the header portrait, nothing else',
   );
   images.each((_, el) => {

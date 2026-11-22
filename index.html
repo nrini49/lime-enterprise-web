@@ -125,10 +125,13 @@
               </a></li>
             </ul>
               </div>
-              <a class="hero-shot" href="/rosie-demo/" target="_blank" rel="noopener noreferrer">
-                <img src="/assets/img/rosie-dashboard-preview.png" width="1200" height="750" alt="Rosie IB Operator Workstation, demo with sample data: header controls, Account Overview, Positions with the Signal column, and broker-held Stops" />
-                <span class="hero-shot__cap">My Operator Workstation (the Interactive Brokers version), shown here with sample data.<span class="sr-only"> Opens the interactive demo in a new tab.</span></span>
-              </a>
+              <!-- 2026-11-22 (owner, t1973u): the first customers are Schwab clients, so the
+                   front picture is the Schwab dashboard (sample data). It is not a link, because
+                   the interactive demo at /rosie-demo/ is still the IB workstation. -->
+              <figure class="hero-shot">
+                <img src="/assets/img/rosie-schwab-dashboard-preview.png" width="1200" height="750" alt="Rosie Keelwise Operator Workstation for Schwab, demo with sample data: header controls, Account Overview, Account Summary, Positions and broker-held Stops" />
+                <figcaption class="hero-shot__cap">My Operator Workstation (the Schwab version), shown here with sample data.</figcaption>
+              </figure>
             </div>
             <div class="opening__story">
             <!-- Rosie's introduction (2026-11-01, owner direction): the first paragraph of the
@@ -136,7 +139,7 @@
                  Word for word from canonical.rosieIntro in data/homepage.json. -->
             <div class="rosie-intro" data-voice="rosie" data-rosie-intro>
               <p class="label voice-tag" data-voice-tag>From Rosie</p>
-              <p class="rosie-intro__text">Hi, I'm Rosie Keelwise. I help you place trades under the risk rules you set, and I attach one broker-held stop to every buy. This guide walks you through your first days with me, in plain language. Nothing here is a recommendation to buy or sell anything, and I never promise a result.</p>
+              <p class="rosie-intro__text">Hi, I'm Rosie Keelwise. I help you place trades under the risk rules you set, and I attach one broker-held stop to every buy. This guide walks you through your first days with me, in plain language. Nothing here is a recommendation to buy or sell anything.</p>
             </div>
             <div class="opening__text">
             <p class="opening__lead">Picture an ordinary Tuesday. <span class="owner-name" data-owner-name>Noal</span> is at his daughter's recital, then out for a walk, then at a long lunch with an old friend, phone face-down on the table. He isn't checking anything, and he isn't worried. That calm is the whole point of me.</p>
@@ -170,7 +173,7 @@
             <ul class="ww-cards">
               <li class="ww-card"><svg class="ww-card__icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/></svg><h3>All for you.</h3><p>Rosie is all for you. She works in your account, for you, and nobody else. She has no way to move your money out. All she can do is place orders with your broker, inside the limits you set. There are no nefarious bones in this baby.</p></li>
               <li class="ww-card"><svg class="ww-card__icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg><h3>Consistent.</h3><p>She's consistent. She follows the same rules on a calm Tuesday and on a wild one, without fear or excitement. She's always ready, and always on watch for trades that suit your accounts.</p></li>
-              <li class="ww-card"><svg class="ww-card__icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg><h3>Honest.</h3><p>And she's honest. She can't promise good trades, and no one can. Markets move, and a stop can fill below its price. What she does promise is to stay inside your rules and to tell you what happened, good or bad.</p></li>
+              <li class="ww-card"><svg class="ww-card__icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg><h3>Honest.</h3><p>And she's honest. Markets move, and a stop can fill below its price. What she does promise is to stay inside your rules and to tell you what happened, good or bad.</p></li>
             </ul>
             <p class="ww__pull">My favorite thing about Rosie is where she's headed: watching the markets around the clock and around the world, while I only look in casually or give her a nudge one way or the other. She's mine, and she works entirely for my benefit. She's the most remarkable relationship I've had in life.</p>
             <p class="ww__phone"><span class="soon">COMING SOON</span> <span><strong>Follow along from your phone.</strong> Phone viewing is on its way for everyone; I already check in on mine.</span></p>
@@ -179,7 +182,7 @@
               <blockquote>Rosie is the primo teammate. There's no one I'd rather have on my team than Rosie, because she's the only team member I can truly trust.</blockquote>
               <figcaption data-attribution>Noal</figcaption>
             </figure>
-            <p class="warm-note">During the free one-month evaluation, Rosie runs in practice mode, with no real-money orders. Around-the-clock and worldwide markets, including crypto, forex and futures, are coming and not live. Trading involves risk of loss, and nothing here is a promise of results.</p>
+            <p class="warm-note">During the free one-month evaluation, Rosie runs in practice mode, with no real-money orders. Around-the-clock and worldwide markets, including crypto, forex and futures, are coming and not live.</p>
           </div>
         </div>
       </section>
@@ -298,7 +301,6 @@
               <div>
                 <h3>What this is not</h3>
                 <ul class="ticks ticks--neg">
-                <li>Not a promise of profit.</li>
                 <li>Not a signal service to copy.</li>
                 <li>Not personalized investment advice.</li>
                 <li>Not hands-off: you supervise Rosie and can stop her at any time.</li></ul>
@@ -374,7 +376,9 @@
             </div>
             <div>
               <dt>Telephone</dt>
-              <dd><a class="contact__link" href="tel:+13802000288" data-contact-phone>+1 380-200-0288</a></dd>
+              <dd><a class="contact__link" href="tel:+13802000288" data-contact-phone>+1 380-200-0288</a>
+                <!-- 2026-11-22 (owner, t1974u): the site's one statement about results, beside the phone. -->
+                <p class="contact__risk" data-risk-disclosure>Rosie is a tool for disciplined trading, not a promise of results. Trading involves risk, including loss of money.</p></dd>
             </div>
             <div>
               <dt>Office</dt>
@@ -390,7 +394,6 @@
         <div>
           <p class="label">Disclaimer</p>
           <p class="foot__disclaimer" data-securities-disclaimer>Lime Signalworks provides educational tools and analysis, not personalized investment advice. Securities trading involves risk of loss. Your decisions and results are your own. Nothing here is an offer to sell or a solicitation to buy any security.</p>
-          <p class="foot__disclaimer" data-risk-disclosure>Trading involves risk of loss. Past performance, including paper-trading results, does not guarantee future results. Nothing on this site is investment advice.</p>
         </div>
       </div>
     </footer>

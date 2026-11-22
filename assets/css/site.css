@@ -2732,3 +2732,22 @@ html {
   letter-spacing: -0.035em;
   line-height: 1;
 }
+
+/* The site's one statement about results sits beside the telephone number (2026-11-22). */
+.contact > div:has(.contact__risk) {
+  grid-column: 1 / -1;
+}
+
+.contact__risk,
+.foot .contact__risk {
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--color-text);
+  max-width: 34em;
+}
+
+.foot__phone {
+  margin: var(--space-4) 0 0;
+  font-size: var(--text-sm);
+}

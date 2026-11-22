@@ -16,8 +16,7 @@ import { readFile, writeFile, readdir, mkdir, rm } from 'node:fs/promises';
 import path from 'node:path';
 
 export const HARBOR_NOTICE =
-  'Educational market commentary, not investment advice. We do not know your situation, ' +
-  'and past conditions do not predict future results.';
+  'Educational market commentary, not investment advice. We do not know your situation.';
 
 /** Days after which the latest edition is called out as not current. */
 export const STALE_AFTER_DAYS = 3;
@@ -526,13 +525,16 @@ ${after}
           <p class="label">Lime Signalworks LLC · LIME Enterprise</p>
           <p class="foot__note">Harbor Now is the daily market report from Lime Signalworks: a dated, plain-language summary written after the close.</p>
           <p class="foot__harbor"><a class="anchor-link hn-foot-link" href="/">Back to the home page</a></p>
+          <!-- 2026-11-22 (owner, t1974u): the site's one statement about results sits beside the
+               telephone number in the main pages' contact block. Harbor pages carry no phone number
+               (they must show no digit runs), so they link to that block instead. -->
+          <p class="foot__phone"><a class="anchor-link" href="/#contact">Call or email Lime Signalworks</a></p>
           <p class="foot__copyright">${esc(canonical.copyright)}</p>
         </div>
         <div>
           <p class="label">Disclaimer</p>
           <p class="foot__disclaimer">${esc(HARBOR_NOTICE)}</p>
           <p class="foot__disclaimer">${esc(canonical.securitiesDisclaimer)}</p>
-          <p class="foot__disclaimer">${esc(canonical.riskDisclosure)}</p>
         </div>
       </div>
     </footer>

@@ -433,11 +433,12 @@ test('voice: a reviewed "descriptive" entry cannot let advice wording through, a
 
 // Owner decision: "I" = Rosie throughout. The rewrites say "I", "my seat", "to me"; only the
 // legal notice keeps the company "we", and it stays word for word.
+// 2026-11-22 (owner, t1974u): "past conditions do not predict future results" was removed; the
+// site's one statement about results now sits beside the telephone number on the main pages.
 test('voice: the educational-not-advice notice is unchanged legal text', () => {
   assert.equal(
     HARBOR_NOTICE,
-    'Educational market commentary, not investment advice. We do not know your situation, ' +
-      'and past conditions do not predict future results.',
+    'Educational market commentary, not investment advice. We do not know your situation.',
   );
 });
 

@@ -1,7 +1,7 @@
 {
   "revision": "site2-claim-audit-2026-11-13",
   "canonical": {
-    "rosieIntro": "Hi, I'm Rosie Keelwise. I help you place trades under the risk rules you set, and I attach one broker-held stop to every buy. This guide walks you through your first days with me, in plain language. Nothing here is a recommendation to buy or sell anything, and I never promise a result.",
+    "rosieIntro": "Hi, I'm Rosie Keelwise. I help you place trades under the risk rules you set, and I attach one broker-held stop to every buy. This guide walks you through your first days with me, in plain language. Nothing here is a recommendation to buy or sell anything.",
     "demoUrl": "/rosie-demo/",
     "demoCtaLabel": "Open the Rosie demo",
     "demoDisclosure": "Sample data in a paper (practice) account. No broker connection, no real orders, and nothing here is advice.",
@@ -16,7 +16,7 @@
     "securitiesDisclaimer": "Lime Signalworks provides educational tools and analysis, not personalized investment advice. Securities trading involves risk of loss. Your decisions and results are your own. Nothing here is an offer to sell or a solicitation to buy any security.",
     "evaluationTerm": "one month",
     "copyright": "© 2026 Lime Signalworks LLC.",
-    "riskDisclosure": "Trading involves risk of loss. Past performance, including paper-trading results, does not guarantee future results. Nothing on this site is investment advice.",
+    "riskDisclosure": "Rosie is a tool for disciplined trading, not a promise of results. Trading involves risk, including loss of money.",
     "videos": {
       "_comment": "The ONE place for video links. channelUrl is the existing Lime Signalworks YouTube channel. Each video's url stays null until a real video is published; while it is null, the tour button links to the channel with fallbackLabel, and the Harbor Now how-to link is not rendered at all, so visitors never see a broken or invented link. To go live, paste the real watch URL into url.",
       "channelUrl": "https://www.youtube.com/@noelrini3882",
@@ -57,7 +57,8 @@
         }
       ],
       "_libraryComment": "2026-11-22: videos from the old GoDaddy site that still play on YouTube (checked by oEmbed and the watch page). Titles are YouTube's own (the double space YouTube shows is the original dash). Shown as self-hosted thumbnails (assets/img/video/<id>.jpg) that link to YouTube in a new window: no embedded player, no autoplay, nothing loaded from YouTube until clicked. Dropped: 7obTu4_94_o 'Invest Calmly  Lime's Safety Suit for Everyone' (plays, but its title uses a retired Site 1 term the site's wording rules exclude), TNlWIQySd8U 'Tame the Sharks Inside First' (values essay, off topic), hL9z3sYCj4Y 'Stop Guessing  Start LIME Alerts Today' (promotes the old LIME alerts product), DGT_0Xje1ks 'Oil Squeeze, Clean Signals  Friday Harbor' (dated market commentary about the old daily email), Vimeo 1178552708 'grok logo video' (16-second logo loop)."
-    }
+    },
+    "_riskDisclosureComment": "2026-11-22 (owner, t1974u): the site relies on ONE statement about not promising results, shown beside the telephone number in the footer of every page. Other no-promise / no-guarantee lines were removed because repeating them broadcasts doubt; factual safety descriptions (stops can fill below their price, paper mode) stay."
   },
   "pages": [
     {
@@ -343,7 +344,6 @@
       "Guided setup and support."
     ],
     "notThis": [
-      "Not a promise of profit.",
       "Not a signal service to copy.",
       "Not personalized investment advice.",
       "Not hands-off: you supervise Rosie and can stop her at any time."

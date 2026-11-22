@@ -58,7 +58,9 @@ Zero-framework static build. No bundler, no CSS preprocessor, no client framewor
   Operator Workstation layout filled with **sample data** (paper account, invented numbers). Every
   control is disabled, there are no forms or network calls, and `tests/rosie-demo.test.mjs`
   enforces that, the sample-data banner, `noindex`, and broker-held (never trailing) stops.
-  `assets/img/rosie-dashboard-preview.png` on the homepage is a 1200×750 screenshot of it.
+  `assets/img/rosie-schwab-dashboard-preview.png` (Home hero and How Rosie Works) is a 1200×750 screenshot of
+  the Rosie Schwab dashboard (nrini49/schwab main d7e8633, render_page.py) rendered offline with invented sample
+  data and a sample-data banner: no broker, no account, no network (2026-11-22, owner: early pages show Schwab).
 
 - `data/harbor/<date>.data.json` — Harbor Now editions, copied **unchanged** from
   `lime-web-public/harbor-now/archive/` (47 editions, 2026-07-13 to 2026-09-29)
