@@ -72,9 +72,9 @@
         </a>
 
         <nav class="masthead__nav" aria-label="Site pages"><a href="#main" aria-current="page" data-page-link="home">Home</a>
-          <a href="/how-rosie-works/" target="_blank" rel="noopener noreferrer" data-page-link="how-rosie-works">How Rosie Works</a>
-          <a href="/harbor-now/" target="_blank" rel="noopener noreferrer" data-page-link="harbor">Harbor Now</a>
-          <a href="/blog/" target="_blank" rel="noopener noreferrer" data-page-link="blog">Blog</a></nav>
+          <a href="/how-rosie-works/" data-page-link="how-rosie-works">How Rosie Works</a>
+          <a href="/harbor-now/" data-page-link="harbor">Harbor Now</a>
+          <a href="/blog/" data-page-link="blog">Blog</a></nav>
 
         <img
           class="masthead__logo masthead__rosie"
@@ -106,6 +106,31 @@
                data-owner-name, like the data-attribution credits, so the tests can pin where
                it may appear. -->
           <div class="opening__col" data-voice="rosie">
+            <p class="label opening__label voice-tag" data-voice-tag>From Rosie</p>
+            <!-- Hero (2026-11-22, owner direction: "snap and pop"): a big display line that
+                 repeats Rosie's own "I take the watch. You take the day.", the h1, two buttons,
+                 three chips that restate facts already on the site, a link to one of Noal's
+                 videos, and the real dashboard screenshot. No new claims. -->
+            <div class="hero-split">
+              <div class="hero-copy">
+                <div class="hero__display"><span>I take the watch.</span> <span class="hero__display-accent">You take the day.</span></div>
+                <h1 id="opening-title" class="hero__h1"><span class="owner-name" data-owner-name>Noal</span>, my developer, built Rosie Keelwise, which is me, so he could stop watching, relax and enjoy his life.</h1>
+                <div class="btn-row hero-ctas"><a class="btn btn--primary" href="#evaluation">Try me free for one month</a>
+            <a class="btn btn--ghost" href="/how-rosie-works/">See how I work</a></div>
+                <ul class="hero-chips"><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>A protective stop at your broker on every position</span></li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Free for one month in a paper (practice) account</span></li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Interactive Brokers and Schwab</span></li></ul>
+                <ul class="video-cards video-cards--hero" data-video-cards>
+              <li><a class="video-card" href="https://www.youtube.com/watch?v=5utNNpUwppA" target="_blank" rel="noopener noreferrer" data-video="5utNNpUwppA">
+                <span class="video-card__thumb"><img src="/assets/img/video/5utNNpUwppA.jpg" width="640" height="360" loading="lazy" decoding="async" alt="" /><span class="video-card__play" aria-hidden="true"></span><span class="video-card__time">1:18</span></span>
+                <span class="video-card__title">Stop Gambling — Start Guardrails<span class="sr-only"> (video on YouTube, opens in a new tab)</span></span>
+              </a></li>
+            </ul>
+              </div>
+              <a class="hero-shot" href="/rosie-demo/" target="_blank" rel="noopener noreferrer">
+                <img src="/assets/img/rosie-dashboard-preview.png" width="1200" height="750" alt="Rosie IB Operator Workstation, demo with sample data: header controls, Account Overview, Positions with the Signal column, and broker-held Stops" />
+                <span class="hero-shot__cap">My Operator Workstation (the Interactive Brokers version), shown here with sample data.<span class="sr-only"> Opens the interactive demo in a new tab.</span></span>
+              </a>
+            </div>
+            <div class="opening__story">
             <!-- Rosie's introduction (2026-11-01, owner direction): the first paragraph of the
                  page body, from the Operator Guide with "Rosie" changed to "Rosie Keelwise".
                  Word for word from canonical.rosieIntro in data/homepage.json. -->
@@ -113,14 +138,14 @@
               <p class="label voice-tag" data-voice-tag>From Rosie</p>
               <p class="rosie-intro__text">Hi, I'm Rosie Keelwise. I help you place trades under the risk rules you set, and I attach one broker-held stop to every buy. This guide walks you through your first days with me, in plain language. Nothing here is a recommendation to buy or sell anything, and I never promise a result.</p>
             </div>
-            <p class="label opening__label voice-tag" data-voice-tag>From Rosie</p>
-            <h1 id="opening-title"><span class="owner-name" data-owner-name>Noal</span>, my developer, built Rosie Keelwise, which is me, so he could stop watching, relax and enjoy his life.</h1>
-            <p>Picture an ordinary Tuesday. <span class="owner-name" data-owner-name>Noal</span> is at his daughter's recital, then out for a walk, then at a long lunch with an old friend, phone face-down on the table. He isn't checking anything, and he isn't worried. That calm is the whole point of me.</p>
+            <div class="opening__text">
+            <p class="opening__lead">Picture an ordinary Tuesday. <span class="owner-name" data-owner-name>Noal</span> is at his daughter's recital, then out for a walk, then at a long lunch with an old friend, phone face-down on the table. He isn't checking anything, and he isn't worried. That calm is the whole point of me.</p>
             <p>I'm on the job. Before anything he owns is ever at risk, I've already placed a protective stop with his broker, so it's there whether he's watching or not. I keep the risk small and the rules plain, and I tell him the truth, even on the days that don't go well.</p>
             <p>Once I'm set up, his job is done for the most part. Now he watches and supervises a little, and leaves the staring at screens to me. I never blink; he was always going to lose that contest.</p>
             <p>Knowing I'm on watch gives him his time back, and he spends it on what the money was for in the first place: being fully present with the people he loves, taking care of his health, staying curious, and feeling looked after. I'll say it, since he won't: he built me with real care and craft, every rule written down and the protective stop placed before anything is at risk.</p>
             <p class="opening__sign">He built me for himself, and he built me so you can have me too.</p>
             <p class="video-row" data-video-row="opening"><a class="video-cta" href="https://www.youtube.com/@noelrini3882" target="_blank" rel="noopener noreferrer" data-video="tour" data-video-placeholder><svg class="video-cta__icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor" opacity="0.16" /><path d="M10 8.2v7.6L16 12z" fill="currentColor" /></svg><span class="video-cta__label">Watch the short videos on YouTube</span><span class="ext" aria-hidden="true">&#8599;</span><span class="sr-only"> (opens in a new tab)</span></a></p>
+            </div>
             <!-- Brokers (2026-11-01, owner direction): the two brokers Rosie works with now,
                  in her own voice. Only Interactive Brokers and Schwab are named. -->
             <div class="brokers-note" data-voice="rosie" data-brokers>
@@ -129,6 +154,7 @@
               <p class="brokers-note__line">I connect only to brokers that hand customers a real, public trading API, so your software can place its own orders.</p>
               <p class="brokers-note__line">I'm built as a small, casual-money sideline, for an account of about a thousand to ten thousand dollars, not as a professional trading desk.</p>
               <p class="brokers-note__line brokers-note__paper">During the free one-month evaluation, I run in practice mode, with no real-money orders. With Interactive Brokers, that is a paper (practice) account at the broker, using real market prices. With Schwab, practice mode is a dry run on your computer: I go through the same checks and keep a record, but orders are not sent to Schwab, because Schwab does not give Rosie a paper-trading API.</p>
+            </div>
             </div>
           </div>
         </div>
@@ -141,9 +167,11 @@
             <p class="label">What Rosie will and won't do</p>
             <h2 id="will-wont-title">What Rosie will and won't do</h2>
             <p>I'll tell you what I love about her, because it's the reason I trust her.</p>
-            <p>Rosie is all for you. She works in your account, for you, and nobody else. She has no way to move your money out. All she can do is place orders with your broker, inside the limits you set. There are no nefarious bones in this baby.</p>
-            <p>She's consistent. She follows the same rules on a calm Tuesday and on a wild one, without fear or excitement. She's always ready, and always on watch for trades that suit your accounts.</p>
-            <p>And she's honest. She can't promise good trades, and no one can. Markets move, and a stop can fill below its price. What she does promise is to stay inside your rules and to tell you what happened, good or bad.</p>
+            <ul class="ww-cards">
+              <li class="ww-card"><svg class="ww-card__icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/></svg><h3>All for you.</h3><p>Rosie is all for you. She works in your account, for you, and nobody else. She has no way to move your money out. All she can do is place orders with your broker, inside the limits you set. There are no nefarious bones in this baby.</p></li>
+              <li class="ww-card"><svg class="ww-card__icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg><h3>Consistent.</h3><p>She's consistent. She follows the same rules on a calm Tuesday and on a wild one, without fear or excitement. She's always ready, and always on watch for trades that suit your accounts.</p></li>
+              <li class="ww-card"><svg class="ww-card__icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg><h3>Honest.</h3><p>And she's honest. She can't promise good trades, and no one can. Markets move, and a stop can fill below its price. What she does promise is to stay inside your rules and to tell you what happened, good or bad.</p></li>
+            </ul>
             <p class="ww__pull">My favorite thing about Rosie is where she's headed: watching the markets around the clock and around the world, while I only look in casually or give her a nudge one way or the other. She's mine, and she works entirely for my benefit. She's the most remarkable relationship I've had in life.</p>
             <p class="ww__phone"><span class="soon">COMING SOON</span> <span><strong>Follow along from your phone.</strong> Phone viewing is on its way for everyone; I already check in on mine.</span></p>
             <p class="ww__sign">Her only job is to help me with my funds, and I like her more and more.</p>
@@ -224,7 +252,12 @@
               <div class="panel__head">
                 <p class="label">Rosie pricing</p>
               </div>
-              <div class="table-wrap">
+              <div class="price-hero" data-price-hero>
+            <span class="price-hero__term">Rosie, paid over 18 months</span>
+            <strong class="price-hero__amount">$3,300</strong>
+            <span class="price-hero__sub">Monthly payment, months 1 to 18: <strong>$183.33</strong></span>
+          </div>
+          <div class="table-wrap">
             <table class="data-table" data-pricing-table>
               <caption class="sr-only">Rosie pricing</caption>
               <thead>
@@ -275,47 +308,11 @@
         </div>
       </section>
 
-      <!-- E10 — for brokers and partners -->
-      <section class="section" id="partners" aria-labelledby="partners-title">
-        <div class="shell">
-          <div class="section__head" data-voice="rosie">
-            <p class="label rule-after">Section 05</p>
-            <p class="label voice-tag" data-voice-tag>From Rosie</p>
-            <h2 id="partners-title">For brokers and partners: I play well with others</h2>
-          </div>
-          <div class="prose" data-voice="rosie">
-            <p>
-              I&rsquo;m built to sit alongside a broker, never in place of one. I run on the
-              customer’s own computer, send orders through the broker’s own API, and leave the
-              broker login with the broker, where it belongs. My protective stops live at the broker, where your systems
-              can see them.
-            </p>
-            <p>
-              Brokers and educators who&rsquo;d like to offer me to their customers are most welcome.
-              On request, Lime Signalworks shares a security overview of how I handle data and
-              orders, and welcomes your security review.
-            </p>
-          </div>
-          <div class="notice" data-security-standards>
-            <span class="label">Security standards</span>
-            <p>
-              We design our controls around the SOC 2 Trust Services Criteria: security,
-              availability, processing integrity, confidentiality, and privacy. Access, change
-              review, backups, and incident response are written policies. Rosie has not yet
-              completed a SOC 2 audit; we will pursue one alongside our first broker partner.
-            </p>
-          </div>
-          <p class="anchor-row">
-            <a class="anchor-link" href="#contact">Start a partner conversation</a>
-          </p>
-        </div>
-      </section>
-
       <!-- E11 — how to begin -->
       <section class="section section--cta" id="how-to-begin" aria-labelledby="how-to-begin-title" data-voice="rosie">
         <div class="shell">
           <div class="section__head">
-            <p class="label rule-after">Section 06</p>
+            <p class="label rule-after">Section 05</p>
             <p class="label voice-tag" data-voice-tag>From Rosie</p>
             <h2 id="how-to-begin-title">Put me to work</h2>
             <p>
@@ -349,9 +346,9 @@
               </p>
             </li>
           </ol>
-          <p class="anchor-row">
-            <a class="anchor-link" href="#contact">Call or email Lime Signalworks</a>
-            <a class="anchor-link" href="/how-rosie-works/#demo" target="_blank" rel="noopener noreferrer">See me in action</a>
+          <p class="btn-row cta-final__row">
+            <a class="btn btn--primary" href="#contact">Call or email Lime Signalworks</a>
+            <a class="btn btn--ghost" href="/how-rosie-works/#demo">See me in action</a>
             <a class="anchor-link" href="https://www.youtube.com/@noelrini3882" target="_blank" rel="noopener noreferrer">Watch on YouTube<span class="sr-only"> (opens in a new tab)</span></a>
           </p>
         </div>
@@ -368,7 +365,7 @@
             TradingView indicators. The daily market report, Harbor Now, is published on this
             site; the Leadership library is a separate site.
           </p>
-          <p class="foot__harbor"><a class="anchor-link" href="/harbor-now/" target="_blank" rel="noopener noreferrer" data-harbor-link>Daily market report</a></p>
+          <p class="foot__harbor"><a class="anchor-link" href="/harbor-now/" data-harbor-link>Daily market report</a></p>
           <!-- Contact is by real mailto: and tel: links; there is no form on this site. -->
           <dl class="contact" id="contact" data-contact>
             <div>

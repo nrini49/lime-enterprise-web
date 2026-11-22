@@ -277,7 +277,6 @@ test('data: the section order and the page each section sits on', () => {
       ['home', 'will-wont'],
       ['home', 'evaluation'],
       ['home', 'pricing'],
-      ['home', 'partners'],
       ['home', 'how-to-begin'],
       ['how-rosie-works', 'life'],
       ['how-rosie-works', 'what-we-do'],
@@ -288,6 +287,7 @@ test('data: the section order and the page each section sits on', () => {
       ['how-rosie-works', 'pros'],
       ['how-rosie-works', 'protection'],
       ['how-rosie-works', 'commitments'],
+      ['how-rosie-works', 'partners'],
       ['how-rosie-works', 'evidence'],
       ['how-rosie-works', 'indicators'],
       ['harbor', 'market-report'],
@@ -632,7 +632,12 @@ test('dom: the only off-origin destination is YouTube (the demo is on this site)
   for (const href of hrefs) {
     assert.match(href, /^https:\/\/www\.youtube\.com\//, `off-origin link that is not YouTube: ${href}`);
   }
-  assert.ok(hrefs.length <= 3, 'only the channel link and the two tour buttons go off-site');
+  // 2026-11-22 (owner direction, t1970u): plus one link per video card, each to a real
+  // video in data/homepage.json canonical.videos.library and nowhere else.
+  const library = new Set((canonical.videos.library || []).map((v) => `https://www.youtube.com/watch?v=${v.youtubeId}`));
+  const cards = $('a.video-card').map((_, el) => $(el).attr('href')).get();
+  for (const href of cards) assert.ok(library.has(href), `video card for a listed video: ${href}`);
+  assert.ok(hrefs.length - cards.length <= 3, 'only the channel link, the two tour buttons and the video cards go off-site');
   links.each((_, el) => {
     assert.equal($(el).attr('target'), '_blank', 'off-site links open in a new window');
     assert.equal($(el).attr('rel'), 'noopener noreferrer');
@@ -941,8 +946,21 @@ test('dom: accessibility scaffolding is present', () => {
   // attribute; this guards against silently proliferating raster images later.
   // 2026-11-01: plus Rosie's portrait in the header (the workstation header pair; the
   // lighthouse half is a <video> with an aria-label, checked in the header test).
-  const images = $('img');
-  assert.equal(images.length, 2, 'the product screenshot and the header portrait, nothing else');
+  // 2026-11-22: the same product screenshot also sits in the Home hero, and the video
+  // links carry self-hosted thumbnails. A thumbnail is decorative (alt="") because the
+  // link around it names the video in text.
+  const thumbs = $('a.video-card img');
+  thumbs.each((_, el) => {
+    assert.equal($(el).attr('alt'), '', 'video thumbnails are decorative');
+    assert.match($(el).attr('src'), /^\/assets\/img\/video\/[\w-]+\.jpg$/, 'thumbnails are self-hosted');
+    assert.ok(norm($(el).closest('a').text()).length > 10, 'the video link names the video');
+  });
+  const images = $('img').not('a.video-card img');
+  assert.deepEqual(
+    [...new Set(images.map((_, el) => $(el).attr('src')).get())].sort(),
+    ['/assets/img/rosie-dashboard-preview.png', '/assets/img/rosie-portrait.png'].sort(),
+    'the product screenshot and the header portrait, nothing else',
+  );
   images.each((_, el) => {
     const alt = $(el).attr('alt');
     assert.ok(alt && alt.length > 20, 'every raster image has a real, descriptive alt attribute');

@@ -73,7 +73,7 @@ test('mobile nav: Harbor Now and the homepage collapse only the masthead links',
         assert.equal(closed.hidden, true, `nav hidden at ${width}`);
         assert.equal(closed.display, 'none');
         assert.equal(closed.links, 4, 'the four site pages');
-        assert.equal(closed.theme, 'light', 'Harbor Now keeps its light default');
+        assert.equal(closed.theme, 'dark', 'Harbor Now opens dark, like Home (2026-11-22)');
         assert.ok(closed.headerH < (width === 390 ? 100 : 160), `header ${closed.headerH}px at ${width}`);
         assert.ok(closed.h1Top >= closed.headerBottom - 1, 'the title is not under the header');
         assert.ok(closed.h1Top < 800, 'the title is on the first screen');

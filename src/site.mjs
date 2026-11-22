@@ -5,9 +5,9 @@
  *
  * Links are root-relative ("/how-rosie-works/"), folder + index.html, so the output runs
  * as plain static files on any host that serves index.html for a folder (Vercel today,
- * GoDaddy later). Following the 2026-11-01 rule, every link that leaves the current page
- * opens in a new window; the current page's own entry is a same-page link to #main,
- * marked aria-current="page".
+ * GoDaddy later). Links between the site's own four pages open in the same window
+ * (owner default, 2026-11-22); links to other sites still open a new window. The current
+ * page's own entry is a same-page link to #main, marked aria-current="page".
  */
 export const NEW_WINDOW = ' target="_blank" rel="noopener noreferrer"';
 
@@ -24,14 +24,14 @@ export function siteNav(pages, currentId) {
     .map((p) =>
       p.id === currentId
         ? `<a href="#main" aria-current="page" data-page-link="${esc(p.id)}">${esc(p.nav)}</a>`
-        : `<a href="${esc(p.path)}"${NEW_WINDOW} data-page-link="${esc(p.id)}">${esc(p.nav)}</a>`,
+        : `<a href="${esc(p.path)}" data-page-link="${esc(p.id)}">${esc(p.nav)}</a>`,
     )
     .join('\n          ');
 }
 
 /** The brand link: back to the top on the home page, to the home page elsewhere. */
 export const brandLink = (currentId) =>
-  currentId === 'home' ? 'href="#main"' : `href="/"${NEW_WINDOW}`;
+  currentId === 'home' ? 'href="#main"' : 'href="/"';
 
 /** "Latest from the blog": the newest posts (up to three) or an honest empty state. */
 export function blogStrip(posts) {
@@ -50,7 +50,7 @@ export function blogStrip(posts) {
           <p class="label rule-after">Lime Signalworks · Blog</p>
           <h2 class="hn-h blog-strip__title" id="blog-strip-title">Latest from the blog</h2>
           ${list}
-          <p class="anchor-row"><a class="anchor-link" href="/blog/"${NEW_WINDOW}>Visit the blog</a></p>
+          <p class="btn-row"><a class="btn btn--ghost" href="/blog/">Visit the blog</a></p>
         </div>
       </section>`;
 }

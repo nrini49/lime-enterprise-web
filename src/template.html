@@ -103,6 +103,25 @@
                data-owner-name, like the data-attribution credits, so the tests can pin where
                it may appear. -->
           <div class="opening__col" data-voice="rosie">
+            <p class="label opening__label voice-tag" data-voice-tag>From Rosie</p>
+            <!-- Hero (2026-11-22, owner direction: "snap and pop"): a big display line that
+                 repeats Rosie's own "I take the watch. You take the day.", the h1, two buttons,
+                 three chips that restate facts already on the site, a link to one of Noal's
+                 videos, and the real dashboard screenshot. No new claims. -->
+            <div class="hero-split">
+              <div class="hero-copy">
+                {{HERO_DISPLAY}}
+                <h1 id="opening-title" class="hero__h1"><span class="owner-name" data-owner-name>Noal</span>, my developer, built Rosie Keelwise, which is me, so he could stop watching, relax and enjoy his life.</h1>
+                <div class="btn-row hero-ctas">{{HERO_CTAS}}</div>
+                <ul class="hero-chips">{{HERO_CHIPS}}</ul>
+                {{HOME_VIDEOS}}
+              </div>
+              <a class="hero-shot" href="/rosie-demo/" target="_blank" rel="noopener noreferrer">
+                <img src="/assets/img/rosie-dashboard-preview.png" width="1200" height="750" alt="Rosie IB Operator Workstation, demo with sample data: header controls, Account Overview, Positions with the Signal column, and broker-held Stops" />
+                <span class="hero-shot__cap">My Operator Workstation (the Interactive Brokers version), shown here with sample data.<span class="sr-only"> Opens the interactive demo in a new tab.</span></span>
+              </a>
+            </div>
+            <div class="opening__story">
             <!-- Rosie's introduction (2026-11-01, owner direction): the first paragraph of the
                  page body, from the Operator Guide with "Rosie" changed to "Rosie Keelwise".
                  Word for word from canonical.rosieIntro in data/homepage.json. -->
@@ -110,14 +129,14 @@
               <p class="label voice-tag" data-voice-tag>From Rosie</p>
               <p class="rosie-intro__text">{{ROSIE_INTRO}}</p>
             </div>
-            <p class="label opening__label voice-tag" data-voice-tag>From Rosie</p>
-            <h1 id="opening-title"><span class="owner-name" data-owner-name>Noal</span>, my developer, built Rosie Keelwise, which is me, so he could stop watching, relax and enjoy his life.</h1>
-            <p>Picture an ordinary Tuesday. <span class="owner-name" data-owner-name>Noal</span> is at his daughter's recital, then out for a walk, then at a long lunch with an old friend, phone face-down on the table. He isn't checking anything, and he isn't worried. That calm is the whole point of me.</p>
+            <div class="opening__text">
+            <p class="opening__lead">Picture an ordinary Tuesday. <span class="owner-name" data-owner-name>Noal</span> is at his daughter's recital, then out for a walk, then at a long lunch with an old friend, phone face-down on the table. He isn't checking anything, and he isn't worried. That calm is the whole point of me.</p>
             <p>I'm on the job. Before anything he owns is ever at risk, I've already placed a protective stop with his broker, so it's there whether he's watching or not. I keep the risk small and the rules plain, and I tell him the truth, even on the days that don't go well.</p>
             <p>Once I'm set up, his job is done for the most part. Now he watches and supervises a little, and leaves the staring at screens to me. I never blink; he was always going to lose that contest.</p>
             <p>Knowing I'm on watch gives him his time back, and he spends it on what the money was for in the first place: being fully present with the people he loves, taking care of his health, staying curious, and feeling looked after. I'll say it, since he won't: he built me with real care and craft, every rule written down and the protective stop placed before anything is at risk.</p>
             <p class="opening__sign">He built me for himself, and he built me so you can have me too.</p>
             <p class="video-row" data-video-row="opening">{{TOUR_LINK}}</p>
+            </div>
             <!-- Brokers (2026-11-01, owner direction): the two brokers Rosie works with now,
                  in her own voice. Only Interactive Brokers and Schwab are named. -->
             <div class="brokers-note" data-voice="rosie" data-brokers>
@@ -126,6 +145,7 @@
               <p class="brokers-note__line">I connect only to brokers that hand customers a real, public trading API, so your software can place its own orders.</p>
               <p class="brokers-note__line">I'm built as a small, casual-money sideline, for an account of about a thousand to ten thousand dollars, not as a professional trading desk.</p>
               <p class="brokers-note__line brokers-note__paper">During the free one-month evaluation, I run in practice mode, with no real-money orders. With Interactive Brokers, that is a paper (practice) account at the broker, using real market prices. With Schwab, practice mode is a dry run on your computer: I go through the same checks and keep a record, but orders are not sent to Schwab, because Schwab does not give Rosie a paper-trading API.</p>
+            </div>
             </div>
           </div>
         </div>
@@ -164,9 +184,11 @@
             <p class="label">What Rosie will and won't do</p>
             <h2 id="will-wont-title">What Rosie will and won't do</h2>
             <p>I'll tell you what I love about her, because it's the reason I trust her.</p>
-            <p>Rosie is all for you. She works in your account, for you, and nobody else. She has no way to move your money out. All she can do is place orders with your broker, inside the limits you set. There are no nefarious bones in this baby.</p>
-            <p>She's consistent. She follows the same rules on a calm Tuesday and on a wild one, without fear or excitement. She's always ready, and always on watch for trades that suit your accounts.</p>
-            <p>And she's honest. She can't promise good trades, and no one can. Markets move, and a stop can fill below its price. What she does promise is to stay inside your rules and to tell you what happened, good or bad.</p>
+            <ul class="ww-cards">
+              <li class="ww-card"><svg class="ww-card__icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/></svg><h3>All for you.</h3><p>Rosie is all for you. She works in your account, for you, and nobody else. She has no way to move your money out. All she can do is place orders with your broker, inside the limits you set. There are no nefarious bones in this baby.</p></li>
+              <li class="ww-card"><svg class="ww-card__icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg><h3>Consistent.</h3><p>She's consistent. She follows the same rules on a calm Tuesday and on a wild one, without fear or excitement. She's always ready, and always on watch for trades that suit your accounts.</p></li>
+              <li class="ww-card"><svg class="ww-card__icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg><h3>Honest.</h3><p>And she's honest. She can't promise good trades, and no one can. Markets move, and a stop can fill below its price. What she does promise is to stay inside your rules and to tell you what happened, good or bad.</p></li>
+            </ul>
             <p class="ww__pull">My favorite thing about Rosie is where she's headed: watching the markets around the clock and around the world, while I only look in casually or give her a nudge one way or the other. She's mine, and she works entirely for my benefit. She's the most remarkable relationship I've had in life.</p>
             <p class="ww__phone"><span class="soon">COMING SOON</span> <span><strong>Follow along from your phone.</strong> Phone viewing is on its way for everyone; I already check in on mine.</span></p>
             <p class="ww__sign">Her only job is to help me with my funds, and I like her more and more.</p>
@@ -214,7 +236,7 @@
               Lime Signalworks also makes its own TradingView indicators: rule-based tools that
               turn a chart into plain readings you can check, instead of a guess. They work on
               their own, on your TradingView chart, no Rosie required (I try not to take it
-              personally). This is the one slightly technical corner of the page, so each one is
+              personally). This is the most technical corner of the page, so each one is
               shown with the problem it was made to solve.
             </p>
           </div>
@@ -702,9 +724,9 @@
               </p>
             </li>
           </ol>
-          <p class="anchor-row">
-            <a class="anchor-link" href="#contact">Call or email Lime Signalworks</a>
-            <a class="anchor-link" href="#demo">See me in action</a>
+          <p class="btn-row cta-final__row">
+            <a class="btn btn--primary" href="#contact">Call or email Lime Signalworks</a>
+            <a class="btn btn--ghost" href="#demo">See me in action</a>
             <a class="anchor-link" href="{{YOUTUBE_CHANNEL_URL}}" target="_blank" rel="noopener noreferrer">Watch on YouTube<span class="sr-only"> (opens in a new tab)</span></a>
           </p>
         </div>
@@ -721,7 +743,7 @@
             TradingView indicators. The daily market report, Harbor Now, is published on this
             site; the Leadership library is a separate site.
           </p>
-          <p class="foot__harbor"><a class="anchor-link" href="/harbor-now/" target="_blank" rel="noopener noreferrer" data-harbor-link>Daily market report</a></p>
+          <p class="foot__harbor"><a class="anchor-link" href="/harbor-now/" data-harbor-link>Daily market report</a></p>
           <!-- Contact is by real mailto: and tel: links; there is no form on this site. -->
           <dl class="contact" id="contact" data-contact>
             <div>

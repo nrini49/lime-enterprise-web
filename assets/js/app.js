@@ -163,3 +163,30 @@
   sync();
   if (typeof query.addEventListener === 'function') query.addEventListener('change', sync);
 })();
+
+/* Scroll reveal (2026-11-22, "snap and pop"): sections fade up as they come into view.
+   Only when the visitor has not asked for reduced motion and IntersectionObserver
+   exists; without this script, or with reduced motion, everything is simply shown. */
+(function () {
+  if (!('IntersectionObserver' in window) || !window.matchMedia) return;
+  if (!window.matchMedia('(prefers-reduced-motion: no-preference)').matches) return;
+  var targets = document.querySelectorAll(
+    'main > section:not(#opening) > .shell, .hooks > li, .ww-cards > li, .stages > li',
+  );
+  if (!targets.length) return;
+  var observer = new IntersectionObserver(
+    function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-in');
+        observer.unobserve(entry.target);
+      });
+    },
+    { rootMargin: '0px 0px -8% 0px', threshold: 0.05 },
+  );
+  for (var i = 0; i < targets.length; i++) {
+    targets[i].setAttribute('data-reveal', '');
+    observer.observe(targets[i]);
+  }
+  document.documentElement.classList.add('motion-ready');
+})();

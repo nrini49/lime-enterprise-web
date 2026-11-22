@@ -41,8 +41,8 @@ const COMMON_SURFACES = [
 
 /**
  * 2026-11-22: the homepage is split into four pages. The three that open dark (Home,
- * How Rosie Works, Blog) are checked here; Harbor Now opens light and is covered by
- * tests/harbor-rendered.test.mjs.
+ * How Rosie Works, Blog) are checked here; Harbor Now (dark too since
+ * 2026-11-22) is covered by tests/harbor-rendered.test.mjs and tests/mobile-nav.test.mjs.
  */
 const DARK_PAGES = [
   {
@@ -53,7 +53,6 @@ const DARK_PAGES = [
       ['.hero', 'hero'],
       ['#evaluation', 'evaluation section'],
       ['#pricing', 'pricing section'],
-      ['#partners', 'Partners section'],
       ['#how-to-begin', 'how to begin section'],
       ['.foot', 'footer'],
     ],
@@ -67,6 +66,7 @@ const DARK_PAGES = [
       ['#what-we-do', 'what we do section'],
       ['#demo', 'demo section'],
       ['#protection', 'protection section'],
+      ['#partners', 'Partners section'],
       ['#indicators', 'indicators section'],
       ['.foot', 'footer'],
     ],
@@ -674,7 +674,8 @@ test('rendered: the page menu and every anchor reach their target', async () => 
       for (const [text, href, target] of nav) {
         if (href === '#main') continue;
         assert.ok(href.startsWith('/') && href.endsWith('/'), `${pg.label}: ${text} links a page folder`);
-        assert.equal(target, '_blank', `${pg.label}: ${text} opens in a new window`);
+        // 2026-11-22: the site's own pages open in the same window.
+        assert.equal(target, null, `${pg.label}: ${text} opens in the same window`);
       }
       await page.click('.masthead__nav a[aria-current="page"]');
       assert.equal(new URL(page.url()).hash, '#main', `${pg.label}: the current page entry stays put`);
@@ -822,7 +823,6 @@ test('rendered: the page is complete and usable with JavaScript disabled', async
       '[data-contact-phone]',
       '[data-securities-disclaimer]',
       '#pricing',
-      '#partners',
       '#how-to-begin',
       '[data-pricing-table]',
       '.masthead__nav a[href="/how-rosie-works/"]',
@@ -831,7 +831,7 @@ test('rendered: the page is complete and usable with JavaScript disabled', async
     }
     assert.equal(await page.locator('button').count(), 0, 'no inert control without JS on Home');
     await page.goto(ORIGIN + 'how-rosie-works/', { waitUntil: 'load' });
-    for (const selector of ['a.cta', '[data-demo-disclosure]', '[data-demo-ask]', '#what-we-do', '#indicators', '[data-contact]']) {
+    for (const selector of ['a.cta', '[data-demo-disclosure]', '[data-demo-ask]', '#what-we-do', '#partners', '#indicators', '[data-contact]']) {
       assert.ok(await page.locator(selector).isVisible(), `how-rosie-works: ${selector} must render without JS`);
     }
     // No control may be shown that cannot act: the toggle is script-created, so with

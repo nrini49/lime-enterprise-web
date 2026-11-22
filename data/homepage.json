@@ -28,7 +28,35 @@
       "harborHowTo": {
         "url": null,
         "label": "Watch: how to use Harbor Now"
-      }
+      },
+      "library": [
+        {
+          "youtubeId": "5utNNpUwppA",
+          "title": "Stop Gambling — Start Guardrails",
+          "duration": "1:18",
+          "pages": [
+            "home",
+            "how-rosie-works"
+          ]
+        },
+        {
+          "youtubeId": "vv_kziBPwOI",
+          "title": "Stop Guessing the Market — Read the Weather",
+          "duration": "9:23",
+          "pages": [
+            "how-rosie-works"
+          ]
+        },
+        {
+          "youtubeId": "iuUHE499z1I",
+          "title": "Trade Calm — Master the Lime Pilot Board",
+          "duration": "5:57",
+          "pages": [
+            "how-rosie-works"
+          ]
+        }
+      ],
+      "_libraryComment": "2026-11-22: videos from the old GoDaddy site that still play on YouTube (checked by oEmbed and the watch page). Titles are YouTube's own (the double space YouTube shows is the original dash). Shown as self-hosted thumbnails (assets/img/video/<id>.jpg) that link to YouTube in a new window: no embedded player, no autoplay, nothing loaded from YouTube until clicked. Dropped: 7obTu4_94_o 'Invest Calmly  Lime's Safety Suit for Everyone' (plays, but its title uses a retired Site 1 term the site's wording rules exclude), TNlWIQySd8U 'Tame the Sharks Inside First' (values essay, off topic), hL9z3sYCj4Y 'Stop Guessing  Start LIME Alerts Today' (promotes the old LIME alerts product), DGT_0Xje1ks 'Oil Squeeze, Clean Signals  Friday Harbor' (dated market commentary about the old daily email), Vimeo 1178552708 'grok logo video' (16-second logo loop)."
     }
   },
   "pages": [
@@ -38,7 +66,30 @@
       "path": "/",
       "file": "index.html",
       "title": "LIME Enterprise — Rosie Keelwise, the automated trading operator who never blinks",
-      "description": "Rosie Keelwise is an automated, rules-based trading operator from Lime Signalworks. She watches the markets while you live your life, holds to your rules and keeps a protective stop at your broker on every position, while you supervise. Try her free for one month in a paper (practice) account."
+      "description": "Rosie Keelwise is an automated, rules-based trading operator from Lime Signalworks. She watches the markets while you live your life, holds to your rules and keeps a protective stop at your broker on every position, while you supervise. Try her free for one month in a paper (practice) account.",
+      "hero": {
+        "display": [
+          "I take the watch.",
+          "You take the day."
+        ],
+        "ctas": [
+          {
+            "label": "Try me free for one month",
+            "href": "#evaluation",
+            "kind": "primary"
+          },
+          {
+            "label": "See how I work",
+            "href": "/how-rosie-works/",
+            "kind": "ghost"
+          }
+        ],
+        "chips": [
+          "A protective stop at your broker on every position",
+          "Free for one month in a paper (practice) account",
+          "Interactive Brokers and Schwab"
+        ]
+      }
     },
     {
       "id": "how-rosie-works",
@@ -49,7 +100,57 @@
       "description": "How Rosie Keelwise works: the three steps, the protective stop on every position, the risk limits she keeps, the markets she handles, and the five Lime Signalworks TradingView indicators.",
       "eyebrow": "Lime Signalworks · How Rosie Works",
       "heading": "How Rosie Works",
-      "lede": "The steps, rules and safeguards behind Rosie, starting simple and getting more technical toward the five TradingView indicators at the end."
+      "lede": "The watching, the sizing, the order entry and the protection: that’s my side of the room. You set the rules, and you stay in charge.",
+      "ledeVoice": "rosie",
+      "ctas": [
+        {
+          "label": "See me in action",
+          "href": "#demo",
+          "kind": "primary"
+        },
+        {
+          "label": "Try me free for one month",
+          "href": "/#evaluation",
+          "kind": "ghost"
+        }
+      ],
+      "hooks": [
+        {
+          "label": "Three steps",
+          "title": "You set the rules. I watch, and I propose. You supervise.",
+          "href": "#how-it-works"
+        },
+        {
+          "label": "Protection",
+          "title": "A protective stop on every position",
+          "text": "It lives at your broker, so it keeps working even with your computer switched off.",
+          "href": "#protection"
+        },
+        {
+          "label": "Risk limits",
+          "title": "2% risk per trade · 6% total open-risk cap",
+          "text": "An order that would go over is refused, politely and absolutely.",
+          "href": "#evidence"
+        },
+        {
+          "label": "Always yours",
+          "title": "STOP ALL and FLATTEN ALL",
+          "text": "STOP ALL halts me and cancels pending buys, and leaves the protective stops in place.",
+          "href": "#protection"
+        },
+        {
+          "label": "Indicators",
+          "title": "Five TradingView indicators",
+          "text": "They work on their own, on your TradingView chart, no Rosie required.",
+          "href": "#indicators"
+        },
+        {
+          "label": "Try me first",
+          "title": "Practice first, so you can judge me",
+          "text": "Free for one month in a paper (practice) account.",
+          "href": "/#evaluation"
+        }
+      ]
     },
     {
       "id": "harbor",
@@ -92,14 +193,9 @@
       "eyebrow": "Section 04"
     },
     {
-      "id": "partners",
-      "page": "home",
-      "eyebrow": "Section 05"
-    },
-    {
       "id": "how-to-begin",
       "page": "home",
-      "eyebrow": "Section 06"
+      "eyebrow": "Section 05"
     },
     {
       "id": "life",
@@ -147,6 +243,11 @@
       "eyebrow": "Section 09"
     },
     {
+      "id": "partners",
+      "page": "how-rosie-works",
+      "eyebrow": "Section 10"
+    },
+    {
       "id": "evidence",
       "page": "how-rosie-works",
       "eyebrow": "Rosie · Evidence"
@@ -154,7 +255,7 @@
     {
       "id": "indicators",
       "page": "how-rosie-works",
-      "eyebrow": "Section 11"
+      "eyebrow": "Section 12"
     },
     {
       "id": "market-report",

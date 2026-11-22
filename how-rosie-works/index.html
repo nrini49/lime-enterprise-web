@@ -65,16 +65,16 @@
           aria-label="Lime Signalworks logo: a lighthouse shining over the sea"
           data-header-logo="lighthouse"
         ></video>
-        <a class="brand" href="/" target="_blank" rel="noopener noreferrer">
+        <a class="brand" href="/">
           <span class="brand__name"
             >Lime Signalworks<span class="brand__unit" data-site-unit>LIME Enterprise</span></span
           >
         </a>
 
-        <nav class="masthead__nav" aria-label="Site pages"><a href="/" target="_blank" rel="noopener noreferrer" data-page-link="home">Home</a>
+        <nav class="masthead__nav" aria-label="Site pages"><a href="/" data-page-link="home">Home</a>
           <a href="#main" aria-current="page" data-page-link="how-rosie-works">How Rosie Works</a>
-          <a href="/harbor-now/" target="_blank" rel="noopener noreferrer" data-page-link="harbor">Harbor Now</a>
-          <a href="/blog/" target="_blank" rel="noopener noreferrer" data-page-link="blog">Blog</a></nav>
+          <a href="/harbor-now/" data-page-link="harbor">Harbor Now</a>
+          <a href="/blog/" data-page-link="blog">Blog</a></nav>
 
         <img
           class="masthead__logo masthead__rosie"
@@ -92,11 +92,38 @@
     </header>
 
     <main id="main">
-      <div class="page-head" data-page-head="how-rosie-works">
+      <div class="page-head page-head--hero" data-page-head="how-rosie-works">
         <div class="shell">
           <p class="label rule-after">Lime Signalworks · How Rosie Works</p>
           <h1 class="page-head__title" id="page-title">How Rosie Works</h1>
-          <p class="page-head__lede">The steps, rules and safeguards behind Rosie, starting simple and getting more technical toward the five TradingView indicators at the end.</p>
+          <div class="page-head__voice" data-voice="rosie"><span class="label voice-tag" data-voice-tag>From Rosie</span><p class="page-head__lede">The watching, the sizing, the order entry and the protection: that’s my side of the room. You set the rules, and you stay in charge.</p></div>
+          <div class="btn-row"><a class="btn btn--primary" href="#demo">See me in action</a>
+            <a class="btn btn--ghost" href="/#evaluation">Try me free for one month</a></div>
+          <ul class="hooks" data-hooks>
+            <li><a class="hook" href="#how-it-works"><span class="hook__n">01 · Three steps</span><strong class="hook__title">You set the rules. I watch, and I propose. You supervise.</strong></a></li>
+            <li><a class="hook" href="#protection"><span class="hook__n">02 · Protection</span><strong class="hook__title">A protective stop on every position</strong><span class="hook__text">It lives at your broker, so it keeps working even with your computer switched off.</span></a></li>
+            <li><a class="hook" href="#evidence"><span class="hook__n">03 · Risk limits</span><strong class="hook__title">2% risk per trade · 6% total open-risk cap</strong><span class="hook__text">An order that would go over is refused, politely and absolutely.</span></a></li>
+            <li><a class="hook" href="#protection"><span class="hook__n">04 · Always yours</span><strong class="hook__title">STOP ALL and FLATTEN ALL</strong><span class="hook__text">STOP ALL halts me and cancels pending buys, and leaves the protective stops in place.</span></a></li>
+            <li><a class="hook" href="#indicators"><span class="hook__n">05 · Indicators</span><strong class="hook__title">Five TradingView indicators</strong><span class="hook__text">They work on their own, on your TradingView chart, no Rosie required.</span></a></li>
+            <li><a class="hook" href="/#evaluation"><span class="hook__n">06 · Try me first</span><strong class="hook__title">Practice first, so you can judge me</strong><span class="hook__text">Free for one month in a paper (practice) account.</span></a></li>
+          </ul>
+          <div class="page-head__videos">
+            <h2 class="page-head__videos-title" id="videos-title">Short videos</h2>
+            <ul class="video-cards " data-video-cards>
+              <li><a class="video-card" href="https://www.youtube.com/watch?v=5utNNpUwppA" target="_blank" rel="noopener noreferrer" data-video="5utNNpUwppA">
+                <span class="video-card__thumb"><img src="/assets/img/video/5utNNpUwppA.jpg" width="640" height="360" loading="lazy" decoding="async" alt="" /><span class="video-card__play" aria-hidden="true"></span><span class="video-card__time">1:18</span></span>
+                <span class="video-card__title">Stop Gambling — Start Guardrails<span class="sr-only"> (video on YouTube, opens in a new tab)</span></span>
+              </a></li>
+              <li><a class="video-card" href="https://www.youtube.com/watch?v=vv_kziBPwOI" target="_blank" rel="noopener noreferrer" data-video="vv_kziBPwOI">
+                <span class="video-card__thumb"><img src="/assets/img/video/vv_kziBPwOI.jpg" width="640" height="360" loading="lazy" decoding="async" alt="" /><span class="video-card__play" aria-hidden="true"></span><span class="video-card__time">9:23</span></span>
+                <span class="video-card__title">Stop Guessing the Market — Read the Weather<span class="sr-only"> (video on YouTube, opens in a new tab)</span></span>
+              </a></li>
+              <li><a class="video-card" href="https://www.youtube.com/watch?v=iuUHE499z1I" target="_blank" rel="noopener noreferrer" data-video="iuUHE499z1I">
+                <span class="video-card__thumb"><img src="/assets/img/video/iuUHE499z1I.jpg" width="640" height="360" loading="lazy" decoding="async" alt="" /><span class="video-card__play" aria-hidden="true"></span><span class="video-card__time">5:57</span></span>
+                <span class="video-card__title">Trade Calm — Master the Lime Pilot Board<span class="sr-only"> (video on YouTube, opens in a new tab)</span></span>
+              </a></li>
+            </ul>
+          </div>
         </div>
       </div>
 
@@ -431,6 +458,42 @@
         </div>
       </section>
 
+      <!-- E10 — for brokers and partners -->
+      <section class="section" id="partners" aria-labelledby="partners-title">
+        <div class="shell">
+          <div class="section__head" data-voice="rosie">
+            <p class="label rule-after">Section 10</p>
+            <p class="label voice-tag" data-voice-tag>From Rosie</p>
+            <h2 id="partners-title">For brokers and partners: I play well with others</h2>
+          </div>
+          <div class="prose" data-voice="rosie">
+            <p>
+              I&rsquo;m built to sit alongside a broker, never in place of one. I run on the
+              customer’s own computer, send orders through the broker’s own API, and leave the
+              broker login with the broker, where it belongs. My protective stops live at the broker, where your systems
+              can see them.
+            </p>
+            <p>
+              Brokers and educators who&rsquo;d like to offer me to their customers are most welcome.
+              On request, Lime Signalworks shares a security overview of how I handle data and
+              orders, and welcomes your security review.
+            </p>
+          </div>
+          <div class="notice" data-security-standards>
+            <span class="label">Security standards</span>
+            <p>
+              We design our controls around the SOC 2 Trust Services Criteria: security,
+              availability, processing integrity, confidentiality, and privacy. Access, change
+              review, backups, and incident response are written policies. Rosie has not yet
+              completed a SOC 2 audit; we will pursue one alongside our first broker partner.
+            </p>
+          </div>
+          <p class="anchor-row">
+            <a class="anchor-link" href="#contact">Start a partner conversation</a>
+          </p>
+        </div>
+      </section>
+
       <!-- Evidence — layout A (rule tiles) only. Layouts B–D stay on /preview/evidence/. -->
       <section class="section evidence" id="evidence" aria-labelledby="evidence-title" data-voice="rosie">
         <div class="shell">
@@ -456,14 +519,14 @@
       <section class="section" id="indicators" aria-labelledby="indicators-title">
         <div class="shell">
           <div class="section__head" data-voice="rosie">
-            <p class="label rule-after">Section 11</p>
+            <p class="label rule-after">Section 12</p>
             <p class="label voice-tag" data-voice-tag>From Rosie</p>
             <h2 id="indicators-title">Five TradingView indicators, from the house that built me</h2>
             <p>
               Lime Signalworks also makes its own TradingView indicators: rule-based tools that
               turn a chart into plain readings you can check, instead of a guess. They work on
               their own, on your TradingView chart, no Rosie required (I try not to take it
-              personally). This is the one slightly technical corner of the page, so each one is
+              personally). This is the most technical corner of the page, so each one is
               shown with the problem it was made to solve.
             </p>
           </div>
@@ -538,7 +601,7 @@
           <ul class="ticks">
             <li>The indicators show their logic. They support your decisions and do not make them for you.</li>
             <li>Indicators do not predict the market, and no indicator removes the risk of loss.</li>
-            <li><a href="/#how-to-begin" target="_blank" rel="noopener noreferrer">Ask Lime Signalworks how to get them</a>.</li>
+            <li><a href="/#how-to-begin">Ask Lime Signalworks how to get them</a>.</li>
           </ul>
         </div>
       </section>
@@ -554,7 +617,7 @@
             TradingView indicators. The daily market report, Harbor Now, is published on this
             site; the Leadership library is a separate site.
           </p>
-          <p class="foot__harbor"><a class="anchor-link" href="/harbor-now/" target="_blank" rel="noopener noreferrer" data-harbor-link>Daily market report</a></p>
+          <p class="foot__harbor"><a class="anchor-link" href="/harbor-now/" data-harbor-link>Daily market report</a></p>
           <!-- Contact is by real mailto: and tel: links; there is no form on this site. -->
           <dl class="contact" id="contact" data-contact>
             <div>

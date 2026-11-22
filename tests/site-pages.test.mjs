@@ -34,7 +34,7 @@ test('site: every page has the same four-link menu, with itself marked current',
       if (pages[i].id === p.id) {
         assert.deepEqual([l.href, l.current], ['#main', 'page'], `${p.file}: own entry`);
       } else {
-        assert.deepEqual([l.href, l.current, l.target], [pages[i].path, null, '_blank'], `${p.file}: link to ${pages[i].id}`);
+        assert.deepEqual([l.href, l.current, l.target], [pages[i].path, null, null], `${p.file}: link to ${pages[i].id}`);
       }
     });
     assert.equal($('.masthead__nav').attr('aria-label'), 'Site pages');

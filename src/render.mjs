@@ -111,7 +111,15 @@ function renderPricingTable(pricing) {
               </tr>`,
     )
     .join('');
-  return `<div class="table-wrap">
+  // Price block (2026-11-22, "snap and pop"): the first locked row shown large, the
+  // monthly row under it. Same figures as the table, nothing new.
+  const [lead, monthly] = pricing.rows;
+  return `<div class="price-hero" data-price-hero>
+            <span class="price-hero__term">${esc(lead.term)}</span>
+            <strong class="price-hero__amount">${esc(lead.price)}</strong>
+            <span class="price-hero__sub">${esc(monthly.term)}: <strong>${esc(monthly.price)}</strong></span>
+          </div>
+          <div class="table-wrap">
             <table class="data-table" data-pricing-table>
               <caption class="sr-only">${esc(pricing.heading)}</caption>
               <thead>
@@ -267,13 +275,62 @@ function splitSections(inner) {
   return chunks;
 }
 
+/** Buttons: in-page and site links stay in this window; anything else opens a new one. */
+const renderButtons = (ctas = []) =>
+  ctas
+    .map((c) => `<a class="btn btn--${esc(c.kind)}" href="${esc(c.href)}">${esc(c.label)}</a>`)
+    .join('\n            ');
+
+/**
+ * Video cards (2026-11-22, owner direction "include links for the videos"): a
+ * self-hosted thumbnail and YouTube's own title, linking to YouTube in a new window.
+ * No embedded player, no autoplay, nothing fetched from YouTube until clicked.
+ */
+const renderVideoCards = (videos, cls = '') =>
+  videos.length
+    ? `<ul class="video-cards ${cls}" data-video-cards>${videos
+        .map(
+          (v) => `
+              <li><a class="video-card" href="https://www.youtube.com/watch?v=${esc(v.youtubeId)}"${NEW_WINDOW} data-video="${esc(v.youtubeId)}">
+                <span class="video-card__thumb"><img src="/assets/img/video/${esc(v.youtubeId)}.jpg" width="640" height="360" loading="lazy" decoding="async" alt="" /><span class="video-card__play" aria-hidden="true"></span><span class="video-card__time">${esc(v.duration)}</span></span>
+                <span class="video-card__title">${esc(v.title)}<span class="sr-only"> (video on YouTube, opens in a new tab)</span></span>
+              </a></li>`,
+        )
+        .join('')}
+            </ul>`
+    : '';
+
 /** The page heading for every page but Home, whose opening already carries the h1. */
-const renderPageHead = (pg) => `
-      <div class="page-head" data-page-head="${esc(pg.id)}">
+const renderPageHead = (pg, videos) => `
+      <div class="page-head${pg.hooks ? ' page-head--hero' : ''}" data-page-head="${esc(pg.id)}">
         <div class="shell">
           <p class="label rule-after">${esc(pg.eyebrow)}</p>
           <h1 class="page-head__title" id="page-title">${esc(pg.heading)}</h1>
-          <p class="page-head__lede">${esc(pg.lede)}</p>
+          ${
+            pg.ledeVoice
+              ? `<div class="page-head__voice" data-voice="${esc(pg.ledeVoice)}"><span class="label voice-tag" data-voice-tag>From Rosie</span><p class="page-head__lede">${esc(pg.lede)}</p></div>`
+              : `<p class="page-head__lede">${esc(pg.lede)}</p>`
+          }${pg.ctas ? `
+          <div class="btn-row">${renderButtons(pg.ctas)}</div>` : ''}${
+            pg.hooks
+              ? `
+          <ul class="hooks" data-hooks>${pg.hooks
+            .map(
+              (h, i) => `
+            <li><a class="hook" href="${esc(h.href)}"><span class="hook__n">${String(i + 1).padStart(2, '0')} · ${esc(h.label)}</span><strong class="hook__title">${esc(h.title)}</strong>${h.text ? `<span class="hook__text">${esc(h.text)}</span>` : ''}</a></li>`,
+            )
+            .join('')}
+          </ul>`
+              : ''
+          }${
+            videos.length
+              ? `
+          <div class="page-head__videos">
+            <h2 class="page-head__videos-title" id="videos-title">Short videos</h2>
+            ${renderVideoCards(videos)}
+          </div>`
+              : ''
+          }
         </div>
       </div>
 `;
@@ -309,6 +366,13 @@ function renderBlog(posts) {
 `;
 }
 
+/** The hero's display line: Rosie's own two short sentences, the second in the accent. */
+const heroDisplay = ([a, b]) =>
+  `<div class="hero__display"><span>${esc(a)}</span> <span class="hero__display-accent">${esc(b)}</span></div>`;
+
+const CHECK =
+  '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+
 /** Exactly one h1 per page. */
 function assertSingleH1(html, file) {
   const n = (html.match(/<h1\b/g) || []).length;
@@ -324,6 +388,8 @@ async function main() {
   const data = JSON.parse(dataRaw);
   const { canonical, pages, sectionOrder, marketReport, pricing, startCards, indicators, pros } = data;
   const blog = JSON.parse(await readFile(path.join(root, 'data', 'blog.json'), 'utf8'));
+  const home = pages.find((p) => p.id === 'home');
+  const videosFor = (pageId) => (canonical.videos.library || []).filter((v) => v.pages.includes(pageId));
 
   const html = template
     .replaceAll('{{ROSIE_INTRO}}', esc(canonical.rosieIntro))
@@ -332,6 +398,10 @@ async function main() {
       `<a class="cta" href="${esc(canonical.demoUrl)}"${newWindow(canonical.demoUrl)}>${esc(canonical.demoCtaLabel)}</a>`,
     )
     .replaceAll('{{TOUR_LINK}}', videoLink(canonical.videos.tour, canonical.videos.channelUrl, 'tour'))
+    .replaceAll('{{HERO_DISPLAY}}', heroDisplay(home.hero.display))
+    .replaceAll('{{HERO_CTAS}}', renderButtons(home.hero.ctas))
+    .replaceAll('{{HERO_CHIPS}}', home.hero.chips.map((c) => `<li>${CHECK}<span>${esc(c)}</span></li>`).join(''))
+    .replaceAll('{{HOME_VIDEOS}}', renderVideoCards(videosFor('home'), 'video-cards--hero'))
     .replaceAll('{{YOUTUBE_CHANNEL_URL}}', esc(canonical.videos.channelUrl))
     .replaceAll('{{DEMO_DISCLOSURE}}', esc(canonical.demoDisclosure))
     .replaceAll('{{DEMO_ASK}}', esc(canonical.demoAsk))
@@ -382,14 +452,20 @@ async function main() {
     body.replace(/href="#([^"]+)"([^>]*)>/g, (m, id, rest) => {
       const owner = pageOf.get(id);
       if (!owner || owner === pageId) return m;
-      return `href="${pageById.get(owner).path}#${id}"${SITE_NEW_WINDOW}${rest}>`;
+      return `href="${pageById.get(owner).path}#${id}"${rest}>`;
     });
 
   const results = [];
   for (const pg of pages.filter((p) => p.id !== 'harbor')) {
     const ids = sectionOrder.filter((s) => s.page === pg.id).map((s) => s.id);
-    let body = ids.map((id) => chunks.get(id)).join('');
-    if (pg.heading) body = renderPageHead(pg) + body;
+    // Section numbers follow the page they land on (data/homepage.json sectionOrder).
+    let body = ids
+      .map((id) => {
+        const eyebrow = sectionOrder.find((s) => s.id === id).eyebrow;
+        return chunks.get(id).replace(/<p class="label rule-after">Section \d\d<\/p>/, `<p class="label rule-after">${esc(eyebrow)}</p>`);
+      })
+      .join('');
+    if (pg.heading) body = renderPageHead(pg, videosFor(pg.id)) + body;
     if (pg.id === 'blog') body += renderBlog(blog.posts);
     body = linkAcross(body, pg.id);
 

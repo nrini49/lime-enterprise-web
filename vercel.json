@@ -15,7 +15,7 @@
     },
     {
       "source": "/how-lime-works",
-      "destination": "/",
+      "destination": "/how-rosie-works/",
       "permanent": true
     },
     {
@@ -40,7 +40,7 @@
     },
     {
       "source": "/unique-high-performance",
-      "destination": "/",
+      "destination": "/how-rosie-works/",
       "permanent": true
     },
     {
@@ -50,21 +50,66 @@
     },
     {
       "source": "/daily-alerts",
-      "destination": "/",
+      "destination": "/harbor-now/",
       "permanent": true
     },
     {
       "source": "/not-a-black-box",
-      "destination": "/",
+      "destination": "/how-rosie-works/",
       "permanent": true
     },
     {
       "source": "/technical-indicator-specs",
-      "destination": "/",
+      "destination": "/how-rosie-works/",
       "permanent": true
     },
     {
       "source": "/testimony-parade",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/alignment",
+      "destination": "/how-rosie-works/",
+      "permanent": true
+    },
+    {
+      "source": "/coherence",
+      "destination": "/how-rosie-works/",
+      "permanent": true
+    },
+    {
+      "source": "/business-structure-1",
+      "destination": "/how-rosie-works/",
+      "permanent": true
+    },
+    {
+      "source": "/founders-comments",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/services",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/still-skeptical",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/testimonies",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/lime-shop",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/terms-of-use",
       "destination": "/",
       "permanent": true
     },
