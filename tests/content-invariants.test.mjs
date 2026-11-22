@@ -14,8 +14,25 @@ const readJson = (p) => JSON.parse(readFileSync(path.join(root, p), 'utf8'));
 
 const data = readJson('data/homepage.json');
 const { canonical, sectionOrder, marketReport, pricing, startCards } = data;
-const html = readFileSync(path.join(root, 'index.html'), 'utf8');
-const $ = cheerio.load(html);
+// 2026-11-22: the homepage is split into four pages (Home, How Rosie Works, Harbor Now,
+// Blog). The content checks below run over the whole site's wording at once: Home's
+// document, with the How Rosie Works sections and the Harbor Now market-report section
+// appended to its <main> in page order, so every section is checked exactly once and
+// the header, footer and contact block are still counted once. Per-page structure (menu,
+// headings, cross-page links) is checked in tests/site-pages.test.mjs.
+const readPage = (file) => readFileSync(path.join(root, file), 'utf8');
+const $ = cheerio.load(readPage('index.html'));
+{
+  const how = cheerio.load(readPage('how-rosie-works/index.html'));
+  how('main > section').each((_, el) => {
+    $('main').append(how.html(el));
+  });
+  const harbor = cheerio.load(readPage('harbor-now/index.html'));
+  for (const s of sectionOrder.filter((x) => x.page === 'harbor')) {
+    $('main').append(harbor.html(harbor(`section#${s.id}`)));
+  }
+}
+const html = $.html();
 
 // 2026-10-28: the hosted Perplexity demo is retired from the home page at the owner's
 // direction. The only demo link is the static sample-data demo at /rosie-demo/ (PR #15),
@@ -249,35 +266,44 @@ test('data: canonical strings are the exact approved wording', () => {
   assert.equal(canonical.evaluationTerm, "one month");
 });
 
-test('data: the section order is the translated Site 1 order, with unique ids', () => {
+test('data: the section order and the page each section sits on', () => {
+  // 2026-11-22 (owner approval, t1954u): the homepage is split into four pages. Home is
+  // short and non-technical; How Rosie Works gets more technical toward the indicators;
+  // the market-report explainer sits on Harbor Now. Wording moved, not rewritten.
   assert.deepEqual(
-    sectionOrder.map((s) => s.id),
+    sectionOrder.map((s) => [s.page, s.id]),
     [
-      // 2026-10-28 (content/assembled-home): the personal opening, life with Rosie,
-      // will and won't, evidence tiles, indicators and demo lead the page, in the
-      // owner's order; the existing sections follow unchanged.
-      'opening',
-      'life',
-      'will-wont',
-      'pros', // 2026-10-28: "Trading the way the pros do", after will-and-won't
-      'evidence',
-      'indicators',
-      'demo',
-      'what-we-do',
-      'how-it-works',
-      'protection',
-      'phone',
-      'markets',
-      'evaluation',
-      'pricing',
-      'market-report',
-      'commitments',
-      'partners',
-      'how-to-begin',
+      ['home', 'opening'],
+      ['home', 'will-wont'],
+      ['home', 'evaluation'],
+      ['home', 'pricing'],
+      ['home', 'partners'],
+      ['home', 'how-to-begin'],
+      ['how-rosie-works', 'life'],
+      ['how-rosie-works', 'what-we-do'],
+      ['how-rosie-works', 'how-it-works'],
+      ['how-rosie-works', 'demo'],
+      ['how-rosie-works', 'markets'],
+      ['how-rosie-works', 'phone'],
+      ['how-rosie-works', 'pros'],
+      ['how-rosie-works', 'protection'],
+      ['how-rosie-works', 'commitments'],
+      ['how-rosie-works', 'evidence'],
+      ['how-rosie-works', 'indicators'],
+      ['harbor', 'market-report'],
     ],
   );
   const ids = sectionOrder.map((s) => s.id);
   assert.equal(new Set(ids).size, ids.length, 'section ids must be unique');
+  assert.deepEqual(
+    data.pages.map((p) => [p.id, p.nav, p.path]),
+    [
+      ['home', 'Home', '/'],
+      ['how-rosie-works', 'How Rosie Works', '/how-rosie-works/'],
+      ['harbor', 'Harbor Now', '/harbor-now/'],
+      ['blog', 'Blog', '/blog/'],
+    ],
+  );
 });
 
 test('data: prices are the locked figures (2026-10-07)', () => {
@@ -351,14 +377,17 @@ test('dom: every section in the order is rendered and labelled', () => {
   }
 });
 
-test('dom: navigation links match the recorded nav labels and all resolve', () => {
+test('dom: the masthead menu links the four pages, Home marked as the current page', () => {
   const navLinks = $('.masthead__nav a');
-  const expected = sectionOrder.filter((s) => s.nav);
-  assert.equal(navLinks.length, expected.length);
-  navLinks.each((i, el) => {
-    assert.equal($(el).attr('href'), `#${expected[i].id}`);
-    assert.equal(norm($(el).text()), expected[i].nav);
-  });
+  assert.deepEqual(
+    navLinks.map((_, el) => [norm($(el).text()), $(el).attr('href'), $(el).attr('aria-current') || null]).get(),
+    [
+      ['Home', '#main', 'page'],
+      ['How Rosie Works', '/how-rosie-works/', null],
+      ['Harbor Now', '/harbor-now/', null],
+      ['Blog', '/blog/', null],
+    ].flat(),
+  );
 });
 
 test('dom: every in-page anchor resolves to an element that exists', () => {
@@ -789,11 +818,12 @@ test('dom: no forbidden Site 1 or scriptural terminology in rendered text or met
   }
 });
 
-test('dom: the pros block is the approved copy, right after will-and-won\'t, naming no one', () => {
+test('dom: the pros block is the approved copy, on How Rosie Works, naming no one', () => {
   const sec = $('section#pros');
   assert.equal(sec.length, 1);
-  assert.equal(sec.prev('section').attr('id'), 'will-wont', 'it follows What Rosie will and won\'t do');
-  assert.equal(sec.next('section').attr('id'), 'evidence', 'it comes before Evidence');
+  // 2026-11-22: on How Rosie Works, between the light sections and the rules.
+  assert.equal(sec.prev('section').attr('id'), 'phone', 'it follows Coming soon: me, in your pocket');
+  assert.equal(sec.next('section').attr('id'), 'protection', 'it comes before I count the cost');
   assert.equal(norm(sec.find('h2').text()), 'Trading the way the pros do.');
   assert.equal(norm(sec.find('.section__head > p:not(.label)').text()), data.pros.body);
   assert.equal(
@@ -1100,7 +1130,7 @@ test('voice: every first-person line belongs to a labelled voice, Noal or Rosie'
   // 2026-11-01 the opening is Rosie's, telling his story, with a "From Rosie" tag.
   assert.deepEqual(
     $('[data-voice="noal"]').map((_, el) => $(el).closest('section').attr('id')).get(),
-    ['life', 'will-wont'],
+    ['will-wont', 'life'], // 2026-11-22: will-wont on Home, life on How Rosie Works
   );
   assert.equal($('#opening [data-voice="noal"]').length, 0, 'the opening is no longer in Noal\'s voice');
   assert.equal($('#opening > .shell > .opening__col[data-voice="rosie"] > [data-voice-tag]').length, 1, 'the opening is labelled From Rosie');

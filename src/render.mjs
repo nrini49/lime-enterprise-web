@@ -1,15 +1,21 @@
 #!/usr/bin/env node
 /**
- * Build step: render data/homepage.json into a static index.html.
- * data/homepage.json is the single source of truth for canonical strings, the
- * section order, the market-report example, pricing, the indicators, and the start cards.
- * index.html is generated output.
- * It also renders Harbor Now (data/harbor/*.data.json) into harbor-now/ via src/harbor.mjs.
+ * Build step: render data/homepage.json into the static four-page site (2026-11-22).
+ * data/homepage.json is the single source of truth for canonical strings, the pages, the
+ * section order (and which page each section sits on), the market-report example,
+ * pricing, the indicators, and the start cards. src/template.html holds every section's
+ * markup once; this script places each section on its page:
+ *   index.html                 Home
+ *   how-rosie-works/index.html How Rosie Works
+ *   harbor-now/                Harbor Now (via src/harbor.mjs, with the market-report section)
+ *   blog/index.html            Blog (from data/blog.json)
+ * All of these are generated output, committed so the site works with no build step.
  */
-import { readFile, writeFile } from 'node:fs/promises';
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { buildHarbor } from './harbor.mjs';
+import { siteNav, brandLink, NEW_WINDOW as SITE_NEW_WINDOW } from './site.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -61,13 +67,6 @@ const newWindow = (href) => (leavesPage(href) ? NEW_WINDOW : '');
 /** A working contact channel: a real mailto:/tel: anchor, never a form. */
 const contactLink = (href, label, marker) =>
   `<a class="contact__link" href="${esc(href)}" data-${esc(marker)}>${esc(label)}</a>`;
-
-function renderNav(sections) {
-  return sections
-    .filter((s) => s.nav)
-    .map((s) => `<a href="#${esc(s.id)}">${esc(s.nav)}</a>`)
-    .join('\n          ');
-}
 
 function renderMarketTable(report) {
   const rows = report.rows
@@ -203,7 +202,7 @@ function renderIndicators(indicators) {
 /** The rendered section order must equal the order recorded in the data file. */
 function assertSectionOrder(html, sections) {
   const rendered = [...html.matchAll(/<section[^>]*\sid="([^"]+)"/g)].map((m) => m[1]);
-  const expected = sections.map((s) => s.id);
+  const expected = sections;
   if (rendered.join(',') !== expected.join(',')) {
     throw new Error(
       `Section order drift.\n  expected: ${expected.join(', ')}\n  rendered: ${rendered.join(', ')}`,
@@ -250,6 +249,72 @@ ${habits}
       </section>`;
 }
 
+/** Tokens filled in per page, after the shared template tokens. */
+const PAGE_TOKENS = ['{{PAGE_TITLE}}', '{{PAGE_DESCRIPTION}}', '{{BRAND_LINK}}', '{{NAV}}'];
+
+/**
+ * Split the template's <main> into one chunk per <section id>, each chunk carrying the
+ * comments and whitespace that come before it. Sections are never nested.
+ */
+function splitSections(inner) {
+  const chunks = new Map();
+  let pos = 0;
+  for (const m of inner.matchAll(/<section\b[^>]*\sid="([^"]+)"[\s\S]*?<\/section>/g)) {
+    const end = m.index + m[0].length;
+    chunks.set(m[1], inner.slice(pos, end));
+    pos = end;
+  }
+  return chunks;
+}
+
+/** The page heading for every page but Home, whose opening already carries the h1. */
+const renderPageHead = (pg) => `
+      <div class="page-head" data-page-head="${esc(pg.id)}">
+        <div class="shell">
+          <p class="label rule-after">${esc(pg.eyebrow)}</p>
+          <h1 class="page-head__title" id="page-title">${esc(pg.heading)}</h1>
+          <p class="page-head__lede">${esc(pg.lede)}</p>
+        </div>
+      </div>
+`;
+
+/** The blog list, or its coming-soon note while there are no posts. Never invented posts. */
+function renderBlog(posts) {
+  const list = posts.length
+    ? `<ul class="blog-list" data-blog-posts>${posts
+        .map(
+          (p) => `
+            <li class="blog-list__item">
+              <p class="label"><time datetime="${esc(p.date)}">${esc(p.date)}</time></p>
+              <h3><a href="${esc(p.url)}"${SITE_NEW_WINDOW}>${esc(p.title)}</a></h3>
+              <p>${esc(p.summary)}</p>
+            </li>`,
+        )
+        .join('')}
+          </ul>`
+    : `<div class="blog-empty" data-blog-empty>
+            <p class="blog-empty__lead">Posts are coming soon.</p>
+            <p>Experiences, Tech Tips and comments will appear here as they are written.
+              Until then, you can <a href="#contact">call or email Lime Signalworks</a>.</p>
+          </div>`;
+  return `
+      <section class="section blog" aria-labelledby="blog-posts-title" data-blog>
+        <div class="shell">
+          <div class="section__head">
+            <h2 id="blog-posts-title">Posts</h2>
+          </div>
+          ${list}
+        </div>
+      </section>
+`;
+}
+
+/** Exactly one h1 per page. */
+function assertSingleH1(html, file) {
+  const n = (html.match(/<h1\b/g) || []).length;
+  if (n !== 1) throw new Error(`${file} has ${n} h1 elements; exactly one is required`);
+}
+
 async function main() {
   const [dataRaw, template] = await Promise.all([
     readFile(path.join(root, 'data', 'homepage.json'), 'utf8'),
@@ -257,10 +322,10 @@ async function main() {
   ]);
 
   const data = JSON.parse(dataRaw);
-  const { canonical, sectionOrder, marketReport, pricing, startCards, indicators, pros } = data;
+  const { canonical, pages, sectionOrder, marketReport, pricing, startCards, indicators, pros } = data;
+  const blog = JSON.parse(await readFile(path.join(root, 'data', 'blog.json'), 'utf8'));
 
   const html = template
-    .replaceAll('{{NAV}}', renderNav(sectionOrder))
     .replaceAll('{{ROSIE_INTRO}}', esc(canonical.rosieIntro))
     .replaceAll(
       '{{DEMO_CTA}}',
@@ -290,20 +355,71 @@ async function main() {
     .replaceAll('{{RISK_DISCLOSURE}}', esc(canonical.riskDisclosure))
     .replaceAll('{{COPYRIGHT}}', esc(canonical.copyright));
 
-  const leftover = html.match(/\{\{[A-Z_]+\}\}/g);
-  if (leftover) throw new Error(`Unreplaced template tokens: ${leftover.join(', ')}`);
+  const leftover = html.match(/\{\{[A-Z_]+\}\}/g)?.filter((t) => !PAGE_TOKENS.includes(t));
+  if (leftover?.length) throw new Error(`Unreplaced template tokens: ${leftover.join(', ')}`);
 
-  assertSectionOrder(html, sectionOrder);
-  assertUniqueIds(html);
-  assertAnchorsResolve(html);
+  // Every section's markup, keyed by id, with the comments that introduce it.
+  const mainOpen = html.indexOf('<main id="main">') + '<main id="main">'.length;
+  const mainClose = html.indexOf('</main>');
+  const shellBefore = html.slice(0, mainOpen);
+  const shellAfter = html.slice(mainClose);
+  const chunks = splitSections(html.slice(mainOpen, mainClose));
+  const known = sectionOrder.map((s) => s.id);
+  const extra = [...chunks.keys()].filter((id) => !known.includes(id));
+  if (extra.length) throw new Error(`Sections in the template but not in sectionOrder: ${extra.join(', ')}`);
 
-  await writeFile(path.join(root, 'index.html'), html, 'utf8');
+  // Which page owns each id, so a link to a section on another page becomes a page link.
+  const pageOf = new Map();
+  for (const s of sectionOrder) {
+    if (!pages.some((p) => p.id === s.page)) throw new Error(`Section ${s.id} names unknown page ${s.page}`);
+    const chunk = chunks.get(s.id);
+    if (!chunk) throw new Error(`Section ${s.id} is in sectionOrder but not in the template`);
+    for (const m of chunk.matchAll(/\sid="([^"]+)"/g)) pageOf.set(m[1], s.page);
+  }
+  const pageById = new Map(pages.map((p) => [p.id, p]));
+
+  const linkAcross = (body, pageId) =>
+    body.replace(/href="#([^"]+)"([^>]*)>/g, (m, id, rest) => {
+      const owner = pageOf.get(id);
+      if (!owner || owner === pageId) return m;
+      return `href="${pageById.get(owner).path}#${id}"${SITE_NEW_WINDOW}${rest}>`;
+    });
+
+  const results = [];
+  for (const pg of pages.filter((p) => p.id !== 'harbor')) {
+    const ids = sectionOrder.filter((s) => s.page === pg.id).map((s) => s.id);
+    let body = ids.map((id) => chunks.get(id)).join('');
+    if (pg.heading) body = renderPageHead(pg) + body;
+    if (pg.id === 'blog') body += renderBlog(blog.posts);
+    body = linkAcross(body, pg.id);
+
+    const out = (shellBefore + body + '\n    ' + shellAfter)
+      .replaceAll('{{PAGE_TITLE}}', esc(pg.title))
+      .replaceAll('{{PAGE_DESCRIPTION}}', esc(pg.description))
+      .replaceAll('{{BRAND_LINK}}', brandLink(pg.id))
+      .replaceAll('{{NAV}}', siteNav(pages, pg.id));
+
+    assertSectionOrder(out, ids);
+    assertUniqueIds(out);
+    assertAnchorsResolve(out);
+    assertSingleH1(out, pg.file);
+
+    await mkdir(path.dirname(path.join(root, pg.file)), { recursive: true });
+    await writeFile(path.join(root, pg.file), out, 'utf8');
+    results.push(`${pg.file} (${ids.length} sections)`);
+  }
   console.log(
-    `built index.html — ${sectionOrder.length} sections, ${startCards.length} start cards, ` +
-      `${pricing.rows.length} prices, ${marketReport.rows.length} example report rows`,
+    `built ${results.join(', ')} — ${startCards.length} start cards, ` +
+      `${pricing.rows.length} prices, ${marketReport.rows.length} example report rows, ${blog.posts.length} blog posts`,
   );
 
-  const harbor = await buildHarbor(root, canonical);
+  // Harbor Now: its own editions, plus the sections the data file places on it
+  // (the market-report explainer) and the "Latest from the blog" strip at the bottom.
+  const harborSections = sectionOrder
+    .filter((s) => s.page === 'harbor')
+    .map((s) => linkAcross(chunks.get(s.id), 'harbor'))
+    .join('');
+  const harbor = await buildHarbor(root, canonical, { pages, harborSections, blogPosts: blog.posts });
   console.log(
     `built harbor-now/ — ${harbor.count} editions, latest ${harbor.latest}` +
       (harbor.stale ? ' (stale: restart note shown)' : ''),

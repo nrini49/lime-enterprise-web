@@ -179,7 +179,7 @@ test('harbor: cluster lines keep the description and lose directives', () => {
 test('harbor: the restart note appears only when the latest edition is more than 3 days old', async () => {
   const latest = dates.at(-1);
   const plus = (n) => new Date(Date.parse(`${latest}T00:00:00Z`) + n * 86400000).toISOString().slice(0, 10);
-  const canonical = JSON.parse(readFileSync(path.join(root, 'data/homepage.json'), 'utf8')).canonical;
+  const { canonical, pages: sitePages } = JSON.parse(readFileSync(path.join(root, 'data/homepage.json'), 'utf8'));
   const tmp = mkdtempSync(path.join(tmpdir(), 'harbor-'));
   mkdirSync(path.join(tmp, 'data'), { recursive: true });
   cpSync(dataDir, path.join(tmp, 'data', 'harbor'), { recursive: true });
@@ -188,7 +188,7 @@ test('harbor: the restart note appears only when the latest edition is more than
   try {
     for (const [days, expected] of [[0, false], [3, false], [4, true], [29, true]]) {
       process.env.HARBOR_NOW_TODAY = plus(days);
-      const res = await buildHarbor(tmp, canonical);
+      const res = await buildHarbor(tmp, canonical, { pages: sitePages });
       assert.equal(res.stale, expected, `${days} days old`);
       for (const rel of ['harbor-now/index.html', `harbor-now/${latest}/index.html`, `harbor-now/${dates[0]}/index.html`]) {
         const $ = cheerio.load(readFileSync(path.join(tmp, rel), 'utf8'));
@@ -376,7 +376,7 @@ test('voice: rewritten text is what renders, and the stance originals do not', (
 
 /** Build a copy of the archive with one edition's source edited, and return the error. */
 const buildWith = async (edit, editVoice) => {
-  const canonical = JSON.parse(readFileSync(path.join(root, 'data/homepage.json'), 'utf8')).canonical;
+  const { canonical, pages: sitePages } = JSON.parse(readFileSync(path.join(root, 'data/homepage.json'), 'utf8'));
   const tmp = mkdtempSync(path.join(tmpdir(), 'harbor-voice-'));
   mkdirSync(path.join(tmp, 'data'), { recursive: true });
   cpSync(dataDir, path.join(tmp, 'data', 'harbor'), { recursive: true });
@@ -391,7 +391,7 @@ const buildWith = async (edit, editVoice) => {
     writeFileSync(path.join(tmp, VOICE_DIR, `${d}.json`), JSON.stringify(v));
   }
   try {
-    await buildHarbor(tmp, canonical);
+    await buildHarbor(tmp, canonical, { pages: sitePages });
     return null;
   } catch (e) {
     return e;
@@ -463,7 +463,9 @@ test('voice: no "we", "our" or "us" renders outside the legal notice; Rosie says
 
 test('voice: every Harbor page says whose "I" it is, with a "From Rosie" tag', () => {
   for (const rel of pages) {
-    const tag = load(rel)('[data-voice-tag]');
+    // 2026-11-22: the report body carries one tag; the market-report explainer that
+    // moved here from the homepage (index only) carries its own, outside .hn-section.
+    const tag = load(rel)('.hn-section [data-voice-tag]');
     assert.equal(tag.length, 1, `${rel}: one voice tag`);
     assert.equal(norm(tag.text()), 'From Rosie');
   }

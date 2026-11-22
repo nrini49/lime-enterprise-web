@@ -32,20 +32,52 @@ const WIDTHS = [
 ];
 
 /** Surfaces that must follow the active palette. Selector → description. */
-const SURFACES = [
+const COMMON_SURFACES = [
   ['html', 'root element'],
   ['body', 'body'],
   ['main#main', 'main'],
   ['.masthead', 'masthead'],
-  ['.hero', 'hero'],
-  ['#what-we-do', 'what we do section'],
-  ['#market-report', 'market report section'],
-  ['#evaluation', 'evaluation section'],
-  ['#pricing', 'pricing section'],
-  ['#partners', 'Partners section'],
-  ['#how-to-begin', 'how to begin section'],
-  ['.foot', 'footer'],
 ];
+
+/**
+ * 2026-11-22: the homepage is split into four pages. The three that open dark (Home,
+ * How Rosie Works, Blog) are checked here; Harbor Now opens light and is covered by
+ * tests/harbor-rendered.test.mjs.
+ */
+const DARK_PAGES = [
+  {
+    path: '',
+    label: 'Home',
+    surfaces: [
+      ...COMMON_SURFACES,
+      ['.hero', 'hero'],
+      ['#evaluation', 'evaluation section'],
+      ['#pricing', 'pricing section'],
+      ['#partners', 'Partners section'],
+      ['#how-to-begin', 'how to begin section'],
+      ['.foot', 'footer'],
+    ],
+  },
+  {
+    path: 'how-rosie-works/',
+    label: 'How Rosie Works',
+    surfaces: [
+      ...COMMON_SURFACES,
+      ['.page-head', 'page heading'],
+      ['#what-we-do', 'what we do section'],
+      ['#demo', 'demo section'],
+      ['#protection', 'protection section'],
+      ['#indicators', 'indicators section'],
+      ['.foot', 'footer'],
+    ],
+  },
+  {
+    path: 'blog/',
+    label: 'Blog',
+    surfaces: [...COMMON_SURFACES, ['.page-head', 'page heading'], ['[data-blog]', 'blog section'], ['.foot', 'footer']],
+  },
+];
+const SURFACES = DARK_PAGES[0].surfaces;
 
 const DARK_MAX_LUMINANCE = 0.12;
 const LIGHT_MIN_LUMINANCE = 0.6;
@@ -138,8 +170,8 @@ test('rendered theme: every surface follows the palette at 1920, 1440, 1280, 414
   const server = await startServer();
   const browser = await chromium.launch();
   try {
-    for (const { width, height, label } of WIDTHS) {
-      await t.test(`${label} (${width}px)`, async () => {
+    for (const { width, height, label } of WIDTHS) for (const pg of DARK_PAGES) {
+      await t.test(`${pg.label}, ${label} (${width}px)`, async () => {
         // A light operating system is emulated throughout: the default state must
         // still be dark, and the toggle must still reach both palettes.
         const context = await browser.newContext({
@@ -149,12 +181,12 @@ test('rendered theme: every surface follows the palette at 1920, 1440, 1280, 414
         const page = await context.newPage();
         const failures = [];
         page.on('pageerror', (err) => failures.push(String(err)));
-        await page.goto(ORIGIN, { waitUntil: 'networkidle' });
+        await page.goto(ORIGIN + pg.path, { waitUntil: 'networkidle' });
         await page.evaluate(() => document.fonts.ready);
         await page.evaluate(PAGE_PROBE);
 
         // Dark theme is the default state, despite the light OS preference.
-        for (const [selector, description] of SURFACES) {
+        for (const [selector, description] of pg.surfaces) {
           const probe = await page.evaluate((s) => window.__themeProbe.surface(s), selector);
           assert.ok(
             probe.luminance !== null && probe.luminance < DARK_MAX_LUMINANCE,
@@ -197,7 +229,7 @@ test('rendered theme: every surface follows the palette at 1920, 1440, 1280, 414
         await page.waitForFunction(() => document.documentElement.dataset.theme === 'light');
         await page.waitForTimeout(400);
         await page.evaluate(PAGE_PROBE);
-        for (const [selector, description] of SURFACES) {
+        for (const [selector, description] of pg.surfaces) {
           const probe = await page.evaluate((s) => window.__themeProbe.surface(s), selector);
           assert.ok(!probe.missing, `${description} missing at ${width}px`);
           assert.ok(
@@ -211,7 +243,7 @@ test('rendered theme: every surface follows the palette at 1920, 1440, 1280, 414
         await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
         await page.waitForTimeout(400);
         await page.evaluate(PAGE_PROBE);
-        for (const [selector, description] of SURFACES) {
+        for (const [selector, description] of pg.surfaces) {
           const probe = await page.evaluate((s) => window.__themeProbe.surface(s), selector);
           assert.ok(
             probe.luminance !== null && probe.luminance < DARK_MAX_LUMINANCE,
@@ -510,14 +542,14 @@ test('rendered: nothing overflows horizontally in either palette', async (t) => 
   const server = await startServer();
   const browser = await chromium.launch();
   try {
-    for (const { width, height, label } of WIDTHS) {
-      await t.test(`${label} (${width}px)`, async () => {
+    for (const { width, height, label } of WIDTHS) for (const pg of DARK_PAGES) {
+      await t.test(`${pg.label}, ${label} (${width}px)`, async () => {
         const context = await browser.newContext({
           viewport: { width, height },
           colorScheme: 'dark',
         });
         const page = await context.newPage();
-        await page.goto(ORIGIN, { waitUntil: 'networkidle' });
+        await page.goto(ORIGIN + pg.path, { waitUntil: 'networkidle' });
         await page.evaluate(() => document.fonts.ready);
 
         const measure = () =>
@@ -566,7 +598,8 @@ test('rendered: the demo disclosure is visible next to the call to action before
           colorScheme: 'dark',
         });
         const page = await context.newPage();
-        await page.goto(ORIGIN, { waitUntil: 'networkidle' });
+        // 2026-11-22: the demo section sits on How Rosie Works.
+        await page.goto(ORIGIN + 'how-rosie-works/', { waitUntil: 'networkidle' });
         await page.evaluate(() => document.fonts.ready);
 
         const cta = page.locator('a.cta');
@@ -620,7 +653,10 @@ test('rendered: the demo disclosure is visible next to the call to action before
   }
 });
 
-test('rendered: anchor navigation moves to each target section', async () => {
+test('rendered: the page menu and every anchor reach their target', async () => {
+  // 2026-11-22: the masthead menu links the four pages (each opening in a new window,
+  // per the 2026-11-01 rule); the current page's own entry goes to #main. A link to a
+  // section on another page names that page's path, and the section must exist there.
   const server = await startServer();
   const browser = await chromium.launch();
   try {
@@ -629,39 +665,34 @@ test('rendered: anchor navigation moves to each target section', async () => {
       colorScheme: 'dark',
     });
     const page = await context.newPage();
-    await page.goto(ORIGIN, { waitUntil: 'networkidle' });
+    for (const pg of DARK_PAGES) {
+      await page.goto(ORIGIN + pg.path, { waitUntil: 'networkidle' });
+      const nav = await page.$$eval('.masthead__nav a', (els) =>
+        els.map((el) => [el.textContent.trim(), el.getAttribute('href'), el.getAttribute('target')]),
+      );
+      assert.equal(nav.length, 4, `${pg.label}: four page links`);
+      for (const [text, href, target] of nav) {
+        if (href === '#main') continue;
+        assert.ok(href.startsWith('/') && href.endsWith('/'), `${pg.label}: ${text} links a page folder`);
+        assert.equal(target, '_blank', `${pg.label}: ${text} opens in a new window`);
+      }
+      await page.click('.masthead__nav a[aria-current="page"]');
+      assert.equal(new URL(page.url()).hash, '#main', `${pg.label}: the current page entry stays put`);
 
-    const navTargets = await page.$$eval('.masthead__nav a', (els) =>
-      els.map((el) => el.getAttribute('href')),
-    );
-    assert.ok(navTargets.length >= 5, 'the nav reflects the section order');
-    for (const target of navTargets) {
-      await page.click(`.masthead__nav a[href="${target}"]`);
-      assert.equal(new URL(page.url()).hash, target, `nav to ${target} sets the fragment`);
-      // Smooth scrolling is enabled, so poll until the section has actually arrived.
-      // Either it lands clear of the sticky masthead, or the document is already at its
-      // end and cannot scroll further.
-      await page
-        .waitForFunction((sel) => {
-          const top = document.querySelector(sel).getBoundingClientRect().top;
-          const header = document.querySelector('.masthead').getBoundingClientRect().height;
-          const atEnd =
-            window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
-          return (top >= header - 8 && top < header + 120) || (atEnd && top < window.innerHeight);
-        }, target)
-        .catch(() => {
-          throw new Error(`nav to ${target} never arrived`);
-        });
+      for (const href of await page.$$eval('main a[href^="#"]', (els) => els.map((el) => el.getAttribute('href')))) {
+        const exists = await page.evaluate((sel) => Boolean(document.querySelector(sel)), href);
+        assert.ok(exists, `${pg.label}: in-page anchor ${href} resolves`);
+      }
+      const across = await page.$$eval('main a[href^="/"][href*="#"]', (els) => els.map((el) => el.getAttribute('href')));
+      for (const href of across) {
+        const [pathPart, hash] = href.split('#');
+        const other = await context.newPage();
+        const res = await other.goto(ORIGIN + pathPart.slice(1), { waitUntil: 'load' });
+        assert.equal(res.status(), 200, `${pg.label}: ${href} page loads`);
+        assert.ok(await other.evaluate((id) => Boolean(document.getElementById(id)), hash), `${pg.label}: ${href} target exists`);
+        await other.close();
+      }
     }
-
-    // In-page anchors inside the body behave the same way.
-    for (const href of await page.$$eval('main a[href^="#"]', (els) =>
-      els.map((el) => el.getAttribute('href')),
-    )) {
-      const exists = await page.evaluate((sel) => Boolean(document.querySelector(sel)), href);
-      assert.ok(exists, `in-page anchor ${href} resolves`);
-    }
-
     await context.close();
   } finally {
     await browser.close();
@@ -783,22 +814,25 @@ test('rendered: the page is complete and usable with JavaScript disabled', async
 
     // Every section, the call to action and its disclosure are
     // present in the served markup, so nothing essential depends on script.
+    // 2026-11-22: the demo and what-we-do sections are on How Rosie Works; the
+    // market-report explainer is on Harbor Now (covered by the Harbor tests).
     for (const selector of [
-      'a.cta',
-      '[data-demo-disclosure]',
-      '[data-demo-ask]',
       '[data-contact]',
       '[data-contact-email]',
       '[data-contact-phone]',
       '[data-securities-disclaimer]',
-      '#what-we-do',
-      '#market-report',
       '#pricing',
       '#partners',
       '#how-to-begin',
       '[data-pricing-table]',
+      '.masthead__nav a[href="/how-rosie-works/"]',
     ]) {
       assert.ok(await page.locator(selector).isVisible(), `${selector} must render without JS`);
+    }
+    assert.equal(await page.locator('button').count(), 0, 'no inert control without JS on Home');
+    await page.goto(ORIGIN + 'how-rosie-works/', { waitUntil: 'load' });
+    for (const selector of ['a.cta', '[data-demo-disclosure]', '[data-demo-ask]', '#what-we-do', '#indicators', '[data-contact]']) {
+      assert.ok(await page.locator(selector).isVisible(), `how-rosie-works: ${selector} must render without JS`);
     }
     // No control may be shown that cannot act: the toggle is script-created, so with
     // script disabled the page presents no buttons at all.

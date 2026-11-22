@@ -6,10 +6,11 @@
   "type": "module",
   "scripts": {
     "build": "node src/render.mjs",
-    "test": "npm run build && node --test tests/",
-    "test:content": "npm run build && node --test tests/content-invariants.test.mjs tests/harbor-now.test.mjs tests/links-new-window.test.mjs",
+    "test": "npm run build && node --test tests/*.test.mjs",
+    "test:content": "npm run build && node --test tests/content-invariants.test.mjs tests/harbor-now.test.mjs tests/links-new-window.test.mjs tests/site-pages.test.mjs",
     "test:rendered": "npm run build && node --test tests/theme-rendering.test.mjs",
-    "serve": "node scripts/serve.mjs"
+    "serve": "node scripts/serve.mjs",
+    "export": "node scripts/export-static.mjs"
   },
   "devDependencies": {
     "cheerio": "^1.2.0",

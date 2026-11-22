@@ -15,7 +15,7 @@
     },
     "securitiesDisclaimer": "Lime Signalworks provides educational tools and analysis, not personalized investment advice. Securities trading involves risk of loss. Your decisions and results are your own. Nothing here is an offer to sell or a solicitation to buy any security.",
     "evaluationTerm": "one month",
-    "copyright": "\u00a9 2026 Lime Signalworks LLC.",
+    "copyright": "© 2026 Lime Signalworks LLC.",
     "riskDisclosure": "Trading involves risk of loss. Past performance, including paper-trading results, does not guarantee future results. Nothing on this site is investment advice.",
     "videos": {
       "_comment": "The ONE place for video links. channelUrl is the existing Lime Signalworks YouTube channel. Each video's url stays null until a real video is published; while it is null, the tour button links to the channel with fallbackLabel, and the Harbor Now how-to link is not rendered at all, so visitors never see a broken or invented link. To go live, paste the real watch URL into url.",
@@ -31,96 +31,135 @@
       }
     }
   },
+  "pages": [
+    {
+      "id": "home",
+      "nav": "Home",
+      "path": "/",
+      "file": "index.html",
+      "title": "LIME Enterprise — Rosie Keelwise, the automated trading operator who never blinks",
+      "description": "Rosie Keelwise is an automated, rules-based trading operator from Lime Signalworks. She watches the markets while you live your life, holds to your rules and keeps a protective stop at your broker on every position, while you supervise. Try her free for one month in a paper (practice) account."
+    },
+    {
+      "id": "how-rosie-works",
+      "nav": "How Rosie Works",
+      "path": "/how-rosie-works/",
+      "file": "how-rosie-works/index.html",
+      "title": "How Rosie Works — Lime Signalworks",
+      "description": "How Rosie Keelwise works: the three steps, the protective stop on every position, the risk limits she keeps, the markets she handles, and the five Lime Signalworks TradingView indicators.",
+      "eyebrow": "Lime Signalworks · How Rosie Works",
+      "heading": "How Rosie Works",
+      "lede": "The steps, rules and safeguards behind Rosie, starting simple and getting more technical toward the five TradingView indicators at the end."
+    },
+    {
+      "id": "harbor",
+      "nav": "Harbor Now",
+      "path": "/harbor-now/",
+      "file": "harbor-now/index.html",
+      "_comment": "Built by src/harbor.mjs from data/harbor/, with its own title and description."
+    },
+    {
+      "id": "blog",
+      "nav": "Blog",
+      "path": "/blog/",
+      "file": "blog/index.html",
+      "title": "Blog — Lime Signalworks",
+      "description": "The Lime Signalworks blog: experiences with Rosie, Tech Tips, and, later, comments from readers. The first posts are coming soon.",
+      "eyebrow": "Lime Signalworks · Blog",
+      "heading": "Blog",
+      "lede": "A place for experiences with Rosie, Tech Tips, and, later, your comments."
+    }
+  ],
   "sectionOrder": [
     {
       "id": "opening",
-      "eyebrow": "From Rosie",
-      "nav": null
-    },
-    {
-      "id": "life",
-      "eyebrow": "Your life with Rosie",
-      "nav": "Life with Rosie"
+      "page": "home",
+      "eyebrow": "From Rosie"
     },
     {
       "id": "will-wont",
-      "eyebrow": "What Rosie will and won't do",
-      "nav": null
-    },
-    {
-      "id": "pros",
-      "eyebrow": "Section 04",
-      "nav": null
-    },
-    {
-      "id": "evidence",
-      "eyebrow": "Rosie \u00b7 Evidence",
-      "nav": "Evidence"
-    },
-    {
-      "id": "indicators",
-      "eyebrow": "Section 06",
-      "nav": "Indicators"
-    },
-    {
-      "id": "demo",
-      "eyebrow": "Section 07",
-      "nav": "Demo"
-    },
-    {
-      "id": "what-we-do",
-      "eyebrow": "Section 08",
-      "nav": null
-    },
-    {
-      "id": "how-it-works",
-      "eyebrow": "Section 09",
-      "nav": "How it works"
-    },
-    {
-      "id": "protection",
-      "eyebrow": "Section 10",
-      "nav": "Protection"
-    },
-    {
-      "id": "phone",
-      "eyebrow": "Section 11",
-      "nav": null
-    },
-    {
-      "id": "markets",
-      "eyebrow": "Section 12",
-      "nav": "Markets"
+      "page": "home",
+      "eyebrow": "What Rosie will and won't do"
     },
     {
       "id": "evaluation",
-      "eyebrow": "Section 13",
-      "nav": "Evaluation"
+      "page": "home",
+      "eyebrow": "Section 03"
     },
     {
       "id": "pricing",
-      "eyebrow": "Section 14",
-      "nav": "Pricing"
-    },
-    {
-      "id": "market-report",
-      "eyebrow": "Section 15",
-      "nav": null
-    },
-    {
-      "id": "commitments",
-      "eyebrow": "Section 16",
-      "nav": null
+      "page": "home",
+      "eyebrow": "Section 04"
     },
     {
       "id": "partners",
-      "eyebrow": "Section 17",
-      "nav": "Partners"
+      "page": "home",
+      "eyebrow": "Section 05"
     },
     {
       "id": "how-to-begin",
-      "eyebrow": "Section 18",
-      "nav": "How to begin"
+      "page": "home",
+      "eyebrow": "Section 06"
+    },
+    {
+      "id": "life",
+      "page": "how-rosie-works",
+      "eyebrow": "Your life with Rosie"
+    },
+    {
+      "id": "what-we-do",
+      "page": "how-rosie-works",
+      "eyebrow": "Section 02"
+    },
+    {
+      "id": "how-it-works",
+      "page": "how-rosie-works",
+      "eyebrow": "Section 03"
+    },
+    {
+      "id": "demo",
+      "page": "how-rosie-works",
+      "eyebrow": "Section 04"
+    },
+    {
+      "id": "markets",
+      "page": "how-rosie-works",
+      "eyebrow": "Section 05"
+    },
+    {
+      "id": "phone",
+      "page": "how-rosie-works",
+      "eyebrow": "Section 06"
+    },
+    {
+      "id": "pros",
+      "page": "how-rosie-works",
+      "eyebrow": "Section 07"
+    },
+    {
+      "id": "protection",
+      "page": "how-rosie-works",
+      "eyebrow": "Section 08"
+    },
+    {
+      "id": "commitments",
+      "page": "how-rosie-works",
+      "eyebrow": "Section 09"
+    },
+    {
+      "id": "evidence",
+      "page": "how-rosie-works",
+      "eyebrow": "Rosie · Evidence"
+    },
+    {
+      "id": "indicators",
+      "page": "how-rosie-works",
+      "eyebrow": "Section 11"
+    },
+    {
+      "id": "market-report",
+      "page": "harbor",
+      "eyebrow": "Harbor Now · About the report"
     }
   ],
   "pros": {
@@ -215,22 +254,22 @@
       "name": "Lime Color Weather",
       "art": "weather",
       "problem": "You trade the same way whether the market is friendly or stormy, and only find out which it was afterwards.",
-      "answer": "Shows the market\u2019s current \u201cweather\u201d as colour bands, so you can see whether conditions favour buying, holding or staying small.",
-      "technical": "Conditions are drawn as colour bands with readings such as \u201cbull cooling\u201d or \u201cstrong bull rising\u201d. The same read appears in more than one pane, and the middle pane shows whether a tiring move is forming with or against the larger trend."
+      "answer": "Shows the market’s current “weather” as colour bands, so you can see whether conditions favour buying, holding or staying small.",
+      "technical": "Conditions are drawn as colour bands with readings such as “bull cooling” or “strong bull rising”. The same read appears in more than one pane, and the middle pane shows whether a tiring move is forming with or against the larger trend."
     },
     {
       "name": "Lime Notify",
       "art": "notify",
-      "problem": "There are so many signals on your screen that you can\u2019t tell what you\u2019re actually supposed to do.",
+      "problem": "There are so many signals on your screen that you can’t tell what you’re actually supposed to do.",
       "answer": "Reduces the noise to three readings only: Buy, Trim and Exit, each checked on the 1-day, 6-hour and 3-hour time frames.",
-      "technical": "The published reading is Alignment + Momentum \u2212 Exhaustion \u2212 Risk: Buy when it is strong, Trim when it softens, Exit when it breaks down. Tiredness and risk count against a Buy."
+      "technical": "The published reading is Alignment + Momentum − Exhaustion − Risk: Buy when it is strong, Trim when it softens, Exit when it breaks down. Tiredness and risk count against a Buy."
     },
     {
       "name": "Lime Exhaustion",
       "art": "exhaustion",
       "problem": "You keep getting in too late, buying right as the move runs out of steam.",
       "answer": "Shows whether a move is fresh, mid-journey or worn out, so you can avoid buying the last gasp of a move.",
-      "technical": "The published reading is Stretch from Trend + Momentum Extremes + Volatility Expansion \u2212 Fresh Support. The further price stretches from its trend, the more tired the move reads."
+      "technical": "The published reading is Stretch from Trend + Momentum Extremes + Volatility Expansion − Fresh Support. The further price stretches from its trend, the more tired the move reads."
     },
     {
       "name": "Lime StopWatcher",
@@ -242,7 +281,7 @@
     {
       "name": "Lime 8 Filter Stack",
       "art": "filters",
-      "problem": "When the signals are mixed, it\u2019s easy to talk yourself into the trade anyway.",
+      "problem": "When the signals are mixed, it’s easy to talk yourself into the trade anyway.",
       "answer": "Combines several safety checks into one pass or fail view, so you can stand aside when the signals are mixed.",
       "technical": null
     }

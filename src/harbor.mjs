@@ -11,6 +11,7 @@
  *   harbor-now/index.html          latest edition + archive list
  *   harbor-now/<date>/index.html   one page per edition
  */
+import { siteNav, brandLink, blogStrip } from './site.mjs';
 import { readFile, writeFile, readdir, mkdir, rm } from 'node:fs/promises';
 import path from 'node:path';
 
@@ -481,7 +482,7 @@ const stale = (latest, today) =>
     ? `<p class="warm-note hn-stale" data-harbor-stale>${esc(staleNote(latest))}</p>`
     : '';
 
-function page({ title, description, canonicalPath, body, canonical }) {
+function page({ title, description, canonicalPath, body, canonical, pages, current = false, after = '' }) {
   const html = `<!doctype html>
 <html lang="en" data-theme="light">
   <head>
@@ -503,14 +504,10 @@ function page({ title, description, canonicalPath, body, canonical }) {
     <header class="masthead">
       <div class="shell masthead__inner">
         <video class="masthead__logo masthead__lighthouse" src="/assets/img/lighthouse-loop.mp4" poster="/assets/img/lighthouse-poster.png" width="92" height="92" muted loop playsinline preload="metadata" role="img" aria-label="Lime Signalworks logo: a lighthouse shining over the sea" data-header-logo="lighthouse"></video>
-        <a class="brand" href="/" target="_blank" rel="noopener noreferrer">
+        <a class="brand" ${brandLink('harbor')}>
           <span class="brand__name">Lime Signalworks<span class="brand__unit">LIME Enterprise</span></span>
         </a>
-        <nav class="masthead__nav" aria-label="Harbor Now">
-          <a href="/" target="_blank" rel="noopener noreferrer">Home</a>
-          <a href="/harbor-now/" target="_blank" rel="noopener noreferrer" data-harbor-nav>Daily market report</a>
-          <a href="/harbor-now/#archive" target="_blank" rel="noopener noreferrer">Archive</a>
-        </nav>
+        <nav class="masthead__nav" aria-label="Site pages">${siteNav(pages, current ? 'harbor' : null)}</nav>
         <img class="masthead__logo masthead__rosie" src="/assets/img/rosie-portrait.png" width="92" height="92" alt="Rosie: a line-art portrait of a woman beside a small multicolored bar chart" data-header-logo="rosie" />
       </div>
     </header>
@@ -520,6 +517,7 @@ function page({ title, description, canonicalPath, body, canonical }) {
 ${body}
         </div>
       </section>
+${after}
     </main>
     <footer class="foot">
       <div class="shell foot__grid">
@@ -562,7 +560,8 @@ export async function loadEditions(root) {
   return editions; // oldest first
 }
 
-export async function buildHarbor(root, canonical) {
+export async function buildHarbor(root, canonical, { pages, harborSections = '', blogPosts = [] } = {}) {
+  if (!pages) throw new Error('buildHarbor needs the site pages for the shared menu');
   checkCanon();
   checkGuide();
   const editions = await loadEditions(root);
@@ -606,6 +605,11 @@ export async function buildHarbor(root, canonical) {
       canonicalPath: '/harbor-now/',
       body: indexBody,
       canonical,
+      pages,
+      current: true,
+      // 2026-11-22: the homepage's market-report explainer moved here, and the
+      // "Latest from the blog" strip closes the page.
+      after: harborSections + '\n' + blogStrip(blogPosts),
     }),
     'utf8',
   );
@@ -643,6 +647,7 @@ export async function buildHarbor(root, canonical) {
         canonicalPath: `/harbor-now/${ed.date}/`,
         body,
         canonical,
+        pages,
       }),
       'utf8',
     );

@@ -1,0 +1,4 @@
+{
+  "_comment": "Blog posts, newest first. Empty until the first real post is written: the blog page then shows its coming-soon note, and the Harbor Now 'Latest from the blog' strip says no posts yet. Never add an invented post. Each post: { \"date\": \"YYYY-MM-DD\", \"title\": \"...\", \"summary\": \"...\", \"url\": \"/blog/<slug>/\" }.",
+  "posts": []
+}

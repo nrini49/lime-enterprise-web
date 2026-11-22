@@ -6,10 +6,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>LIME Enterprise — Rosie Keelwise, the automated trading operator who never blinks</title>
+    <title>{{PAGE_TITLE}}</title>
     <meta
       name="description"
-      content="Rosie Keelwise is an automated, rules-based trading operator from Lime Signalworks. She watches the markets while you live your life, holds to your rules and keeps a protective stop at your broker on every position, while you supervise. Try her free for one month in a paper (practice) account."
+      content="{{PAGE_DESCRIPTION}}"
     />
     <meta name="robots" content="index, follow" />
     <!-- Declares dark as the default rendering scheme so a light operating system does
@@ -26,19 +26,19 @@
       rel="preload"
       as="font"
       type="font/woff2"
-      href="assets/fonts/inter-latin.woff2"
+      href="/assets/fonts/inter-latin.woff2"
       crossorigin
     />
     <link
       rel="preload"
       as="font"
       type="font/woff2"
-      href="assets/fonts/archivo-latin.woff2"
+      href="/assets/fonts/archivo-latin.woff2"
       crossorigin
     />
-    <link rel="stylesheet" href="assets/css/fonts.css" />
-    <link rel="stylesheet" href="assets/css/base.css" />
-    <link rel="stylesheet" href="assets/css/site.css" />
+    <link rel="stylesheet" href="/assets/css/fonts.css" />
+    <link rel="stylesheet" href="/assets/css/base.css" />
+    <link rel="stylesheet" href="/assets/css/site.css" />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -53,8 +53,8 @@
              still poster and only plays when app.js starts it (never under reduced motion). -->
         <video
           class="masthead__logo masthead__lighthouse"
-          src="assets/img/lighthouse-loop.mp4"
-          poster="assets/img/lighthouse-poster.png"
+          src="/assets/img/lighthouse-loop.mp4"
+          poster="/assets/img/lighthouse-poster.png"
           width="92"
           height="92"
           muted
@@ -65,17 +65,17 @@
           aria-label="Lime Signalworks logo: a lighthouse shining over the sea"
           data-header-logo="lighthouse"
         ></video>
-        <a class="brand" href="#main">
+        <a class="brand" {{BRAND_LINK}}>
           <span class="brand__name"
             >Lime Signalworks<span class="brand__unit" data-site-unit>LIME Enterprise</span></span
           >
         </a>
 
-        <nav class="masthead__nav" aria-label="Sections">{{NAV}}</nav>
+        <nav class="masthead__nav" aria-label="Site pages">{{NAV}}</nav>
 
         <img
           class="masthead__logo masthead__rosie"
-          src="assets/img/rosie-portrait.png"
+          src="/assets/img/rosie-portrait.png"
           width="92"
           height="92"
           alt="Rosie: a line-art portrait of a woman beside a small multicolored bar chart"
@@ -207,7 +207,7 @@
       <section class="section" id="indicators" aria-labelledby="indicators-title">
         <div class="shell">
           <div class="section__head" data-voice="rosie">
-            <p class="label rule-after">Section 06</p>
+            <p class="label rule-after">Section 11</p>
             <p class="label voice-tag" data-voice-tag>From Rosie</p>
             <h2 id="indicators-title">Five TradingView indicators, from the house that built me</h2>
             <p>
@@ -234,7 +234,7 @@
       <section class="section demo" id="demo" aria-labelledby="demo-title" data-voice="rosie">
         <div class="shell">
           <div class="section__head">
-            <p class="label rule-after">Section 07</p>
+            <p class="label rule-after">Section 04</p>
             <p class="label voice-tag" data-voice-tag>From Rosie</p>
             <h2 id="demo-title">I&rsquo;m Rosie, and I never blink.</h2>
           </div>
@@ -287,7 +287,7 @@
             </div>
             <figure class="product-shot">
               <img
-                src="assets/img/rosie-dashboard-preview.png"
+                src="/assets/img/rosie-dashboard-preview.png"
                 width="1200"
                 height="750"
                 loading="lazy"
@@ -303,7 +303,7 @@
       <section class="section" id="what-we-do" aria-labelledby="what-we-do-title" data-voice="rosie">
         <div class="shell">
           <div class="section__head">
-            <p class="label rule-after">Section 08</p>
+            <p class="label rule-after">Section 02</p>
             <p class="label voice-tag" data-voice-tag>From Rosie</p>
             <h2 id="what-we-do-title">What I do for you</h2>
           </div>
@@ -333,7 +333,7 @@
       <section class="section" id="how-it-works" aria-labelledby="how-it-works-title" data-voice="rosie">
         <div class="shell">
           <div class="section__head">
-            <p class="label rule-after">Section 09</p>
+            <p class="label rule-after">Section 03</p>
             <p class="label voice-tag" data-voice-tag>From Rosie</p>
             <h2 id="how-it-works-title">How I work, in three steps</h2>
             <p>
@@ -381,7 +381,7 @@
       <section class="section" id="protection" aria-labelledby="protection-title" data-voice="rosie">
         <div class="shell">
           <div class="section__head">
-            <p class="label rule-after">Section 10</p>
+            <p class="label rule-after">Section 08</p>
             <p class="label voice-tag" data-voice-tag>From Rosie</p>
             <h2 id="protection-title">I count the cost before the prize.</h2>
             <p>
@@ -431,7 +431,7 @@
       <section class="section" id="phone" aria-labelledby="phone-title" data-voice="rosie">
         <div class="shell">
           <div class="section__head">
-            <p class="label rule-after">Section 11</p>
+            <p class="label rule-after">Section 06</p>
             <p class="label voice-tag" data-voice-tag>From Rosie</p>
             <h2 id="phone-title">Coming soon: me, in your pocket</h2>
             <p>
@@ -466,7 +466,7 @@
       <section class="section" id="markets" aria-labelledby="markets-title" data-voice="rosie">
         <div class="shell">
           <div class="section__head">
-            <p class="label rule-after">Section 12</p>
+            <p class="label rule-after">Section 05</p>
             <p class="label voice-tag" data-voice-tag>From Rosie</p>
             <h2 id="markets-title">Stocks and ETFs, handled with style.</h2>
             <p>
@@ -498,7 +498,7 @@
       <section class="section" id="evaluation" aria-labelledby="evaluation-title">
         <div class="shell">
           <div class="section__head" data-voice="rosie">
-            <p class="label rule-after">Section 13</p>
+            <p class="label rule-after">Section 03</p>
             <p class="label voice-tag" data-voice-tag>From Rosie</p>
             <h2 id="evaluation-title">Judge me on paper, free for one month</h2>
             <p>
@@ -547,7 +547,7 @@
       <section class="section" id="pricing" aria-labelledby="pricing-title">
         <div class="shell">
           <div class="section__head" data-voice="rosie">
-            <p class="label rule-after">Section 14</p>
+            <p class="label rule-after">Section 04</p>
             <p class="label voice-tag" data-voice-tag>From Rosie</p>
             <h2 id="pricing-title">One price. Then I&rsquo;m yours.</h2>
             <p>
@@ -584,7 +584,7 @@
       <section class="section" id="market-report" aria-labelledby="market-report-title" data-voice="rosie">
         <div class="shell">
           <div class="section__head">
-            <p class="label rule-after">Section 15</p>
+            <p class="label rule-after">Harbor Now · About the report</p>
             <p class="label voice-tag" data-voice-tag>From Rosie</p>
             <h2 id="market-report-title">The daily market report, in plain words</h2>
             <p>
@@ -611,7 +611,7 @@
       <section class="section" id="commitments" aria-labelledby="commitments-title">
         <div class="shell">
           <div class="section__head">
-            <p class="label rule-after">Section 16</p>
+            <p class="label rule-after">Section 09</p>
             <h2 id="commitments-title">Straight talk, no theatrics</h2>
           </div>
           <div class="prose">
@@ -632,7 +632,7 @@
       <section class="section" id="partners" aria-labelledby="partners-title">
         <div class="shell">
           <div class="section__head" data-voice="rosie">
-            <p class="label rule-after">Section 17</p>
+            <p class="label rule-after">Section 05</p>
             <p class="label voice-tag" data-voice-tag>From Rosie</p>
             <h2 id="partners-title">For brokers and partners: I play well with others</h2>
           </div>
@@ -668,7 +668,7 @@
       <section class="section section--cta" id="how-to-begin" aria-labelledby="how-to-begin-title" data-voice="rosie">
         <div class="shell">
           <div class="section__head">
-            <p class="label rule-after">Section 18</p>
+            <p class="label rule-after">Section 06</p>
             <p class="label voice-tag" data-voice-tag>From Rosie</p>
             <h2 id="how-to-begin-title">Put me to work</h2>
             <p>
@@ -751,6 +751,6 @@
       </div>
     </footer>
 
-    <script src="assets/js/app.js" defer></script>
+    <script src="/assets/js/app.js" defer></script>
   </body>
 </html>
