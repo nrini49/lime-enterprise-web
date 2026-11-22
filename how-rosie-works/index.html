@@ -154,6 +154,32 @@
         </div>
       </section>
 
+      <!-- Rosie's rules, full list (2026-11-22, owner t1984u/t1985u). Each line checked against
+           the code on both servers (Schwab main d7e8633, IB main b429892); file:line citations
+           are in PR #30. Guardrails only: no signal logic, no indicator settings. -->
+      <section class="section" id="rules" aria-labelledby="rules-title" data-voice="rosie">
+        <div class="shell">
+          <div class="section__head">
+            <p class="label rule-after">Rosie's rules</p>
+            <p class="label voice-tag" data-voice-tag>From Rosie</p>
+            <h2 id="rules-title">All my rules, in plain words</h2>
+            <p>These are the guardrails I follow on every order, with Schwab and with Interactive Brokers.</p>
+          </div>
+          <ol class="rules-full" data-rules="full">
+            <li><strong>A stop on every buy.</strong> Every buy is a limit order, never a market order, and it goes in with one protective stop held at your broker as a good-till-cancelled order, so the stop stays in place whether you&rsquo;re watching or not.</li>
+            <li><strong>A cap on every buy.</strong> Conservative: up to 2 shares and $500. Normal: up to 5 shares and $1,250. Aggressive: up to 10 shares and $2,500. You pick the level, and my automatic buys always use Conservative.</li>
+            <li><strong>A daily loss limit.</strong> If your account falls 3% from the day&rsquo;s start, I make no new buys until the next trading day.</li>
+            <li><strong>A quiet open.</strong> No new buys in the first 15 minutes after the 9:30 a.m. ET open.</li>
+            <li><strong>A daily cap on automatic trades.</strong> At most 20 automatic orders a day, and after 3 losing automatic trades in a row, no more automatic buys that day.</li>
+            <li><strong>Your list only.</strong> I buy only symbols on my approved list.</li>
+            <li><strong>Exits are never blocked.</strong> None of these limits ever stops a sell, your stop, or closing everything.</li>
+            <li><strong>Practice first.</strong> I start in practice mode. Real-money orders only begin when you turn them on.</li>
+            <li><strong>Your keys stay home.</strong> With Schwab, your app key and sign-in stay in files on your own computer. With Interactive Brokers, you sign in to IB&rsquo;s own app on your computer, and I never hold your IB password.</li>
+            <li><strong>Your account only.</strong> Orders go only to your own broker account.</li>
+          </ol>
+        </div>
+      </section>
+
       <!-- E2 — what Rosie does for you -->
       <section class="section" id="what-we-do" aria-labelledby="what-we-do-title" data-voice="rosie">
         <div class="shell">

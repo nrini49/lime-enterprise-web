@@ -205,6 +205,11 @@
       "eyebrow": "Your life with Rosie"
     },
     {
+      "id": "rules",
+      "page": "how-rosie-works",
+      "eyebrow": "Rosie's rules"
+    },
+    {
       "id": "what-we-do",
       "page": "how-rosie-works",
       "eyebrow": "Section 02"

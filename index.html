@@ -144,12 +144,27 @@
               <p class="label voice-tag" data-voice-tag>From Rosie</p>
               <p class="rosie-intro__text">Hi, I'm Rosie Keelwise, a rule-based trading assistant. I help you place trades under the risk rules you set, and I attach one broker-held stop to every buy. This guide walks you through your first days with me, in plain language. Nothing here is a recommendation to buy or sell anything.</p>
             </div>
+            <!-- Rosie's rules, short form (2026-11-22, owner t1985u): the biggest guardrails, one
+                 line each, right under her intro. Each line was checked against the code on both
+                 servers (Schwab main d7e8633, IB main b429892). Guardrails only, no signal logic.
+                 The full list is the #rules section on How Rosie Works. -->
+            <div class="rules-card" data-voice="rosie" data-rules="home">
+              <p class="label voice-tag" data-voice-tag>From Rosie</p>
+              <h2 class="rules-card__title" id="rules-card-title">My rules, in plain words</h2>
+              <ul class="rules-list">
+                <li>Every buy goes in with a protective stop, held at your broker.</li>
+                <li>Every buy has a share cap and a dollar cap, set by the risk level you choose.</li>
+                <li>If your account falls 3% from the day&rsquo;s start, I make no new buys until the next trading day.</li>
+                <li>No new buys in the first 15 minutes after the 9:30 a.m. ET open.</li>
+                <li>I start in practice mode. Real-money orders only begin when you turn them on.</li>
+                <li>Orders go only to your own broker account.</li>
+              </ul>
+              <p class="rules-card__more"><a href="/how-rosie-works/#rules">See all the rules</a></p>
+            </div>
+            <!-- 2026-11-22 (owner t1986u, "simple can be better"): Noal's story, cut to one paragraph.
+                 Every fact was already on the page. -->
             <div class="opening__text">
-            <p class="opening__lead">Picture an ordinary Tuesday. <span class="owner-name" data-owner-name>Noal</span> is at his daughter's recital, then out for a walk, then at a long lunch with an old friend, phone face-down on the table. He isn't checking anything, and he isn't worried. That calm is the whole point of me.</p>
-            <p>I'm on the job. Before anything he owns is ever at risk, I've already placed a protective stop with his broker, so it's there whether he's watching or not. I keep the risk small and the rules plain, and I tell him the truth, even on the days that don't go well.</p>
-            <p>Once I'm set up, his job is done for the most part. Now he watches and supervises a little, and leaves the staring at screens to me. I never blink; he was always going to lose that contest.</p>
-            <p>Knowing I'm on watch gives him his time back, and he spends it on what the money was for in the first place: being fully present with the people he loves, taking care of his health, staying curious, and feeling looked after. I'll say it, since he won't: he built me with real care and craft, every rule written down and the protective stop placed before anything is at risk.</p>
-            <p class="opening__sign">He built me for himself, and he built me so you can have me too.</p>
+            <p class="opening__lead">Picture an ordinary Tuesday. <span class="owner-name" data-owner-name>Noal</span> is at his daughter's recital, then at a long lunch with an old friend, phone face-down on the table. I'm on the job: I've already placed a protective stop with his broker, I keep the risk small, and I tell him the truth, even on the days that don't go well. He built me for himself, and he built me so you can have me too.</p>
             <p class="video-row" data-video-row="opening"><a class="video-cta" href="https://www.youtube.com/@noelrini3882" target="_blank" rel="noopener noreferrer" data-video="tour" data-video-placeholder><svg class="video-cta__icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor" opacity="0.16" /><path d="M10 8.2v7.6L16 12z" fill="currentColor" /></svg><span class="video-cta__label">Watch the short videos on YouTube</span><span class="ext" aria-hidden="true">&#8599;</span><span class="sr-only"> (opens in a new tab)</span></a></p>
             </div>
             <!-- Brokers (2026-11-01, owner direction): the two brokers Rosie works with now,

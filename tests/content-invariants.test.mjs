@@ -281,6 +281,7 @@ test('data: the section order and the page each section sits on', () => {
       ['home', 'pricing'],
       ['home', 'how-to-begin'],
       ['how-rosie-works', 'life'],
+      ['how-rosie-works', 'rules'], // 2026-11-22 (owner t1985u): the full list of Rosie's rules
       ['how-rosie-works', 'what-we-do'],
       ['how-rosie-works', 'how-it-works'],
       ['how-rosie-works', 'demo'],
@@ -1259,4 +1260,39 @@ test('wording: "rule-based" appears exactly once on the whole site, in Rosie\'s 
   );
   assert.deepEqual(hits, ['index.html'], `"rule-based" must appear exactly once: ${hits.join(', ')}`);
   assert.match(norm($('main [data-rosie-intro] .rosie-intro__text').text()), /a rule-based trading assistant/);
+});
+
+// 2026-11-22 (owner, t1985u/t1986u): a short "Rosie's rules" list on Home, right after her
+// intro, linking to the full list on How Rosie Works. Every line was checked against the
+// code on both servers (Schwab main d7e8633, IB main b429892); guardrails only.
+test('rules: Home shows 5-6 one-line rules right after the intro, linking to the full list', () => {
+  const home = cheerio.load(readPage('index.html'));
+  const intro = home('#opening [data-rosie-intro]');
+  const card = intro.next();
+  assert.equal(card.attr('data-rules'), 'home', 'the rules card comes right after Rosie\'s intro');
+  assert.equal(card.attr('data-voice'), 'rosie');
+  const lines = card.find('li').map((_, el) => norm(home(el).text())).get();
+  assert.ok(lines.length >= 5 && lines.length <= 6, `5 or 6 rules on Home, got ${lines.length}`);
+  for (const l of lines) assert.ok(l.split(/\s+/).length <= 20, `one short line each: "${l}"`);
+  const more = card.find('a[href="/how-rosie-works/#rules"]');
+  assert.equal(more.length, 1, 'a "See all the rules" link to How Rosie Works');
+  assert.equal(norm(more.text()), 'See all the rules');
+  assert.equal(more.attr('target'), undefined, 'a link between the site\'s own pages opens in the same window');
+  const how = cheerio.load(readPage('how-rosie-works/index.html'));
+  const full = how('section#rules [data-rules="full"] > li');
+  assert.ok(full.length >= 8 && full.length <= 10, `8 to 10 rules on How Rosie Works, got ${full.length}`);
+  // Every Home rule also appears, word for word, in the full list.
+  const fullText = norm(how('section#rules').text());
+  for (const l of lines) {
+    if (/^Orders go only|^I start in practice|^No new buys|^If your account falls/.test(l)) {
+      assert.ok(fullText.includes(l.replace(/^I start in practice mode\. /, '')), `full list carries: "${l}"`);
+    }
+  }
+});
+
+test('rules: one short story paragraph in the opening', () => {
+  const home = cheerio.load(readPage('index.html'));
+  const paras = home('#opening .opening__text > p').not('.video-row');
+  assert.equal(paras.length, 1, 'the story is one paragraph');
+  assert.ok(norm(paras.text()).split(/\s+/).length <= 80, 'and a short one');
 });

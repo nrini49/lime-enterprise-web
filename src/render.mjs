@@ -337,17 +337,32 @@ const renderPageHead = (pg, videos) => `
 
 /** The blog list, or its coming-soon note while there are no posts. Never invented posts. */
 function renderBlog(posts) {
-  const list = posts.length
-    ? `<ul class="blog-list" data-blog-posts>${posts
-        .map(
-          (p) => `
+  // 2026-11-22 (owner t1991u): a pinned post stays on top. A post with a body is shown in
+  // full here, credited to its author; it ends with a "Share your experience" link to the
+  // contact section, because comments are not built yet (no fake comment box).
+  const ordered = [...posts.filter((p) => p.pinned), ...posts.filter((p) => !p.pinned)];
+  const linkAttrs = (url) => (/^\//.test(url) ? '' : SITE_NEW_WINDOW);
+  const fmtDate = (iso) =>
+    new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+  const item = (p) =>
+    p.body
+      ? `
+            <li class="blog-list__item blog-post${p.pinned ? ' blog-post--pinned' : ''}" id="${esc(p.id)}" data-blog-post="${esc(p.id)}"${p.author === 'Noal' ? ' data-voice="noal"' : ''}>
+              <article aria-labelledby="${esc(p.id)}-title">
+                <p class="label blog-post__meta">${p.pinned ? '<span class="blog-post__pin" data-pinned>Pinned</span> ' : ''}<time datetime="${esc(p.date)}">${esc(fmtDate(p.date))}</time> · By <span data-attribution>${esc(p.author)}</span></p>
+                <h3 id="${esc(p.id)}-title" class="blog-post__title">${esc(p.title)}</h3>
+                ${p.body.map((para) => `<p>${esc(para)}</p>`).join('\n                ')}
+                <p class="btn-row blog-post__share"><a class="btn btn--ghost" href="#contact" data-share-experience>Share your experience</a></p>
+              </article>
+            </li>`
+      : `
             <li class="blog-list__item">
-              <p class="label"><time datetime="${esc(p.date)}">${esc(p.date)}</time></p>
-              <h3><a href="${esc(p.url)}"${SITE_NEW_WINDOW}>${esc(p.title)}</a></h3>
+              <p class="label"><time datetime="${esc(p.date)}">${esc(fmtDate(p.date))}</time></p>
+              <h3><a href="${esc(p.url)}"${linkAttrs(p.url)}>${esc(p.title)}</a></h3>
               <p>${esc(p.summary)}</p>
-            </li>`,
-        )
-        .join('')}
+            </li>`;
+  const list = posts.length
+    ? `<ul class="blog-list" data-blog-posts>${ordered.map(item).join('')}
           </ul>`
     : `<div class="blog-empty" data-blog-empty>
             <p class="blog-empty__lead">Posts are coming soon.</p>

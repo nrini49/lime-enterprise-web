@@ -122,3 +122,27 @@ test('site: no page names anyone outside the approved credits', () => {
     for (const name of ['sean', 'rechtman']) assert.ok(!text.includes(name), `${p.file} names "${name}"`);
   }
 });
+
+// 2026-11-22 (owner t1991u): the first, pinned post anchors the blog. Shown in full, by Noal,
+// ending with a "Share your experience" link to the contact section (no comment box yet).
+test('blog: the pinned first post is shown in full, by Noal, with a link to share an experience', () => {
+  const $ = load('blog/index.html');
+  const first = $('[data-blog-posts] > li').first();
+  assert.equal(first.attr('data-blog-post'), 'who-judges-rosies-rules');
+  assert.equal(first.find('[data-pinned]').length, 1, 'marked as pinned');
+  assert.equal(norm(first.find('h3').text()), "Who judges whether Rosie's rules work?");
+  assert.equal(first.find('time').attr('datetime'), '2026-11-22');
+  assert.equal(norm(first.find('time').text()), 'November 22, 2026');
+  assert.equal(norm(first.find('[data-attribution]').text()), 'Noal');
+  assert.equal(first.attr('data-voice'), 'noal');
+  assert.equal(
+    norm(first.find('article > p').not('.label').not('.btn-row').text()),
+    "Who judges whether a trading rule works? Not me, and not Rosie. Whether she follows the rules exactly can be checked today. Whether the rules are worth having only shows up over many trades, in real markets, in your own records. That's where you come in. Tell us what you saw: a stop that saved you, a rule that felt too tight, a day you didn't have to watch. Your experience is the test.",
+  );
+  const share = first.find('a[data-share-experience]');
+  assert.equal(norm(share.text()), 'Share your experience');
+  assert.equal(share.attr('href'), '#contact');
+  assert.equal(share.attr('target'), undefined);
+  assert.equal($('#contact').length, 1, 'the contact section is on the page');
+  assert.equal($('form, input, textarea, select, button').length, 0, 'no fake comment box');
+});

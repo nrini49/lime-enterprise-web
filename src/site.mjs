@@ -35,12 +35,12 @@ export const brandLink = (currentId) =>
 
 /** "Latest from the blog": the newest posts (up to three) or an honest empty state. */
 export function blogStrip(posts) {
-  const latest = posts.slice(0, 3);
+  const latest = [...posts.filter((p) => p.pinned), ...posts.filter((p) => !p.pinned)].slice(0, 3);
   const list = latest.length
     ? `<ul class="blog-strip__list" data-blog-strip-posts>${latest
         .map(
           (p) => `
-              <li><a href="${esc(p.url)}"${NEW_WINDOW}><time datetime="${esc(p.date)}">${esc(p.date)}</time> <span>${esc(p.title)}</span></a></li>`,
+              <li><a href="${esc(p.url)}"${/^\//.test(p.url) ? '' : NEW_WINDOW}><time datetime="${esc(p.date)}">${esc(p.date)}</time> <span>${esc(p.title)}</span></a></li>`,
         )
         .join('')}
             </ul>`
