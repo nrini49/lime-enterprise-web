@@ -2,7 +2,7 @@
   "revision": "site2-claim-audit-2026-11-13",
   "canonical": {
     "rosieIntro": "Hi, I'm Rosie Keelwise. I help you place trades under the risk rules you set, and I attach one broker-held stop to every buy. This guide walks you through your first days with me, in plain language. Nothing here is a recommendation to buy or sell anything.",
-    "demoUrl": "/rosie-demo/",
+    "demoUrl": "/rosie-demo-schwab/",
     "demoCtaLabel": "Open the Rosie demo",
     "demoDisclosure": "Sample data in a paper (practice) account. No broker connection, no real orders, and nothing here is advice.",
     "demoAsk": "If you'd like the full demo, just ask. We'll set you up with the whole thing, for free, no strings attached.",
@@ -88,7 +88,7 @@
         "chips": [
           "A protective stop at your broker on every position",
           "Free for one month in a paper (practice) account",
-          "Interactive Brokers and Schwab"
+          "Schwab and Interactive Brokers"
         ]
       }
     },

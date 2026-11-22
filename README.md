@@ -54,7 +54,11 @@ Zero-framework static build. No bundler, no CSS preprocessor, no client framewor
 - `scripts/fetch-fonts.mjs` — one-off vendoring helper; regenerates `assets/fonts/` (never run by
   the site)
 - `index.html` — **generated artifact**, committed so the site works with no build step
-- `rosie-demo/` — the public Rosie demo: a static, script-free snapshot of the current Rosie IB
+- `rosie-demo-schwab/` — the public Rosie demo linked from the site since 2026-11-22 (Schwab first):
+  a static, script-free snapshot of the Rosie Schwab dashboard (nrini49/schwab main d7e8633) with
+  invented **sample data**, built by the same method as `rosie-demo/`; checked by
+  `tests/rosie-demo-schwab.test.mjs`. The IB demo below stays in place, unlinked.
+- `rosie-demo/` — the earlier public Rosie demo (IB): a static, script-free snapshot of the current Rosie IB
   Operator Workstation layout filled with **sample data** (paper account, invented numbers). Every
   control is disabled, there are no forms or network calls, and `tests/rosie-demo.test.mjs`
   enforces that, the sample-data banner, `noindex`, and broker-held (never trailing) stops.
@@ -123,7 +127,7 @@ npm run serve        # serve the repo root on http://localhost:4173
   declares light, and no `prefers-color-scheme: dark` rule exists. The dark toggle is optional,
   fully functional, and never persisted to any browser storage.
 - **Exactly one demo call to action**, labelled "Open the Rosie demo", pointing at the static
-  sample-data demo `/rosie-demo/` on this site, with its labelling rendered as the immediately
+  sample-data demo `/rosie-demo-schwab/` on this site (the IB `/rosie-demo/` until 2026-11-22), with its labelling rendered as the immediately
   following static element (never a tooltip, toast, modal, or collapsed content): sample data,
   a paper (practice) account, no broker connection, no real orders, not advice. The hosted demo
   and its sign-in line were retired from the home page on 2026-10-28; the full demo is offered on

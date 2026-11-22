@@ -37,7 +37,9 @@ const html = $.html();
 // 2026-10-28: the hosted Perplexity demo is retired from the home page at the owner's
 // direction. The only demo link is the static sample-data demo at /rosie-demo/ (PR #15),
 // and the full demo is offered on request through the contact block.
-const DEMO_URL = '/rosie-demo/';
+// 2026-11-22 (owner, t1975u): Schwab first. The demo link opens the Schwab sample-data demo;
+// the IB demo at /rosie-demo/ stays in place but is no longer linked.
+const DEMO_URL = '/rosie-demo-schwab/';
 const RETIRED_DEMO_URL = 'https://limesignalworks.pplx.app/';
 const LEADERSHIP_URL = 'https://signals.limesignalworks.com';
 const LIBRARY_URL = 'https://leadership.limesignalworks.com';
@@ -426,7 +428,7 @@ test('dom: exactly one demo call to action, with the approved label and target',
   assert.equal(link.attr('target'), '_blank', 'the demo opens in a new window');
   assert.equal(link.attr('rel'), 'noopener noreferrer');
   $('a[href*="rosie-demo"]').each((_, el) => {
-    assert.equal($(el).attr('href'), DEMO_URL, 'every demo link points at /rosie-demo/');
+    assert.equal($(el).attr('href'), DEMO_URL, 'every demo link points at the Schwab demo');
   });
 });
 
@@ -721,7 +723,14 @@ test('naming: "Rosie Keelwise" introduces her once up top; "Rosie" after that', 
   assert.equal(intro.length, 1, 'one Rosie introduction');
   assert.equal(norm(intro.text()), ROSIE_INTRO, 'the introduction is word for word as approved');
   assert.equal($('main p').not('.label').first()[0], intro[0], 'the introduction is the first paragraph of the page body');
-  const body = norm($('main').clone().find('[data-rosie-intro]').remove().end().text());
+  // 2026-11-22 (owner, t1975u): the welcome line above the opening names her in full too, so
+  // visitors know which Rosie this is. It is set aside here like the introduction.
+  assert.equal(
+    norm($('[data-welcome]').text()),
+    'Welcome to Rosie Keelwise, the LIME trading assistant from Lime Signalworks LLC',
+  );
+  assert.doesNotMatch(norm($('main').text()), /Rosie Keelwise,? LLC|Keelwise LLC/, 'Rosie Keelwise is never called an LLC');
+  const body = norm($('main').clone().find('[data-rosie-intro], [data-welcome]').remove().end().text());
   assert.equal(body.split('Keelwise').length - 1, 1, 'Keelwise appears once in the page body, in the opening');
   assert.doesNotMatch(html, /Rosie \/ Keelwise|Rosie \(Keelwise\)|also called Keelwise/);
 });

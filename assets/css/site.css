@@ -2751,3 +2751,26 @@ html {
   margin: var(--space-4) 0 0;
   font-size: var(--text-sm);
 }
+
+/* Welcome line (2026-11-22): the first words a visitor reads, above Rosie's eyebrow. */
+.hero__welcome {
+  position: relative;
+  display: inline-block;
+  margin: 0 0 var(--space-5);
+  padding: 0.45rem 0.95rem;
+  border: 1px solid color-mix(in oklab, var(--color-accent) 55%, transparent);
+  border-radius: 1.25rem;
+  background: color-mix(in oklab, var(--color-accent) 10%, transparent);
+  font: 600 var(--text-sm)/1.4 var(--font-body);
+  color: var(--color-text);
+  max-width: 100%;
+}
+
+.hero__welcome strong {
+  color: var(--color-accent);
+  font-weight: 800;
+}
+
+.hero.opening .opening__col > .opening__label {
+  margin-top: 0;
+}

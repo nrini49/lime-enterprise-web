@@ -13,7 +13,7 @@ import path from 'node:path';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const out = path.join(root, 'dist');
-const SHIP = ['index.html', 'how-rosie-works', 'harbor-now', 'blog', 'rosie-demo', 'assets'];
+const SHIP = ['index.html', 'how-rosie-works', 'harbor-now', 'blog', 'rosie-demo', 'rosie-demo-schwab', 'assets'];
 
 await rm(out, { recursive: true, force: true });
 await mkdir(out, { recursive: true });

@@ -32,7 +32,7 @@ const files = htmlFiles(root);
 
 test('links: the scan covers the home page, Harbor Now and the demo', () => {
   const rel = files.map((f) => path.relative(root, f));
-  for (const page of ['index.html', 'harbor-now/index.html', 'rosie-demo/index.html']) {
+  for (const page of ['index.html', 'harbor-now/index.html', 'rosie-demo/index.html', 'rosie-demo-schwab/index.html']) {
     assert.ok(rel.includes(page), `${page} is scanned`);
   }
   assert.ok(rel.filter((r) => r.startsWith('harbor-now/')).length > 1, 'Harbor Now editions are scanned');

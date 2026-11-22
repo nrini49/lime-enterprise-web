@@ -102,6 +102,10 @@
                comes from her and he does not speak for himself. His name is marked with
                data-owner-name, like the data-attribution credits, so the tests can pin where
                it may appear. -->
+          <!-- Welcome line (2026-11-22, owner t1975u): the first words on the site, so visitors know
+               which Rosie this is (other products share the name). Lime Signalworks LLC is the
+               legal entity; Rosie Keelwise is its product, never an LLC herself. -->
+          <div class="hero__welcome" data-welcome>Welcome to <strong>Rosie Keelwise</strong>, the LIME trading assistant from Lime Signalworks LLC</div>
           <div class="opening__col" data-voice="rosie">
             <p class="label opening__label voice-tag" data-voice-tag>From Rosie</p>
             <!-- Hero (2026-11-22, owner direction: "snap and pop"): a big display line that
@@ -116,13 +120,12 @@
                 <ul class="hero-chips">{{HERO_CHIPS}}</ul>
                 {{HOME_VIDEOS}}
               </div>
-              <!-- 2026-11-22 (owner, t1973u): the first customers are Schwab clients, so the
-                   front picture is the Schwab dashboard (sample data). It is not a link, because
-                   the interactive demo at /rosie-demo/ is still the IB workstation. -->
-              <figure class="hero-shot">
+              <!-- 2026-11-22 (owner, t1973u/t1975u): the first customers are Schwab clients, so the
+                   front picture is the Schwab dashboard (sample data) and it opens the Schwab demo. -->
+              <a class="hero-shot" href="/rosie-demo-schwab/" target="_blank" rel="noopener noreferrer">
                 <img src="/assets/img/rosie-schwab-dashboard-preview.png" width="1200" height="750" alt="Rosie Keelwise Operator Workstation for Schwab, demo with sample data: header controls, Account Overview, Account Summary, Positions and broker-held Stops" />
-                <figcaption class="hero-shot__cap">My Operator Workstation (the Schwab version), shown here with sample data.</figcaption>
-              </figure>
+                <span class="hero-shot__cap">My Operator Workstation (the Schwab version), shown here with sample data.<span class="sr-only"> Opens the interactive demo in a new tab.</span></span>
+              </a>
             </div>
             <div class="opening__story">
             <!-- Rosie's introduction (2026-11-01, owner direction): the first paragraph of the
@@ -141,13 +144,13 @@
             <p class="video-row" data-video-row="opening">{{TOUR_LINK}}</p>
             </div>
             <!-- Brokers (2026-11-01, owner direction): the two brokers Rosie works with now,
-                 in her own voice. Only Interactive Brokers and Schwab are named. -->
+                 in her own voice. Only Schwab and Interactive Brokers are named (Schwab first since 2026-11-22: the first customers are Schwab clients). -->
             <div class="brokers-note" data-voice="rosie" data-brokers>
               <p class="label voice-tag" data-voice-tag>From Rosie</p>
-              <p class="brokers-note__line">I work with <strong>Interactive Brokers</strong> and <strong>Schwab</strong> today.</p>
+              <p class="brokers-note__line">I work with <strong>Schwab</strong> and <strong>Interactive Brokers</strong> today.</p>
               <p class="brokers-note__line">I connect only to brokers that hand customers a real, public trading API, so your software can place its own orders.</p>
               <p class="brokers-note__line">I'm built as a small, casual-money sideline, for an account of about a thousand to ten thousand dollars, not as a professional trading desk.</p>
-              <p class="brokers-note__line brokers-note__paper">During the free one-month evaluation, I run in practice mode, with no real-money orders. With Interactive Brokers, that is a paper (practice) account at the broker, using real market prices. With Schwab, practice mode is a dry run on your computer: I go through the same checks and keep a record, but orders are not sent to Schwab, because Schwab does not give Rosie a paper-trading API.</p>
+              <p class="brokers-note__line brokers-note__paper">During the free one-month evaluation, I run in practice mode, with no real-money orders. With Schwab, practice mode is a dry run on your computer: I go through the same checks and keep a record, but orders are not sent to Schwab, because Schwab does not give Rosie a paper-trading API. With Interactive Brokers, that is a paper (practice) account at the broker, using real market prices.</p>
             </div>
             </div>
           </div>
@@ -219,7 +222,7 @@
           <h3 class="evidence__sub">A beauty in digits: the rules every order has to pass</h3>
           <div class="tiles">
             <div class="tile"><p class="label">Disaster stop</p><p class="tile__big">10<small>% below entry</small></p><p><strong>I place a protective stop at your broker on every position.</strong> I send it with the buy order, for the same number of shares. Its price starts at 10% below the entry. On some symbols I may set it wider so an ordinary overnight gap is less likely to take it out; I never tighten it or turn it into a trailing stop. If you sell only part of a position, I reduce the stop to the shares you still hold, at the same price.</p><p class="tile__src">Source: my written protection rules</p></div>
-            <div class="tile"><p class="label">Per-buy caps</p><p class="tile__big">2 / $500</p><p>You choose Conservative, Normal or Aggressive. Conservative allows up to 2 shares and $500 per buy; Normal 5 shares and $1,250; Aggressive 10 shares and $2,500. Automatic buys, if you turn them on, always use the Conservative cap. These sit on top of the 2% and 6% limits; whichever is tighter wins.</p><p class="tile__src">Source: my written risk-choice rules, on both Interactive Brokers and Schwab</p></div>
+            <div class="tile"><p class="label">Per-buy caps</p><p class="tile__big">2 / $500</p><p>You choose Conservative, Normal or Aggressive. Conservative allows up to 2 shares and $500 per buy; Normal 5 shares and $1,250; Aggressive 10 shares and $2,500. Automatic buys, if you turn them on, always use the Conservative cap. These sit on top of the 2% and 6% limits; whichever is tighter wins.</p><p class="tile__src">Source: my written risk-choice rules, on both Schwab and Interactive Brokers</p></div>
             <div class="tile"><p class="label">Risk per trade</p><p class="tile__big">2<small>% of equity</small></p><p>I also size every position so that, if its stop is reached, the loss <em>at the stop price</em> is no more than 2% of the account. A fast market can still fill below the stop; I won't pretend otherwise.</p><p class="tile__src">Source: my written sizing rules</p></div>
             <div class="tile"><p class="label">Total open risk</p><p class="tile__big">6<small>% of equity</small></p><p><strong>Every order I send passes the same safety checks first.</strong> Everything I have open, plus anything pending, may put no more than 6% of the account at risk. An order that would go over is refused, politely and absolutely.</p><p class="tile__src">Source: my written risk limits</p></div>
             <div class="tile"><p class="label">Trailing stops</p><p class="tile__big">0</p><p>Trailing stops came out of my rules on 21 October 2026. My entries, partial sales and exits come from my signal rules instead, and an automated check makes sure I never create a trailing stop. I'm consistent like that.</p><p class="tile__src">Source: the Lime Signalworks decision of 21 Oct 2026, checked by an automated test</p></div>
@@ -253,7 +256,8 @@
         </div>
       </section>
 
-      <!-- Demo — the static sample-data demo at /rosie-demo/ (PR #15) is the only demo link.
+      <!-- Demo — the static sample-data demo is the only demo link: /rosie-demo-schwab/ since
+           2026-11-22 (Schwab first, t1975u); the IB demo at /rosie-demo/ (PR #15) stays in place, unlinked.
            The hosted demo was retired on 2026-10-28 at the owner's direction;
            the full demo is offered on request through the contact block. -->
       <section class="section demo" id="demo" aria-labelledby="demo-title" data-voice="rosie">
@@ -301,7 +305,7 @@
                 </div>
                 <div>
                   <dt>Brokers</dt>
-                  <dd>Interactive Brokers and Schwab</dd>
+                  <dd>Schwab and Interactive Brokers</dd>
                 </div>
                 <div>
                   <dt>Try me first</dt>
@@ -318,7 +322,7 @@
                 loading="lazy"
                 alt="Rosie Keelwise Operator Workstation for Schwab, demo with sample data: header controls, Account Overview, Account Summary, Positions and broker-held Stops"
               />
-              <figcaption>My Operator Workstation (the Schwab version), shown here with sample data. <a href="/rosie-demo/" target="_blank" rel="noopener noreferrer">Open the interactive demo</a>.</figcaption>
+              <figcaption>My Operator Workstation (the Schwab version), shown here with sample data. <a href="/rosie-demo-schwab/" target="_blank" rel="noopener noreferrer">Open the interactive demo</a>.</figcaption>
             </figure>
           </div>
         </div>
@@ -529,10 +533,10 @@
             <p>
               Every new user starts with a free one-month evaluation in practice mode: the real
               me, with no live capital and no real-money orders. Lime Signalworks sets it up
-              with you. With Interactive Brokers, practice orders go to IB&rsquo;s paper account
-              and use real market prices. With Schwab, practice mode is a dry run on your
-              computer: I go through the same checks and records, but nothing is sent to Schwab,
-              because Schwab does not give Rosie a paper-trading API. Whether I stay afterwards
+              with you. With Schwab, practice mode is a dry run on your computer: I go through
+              the same checks and records, but nothing is sent to Schwab, because Schwab does not
+              give Rosie a paper-trading API. With Interactive Brokers, practice orders go to
+              IB&rsquo;s paper account and use real market prices. Whether I stay afterwards
               is entirely your call; I&rsquo;m confident, not clingy.
             </p>
           </div>
