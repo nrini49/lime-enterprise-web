@@ -1,7 +1,7 @@
 {
   "revision": "site2-claim-audit-2026-11-13",
   "canonical": {
-    "rosieIntro": "Hi, I'm Rosie Keelwise. I help you place trades under the risk rules you set, and I attach one broker-held stop to every buy. This guide walks you through your first days with me, in plain language. Nothing here is a recommendation to buy or sell anything.",
+    "rosieIntro": "Hi, I'm Rosie Keelwise, a rule-based trading assistant. I help you place trades under the risk rules you set, and I attach one broker-held stop to every buy. This guide walks you through your first days with me, in plain language. Nothing here is a recommendation to buy or sell anything.",
     "demoUrl": "/rosie-demo-schwab/",
     "demoCtaLabel": "Open the Rosie demo",
     "demoDisclosure": "Sample data in a paper (practice) account. No broker connection, no real orders, and nothing here is advice.",
@@ -58,7 +58,8 @@
       ],
       "_libraryComment": "2026-11-22: videos from the old GoDaddy site that still play on YouTube (checked by oEmbed and the watch page). Titles are YouTube's own (the double space YouTube shows is the original dash). Shown as self-hosted thumbnails (assets/img/video/<id>.jpg) that link to YouTube in a new window: no embedded player, no autoplay, nothing loaded from YouTube until clicked. Dropped: 7obTu4_94_o 'Invest Calmly  Lime's Safety Suit for Everyone' (plays, but its title uses a retired Site 1 term the site's wording rules exclude), TNlWIQySd8U 'Tame the Sharks Inside First' (values essay, off topic), hL9z3sYCj4Y 'Stop Guessing  Start LIME Alerts Today' (promotes the old LIME alerts product), DGT_0Xje1ks 'Oil Squeeze, Clean Signals  Friday Harbor' (dated market commentary about the old daily email), Vimeo 1178552708 'grok logo video' (16-second logo loop)."
     },
-    "_riskDisclosureComment": "2026-11-22 (owner, t1974u): the site relies on ONE statement about not promising results, shown beside the telephone number in the footer of every page. Other no-promise / no-guarantee lines were removed because repeating them broadcasts doubt; factual safety descriptions (stops can fill below their price, paper mode) stay."
+    "_riskDisclosureComment": "2026-11-22 (owner, t1974u): the site relies on ONE statement about not promising results, shown beside the telephone number in the footer of every page. Other no-promise / no-guarantee lines were removed because repeating them broadcasts doubt; factual safety descriptions (stops can fill below their price, paper mode) stay.",
+    "_ruleBasedComment": "2026-11-22 (owner, t1983u): the phrase 'rule-based' appears exactly once on the site, in Rosie's introduction just below the Home opener. Less is more."
   },
   "pages": [
     {
@@ -67,7 +68,7 @@
       "path": "/",
       "file": "index.html",
       "title": "LIME Enterprise — Rosie Keelwise, the automated trading operator who never blinks",
-      "description": "Rosie Keelwise is an automated, rules-based trading operator from Lime Signalworks. She watches the markets while you live your life, holds to your rules and keeps a protective stop at your broker on every position, while you supervise. Try her free for one month in a paper (practice) account.",
+      "description": "Rosie Keelwise is an automated trading operator from Lime Signalworks. She watches the markets while you live your life, holds to your rules and keeps a protective stop at your broker on every position, while you supervise. Try her free for one month in a paper (practice) account.",
       "hero": {
         "display": [
           "I take the watch.",
@@ -337,7 +338,7 @@
       }
     ],
     "includes": [
-      "Rosie, the rules-based trading operator, installed on your computer.",
+      "Rosie, the trading operator, installed on your computer.",
       "A broker-held protective stop on every position.",
       "Built-in risk limits: Conservative, Normal and Aggressive per-buy caps (2 shares / $500, 5 / $1,250, 10 / $2,500), automatic buys at the Conservative cap, 2% per trade, 6% total open risk, and a daily loss limit.",
       "The daily market situation report.",

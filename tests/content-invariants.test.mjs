@@ -4,7 +4,7 @@
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import * as cheerio from 'cheerio';
@@ -706,7 +706,7 @@ test('dom: the header carries the lighthouse logo left and Rosie\'s portrait rig
 });
 
 const ROSIE_INTRO =
-  "Hi, I'm Rosie Keelwise. I help you place trades under the risk rules you set, and I attach one " +
+  "Hi, I'm Rosie Keelwise, a rule-based trading assistant. I help you place trades under the risk rules you set, and I attach one " +
   'broker-held stop to every buy. This guide walks you through your first days with me, in plain ' +
   'language. Nothing here is a recommendation to buy or sell anything.';
 // 2026-11-22 (owner, t1974u): ", and I never promise a result" was dropped from the intro; the
@@ -727,7 +727,7 @@ test('naming: "Rosie Keelwise" introduces her once up top; "Rosie" after that', 
   // visitors know which Rosie this is. It is set aside here like the introduction.
   assert.equal(
     norm($('[data-welcome]').text()),
-    'Welcome to Rosie Keelwise, the LIME trading assistant from Lime Signalworks LLC',
+    'Welcome to Rosie Keelwise, the AI-powered stock trading assistant from Lime Signalworks LLC',
   );
   assert.doesNotMatch(norm($('main').text()), /Rosie Keelwise,? LLC|Keelwise LLC/, 'Rosie Keelwise is never called an LLC');
   const body = norm($('main').clone().find('[data-rosie-intro], [data-welcome]').remove().end().text());
@@ -1242,4 +1242,21 @@ test('dom: risk choices, approve flow, and STOP ALL match the current servers', 
   assert.match(text, /a thousand to ten thousand dollars/);
   assert.match(text, /does not give Rosie a paper-trading API/i);
   assert.match(text, /no self-serve download/i);
+});
+
+// 2026-11-22 (owner, t1983u): "use the phrase rule-based once, and that's it. Less is more."
+// Counted across every built page of the site (markup and metadata), in any spelling.
+test('wording: "rule-based" appears exactly once on the whole site, in Rosie\'s introduction', () => {
+  const files = ['index.html', 'how-rosie-works/index.html', 'blog/index.html', 'rosie-demo/index.html', 'rosie-demo-schwab/index.html'];
+  const harborDir = path.join(root, 'harbor-now');
+  files.push('harbor-now/index.html');
+  for (const d of readdirSync(harborDir)) {
+    if (existsSync(path.join(harborDir, d, 'index.html'))) files.push(`harbor-now/${d}/index.html`);
+  }
+  const RULE_BASED = /rules?[-\s]+based/gi;
+  const hits = files.flatMap((f) =>
+    [...readFileSync(path.join(root, f), 'utf8').replace(/<!--[\s\S]*?-->/g, '').matchAll(RULE_BASED)].map(() => f),
+  );
+  assert.deepEqual(hits, ['index.html'], `"rule-based" must appear exactly once: ${hits.join(', ')}`);
+  assert.match(norm($('main [data-rosie-intro] .rosie-intro__text').text()), /a rule-based trading assistant/);
 });
