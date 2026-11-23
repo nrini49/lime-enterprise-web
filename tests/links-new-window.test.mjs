@@ -12,7 +12,7 @@ import { fileURLToPath } from 'node:url';
 import * as cheerio from 'cheerio';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SKIP = new Set(['node_modules', '.git', 'tests', 'src', 'data', 'scripts']);
+const SKIP = new Set(['node_modules', '.git', 'tests', 'src', 'data', 'scripts', 'dist']);
 
 function htmlFiles(dir) {
   const out = [];

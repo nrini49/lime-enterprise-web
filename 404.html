@@ -1,0 +1,157 @@
+<!doctype html>
+<!-- data-theme is set in the markup so the dark palette is the default on first paint
+     (no flash of light), even with JavaScript disabled and whatever the operating
+     system prefers. The toggle switches to light for the current page view. -->
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Page not found — Lime Signalworks</title>
+    <meta
+      name="description"
+      content="This address is not a page on Lime Signalworks. The link may be old, or it may have been typed incorrectly."
+    />
+    <meta name="robots" content="noindex" />
+    <!-- Declares dark as the default rendering scheme so a light operating system does
+         not paint the canvas or form controls light before the stylesheet applies. The
+         light palette is reached only through the toggle, via the color-scheme property. -->
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0b1416" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231f6b45'/%3E%3Cg stroke='%23f4f6f4' stroke-width='2.5' fill='none' stroke-linecap='square'%3E%3Cpath d='M6 21l7-7 5 5 8-8'/%3E%3Cpath d='M6 26h20'/%3E%3C/g%3E%3C/svg%3E"
+    />
+    <!-- Self-hosted OFL 1.1 typefaces. No external font service is contacted. -->
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/assets/fonts/inter-latin.woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/assets/fonts/archivo-latin.woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="/assets/css/fonts.css" />
+    <link rel="stylesheet" href="/assets/css/base.css" />
+    <link rel="stylesheet" href="/assets/css/site.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- E1 — header and primary call to action -->
+    <header class="masthead">
+      <div class="shell masthead__inner">
+        <!-- Header logos (2026-11-01), the same two as the Rosie Operator Workstation header:
+             the lighthouse mark on the left and Rosie's portrait on the right, equal squares
+             (92px wide screens, 56px tablets, 48px phones, as on the workstation). The
+             lighthouse is the workstation's own looping video; it shows its first frame as a
+             still poster and only plays when app.js starts it (never under reduced motion). -->
+        <video
+          class="masthead__logo masthead__lighthouse"
+          src="/assets/img/lighthouse-loop.mp4"
+          poster="/assets/img/lighthouse-poster.png"
+          width="92"
+          height="92"
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          role="img"
+          aria-label="Lime Signalworks logo: a lighthouse shining over the sea"
+          data-header-logo="lighthouse"
+        ></video>
+        <a class="brand" href="/">
+          <span class="brand__name"
+            >Lime Signalworks<span class="brand__unit" data-site-unit>LIME Enterprise</span></span
+          >
+        </a>
+
+        <nav class="masthead__nav" aria-label="Site pages"><a href="/" data-page-link="home">Home</a>
+          <a href="/how-rosie-works/" data-page-link="how-rosie-works">How Rosie Works</a>
+          <a href="/harbor-now/" data-page-link="harbor">Harbor Now</a>
+          <a href="/blog/" data-page-link="blog">Blog</a></nav>
+
+        <img
+          class="masthead__logo masthead__rosie"
+          src="/assets/img/rosie-portrait.png"
+          width="92"
+          height="92"
+          alt="Rosie: a line-art portrait of a woman beside a small multicolored bar chart"
+          data-header-logo="rosie"
+        />
+
+        <!-- The theme toggle is created by assets/js/app.js, the same script that makes it
+             work. It is deliberately absent from the served markup so that a visitor with
+             JavaScript disabled is never shown a control that cannot do anything. -->
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="page-head" data-page-head="not-found">
+        <div class="shell">
+          <p class="label rule-after">Lime Signalworks</p>
+          <div class="page-head__voice" data-voice="rosie">
+            <span class="label voice-tag" data-voice-tag>From Rosie</span>
+            <h1 class="page-head__title" id="page-title">This page isn&apos;t here</h1>
+            <p class="page-head__lede">I don&apos;t have a page at this address. It may be an old link, or it may have been typed incorrectly. These pages are on this site:</p>
+          </div>
+          <div class="btn-row">
+            <a class="btn btn--primary" href="/">Home</a>
+            <a class="btn btn--ghost" href="/how-rosie-works/">How Rosie Works</a>
+            <a class="btn btn--ghost" href="/harbor-now/">Harbor Now</a>
+            <a class="btn btn--ghost" href="/blog/">Blog</a>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- E12 — footer -->
+    <footer class="foot">
+      <div class="shell foot__grid">
+        <div>
+          <p class="label">Lime Signalworks LLC · LIME Enterprise</p>
+          <p class="foot__note">
+            Rosie is a product of Lime Signalworks LLC. Lime Signalworks also offers five
+            TradingView indicators. The daily market report, Harbor Now, is published on this
+            site; the Leadership library is a separate site.
+          </p>
+          <p class="foot__harbor"><a class="anchor-link" href="/harbor-now/" data-harbor-link>Daily market report</a></p>
+          <!-- Contact is by real mailto: and tel: links; there is no form on this site. -->
+          <dl class="contact" id="contact" data-contact>
+            <div>
+              <dt>Email</dt>
+              <dd><a class="contact__link" href="mailto:contact@limesignalworks.com" data-contact-email>contact@limesignalworks.com</a></dd>
+            </div>
+            <div>
+              <dt>Telephone</dt>
+              <dd><a class="contact__link" href="tel:+13802000288" data-contact-phone>+1 380-200-0288</a>
+                <!-- 2026-11-22 (owner, t1974u): the site's one statement about results, beside the phone. -->
+                <p class="contact__risk" data-risk-disclosure>Rosie is a tool for disciplined trading, not a promise of results. Trading involves risk, including loss of money.</p></dd>
+            </div>
+            <div>
+              <dt>Office</dt>
+              <dd>2722 Erie Ave, Suite 219, Cincinnati, OH 45208</dd>
+            </div>
+            <div>
+              <dt>Availability</dt>
+              <dd>By appointment.</dd>
+            </div>
+          </dl>
+          <p class="foot__copyright">© 2026 Lime Signalworks LLC.</p>
+        </div>
+        <div>
+          <p class="label">Disclaimer</p>
+          <p class="foot__disclaimer" data-securities-disclaimer>Lime Signalworks provides educational tools and analysis, not personalized investment advice. Securities trading involves risk of loss. Your decisions and results are your own. Nothing here is an offer to sell or a solicitation to buy any security.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="/assets/js/app.js" defer></script>
+  </body>
+</html>

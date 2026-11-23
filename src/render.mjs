@@ -9,6 +9,7 @@
  *   how-rosie-works/index.html How Rosie Works
  *   harbor-now/                Harbor Now (via src/harbor.mjs, with the market-report section)
  *   blog/index.html            Blog (from data/blog.json)
+ *   404.html                   Branded not-found page (same shell; not in the menu)
  * All of these are generated output, committed so the site works with no build step.
  */
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
@@ -388,6 +389,32 @@ const heroDisplay = ([a, b]) =>
 const CHECK =
   '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 
+
+/** The branded 404 page: same masthead, footer and contact as the rest of the site. */
+function renderNotFound(pages) {
+  const links = pages
+    .map(
+      (pg) =>
+        `<a class="btn btn--${pg.id === 'home' ? 'primary' : 'ghost'}" href="${esc(pg.path)}">${esc(pg.nav)}</a>`,
+    )
+    .join('\n            ');
+  return `
+      <div class="page-head" data-page-head="not-found">
+        <div class="shell">
+          <p class="label rule-after">Lime Signalworks</p>
+          <div class="page-head__voice" data-voice="rosie">
+            <span class="label voice-tag" data-voice-tag>From Rosie</span>
+            <h1 class="page-head__title" id="page-title">This page isn&apos;t here</h1>
+            <p class="page-head__lede">I don&apos;t have a page at this address. It may be an old link, or it may have been typed incorrectly. These pages are on this site:</p>
+          </div>
+          <div class="btn-row">
+            ${links}
+          </div>
+        </div>
+      </div>
+`;
+}
+
 /** Exactly one h1 per page. */
 function assertSingleH1(html, file) {
   const n = (html.match(/<h1\b/g) || []).length;
@@ -518,6 +545,25 @@ async function main() {
     `built harbor-now/ — ${harbor.count} editions, latest ${harbor.latest}` +
       (harbor.stale ? ' (stale: restart note shown)' : ''),
   );
+
+  const notFoundBody = renderNotFound(pages);
+  let notFound = (shellBefore + notFoundBody + '\n    ' + shellAfter)
+    .replaceAll('{{PAGE_TITLE}}', 'Page not found — Lime Signalworks')
+    .replaceAll(
+      '{{PAGE_DESCRIPTION}}',
+      'This address is not a page on Lime Signalworks. The link may be old, or it may have been typed incorrectly.',
+    )
+    .replaceAll('{{BRAND_LINK}}', 'href="/"')
+    .replaceAll('{{NAV}}', siteNav(pages, null));
+  notFound = notFound.replace(
+    '<meta name="robots" content="index, follow" />',
+    '<meta name="robots" content="noindex" />',
+  );
+  assertSingleH1(notFound, '404.html');
+  assertUniqueIds(notFound);
+  assertAnchorsResolve(notFound);
+  await writeFile(path.join(root, '404.html'), notFound, 'utf8');
+  console.log('built 404.html');
 }
 
 main().catch((err) => {

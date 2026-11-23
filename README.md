@@ -15,7 +15,9 @@ Static site for limesignalworks.com, in four pages (split from the single homepa
 `src/render.mjs` places it on its page and turns a link to a section on another page into a
 page link. The output is plain HTML/CSS/assets with root-relative links: `npm run export`
 copies the files to upload into `dist/` (with an `.htaccess` that repeats `vercel.json`'s
-redirects for Apache hosts).
+redirects for Apache hosts, plus HTTPS, the apex-to-www redirect, a branded 404, and
+blocks for source folders). `npm run package:godaddy` builds that set into a zip for
+GoDaddy `public_html`. Neither command uploads anything.
 
 This repository is **not** Site 1 (`lime-web-public`, `limesignalworks.com`). Nothing here deploys
 to, reads from, or links into Site 1; the sister-site link buttons were removed.
@@ -38,10 +40,14 @@ Zero-framework static build. No bundler, no CSS preprocessor, no client framewor
 - `data/homepage.json` — **source of truth**: canonical strings, section order, market-report
   example, planned pricing, start cards
 - `src/template.html` — page skeleton with `{{TOKEN}}` placeholders
-- `src/render.mjs` — build script: JSON + template → the four pages (see the table above)
+- `src/render.mjs` — build script: JSON + template → the four pages and `404.html` (see the table above)
 - `src/site.mjs` — the shared page menu, brand link and Harbor Now "Latest from the blog" strip
 - `data/blog.json` — blog posts, newest first; empty until a real post exists
 - `scripts/export-static.mjs` — `npm run export`: copies the uploadable site into `dist/`
+- `scripts/htaccess.mjs` / `scripts/write-htaccess.mjs` — generate `.htaccess` from `vercel.json`
+- `scripts/package-godaddy.mjs` — `npm run package:godaddy`: build, export, and zip for `public_html`
+- `404.html` — **generated artifact**, branded not-found page, same shell as the other pages
+- `.htaccess` — **generated artifact**, Apache rules for GoDaddy; do not hand-edit
 - `assets/css/fonts.css` — `@font-face` rules for the three self-hosted OFL 1.1 families
 - `assets/fonts/` — vendored woff2 subsets plus the OFL licence text for each family
 - `assets/css/base.css` — shared reset, focus-visible, reduced-motion, `.sr-only`
@@ -94,15 +100,16 @@ asserts that none of their content reaches the page.
 
 ```bash
 npm install          # cheerio, playwright (dev only; no runtime deps)
-npm run build        # regenerate the four pages from data/ + src/template.html
-npm test             # build, then run every suite in tests/
-npm run export       # copy the uploadable static site into dist/
-npm run serve        # serve the repo root on http://localhost:4173
+npm run build           # regenerate the four pages, 404.html, and .htaccess
+npm test                # build, then run every suite in tests/
+npm run export          # copy the uploadable static site into dist/
+npm run package:godaddy # build, export, and zip dist/limesignalworks-public_html.zip
+npm run serve           # serve the repo root on http://localhost:4173
 ```
 
 ## Conventions for incremental edits
 
-1. **Never hand-edit `index.html`.** Edit `data/homepage.json` or `src/template.html`, then
+1. **Never hand-edit `index.html`, `404.html`, or `.htaccess`.** Edit `data/homepage.json` or `src/template.html`, then
    `npm run build`. The build throws on an unreplaced token, on section-order drift against the
    data file, on a duplicate element id, and on an in-page anchor with no target.
 2. **Canonical strings live in `data/homepage.json`.** The demo CTA label, its disclosure, the

@@ -1,0 +1,52 @@
+# Lime Signalworks — Apache rules for GoDaddy cPanel (Web Hosting Deluxe).
+# Path redirects are generated from vercel.json. Do not hand-edit the rule list;
+# change vercel.json and run `npm run build` (or node scripts/write-htaccess.mjs).
+
+DirectoryIndex index.html
+Options -Indexes
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Apex → https://www in one hop (Vercel uses 308 for this).
+  RewriteCond %{HTTP_HOST} ^limesignalworks\.com$ [NC]
+  RewriteRule ^ https://www.limesignalworks.com%{REQUEST_URI} [R=308,L]
+
+  # HTTP on www (or any other host) → HTTPS on the same host.
+  RewriteCond %{HTTPS} !=on
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+  # Old paths, matching vercel.json (301 unless marked otherwise).
+  # /data/harbor/* is a 302 to /harbor-now/, and must sit above the /data/ block.
+  RewriteRule ^home/?$ / [R=301,L]
+  RewriteRule ^about-lime/?$ / [R=301,L]
+  RewriteRule ^how-lime-works/?$ /how-rosie-works/ [R=301,L]
+  RewriteRule ^blank/?$ / [R=301,L]
+  RewriteRule ^life-changes/?$ / [R=301,L]
+  RewriteRule ^lime-hammers-brain/?$ / [R=301,L]
+  RewriteRule ^privacy-policy/?$ / [R=301,L]
+  RewriteRule ^unique-high-performance/?$ /how-rosie-works/ [R=301,L]
+  RewriteRule ^preparing-to-be-wealthy/?$ / [R=301,L]
+  RewriteRule ^daily-alerts/?$ /harbor-now/ [R=301,L]
+  RewriteRule ^not-a-black-box/?$ /how-rosie-works/ [R=301,L]
+  RewriteRule ^technical-indicator-specs/?$ /how-rosie-works/ [R=301,L]
+  RewriteRule ^testimony-parade/?$ / [R=301,L]
+  RewriteRule ^alignment/?$ /how-rosie-works/ [R=301,L]
+  RewriteRule ^coherence/?$ /how-rosie-works/ [R=301,L]
+  RewriteRule ^business-structure-1/?$ /how-rosie-works/ [R=301,L]
+  RewriteRule ^founders-comments/?$ / [R=301,L]
+  RewriteRule ^services/?$ / [R=301,L]
+  RewriteRule ^still-skeptical/?$ / [R=301,L]
+  RewriteRule ^testimonies/?$ / [R=301,L]
+  RewriteRule ^lime-shop/?$ / [R=301,L]
+  RewriteRule ^terms-of-use/?$ / [R=301,L]
+  RewriteRule ^m(/.*)?$ / [R=301,L]
+  RewriteRule ^data/harbor(/.*)?$ /harbor-now/ [R=302,L]
+
+  # If the whole repo is uploaded by mistake, do not serve source or internals.
+  RewriteRule ^(data|src|tests|scripts|node_modules)(/|$) - [F,L]
+  RewriteRule ^(package(-lock)?\.json|vercel\.json|README\.md|CNAME|\.gitignore)$ - [F,L]
+  RewriteRule ^\.git - [F,L]
+</IfModule>
