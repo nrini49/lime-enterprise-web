@@ -380,6 +380,32 @@ test('dom: every section in the order is rendered and labelled', () => {
   }
 });
 
+// 2026-11-23 (owner, t2074u): heading and label of #will-wont changed from "What Rosie will and won't do" to "What Rosie actually does". Body unchanged.
+// 2026-11-23 (owner, t2075u): "inside the limits you set" removed from the All for you card; no replacement.
+// 2026-11-23 (owner, t2076u): ww__pull reworded; "where she's headed" removed, "my benefit" became "our benefit", and "financial" added before "relationship".
+// 2026-11-23 (owner, t2077u): ww__sign changed from "Her only job is to help me with my funds, and I like her more and more." to "Her only job is to trade my funds effectively."
+// 2026-11-23 (owner, t2079u): will-wont warm-note first sentence gained ", while you learn to use the dashboard effectively."
+// 2026-11-23 (owner, t2080u): warm-note second sentence now: "Right now, Rosie handles stocks, ETFs and options. Around-the-clock markets, including crypto, forex and futures, are coming in a future release."
+test('wording: will-wont heading and All for you card match the 2026-11-23 owner wording', () => {
+  assert.equal(norm($('#will-wont-title').text()), 'What Rosie actually does');
+  assert.equal(norm($('#will-wont .ww__col > p.label').first().text()), 'What Rosie actually does');
+  const card = $('#will-wont h3').filter((_, el) => norm($(el).text()) === 'All for you.').parent();
+  assert.equal(card.length, 1, 'All for you card');
+  assert.match(norm(card.find('p').text()), /All she can do is place orders with your broker\./);
+  assert.doesNotMatch(norm(card.find('p').text()), /inside the limits you set/);
+
+  const pull = norm($('#will-wont .ww__pull').text());
+  assert.equal(
+    pull,
+    "My favorite thing about Rosie: she watches the markets around the clock and around the world, while I only look in casually or give her a nudge one way or the other. She's mine, and she works entirely for our benefit. She's the most remarkable financial relationship I've had in life.",
+  );
+  assert.equal(norm($('#will-wont .ww__sign').text()), 'Her only job is to trade my funds effectively.');
+  assert.equal(
+    norm($('#will-wont .warm-note').text()),
+    'During the free one-month evaluation, Rosie runs in practice mode, with no real-money orders, while you learn to use the dashboard effectively. Right now, Rosie handles stocks, ETFs and options. Around-the-clock markets, including crypto, forex and futures, are coming in a future release.',
+  );
+});
+
 test('dom: the masthead menu links the four pages, Home marked as the current page', () => {
   const navLinks = $('.masthead__nav a');
   assert.deepEqual(
@@ -707,8 +733,9 @@ test('dom: the header carries the lighthouse logo left and Rosie\'s portrait rig
 });
 
 const ROSIE_INTRO =
-  "Hi, I'm Rosie Keelwise, a rule-based trading assistant. I help you place trades under the risk rules you set, and I attach one " +
+  "Hi, I'm Rosie Keelwise, a rule-based trading assistant. I help you place trades under the risk rules. And I attach one " +
   'broker-held stop to every buy. This guide walks you through your first days with me, in plain language.';
+// 2026-11-23 (owner, t2070u): "you set" removed from the intro; period after "rules", next sentence starts "And I attach…".
 // 2026-11-23 (owner, t2064u): "Nothing here is a recommendation to buy or sell anything." removed; no replacement.
 // 2026-11-22 (owner, t1974u): ", and I never promise a result" was dropped from the intro; the
 // site's one statement about results sits beside the telephone number in the footer.
@@ -1239,9 +1266,12 @@ test('dom: risk choices, approve flow, and STOP ALL match the current servers', 
   assert.match(text, /leaves the protective stops/i);
   assert.doesNotMatch(text, /One button halts me\. One button closes every open position/i);
   assert.doesNotMatch(text, /27 October 2026|27 Oct 2026/);
-  assert.match(text, /casual-money sideline/i);
-  assert.match(text, /a thousand to ten thousand dollars/);
-  assert.match(text, /does not give Rosie a paper-trading API/i);
+  // 2026-11-23 (owner, t2072u): "I'm built as a small, casual-money sideline, for an account of about a thousand to ten thousand dollars, not as a professional trading desk." became "I'm built for a small account of about a thousand to ten thousand dollars."
+  assert.match(text, /I'm built for a small account of about a thousand to ten thousand dollars/);
+  assert.doesNotMatch(text, /casual-money sideline/i);
+  assert.doesNotMatch(text, /professional trading desk/i);
+  // 2026-11-23 (owner, t2073u): "because Schwab does not give Rosie a paper-trading API" removed from both homepage mentions; no replacement.
+  assert.doesNotMatch(text, /does not give Rosie a paper-trading API/i);
   assert.match(text, /no self-serve download/i);
 });
 

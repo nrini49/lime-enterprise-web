@@ -138,7 +138,9 @@
                    Rosie's voice on what her last name means and what she does, right after her approved
                    introduction (which stays the first paragraph of the page). "Keelwise" is not repeated,
                    so the once-in-the-body naming rule still holds. -->
-              <p class="rosie-intro__name" data-name-note>My last name comes from a ship&rsquo;s keel, the part below the waterline that keeps a boat steady in rough water. Keeping your trading steady is my job: I follow your rules, place the trades you approve with your broker, each with a protective stop, and monitor them until they close.</p>
+              <!-- 2026-11-23 (owner, t2071u): "I follow your rules, place the trades you approve with your broker"
+                   became "I follow specific rules to place trades with your broker"; rest of the paragraph unchanged. -->
+              <p class="rosie-intro__name" data-name-note>My last name comes from a ship&rsquo;s keel, the part below the waterline that keeps a boat steady in rough water. Keeping your trading steady is my job: I follow specific rules to place trades with your broker, each with a protective stop, and monitor them until they close.</p>
             </div>
             <!-- Rosie's rules, short form (2026-11-22, owner t1985u): the biggest guardrails, one
                  line each, right under her intro. Each line was checked against the code on both
@@ -171,8 +173,10 @@
               <p class="label voice-tag" data-voice-tag>From Rosie</p>
               <p class="brokers-note__line">I work with <strong>Schwab</strong> and <strong>Interactive Brokers</strong> today.</p>
               <p class="brokers-note__line">I connect only to brokers that hand customers a real, public trading API, so your software can place its own orders.</p>
-              <p class="brokers-note__line">I'm built as a small, casual-money sideline, for an account of about a thousand to ten thousand dollars, not as a professional trading desk.</p>
-              <p class="brokers-note__line brokers-note__paper">During the free one-month evaluation, I run in practice mode, with no real-money orders. With Schwab, practice mode is a dry run on your computer: I go through the same checks and keep a record, but orders are not sent to Schwab, because Schwab does not give Rosie a paper-trading API. With Interactive Brokers, that is a paper (practice) account at the broker, using real market prices.</p>
+              <!-- 2026-11-23 (owner, t2072u): "I'm built as a small, casual-money sideline, for an account of about a thousand to ten thousand dollars, not as a professional trading desk." became "I'm built for a small account of about a thousand to ten thousand dollars." -->
+              <p class="brokers-note__line">I'm built for a small account of about a thousand to ten thousand dollars.</p>
+              <!-- 2026-11-23 (owner, t2073u): "because Schwab does not give Rosie a paper-trading API" removed from this line and from the Section 03 evaluation paragraph; no replacement. -->
+              <p class="brokers-note__line brokers-note__paper">During the free one-month evaluation, I run in practice mode, with no real-money orders. With Schwab, practice mode is a dry run on your computer: I go through the same checks and keep a record, but orders are not sent to Schwab. With Interactive Brokers, that is a paper (practice) account at the broker, using real market prices.</p>
             </div>
             </div>
           </div>
@@ -206,26 +210,32 @@
         </div>
       </section>
 
-      <!-- What Rosie will and won't do — single column, warm first person (PR #13) -->
+      <!-- 2026-11-23 (owner, t2074u): heading and label changed from "What Rosie will and won't do" to "What Rosie actually does". Section body unchanged. -->
+      <!-- What Rosie actually does — single column, warm first person (PR #13) -->
       <section class="ww" id="will-wont" aria-labelledby="will-wont-title">
         <div class="shell">
           <div class="ww__col" data-voice="noal">
-            <p class="label">What Rosie will and won't do</p>
-            <h2 id="will-wont-title">What Rosie will and won't do</h2>
+            <p class="label">What Rosie actually does</p>
+            <h2 id="will-wont-title">What Rosie actually does</h2>
             <p>I'll tell you what I love about her, because it's the reason I trust her.</p>
             <ul class="ww-cards">
-              <li class="ww-card"><svg class="ww-card__icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/></svg><h3>All for you.</h3><p>Rosie is all for you. She works in your account, for you, and nobody else. She has no way to move your money out. All she can do is place orders with your broker, inside the limits you set. There are no nefarious bones in this baby.</p></li>
+              <!-- 2026-11-23 (owner, t2075u): "inside the limits you set" removed from the All for you card; no replacement. -->
+              <li class="ww-card"><svg class="ww-card__icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/></svg><h3>All for you.</h3><p>Rosie is all for you. She works in your account, for you, and nobody else. She has no way to move your money out. All she can do is place orders with your broker. There are no nefarious bones in this baby.</p></li>
               <li class="ww-card"><svg class="ww-card__icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg><h3>Consistent.</h3><p>She's consistent. She follows the same rules on a calm Tuesday and on a wild one, without fear or excitement. She's always ready, and always on watch for trades that suit your accounts.</p></li>
               <li class="ww-card"><svg class="ww-card__icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg><h3>Honest.</h3><p>And she's honest. Markets move, and a stop can fill below its price. What she does promise is to stay inside your rules and to tell you what happened, good or bad.</p></li>
             </ul>
-            <p class="ww__pull">My favorite thing about Rosie is where she's headed: watching the markets around the clock and around the world, while I only look in casually or give her a nudge one way or the other. She's mine, and she works entirely for my benefit. She's the most remarkable relationship I've had in life.</p>
+            <!-- 2026-11-23 (owner, t2076u): ww__pull reworded; "where she's headed" removed, "my benefit" became "our benefit", and "financial" added before "relationship". -->
+            <p class="ww__pull">My favorite thing about Rosie: she watches the markets around the clock and around the world, while I only look in casually or give her a nudge one way or the other. She's mine, and she works entirely for our benefit. She's the most remarkable financial relationship I've had in life.</p>
             <p class="ww__phone"><span class="soon">COMING SOON</span> <span><strong>Follow along from your phone.</strong> Phone viewing is on its way for everyone; I already check in on mine.</span></p>
-            <p class="ww__sign">Her only job is to help me with my funds, and I like her more and more.</p>
+            <!-- 2026-11-23 (owner, t2077u): ww__sign changed from "Her only job is to help me with my funds, and I like her more and more." to "Her only job is to trade my funds effectively." -->
+            <p class="ww__sign">Her only job is to trade my funds effectively.</p>
             <figure class="sleep ww__quote" id="teammate">
               <blockquote>Rosie is the primo teammate. There's no one I'd rather have on my team than Rosie, because she's the only team member I can truly trust.</blockquote>
               <figcaption data-attribution>Noal</figcaption>
             </figure>
-            <p class="warm-note">During the free one-month evaluation, Rosie runs in practice mode, with no real-money orders. Around-the-clock and worldwide markets, including crypto, forex and futures, are coming and not live.</p>
+            <!-- 2026-11-23 (owner, t2079u): first sentence of the will-wont warm-note gained ", while you learn to use the dashboard effectively." Rest of the paragraph unchanged. -->
+            <!-- 2026-11-23 (owner, t2080u): second sentence replaced; "coming and not live" became present stocks/ETFs/options plus around-the-clock markets "coming in a future release." -->
+            <p class="warm-note">During the free one-month evaluation, Rosie runs in practice mode, with no real-money orders, while you learn to use the dashboard effectively. Right now, Rosie handles stocks, ETFs and options. Around-the-clock markets, including crypto, forex and futures, are coming in a future release.</p>
           </div>
         </div>
       </section>
@@ -631,8 +641,7 @@
               Every new user starts with a free one-month evaluation in practice mode: the real
               me, with no live capital and no real-money orders. Lime Signalworks sets it up
               with you. With Schwab, practice mode is a dry run on your computer: I go through
-              the same checks and records, but nothing is sent to Schwab, because Schwab does not
-              give Rosie a paper-trading API. With Interactive Brokers, practice orders go to
+              the same checks and records, but nothing is sent to Schwab. With Interactive Brokers, practice orders go to
               IB&rsquo;s paper account and use real market prices. Whether I stay afterwards
               is entirely your call; I&rsquo;m confident, not clingy.
             </p>

@@ -1,7 +1,7 @@
 {
   "revision": "site2-claim-audit-2026-11-13",
   "canonical": {
-    "rosieIntro": "Hi, I'm Rosie Keelwise, a rule-based trading assistant. I help you place trades under the risk rules you set, and I attach one broker-held stop to every buy. This guide walks you through your first days with me, in plain language.",
+    "rosieIntro": "Hi, I'm Rosie Keelwise, a rule-based trading assistant. I help you place trades under the risk rules. And I attach one broker-held stop to every buy. This guide walks you through your first days with me, in plain language.",
     "demoUrl": "/rosie-demo-schwab/",
     "demoCtaLabel": "Open the Rosie demo",
     "demoDisclosure": "Sample data in a paper (practice) account. No broker connection, no real orders, and nothing here is advice.",
@@ -206,7 +206,7 @@
     {
       "id": "will-wont",
       "page": "home",
-      "eyebrow": "What Rosie will and won't do"
+      "eyebrow": "What Rosie actually does"
     },
     {
       "id": "evaluation",
