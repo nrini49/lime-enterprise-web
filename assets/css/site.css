@@ -626,6 +626,12 @@ html {
   margin-bottom: 0;
 }
 
+/* 2026-11-23: what her last name means, under the approved introduction. */
+.rosie-intro .rosie-intro__name {
+  margin-top: var(--space-3);
+  color: var(--color-text-muted);
+}
+
 /* ---------- Harbor Now reading guide (2026-11-01) ---------- */
 .hn-guide {
   margin-top: var(--space-12);
