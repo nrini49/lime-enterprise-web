@@ -178,6 +178,51 @@
             <li><strong>Your keys stay home.</strong> With Schwab, your app key and sign-in stay in files on your own computer. With Interactive Brokers, you sign in to IB&rsquo;s own app on your computer, and I never hold your IB password.</li>
             <li><strong>Your account only.</strong> Orders go only to your own broker account.</li>
           </ol>
+          <!-- 2026-11-23 (owner t2029u, reviewer feedback: "are the trading rules fixed or variable?").
+               Checked against the code on both servers (Schwab main d7e8633, IB main b429892):
+               dashboard controls (account choice, risk tiers, share-price cap, practice/live, LIVE AUTO,
+               STOP ALL, FLATTEN ALL); settings-file values with built-in ceilings (stop distance 3%,
+               hard max 7.5%; risk per trade 2%; total open risk 6%; daily loss 3%; 20 automatic
+               orders, 3 losses in a row); constants in code (limit buy + one broker-held stop,
+               7.5% ceiling and refusal, 15-minute open skip, Conservative cap for automatic buys,
+               exits never blocked). Citations are in PR #30. -->
+          <div class="rules-who" id="rules-who-sets" data-rules="who-sets">
+            <h3 class="rules-who__title">Which rules you can change</h3>
+            <p class="rules-who__lede">Some of my rules are yours to set, some are set with you when I&rsquo;m installed, and some are built in and the same for everyone.</p>
+            <div class="rules-who__grid">
+              <div class="rules-who__col">
+                <h4>You set these on my Workstation, any time</h4>
+                <ul>
+                  <li>Which of your brokerage accounts I trade.</li>
+                  <li>The risk level for each account: Conservative, Normal or Aggressive.</li>
+                  <li>A top share price for new buys, if you want one.</li>
+                  <li>Switching between practice and real money (once real money has been enabled at setup), and whether I may trade on my own. I start in practice, with automatic trading off.</li>
+                  <li>STOP ALL and FLATTEN ALL, whenever you choose.</li>
+                </ul>
+              </div>
+              <div class="rules-who__col">
+                <h4>Set with you when I&rsquo;m installed</h4>
+                <p>These live in a settings file on your computer, not on the dashboard. Each one has a starting value and a built-in limit, and changing one means editing that file and restarting me.</p>
+                <ul>
+                  <li>How far below the buy price your protective stop sits: 3% to start, and never more than 7.5%.</li>
+                  <li>Risk per trade: 2% of the account to start.</li>
+                  <li>Total open risk: 6% of the account to start.</li>
+                  <li>Daily loss limit: 3% to start.</li>
+                  <li>Automatic trades: at most 20 a day and a pause after 3 losses in a row, to start.</li>
+                </ul>
+              </div>
+              <div class="rules-who__col">
+                <h4>Built in, the same for everyone</h4>
+                <ul>
+                  <li>Every buy is a limit order with one protective stop held at your broker.</li>
+                  <li>No stop is ever wider than 7.5%. If a stock&rsquo;s ordinary overnight moves would need more room than that, I don&rsquo;t buy it.</li>
+                  <li>No new buys in the first 15 minutes after the open.</li>
+                  <li>My automatic buys always use the Conservative cap.</li>
+                  <li>No limit ever blocks a sell, your stop, or closing everything.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

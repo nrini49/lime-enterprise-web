@@ -1276,13 +1276,20 @@ test('rules: Home shows 5-6 one-line rules right after the intro, linking to the
   for (const l of lines) assert.ok(l.split(/\s+/).length <= 20, `one short line each: "${l}"`);
   const more = card.find('a[href="/how-rosie-works/#rules"]');
   assert.equal(more.length, 1, 'a "See all the rules" link to How Rosie Works');
-  assert.equal(norm(more.text()), 'See all the rules');
+  // 2026-11-23 (owner t2029u): the link also says the full list shows which rules you can change.
+  assert.equal(norm(more.text()), 'See all the rules, and which ones you can change');
   assert.equal(more.attr('target'), undefined, 'a link between the site\'s own pages opens in the same window');
   const how = cheerio.load(readPage('how-rosie-works/index.html'));
   const full = how('section#rules [data-rules="full"] > li');
   assert.ok(full.length >= 8 && full.length <= 10, `8 to 10 rules on How Rosie Works, got ${full.length}`);
   // Every Home rule also appears, word for word, in the full list.
   const fullText = norm(how('section#rules').text());
+  // 2026-11-23 (owner t2029u): the full list says which rules the operator sets, which are set
+  // at install, and which are built in.
+  const who = how('section#rules [data-rules="who-sets"]');
+  assert.equal(who.length, 1, 'the "which rules you can change" block is on How Rosie Works');
+  assert.equal(who.find('.rules-who__col').length, 3, 'three groups: yours, set at install, built in');
+  assert.match(norm(who.text()), /never more than 7\.5%/);
   for (const l of lines) {
     if (/^Orders go only|^I start in practice|^No new buys|^If your account falls/.test(l)) {
       assert.ok(fullText.includes(l.replace(/^I start in practice mode\. /, '')), `full list carries: "${l}"`);
