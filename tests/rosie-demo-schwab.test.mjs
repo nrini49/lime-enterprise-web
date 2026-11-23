@@ -70,3 +70,14 @@ test('schwab demo: every local asset it references exists', () => {
   const refs = [...html.matchAll(/\s(?:src|href)="([^"]+)"/g)].map((m) => m[1]).filter((u) => u !== '/');
   for (const r of refs) assert.ok(existsSync(path.join(demoDir, r)), `missing asset ${r}`);
 });
+
+// 2026-11-23 (owner t2029u, reviewer feedback: "the trade ticket menu does not work"). The demo is
+// static and inert by design, so the Trade Ticket says so where people try it, and the notes no
+// longer promise row clicks or sorting on this page.
+test('schwab demo: the Trade Ticket says it is a demo picture, and no note promises clicks that do nothing', () => {
+  const note = $('details[data-state-id="panel-trade-ticket"] [data-demo-ticket-note]');
+  assert.equal(note.length, 1, 'one demo note inside the Trade Ticket');
+  assert.match(note.text(), /Demo only/);
+  assert.match(note.text(), /Nothing on this page can place an order/);
+  assert.ok(!/(^|\. )Click a (row|column)/.test(text), 'no note tells the visitor to click a row or column here');
+});
