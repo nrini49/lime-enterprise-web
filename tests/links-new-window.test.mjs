@@ -12,7 +12,7 @@ import { fileURLToPath } from 'node:url';
 import * as cheerio from 'cheerio';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SKIP = new Set(['node_modules', '.git', 'tests', 'src', 'data', 'scripts']);
+const SKIP = new Set(['node_modules', '.git', 'tests', 'src', 'data', 'scripts', 'dist']);
 
 function htmlFiles(dir) {
   const out = [];
@@ -25,12 +25,14 @@ function htmlFiles(dir) {
   return out;
 }
 
-const EXEMPT = /^(#|mailto:|tel:)/i;
+// 2026-11-22 (owner default): links between the site's own pages (Home, How Rosie Works,
+// Harbor Now and its dated editions, Blog) stay in the same window too.
+const EXEMPT = /^(#|mailto:|tel:|\/(how-rosie-works\/|harbor-now\/(\d{4}-\d\d-\d\d\/)?|blog\/)?(#[\w-]*)?$)/i;
 const files = htmlFiles(root);
 
 test('links: the scan covers the home page, Harbor Now and the demo', () => {
   const rel = files.map((f) => path.relative(root, f));
-  for (const page of ['index.html', 'harbor-now/index.html', 'rosie-demo/index.html']) {
+  for (const page of ['index.html', 'harbor-now/index.html', 'rosie-demo/index.html', 'rosie-demo-schwab/index.html']) {
     assert.ok(rel.includes(page), `${page} is scanned`);
   }
   assert.ok(rel.filter((r) => r.startsWith('harbor-now/')).length > 1, 'Harbor Now editions are scanned');

@@ -11,12 +11,12 @@
  *   harbor-now/index.html          latest edition + archive list
  *   harbor-now/<date>/index.html   one page per edition
  */
+import { siteNav, brandLink, blogStrip } from './site.mjs';
 import { readFile, writeFile, readdir, mkdir, rm } from 'node:fs/promises';
 import path from 'node:path';
 
 export const HARBOR_NOTICE =
-  'Educational market commentary, not investment advice. We do not know your situation, ' +
-  'and past conditions do not predict future results.';
+  'Educational market commentary, not investment advice. We do not know your situation.';
 
 /** Days after which the latest edition is called out as not current. */
 export const STALE_AFTER_DAYS = 3;
@@ -481,16 +481,17 @@ const stale = (latest, today) =>
     ? `<p class="warm-note hn-stale" data-harbor-stale>${esc(staleNote(latest))}</p>`
     : '';
 
-function page({ title, description, canonicalPath, body, canonical }) {
+function page({ title, description, canonicalPath, body, canonical, pages, current = false, after = '' }) {
   const html = `<!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>${esc(title)}</title>
     <meta name="description" content="${esc(description)}" />
     <meta name="robots" content="index, follow" />
-    <meta name="color-scheme" content="light" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0b1416" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231f6b45'/%3E%3Cg stroke='%23f4f6f4' stroke-width='2.5' fill='none' stroke-linecap='square'%3E%3Cpath d='M6 21l7-7 5 5 8-8'/%3E%3Cpath d='M6 26h20'/%3E%3C/g%3E%3C/svg%3E" />
     <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin.woff2" crossorigin />
     <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/archivo-latin.woff2" crossorigin />
@@ -503,14 +504,10 @@ function page({ title, description, canonicalPath, body, canonical }) {
     <header class="masthead">
       <div class="shell masthead__inner">
         <video class="masthead__logo masthead__lighthouse" src="/assets/img/lighthouse-loop.mp4" poster="/assets/img/lighthouse-poster.png" width="92" height="92" muted loop playsinline preload="metadata" role="img" aria-label="Lime Signalworks logo: a lighthouse shining over the sea" data-header-logo="lighthouse"></video>
-        <a class="brand" href="/" target="_blank" rel="noopener noreferrer">
+        <a class="brand" ${brandLink('harbor')}>
           <span class="brand__name">Lime Signalworks<span class="brand__unit">LIME Enterprise</span></span>
         </a>
-        <nav class="masthead__nav" aria-label="Harbor Now">
-          <a href="/" target="_blank" rel="noopener noreferrer">Home</a>
-          <a href="/harbor-now/" target="_blank" rel="noopener noreferrer" data-harbor-nav>Daily market report</a>
-          <a href="/harbor-now/#archive" target="_blank" rel="noopener noreferrer">Archive</a>
-        </nav>
+        <nav class="masthead__nav" aria-label="Site pages">${siteNav(pages, current ? 'harbor' : null)}</nav>
         <img class="masthead__logo masthead__rosie" src="/assets/img/rosie-portrait.png" width="92" height="92" alt="Rosie: a line-art portrait of a woman beside a small multicolored bar chart" data-header-logo="rosie" />
       </div>
     </header>
@@ -520,20 +517,24 @@ function page({ title, description, canonicalPath, body, canonical }) {
 ${body}
         </div>
       </section>
+${after}
     </main>
     <footer class="foot">
       <div class="shell foot__grid">
         <div>
           <p class="label">Lime Signalworks LLC · LIME Enterprise</p>
           <p class="foot__note">Harbor Now is the daily market report from Lime Signalworks: a dated, plain-language summary written after the close.</p>
-          <p class="foot__harbor"><a class="anchor-link hn-foot-link" href="/" target="_blank" rel="noopener noreferrer">Back to the home page</a></p>
+          <p class="foot__harbor"><a class="anchor-link hn-foot-link" href="/">Back to the home page</a></p>
+          <!-- 2026-11-22 (owner, t1974u): the site's one statement about results sits beside the
+               telephone number in the main pages' contact block. Harbor pages carry no phone number
+               (they must show no digit runs), so they link to that block instead. -->
+          <p class="foot__phone"><a class="anchor-link" href="/#contact">Call or email Lime Signalworks</a></p>
           <p class="foot__copyright">${esc(canonical.copyright)}</p>
         </div>
         <div>
           <p class="label">Disclaimer</p>
           <p class="foot__disclaimer">${esc(HARBOR_NOTICE)}</p>
           <p class="foot__disclaimer">${esc(canonical.securitiesDisclaimer)}</p>
-          <p class="foot__disclaimer">${esc(canonical.riskDisclosure)}</p>
         </div>
       </div>
     </footer>
@@ -562,7 +563,8 @@ export async function loadEditions(root) {
   return editions; // oldest first
 }
 
-export async function buildHarbor(root, canonical) {
+export async function buildHarbor(root, canonical, { pages, harborSections = '', blogPosts = [] } = {}) {
+  if (!pages) throw new Error('buildHarbor needs the site pages for the shared menu');
   checkCanon();
   checkGuide();
   const editions = await loadEditions(root);
@@ -577,7 +579,7 @@ export async function buildHarbor(root, canonical) {
   const archive = newestFirst
     .map(
       (ed) => `
-            <li><a href="/harbor-now/${ed.date}/" target="_blank" rel="noopener noreferrer"><time class="hn-arch__date" datetime="${ed.date}">${esc(shortDate(ed.date))}</time><span class="hn-arch__title">${esc(ed.title)}</span></a></li>`,
+            <li><a href="/harbor-now/${ed.date}/"><time class="hn-arch__date" datetime="${ed.date}">${esc(shortDate(ed.date))}</time><span class="hn-arch__title">${esc(ed.title)}</span></a></li>`,
     )
     .join('');
 
@@ -591,7 +593,7 @@ export async function buildHarbor(root, canonical) {
           ${notice()}
           <p class="label hn-latest-label">Latest edition</p>
           ${renderEditionBody(latest, 'h2')}
-          <p class="anchor-row"><a class="anchor-link" href="/harbor-now/${latest.date}/" target="_blank" rel="noopener noreferrer">Open the ${esc(prettyDate(latest.date))} edition</a></p>
+          <p class="anchor-row"><a class="btn btn--primary" href="/harbor-now/${latest.date}/">Open the ${esc(prettyDate(latest.date))} edition</a></p>
           ${renderGuide(canonical)}
           <h2 class="hn-h" id="archive">Archive</h2>
           <p class="hn-count">${editions.length} editions, ${esc(prettyDate(editions[0].date))} to ${esc(prettyDate(latest.date))}.</p>
@@ -606,6 +608,11 @@ export async function buildHarbor(root, canonical) {
       canonicalPath: '/harbor-now/',
       body: indexBody,
       canonical,
+      pages,
+      current: true,
+      // 2026-11-22: the homepage's market-report explainer moved here, and the
+      // "Latest from the blog" strip closes the page.
+      after: harborSections + '\n' + blogStrip(blogPosts),
     }),
     'utf8',
   );
@@ -615,12 +622,12 @@ export async function buildHarbor(root, canonical) {
     const prev = editions[i - 1];
     const next = editions[i + 1];
     const pager = [
-      prev ? `<a class="anchor-link" href="/harbor-now/${prev.date}/" target="_blank" rel="prev noopener noreferrer">&larr; ${esc(prettyDate(prev.date))}</a>` : '',
-      `<a class="anchor-link" href="/harbor-now/#archive" target="_blank" rel="noopener noreferrer">All editions</a>`,
-      next ? `<a class="anchor-link" href="/harbor-now/${next.date}/" target="_blank" rel="next noopener noreferrer">${esc(prettyDate(next.date))} &rarr;</a>` : '',
+      prev ? `<a class="anchor-link" href="/harbor-now/${prev.date}/" rel="prev">&larr; ${esc(prettyDate(prev.date))}</a>` : '',
+      `<a class="anchor-link" href="/harbor-now/#archive">All editions</a>`,
+      next ? `<a class="anchor-link" href="/harbor-now/${next.date}/" rel="next">${esc(prettyDate(next.date))} &rarr;</a>` : '',
     ].filter(Boolean).join('\n            ');
     const body = `          <div class="hn-head">
-            <p class="label rule-after"><a href="/harbor-now/" target="_blank" rel="noopener noreferrer">Harbor Now</a> · ${esc(prettyDate(ed.date))}</p>
+            <p class="label rule-after"><a href="/harbor-now/">Harbor Now</a> · ${esc(prettyDate(ed.date))}</p>
             <p class="label voice-tag" data-voice-tag>From Rosie</p>
             ${stale(latest.date, today)}
           </div>
@@ -643,6 +650,7 @@ export async function buildHarbor(root, canonical) {
         canonicalPath: `/harbor-now/${ed.date}/`,
         body,
         canonical,
+        pages,
       }),
       'utf8',
     );

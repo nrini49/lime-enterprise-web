@@ -1,15 +1,22 @@
 #!/usr/bin/env node
 /**
- * Build step: render data/homepage.json into a static index.html.
- * data/homepage.json is the single source of truth for canonical strings, the
- * section order, the market-report example, pricing, the indicators, and the start cards.
- * index.html is generated output.
- * It also renders Harbor Now (data/harbor/*.data.json) into harbor-now/ via src/harbor.mjs.
+ * Build step: render data/homepage.json into the static four-page site (2026-11-22).
+ * data/homepage.json is the single source of truth for canonical strings, the pages, the
+ * section order (and which page each section sits on), the market-report example,
+ * pricing, the indicators, and the start cards. src/template.html holds every section's
+ * markup once; this script places each section on its page:
+ *   index.html                 Home
+ *   how-rosie-works/index.html How Rosie Works
+ *   harbor-now/                Harbor Now (via src/harbor.mjs, with the market-report section)
+ *   blog/index.html            Blog (from data/blog.json)
+ *   404.html                   Branded not-found page (same shell; not in the menu)
+ * All of these are generated output, committed so the site works with no build step.
  */
-import { readFile, writeFile } from 'node:fs/promises';
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { buildHarbor } from './harbor.mjs';
+import { siteNav, brandLink, NEW_WINDOW as SITE_NEW_WINDOW } from './site.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -62,13 +69,6 @@ const newWindow = (href) => (leavesPage(href) ? NEW_WINDOW : '');
 const contactLink = (href, label, marker) =>
   `<a class="contact__link" href="${esc(href)}" data-${esc(marker)}>${esc(label)}</a>`;
 
-function renderNav(sections) {
-  return sections
-    .filter((s) => s.nav)
-    .map((s) => `<a href="#${esc(s.id)}">${esc(s.nav)}</a>`)
-    .join('\n          ');
-}
-
 function renderMarketTable(report) {
   const rows = report.rows
     .map(
@@ -112,7 +112,15 @@ function renderPricingTable(pricing) {
               </tr>`,
     )
     .join('');
-  return `<div class="table-wrap">
+  // Price block (2026-11-22, "snap and pop"): the first locked row shown large, the
+  // monthly row under it. Same figures as the table, nothing new.
+  const [lead, monthly] = pricing.rows;
+  return `<div class="price-hero" data-price-hero>
+            <span class="price-hero__term">${esc(lead.term)}</span>
+            <strong class="price-hero__amount">${esc(lead.price)}</strong>
+            <span class="price-hero__sub">${esc(monthly.term)}: <strong>${esc(monthly.price)}</strong></span>
+          </div>
+          <div class="table-wrap">
             <table class="data-table" data-pricing-table>
               <caption class="sr-only">${esc(pricing.heading)}</caption>
               <thead>
@@ -203,7 +211,7 @@ function renderIndicators(indicators) {
 /** The rendered section order must equal the order recorded in the data file. */
 function assertSectionOrder(html, sections) {
   const rendered = [...html.matchAll(/<section[^>]*\sid="([^"]+)"/g)].map((m) => m[1]);
-  const expected = sections.map((s) => s.id);
+  const expected = sections;
   if (rendered.join(',') !== expected.join(',')) {
     throw new Error(
       `Section order drift.\n  expected: ${expected.join(', ')}\n  rendered: ${rendered.join(', ')}`,
@@ -250,6 +258,169 @@ ${habits}
       </section>`;
 }
 
+/** Tokens filled in per page, after the shared template tokens. */
+const PAGE_TOKENS = ['{{PAGE_TITLE}}', '{{PAGE_DESCRIPTION}}', '{{BRAND_LINK}}', '{{NAV}}'];
+
+/**
+ * Split the template's <main> into one chunk per <section id>, each chunk carrying the
+ * comments and whitespace that come before it. Sections are never nested.
+ */
+function splitSections(inner) {
+  const chunks = new Map();
+  let pos = 0;
+  for (const m of inner.matchAll(/<section\b[^>]*\sid="([^"]+)"[\s\S]*?<\/section>/g)) {
+    const end = m.index + m[0].length;
+    chunks.set(m[1], inner.slice(pos, end));
+    pos = end;
+  }
+  return chunks;
+}
+
+/** Buttons: in-page and site links stay in this window; anything else opens a new one. */
+const renderButtons = (ctas = []) =>
+  ctas
+    .map((c) => `<a class="btn btn--${esc(c.kind)}" href="${esc(c.href)}">${esc(c.label)}</a>`)
+    .join('\n            ');
+
+/**
+ * Video cards (2026-11-22, owner direction "include links for the videos"): a
+ * self-hosted thumbnail and YouTube's own title, linking to YouTube in a new window.
+ * No embedded player, no autoplay, nothing fetched from YouTube until clicked.
+ */
+const renderVideoCards = (videos, cls = '') =>
+  videos.length
+    ? `<ul class="video-cards ${cls}" data-video-cards>${videos
+        .map(
+          (v) => `
+              <li><a class="video-card" href="https://www.youtube.com/watch?v=${esc(v.youtubeId)}"${NEW_WINDOW} data-video="${esc(v.youtubeId)}">
+                <span class="video-card__thumb"><img src="/assets/img/video/${esc(v.youtubeId)}.jpg" width="640" height="360" loading="lazy" decoding="async" alt="" /><span class="video-card__play" aria-hidden="true"></span><span class="video-card__time">${esc(v.duration)}</span></span>
+                <span class="video-card__title">${esc(v.title)}<span class="sr-only"> (video on YouTube, opens in a new tab)</span></span>
+              </a></li>`,
+        )
+        .join('')}
+            </ul>`
+    : '';
+
+/** The page heading for every page but Home, whose opening already carries the h1. */
+const renderPageHead = (pg, videos) => `
+      <div class="page-head${pg.hooks ? ' page-head--hero' : ''}" data-page-head="${esc(pg.id)}">
+        <div class="shell">
+          <p class="label rule-after">${esc(pg.eyebrow)}</p>
+          <h1 class="page-head__title" id="page-title">${esc(pg.heading)}</h1>
+          ${
+            pg.ledeVoice
+              ? `<div class="page-head__voice" data-voice="${esc(pg.ledeVoice)}"><span class="label voice-tag" data-voice-tag>From Rosie</span><p class="page-head__lede">${esc(pg.lede)}</p></div>`
+              : `<p class="page-head__lede">${esc(pg.lede)}</p>`
+          }${pg.ctas ? `
+          <div class="btn-row">${renderButtons(pg.ctas)}</div>` : ''}${
+            pg.hooks
+              ? `
+          <ul class="hooks" data-hooks>${pg.hooks
+            .map(
+              (h, i) => `
+            <li><a class="hook" href="${esc(h.href)}"><span class="hook__n">${String(i + 1).padStart(2, '0')} · ${esc(h.label)}</span><strong class="hook__title">${esc(h.title)}</strong>${h.text ? `<span class="hook__text">${esc(h.text)}</span>` : ''}</a></li>`,
+            )
+            .join('')}
+          </ul>`
+              : ''
+          }${
+            videos.length
+              ? `
+          <div class="page-head__videos">
+            <h2 class="page-head__videos-title" id="videos-title">Short videos</h2>
+            ${renderVideoCards(videos)}
+          </div>`
+              : ''
+          }
+        </div>
+      </div>
+`;
+
+/** The blog list, or its coming-soon note while there are no posts. Never invented posts. */
+function renderBlog(posts) {
+  // 2026-11-22 (owner t1991u): a pinned post stays on top. A post with a body is shown in
+  // full here, credited to its author; it ends with a "Share your experience" link to the
+  // contact section, because comments are not built yet (no fake comment box).
+  const ordered = [...posts.filter((p) => p.pinned), ...posts.filter((p) => !p.pinned)];
+  const linkAttrs = (url) => (/^\//.test(url) ? '' : SITE_NEW_WINDOW);
+  const fmtDate = (iso) =>
+    new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+  const item = (p) =>
+    p.body
+      ? `
+            <li class="blog-list__item blog-post${p.pinned ? ' blog-post--pinned' : ''}" id="${esc(p.id)}" data-blog-post="${esc(p.id)}"${p.author === 'Noal' ? ' data-voice="noal"' : ''}>
+              <article aria-labelledby="${esc(p.id)}-title">
+                <p class="label blog-post__meta">${p.pinned ? '<span class="blog-post__pin" data-pinned>Pinned</span> ' : ''}<time datetime="${esc(p.date)}">${esc(fmtDate(p.date))}</time> · By <span data-attribution>${esc(p.author)}</span></p>
+                <h3 id="${esc(p.id)}-title" class="blog-post__title">${esc(p.title)}</h3>
+                ${p.body.map((para) => `<p>${esc(para)}</p>`).join('\n                ')}
+                <p class="btn-row blog-post__share"><a class="btn btn--ghost" href="#contact" data-share-experience>Share your experience</a></p>
+              </article>
+            </li>`
+      : `
+            <li class="blog-list__item">
+              <p class="label"><time datetime="${esc(p.date)}">${esc(fmtDate(p.date))}</time></p>
+              <h3><a href="${esc(p.url)}"${linkAttrs(p.url)}>${esc(p.title)}</a></h3>
+              <p>${esc(p.summary)}</p>
+            </li>`;
+  const list = posts.length
+    ? `<ul class="blog-list" data-blog-posts>${ordered.map(item).join('')}
+          </ul>`
+    : `<div class="blog-empty" data-blog-empty>
+            <p class="blog-empty__lead">Posts are coming soon.</p>
+            <p>Experiences, Tech Tips and comments will appear here as they are written.
+              Until then, you can <a href="#contact">call or email Lime Signalworks</a>.</p>
+          </div>`;
+  return `
+      <section class="section blog" aria-labelledby="blog-posts-title" data-blog>
+        <div class="shell">
+          <div class="section__head">
+            <h2 id="blog-posts-title">Posts</h2>
+          </div>
+          ${list}
+        </div>
+      </section>
+`;
+}
+
+/** The hero's display line: Rosie's own two short sentences, the second in the accent. */
+const heroDisplay = ([a, b]) =>
+  `<div class="hero__display"><span>${esc(a)}</span> <span class="hero__display-accent">${esc(b)}</span></div>`;
+
+const CHECK =
+  '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+
+
+/** The branded 404 page: same masthead, footer and contact as the rest of the site. */
+function renderNotFound(pages) {
+  const links = pages
+    .map(
+      (pg) =>
+        `<a class="btn btn--${pg.id === 'home' ? 'primary' : 'ghost'}" href="${esc(pg.path)}">${esc(pg.nav)}</a>`,
+    )
+    .join('\n            ');
+  return `
+      <div class="page-head" data-page-head="not-found">
+        <div class="shell">
+          <p class="label rule-after">Lime Signalworks</p>
+          <div class="page-head__voice" data-voice="rosie">
+            <span class="label voice-tag" data-voice-tag>From Rosie</span>
+            <h1 class="page-head__title" id="page-title">This page isn&apos;t here</h1>
+            <p class="page-head__lede">I don&apos;t have a page at this address. It may be an old link, or it may have been typed incorrectly. These pages are on this site:</p>
+          </div>
+          <div class="btn-row">
+            ${links}
+          </div>
+        </div>
+      </div>
+`;
+}
+
+/** Exactly one h1 per page. */
+function assertSingleH1(html, file) {
+  const n = (html.match(/<h1\b/g) || []).length;
+  if (n !== 1) throw new Error(`${file} has ${n} h1 elements; exactly one is required`);
+}
+
 async function main() {
   const [dataRaw, template] = await Promise.all([
     readFile(path.join(root, 'data', 'homepage.json'), 'utf8'),
@@ -257,16 +428,25 @@ async function main() {
   ]);
 
   const data = JSON.parse(dataRaw);
-  const { canonical, sectionOrder, marketReport, pricing, startCards, indicators, pros } = data;
+  const { canonical, pages, sectionOrder, marketReport, pricing, startCards, indicators, pros } = data;
+  const blog = JSON.parse(await readFile(path.join(root, 'data', 'blog.json'), 'utf8'));
+  const home = pages.find((p) => p.id === 'home');
+  const videosFor = (pageId) => (canonical.videos.library || []).filter((v) => v.pages.includes(pageId));
 
   const html = template
-    .replaceAll('{{NAV}}', renderNav(sectionOrder))
     .replaceAll('{{ROSIE_INTRO}}', esc(canonical.rosieIntro))
     .replaceAll(
       '{{DEMO_CTA}}',
       `<a class="cta" href="${esc(canonical.demoUrl)}"${newWindow(canonical.demoUrl)}>${esc(canonical.demoCtaLabel)}</a>`,
     )
     .replaceAll('{{TOUR_LINK}}', videoLink(canonical.videos.tour, canonical.videos.channelUrl, 'tour'))
+    .replaceAll('{{HERO_DISPLAY}}', heroDisplay(home.hero.display))
+    .replaceAll('{{HERO_CTAS}}', renderButtons(home.hero.ctas))
+    .replaceAll('{{HERO_CHIPS}}', home.hero.chips.map((c) => `<li>${CHECK}<span>${esc(c)}</span></li>`).join(''))
+    .replaceAll('{{HOME_VIDEOS}}', renderVideoCards(videosFor('home'), 'video-cards--hero'))
+    // 2026-11-22 (owner t1998u): a video beside Rosie's rules and two beside the story.
+    .replaceAll('{{RULES_VIDEOS}}', renderVideoCards(videosFor('home-rules'), 'video-cards--hero video-cards--aside'))
+    .replaceAll('{{STORY_VIDEOS}}', renderVideoCards(videosFor('home-story'), 'video-cards--hero video-cards--aside'))
     .replaceAll('{{YOUTUBE_CHANNEL_URL}}', esc(canonical.videos.channelUrl))
     .replaceAll('{{DEMO_DISCLOSURE}}', esc(canonical.demoDisclosure))
     .replaceAll('{{DEMO_ASK}}', esc(canonical.demoAsk))
@@ -290,24 +470,100 @@ async function main() {
     .replaceAll('{{RISK_DISCLOSURE}}', esc(canonical.riskDisclosure))
     .replaceAll('{{COPYRIGHT}}', esc(canonical.copyright));
 
-  const leftover = html.match(/\{\{[A-Z_]+\}\}/g);
-  if (leftover) throw new Error(`Unreplaced template tokens: ${leftover.join(', ')}`);
+  const leftover = html.match(/\{\{[A-Z_]+\}\}/g)?.filter((t) => !PAGE_TOKENS.includes(t));
+  if (leftover?.length) throw new Error(`Unreplaced template tokens: ${leftover.join(', ')}`);
 
-  assertSectionOrder(html, sectionOrder);
-  assertUniqueIds(html);
-  assertAnchorsResolve(html);
+  // Every section's markup, keyed by id, with the comments that introduce it.
+  const mainOpen = html.indexOf('<main id="main">') + '<main id="main">'.length;
+  const mainClose = html.indexOf('</main>');
+  const shellBefore = html.slice(0, mainOpen);
+  const shellAfter = html.slice(mainClose);
+  const chunks = splitSections(html.slice(mainOpen, mainClose));
+  const known = sectionOrder.map((s) => s.id);
+  const extra = [...chunks.keys()].filter((id) => !known.includes(id));
+  if (extra.length) throw new Error(`Sections in the template but not in sectionOrder: ${extra.join(', ')}`);
 
-  await writeFile(path.join(root, 'index.html'), html, 'utf8');
+  // Which page owns each id, so a link to a section on another page becomes a page link.
+  const pageOf = new Map();
+  for (const s of sectionOrder) {
+    if (!pages.some((p) => p.id === s.page)) throw new Error(`Section ${s.id} names unknown page ${s.page}`);
+    const chunk = chunks.get(s.id);
+    if (!chunk) throw new Error(`Section ${s.id} is in sectionOrder but not in the template`);
+    for (const m of chunk.matchAll(/\sid="([^"]+)"/g)) pageOf.set(m[1], s.page);
+  }
+  const pageById = new Map(pages.map((p) => [p.id, p]));
+
+  const linkAcross = (body, pageId) =>
+    body.replace(/href="#([^"]+)"([^>]*)>/g, (m, id, rest) => {
+      const owner = pageOf.get(id);
+      if (!owner || owner === pageId) return m;
+      return `href="${pageById.get(owner).path}#${id}"${rest}>`;
+    });
+
+  const results = [];
+  for (const pg of pages.filter((p) => p.id !== 'harbor')) {
+    const ids = sectionOrder.filter((s) => s.page === pg.id).map((s) => s.id);
+    // Section numbers follow the page they land on (data/homepage.json sectionOrder).
+    let body = ids
+      .map((id) => {
+        const eyebrow = sectionOrder.find((s) => s.id === id).eyebrow;
+        return chunks.get(id).replace(/<p class="label rule-after">Section \d\d<\/p>/, `<p class="label rule-after">${esc(eyebrow)}</p>`);
+      })
+      .join('');
+    if (pg.heading) body = renderPageHead(pg, videosFor(pg.id)) + body;
+    if (pg.id === 'blog') body += renderBlog(blog.posts);
+    body = linkAcross(body, pg.id);
+
+    const out = (shellBefore + body + '\n    ' + shellAfter)
+      .replaceAll('{{PAGE_TITLE}}', esc(pg.title))
+      .replaceAll('{{PAGE_DESCRIPTION}}', esc(pg.description))
+      .replaceAll('{{BRAND_LINK}}', brandLink(pg.id))
+      .replaceAll('{{NAV}}', siteNav(pages, pg.id));
+
+    assertSectionOrder(out, ids);
+    assertUniqueIds(out);
+    assertAnchorsResolve(out);
+    assertSingleH1(out, pg.file);
+
+    await mkdir(path.dirname(path.join(root, pg.file)), { recursive: true });
+    await writeFile(path.join(root, pg.file), out, 'utf8');
+    results.push(`${pg.file} (${ids.length} sections)`);
+  }
   console.log(
-    `built index.html — ${sectionOrder.length} sections, ${startCards.length} start cards, ` +
-      `${pricing.rows.length} prices, ${marketReport.rows.length} example report rows`,
+    `built ${results.join(', ')} — ${startCards.length} start cards, ` +
+      `${pricing.rows.length} prices, ${marketReport.rows.length} example report rows, ${blog.posts.length} blog posts`,
   );
 
-  const harbor = await buildHarbor(root, canonical);
+  // Harbor Now: its own editions, plus the sections the data file places on it
+  // (the market-report explainer) and the "Latest from the blog" strip at the bottom.
+  const harborSections = sectionOrder
+    .filter((s) => s.page === 'harbor')
+    .map((s) => linkAcross(chunks.get(s.id), 'harbor'))
+    .join('');
+  const harbor = await buildHarbor(root, canonical, { pages, harborSections, blogPosts: blog.posts });
   console.log(
     `built harbor-now/ — ${harbor.count} editions, latest ${harbor.latest}` +
       (harbor.stale ? ' (stale: restart note shown)' : ''),
   );
+
+  const notFoundBody = renderNotFound(pages);
+  let notFound = (shellBefore + notFoundBody + '\n    ' + shellAfter)
+    .replaceAll('{{PAGE_TITLE}}', 'Page not found — Lime Signalworks')
+    .replaceAll(
+      '{{PAGE_DESCRIPTION}}',
+      'This address is not a page on Lime Signalworks. The link may be old, or it may have been typed incorrectly.',
+    )
+    .replaceAll('{{BRAND_LINK}}', 'href="/"')
+    .replaceAll('{{NAV}}', siteNav(pages, null));
+  notFound = notFound.replace(
+    '<meta name="robots" content="index, follow" />',
+    '<meta name="robots" content="noindex" />',
+  );
+  assertSingleH1(notFound, '404.html');
+  assertUniqueIds(notFound);
+  assertAnchorsResolve(notFound);
+  await writeFile(path.join(root, '404.html'), notFound, 'utf8');
+  console.log('built 404.html');
 }
 
 main().catch((err) => {

@@ -626,6 +626,12 @@ html {
   margin-bottom: 0;
 }
 
+/* 2026-11-23: what her last name means, under the approved introduction. */
+.rosie-intro .rosie-intro__name {
+  margin-top: var(--space-3);
+  color: var(--color-text-muted);
+}
+
 /* ---------- Harbor Now reading guide (2026-11-01) ---------- */
 .hn-guide {
   margin-top: var(--space-12);
@@ -1835,7 +1841,6 @@ html {
   max-width: 64rem;
 }
 
-<<<<<<< HEAD
 /* ============================================================
    Harbor Now — the daily market report (/harbor-now/), rendered by
    src/harbor.mjs from data/harbor/. Reuses the panel, data-table, notice,
@@ -2019,7 +2024,8 @@ html {
 
 .foot__harbor {
   margin-top: var(--space-1);
-=======
+}
+
 /* 2026-10-28: Rosie speaks in the first person from the pros block on. Each section in
    her voice carries a small "From Rosie" tag, mirroring "From Noal" on the opening, so
    the reader always knows whose "I" it is. */
@@ -2029,5 +2035,834 @@ html {
 }
 .voice-tag--block {
   margin-block: var(--space-6) var(--space-3);
->>>>>>> origin/content/assembled-home
+}
+
+/* ============================================================
+   Four-page site (2026-11-22): the shared page menu, the page heading on
+   How Rosie Works and Blog, the blog page and the Harbor Now blog strip.
+   ============================================================ */
+
+.masthead__nav a[aria-current='page'] {
+  color: var(--color-text);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--color-primary);
+  text-underline-offset: 0.35em;
+}
+
+.page-head {
+  padding-block: clamp(var(--space-10), 5vw, var(--space-16)) var(--space-8);
+  border-bottom: 1px solid var(--color-divider);
+  background-color: var(--color-bg);
+}
+
+.page-head__title {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+  margin-block: var(--space-4) var(--space-4);
+}
+
+.page-head__lede {
+  max-width: 60ch;
+  font-size: var(--text-lg);
+  color: var(--color-text-muted);
+}
+
+.blog-empty {
+  max-width: 60ch;
+  padding: var(--space-6);
+  border: 1px dashed var(--color-border);
+  border-radius: 0.5rem;
+  background-color: var(--color-surface);
+}
+
+.blog-empty__lead {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  margin-bottom: var(--space-3);
+}
+
+.blog-empty a,
+.blog-list a,
+.blog-strip__list a {
+  color: var(--color-primary);
+}
+
+.blog-list,
+.blog-strip__list {
+  list-style: none;
+  padding: 0;
+  max-width: 60ch;
+}
+
+.blog-list__item + .blog-list__item,
+.blog-strip__list li + li {
+  margin-top: var(--space-5);
+}
+
+.blog-strip__title {
+  margin-top: var(--space-3);
+}
+
+.blog-strip__empty {
+  color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   Snap and pop (2026-11-22, owner and Lewis): bolder hero, buttons, scannable
+   cards, a standout price, a strong close. Layout and colour only; the words are
+   the site's own. Every movement lives under prefers-reduced-motion: no-preference.
+   ========================================================================== */
+
+/* ---------- Buttons (links styled as buttons; there are no <button>s in the markup) ---------- */
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+  margin: 0;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3rem;
+  padding: 0.8rem 1.4rem;
+  border-radius: var(--radius-full);
+  font: 700 var(--text-base)/1.2 var(--font-display);
+  letter-spacing: 0.005em;
+  text-decoration: none;
+  border: 1.5px solid transparent;
+}
+
+.btn--primary {
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  box-shadow: 0 10px 30px -10px color-mix(in oklab, var(--color-primary) 70%, transparent);
+}
+
+.btn--primary:hover {
+  background: var(--color-primary-hover);
+  color: var(--color-text-inverse);
+}
+
+.btn--ghost {
+  color: var(--color-text);
+  border-color: color-mix(in oklab, var(--color-text) 35%, transparent);
+  background: color-mix(in oklab, var(--color-surface-2) 60%, transparent);
+}
+
+.btn--ghost:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.btn::after {
+  content: '\2192';
+  font-weight: 700;
+}
+
+.btn:focus-visible,
+.hook:focus-visible,
+.video-card:focus-visible,
+.hero-shot:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* ---------- Home hero ---------- */
+
+.hero.opening {
+  padding-block: clamp(2rem, 1rem + 4vw, 4.5rem) clamp(2rem, 1.5rem + 2vw, 3.5rem);
+  background-color: var(--color-bg);
+  background-image:
+    radial-gradient(55% 60% at 80% 10%, color-mix(in oklab, var(--color-primary) 22%, transparent) 0%, transparent 70%),
+    radial-gradient(45% 50% at 5% 90%, color-mix(in oklab, var(--color-accent) 12%, transparent) 0%, transparent 70%),
+    linear-gradient(color-mix(in oklab, var(--color-text) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, var(--color-text) 5%, transparent) 1px, transparent 1px);
+  background-size: auto, auto, 48px 48px, 48px 48px;
+}
+
+.hero.opening .opening__rings {
+  opacity: 0.25;
+}
+
+.hero.opening .opening__col {
+  max-width: var(--content-wide);
+}
+
+.hero-split {
+  display: grid;
+  gap: clamp(1.75rem, 1rem + 3vw, 3rem);
+  align-items: center;
+  margin-top: var(--space-4);
+}
+
+@media (min-width: 62rem) {
+  .hero-split {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  }
+}
+
+.hero__display {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2.6rem, 1.2rem + 5.4vw, 4.9rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  color: var(--color-text);
+  overflow-wrap: break-word;
+}
+
+.hero__display span {
+  display: block;
+}
+
+.hero__display-accent {
+  color: var(--color-accent);
+}
+
+.hero.opening h1.hero__h1 {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: clamp(1.1rem, 0.95rem + 0.7vw, 1.45rem);
+  line-height: 1.45;
+  letter-spacing: 0;
+  color: var(--color-text-muted);
+  margin: var(--space-5) 0 var(--space-6);
+  max-width: 34em;
+}
+
+.hero.opening h1.hero__h1::after {
+  display: none;
+}
+
+.hero.opening h1.hero__h1 .owner-name {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.hero-chips {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-6) 0 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.hero-chips li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.hero-chips svg {
+  flex: none;
+  margin-top: 0.1rem;
+  color: var(--color-text-inverse);
+  background: var(--color-primary);
+  border-radius: var(--radius-full);
+  padding: 3px;
+  width: 1.3rem;
+  height: 1.3rem;
+}
+
+.hero-shot {
+  position: relative;
+  display: block;
+  border-radius: 14px;
+  padding: 6px;
+  background: linear-gradient(140deg, color-mix(in oklab, var(--color-primary) 70%, transparent), color-mix(in oklab, var(--color-accent) 25%, transparent) 45%, color-mix(in oklab, var(--color-border) 80%, transparent));
+  box-shadow: 0 30px 80px -30px color-mix(in oklab, var(--color-primary) 55%, transparent), var(--shadow-md);
+  text-decoration: none;
+  color: var(--color-text-muted);
+}
+
+.hero-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.hero-shot__cap {
+  display: block;
+  padding: 0.6rem 0.5rem 0.25rem;
+  font-size: var(--text-xs);
+  color: var(--color-text);
+}
+
+.opening__story {
+  display: grid;
+  gap: var(--space-8);
+  margin-top: clamp(2.5rem, 1.5rem + 4vw, 4.5rem);
+  padding-top: clamp(2rem, 1rem + 3vw, 3rem);
+  border-top: 1px solid var(--color-divider);
+}
+
+@media (min-width: 62rem) {
+  .opening__story {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    grid-template-areas: 'intro rules' 'text brokers';
+    align-items: start;
+    column-gap: var(--space-12);
+  }
+  .opening__story > .rosie-intro { grid-area: intro; }
+  .opening__story > .opening__text { grid-area: text; }
+  .opening__story > .brokers-note { grid-area: brokers; }
+  .opening__story > .rules-card { grid-area: rules; }
+}
+
+.opening__story > .rosie-intro,
+.opening__story > .rules-card,
+.opening__story > .brokers-note {
+  margin: 0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  padding: var(--space-6);
+}
+
+.opening .opening__text p:not(.label) {
+  font-size: var(--text-base);
+  line-height: 1.65;
+  margin-bottom: 1rem;
+}
+
+.opening .opening__text p.opening__lead {
+  font-size: var(--text-lg);
+}
+
+/* ---------- Video cards ---------- */
+
+.video-cards {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+}
+
+.video-cards--hero {
+  margin-top: var(--space-6);
+  grid-template-columns: minmax(0, 22rem);
+}
+
+.video-card {
+  display: grid;
+  grid-template-columns: 8.5rem minmax(0, 1fr);
+  gap: var(--space-3);
+  align-items: center;
+  padding: 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.video-cards:not(.video-cards--hero) .video-card {
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+
+.video-card:hover {
+  border-color: var(--color-primary);
+}
+
+.video-card__thumb {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--color-surface-offset);
+}
+
+.video-card__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.video-card__play {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 2.6rem;
+  height: 2.6rem;
+  margin: -1.3rem 0 0 -1.3rem;
+  border-radius: var(--radius-full);
+  background: oklch(0.15 0.02 160 / 0.78);
+  box-shadow: 0 0 0 2px oklch(1 0 0 / 0.75);
+}
+
+.video-card__play::before {
+  content: '';
+  position: absolute;
+  left: 52%;
+  top: 50%;
+  transform: translate(-40%, -50%);
+  border-style: solid;
+  border-width: 0.5rem 0 0.5rem 0.8rem;
+  border-color: transparent transparent transparent #fff;
+}
+
+.video-card__time {
+  position: absolute;
+  right: 0.35rem;
+  bottom: 0.35rem;
+  padding: 0.05rem 0.35rem;
+  border-radius: 4px;
+  font: 600 0.72rem/1.4 var(--font-mono);
+  background: oklch(0.12 0.01 160 / 0.85);
+  color: #fff;
+}
+
+.video-card__title {
+  font: 700 var(--text-sm)/1.35 var(--font-display);
+  padding-inline: 0.25rem;
+}
+
+/* ---------- Will and won't: three cards ---------- */
+
+.ww .ww__col {
+  max-width: var(--content-wide);
+}
+
+.ww-cards {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-8) 0;
+  display: grid;
+  gap: var(--space-4);
+}
+
+@media (min-width: 56rem) {
+  .ww-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.ww-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-top: 3px solid var(--color-accent);
+  border-radius: 14px;
+  padding: var(--space-6);
+}
+
+.ww-card__icon {
+  color: var(--color-accent);
+  display: block;
+  margin-bottom: var(--space-3);
+}
+
+.ww .ww-card h3 {
+  font: 800 var(--text-xl)/1.1 var(--font-display);
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--space-3);
+}
+
+.ww .ww-card p:not(.label) {
+  font-size: var(--text-base);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.ww p.ww__pull {
+  font: 700 clamp(1.3rem, 1rem + 1.3vw, 2rem)/1.3 var(--font-display);
+  letter-spacing: -0.015em;
+  max-width: 34em;
+  border-left: 4px solid var(--color-accent);
+  padding-left: var(--space-5);
+}
+
+/* ---------- Section rhythm (all pages): tighter, with bolder headings ---------- */
+
+.section {
+  padding-block: clamp(var(--space-10), 5vw, var(--space-16));
+}
+
+.section__head h2,
+.ww h2 {
+  font-size: clamp(1.75rem, 1.2rem + 2.2vw, 2.75rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+}
+
+/* Numbered stage cards (evaluation, how to begin) */
+.stages li {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-top: 3px solid var(--color-accent);
+  border-radius: 14px;
+  padding: var(--space-6);
+}
+
+/* ---------- Price block ---------- */
+
+#pricing .panel {
+  border-radius: 16px;
+  border-color: color-mix(in oklab, var(--color-primary) 45%, var(--color-border));
+  box-shadow: 0 24px 60px -30px color-mix(in oklab, var(--color-primary) 60%, transparent);
+  background:
+    radial-gradient(90% 70% at 100% 0%, color-mix(in oklab, var(--color-primary) 14%, transparent), transparent 70%),
+    var(--color-surface);
+  padding: var(--space-6);
+}
+
+.price-hero {
+  display: grid;
+  gap: var(--space-1);
+  margin: var(--space-4) 0 var(--space-5);
+}
+
+.price-hero__term {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.price-hero__amount {
+  font: 900 clamp(3.2rem, 2rem + 5vw, 5.2rem)/1 var(--font-display);
+  letter-spacing: -0.04em;
+  color: var(--color-text);
+}
+
+.price-hero__sub {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+}
+
+.price-hero__sub strong {
+  color: var(--color-accent);
+}
+
+/* ---------- Closing call to action ---------- */
+
+.section--cta {
+  background:
+    radial-gradient(70% 90% at 50% 0%, color-mix(in oklab, var(--color-primary) 20%, transparent), transparent 70%),
+    var(--color-bg);
+}
+
+.section--cta .section__head h2 {
+  font-size: clamp(2.2rem, 1.3rem + 4vw, 4rem);
+}
+
+.cta-final__row {
+  margin-top: var(--space-8);
+}
+
+/* ---------- Page heads (How Rosie Works, Harbor Now, Blog) ---------- */
+
+.page-head {
+  background-image:
+    radial-gradient(60% 80% at 85% 0%, color-mix(in oklab, var(--color-primary) 16%, transparent), transparent 70%);
+}
+
+.page-head__title {
+  font-size: clamp(2.4rem, 1.3rem + 5vw, 4.8rem);
+  font-weight: 900;
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+.page-head--hero .page-head__lede {
+  font-size: clamp(1.15rem, 1rem + 0.8vw, 1.55rem);
+  color: var(--color-text);
+  font-weight: 500;
+  line-height: 1.4;
+  max-width: 34em;
+}
+
+.page-head__voice .voice-tag {
+  display: block;
+  color: var(--color-flag);
+  margin-top: var(--space-4);
+}
+
+.page-head .btn-row {
+  margin-top: var(--space-6);
+}
+
+.hooks {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-10) 0 0;
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+}
+
+.hook {
+  display: grid;
+  gap: var(--space-2);
+  height: 100%;
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.hook:hover {
+  border-color: var(--color-primary);
+}
+
+.hook__n {
+  font: 600 var(--text-xs)/1.3 var(--font-mono);
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.hook__title {
+  font: 800 var(--text-lg)/1.2 var(--font-display);
+  letter-spacing: -0.015em;
+}
+
+.hook__text {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.page-head__videos {
+  margin-top: var(--space-10);
+}
+
+.page-head__videos-title {
+  font: 800 var(--text-lg)/1.2 var(--font-display);
+  margin: 0 0 var(--space-4);
+}
+
+/* Blog strip and Harbor: the same cards and buttons, lighter */
+.blog-strip .btn-row {
+  margin-top: var(--space-5);
+}
+
+.blog-empty,
+.blog-list__item {
+  border-radius: 14px;
+}
+
+/* ---------- Motion (only when the visitor has not asked for less) ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .btn,
+  .hook,
+  .video-card,
+  .ww-card,
+  .hero-shot {
+    transition:
+      transform 180ms cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 180ms ease,
+      border-color 180ms ease,
+      background-color 180ms ease,
+      color 180ms ease;
+  }
+  .btn:hover,
+  .hook:hover,
+  .video-card:hover,
+  .ww-card:hover {
+    transform: translateY(-2px);
+  }
+  .hero-shot:hover {
+    transform: translateY(-4px) rotate(-0.3deg);
+  }
+
+  .hero-copy > *,
+  .hero-shot {
+    animation: pop-in 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .hero-copy > :nth-child(2) { animation-delay: 80ms; }
+  .hero-copy > :nth-child(3) { animation-delay: 160ms; }
+  .hero-copy > :nth-child(4) { animation-delay: 240ms; }
+  .hero-copy > :nth-child(5) { animation-delay: 320ms; }
+  .hero-shot { animation-delay: 200ms; }
+
+  .hero.opening {
+    animation: glow-drift 18s ease-in-out infinite alternate;
+  }
+
+  /* Scroll reveal: app.js adds .motion-ready only when it runs, so without JS
+     everything is simply visible. */
+  .motion-ready [data-reveal] {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 600ms ease, transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .motion-ready [data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes pop-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes glow-drift {
+  from { background-position: 0 0, 0 0, 0 0, 0 0; }
+  to { background-position: 40px -20px, -30px 20px, 0 0, 0 0; }
+}
+
+.hook {
+  align-content: start;
+}
+
+.stages h3 {
+  font-size: var(--text-lg);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+}
+
+/* Harbor Now: the same bold page title and card corners as the other pages (lighter pass). */
+.hn-h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 1.3rem + 5vw, 4.8rem);
+  font-weight: 900;
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+/* The site's one statement about results sits beside the telephone number (2026-11-22). */
+.contact > div:has(.contact__risk) {
+  grid-column: 1 / -1;
+}
+
+.contact__risk,
+.foot .contact__risk {
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--color-text);
+  max-width: 34em;
+}
+
+.foot__phone {
+  margin: var(--space-4) 0 0;
+  font-size: var(--text-sm);
+}
+
+/* Welcome line (2026-11-22): the first words a visitor reads, above Rosie's eyebrow. */
+.hero__welcome {
+  position: relative;
+  display: inline-block;
+  margin: 0 0 var(--space-5);
+  padding: 0.45rem 0.95rem;
+  border: 1px solid color-mix(in oklab, var(--color-accent) 55%, transparent);
+  border-radius: 1.25rem;
+  background: color-mix(in oklab, var(--color-accent) 10%, transparent);
+  font: 600 var(--text-sm)/1.4 var(--font-body);
+  color: var(--color-text);
+  max-width: 100%;
+}
+
+.hero__welcome strong {
+  color: var(--color-accent);
+  font-weight: 800;
+}
+
+.hero.opening .opening__col > .opening__label {
+  margin-top: 0;
+}
+
+/* ---------- Rosie's rules (2026-11-22, owner t1985u) ---------- */
+.rules-card {
+  border-inline-start: 4px solid var(--color-accent) !important;
+}
+.rules-card .voice-tag { margin-bottom: var(--space-2); }
+.rules-card__title {
+  font-size: var(--text-xl);
+  line-height: 1.2;
+  margin: 0 0 var(--space-3);
+}
+.rules-list,
+.rules-full {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.6rem;
+}
+.rules-list li,
+.rules-full li {
+  position: relative;
+  padding-inline-start: 1.6rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.rules-list li::before,
+.rules-full li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0.15rem;
+  top: 0.45em;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+.rules-full { max-width: 46rem; margin-top: var(--space-6); gap: 0.9rem; }
+
+/* 2026-11-23: which rules the operator sets, which are set at install, which are built in. */
+.rules-who { margin-top: var(--space-10, 2.5rem); max-width: 72rem; }
+.rules-who__title { margin: 0 0 var(--space-2); }
+.rules-who__lede { color: var(--color-text-muted); max-width: 46rem; margin: 0 0 var(--space-5); }
+.rules-who__grid { display: grid; gap: var(--space-4); }
+@media (min-width: 60rem) { .rules-who__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.rules-who__col {
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+.rules-who__col h4 { margin: 0 0 var(--space-3); font-size: var(--text-base); }
+.rules-who__col p { color: var(--color-text-muted); font-size: 0.95em; margin: 0 0 var(--space-3); }
+.rules-who__col ul { margin: 0; padding-inline-start: 1.1rem; display: grid; gap: 0.5rem; line-height: 1.5; }
+.rules-card__more { margin: var(--space-4) 0 0; font-weight: 600; }
+.rules-card__more a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---------- Blog post shown in full, pinned first (2026-11-22, owner t1991u) ---------- */
+.blog-post {
+  max-width: 62ch;
+  padding: var(--space-6);
+  border: 1px solid var(--color-border);
+  border-inline-start: 4px solid var(--color-accent);
+  border-radius: 14px;
+  background: var(--color-surface);
+}
+.blog-post__meta { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+.blog-post__pin {
+  display: inline-block;
+  padding: 0.1rem 0.55rem;
+  border-radius: 999px;
+  background: var(--color-accent);
+  color: var(--color-bg, #0b0f0c);
+  font-weight: 700;
+}
+.blog-list .blog-post .blog-post__title { font-family: var(--font-display); font-size: clamp(1.35rem, 1.1rem + 1vw, 1.75rem); line-height: 1.25; margin: var(--space-2) 0 var(--space-3); }
+.blog-post p:not(.label):not(.btn-row) { line-height: 1.65; overflow-wrap: anywhere; }
+.blog-post__share { margin: var(--space-5) 0 0; }
+
+/* ---------- Video cards beside the rules and the story (2026-11-22, owner t1998u) ---------- */
+.video-cards--aside { margin-top: var(--space-5); margin-bottom: var(--space-4); }
+@media (max-width: 24rem) {
+  .video-cards--hero .video-card { grid-template-columns: 6.5rem minmax(0, 1fr); }
 }

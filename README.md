@@ -1,7 +1,23 @@
 # Lime Signalworks — LIME Enterprise (Site 2)
 
-Static enterprise homepage for the LIME Enterprise surface. Root route `/` only, single page with
-anchor navigation.
+Static site for limesignalworks.com, in four pages (split from the single homepage on
+2026-11-22) that share one masthead menu:
+
+| Page | URL | File | Built from |
+| --- | --- | --- | --- |
+| Home | `/` | `index.html` | `src/template.html` sections where `page` is `home` |
+| How Rosie Works | `/how-rosie-works/` | `how-rosie-works/index.html` | sections where `page` is `how-rosie-works` |
+| Harbor Now | `/harbor-now/` | `harbor-now/index.html` (+ dated editions) | `src/harbor.mjs`, plus sections where `page` is `harbor` and the blog strip |
+| Blog | `/blog/` | `blog/index.html` | `data/blog.json` (empty until the first real post) |
+
+`data/homepage.json` lists the pages (`pages`) and places every section on one of them
+(`sectionOrder[].page`). `src/template.html` still holds each section's markup exactly once;
+`src/render.mjs` places it on its page and turns a link to a section on another page into a
+page link. The output is plain HTML/CSS/assets with root-relative links: `npm run export`
+copies the files to upload into `dist/` (with an `.htaccess` that repeats `vercel.json`'s
+redirects for Apache hosts, plus HTTPS, the apex-to-www redirect, a branded 404, and
+blocks for source folders). `npm run package:godaddy` builds that set into a zip for
+GoDaddy `public_html`. Neither command uploads anything.
 
 This repository is **not** Site 1 (`lime-web-public`, `limesignalworks.com`). Nothing here deploys
 to, reads from, or links into Site 1; the sister-site link buttons were removed.
@@ -24,7 +40,14 @@ Zero-framework static build. No bundler, no CSS preprocessor, no client framewor
 - `data/homepage.json` — **source of truth**: canonical strings, section order, market-report
   example, planned pricing, start cards
 - `src/template.html` — page skeleton with `{{TOKEN}}` placeholders
-- `src/render.mjs` — build script: JSON + template → `index.html`
+- `src/render.mjs` — build script: JSON + template → the four pages and `404.html` (see the table above)
+- `src/site.mjs` — the shared page menu, brand link and Harbor Now "Latest from the blog" strip
+- `data/blog.json` — blog posts, newest first; empty until a real post exists
+- `scripts/export-static.mjs` — `npm run export`: copies the uploadable site into `dist/`
+- `scripts/htaccess.mjs` / `scripts/write-htaccess.mjs` — generate `.htaccess` from `vercel.json`
+- `scripts/package-godaddy.mjs` — `npm run package:godaddy`: build, export, and zip for `public_html`
+- `404.html` — **generated artifact**, branded not-found page, same shell as the other pages
+- `.htaccess` — **generated artifact**, Apache rules for GoDaddy; do not hand-edit
 - `assets/css/fonts.css` — `@font-face` rules for the three self-hosted OFL 1.1 families
 - `assets/fonts/` — vendored woff2 subsets plus the OFL licence text for each family
 - `assets/css/base.css` — shared reset, focus-visible, reduced-motion, `.sr-only`
@@ -37,11 +60,17 @@ Zero-framework static build. No bundler, no CSS preprocessor, no client framewor
 - `scripts/fetch-fonts.mjs` — one-off vendoring helper; regenerates `assets/fonts/` (never run by
   the site)
 - `index.html` — **generated artifact**, committed so the site works with no build step
-- `rosie-demo/` — the public Rosie demo: a static, script-free snapshot of the current Rosie IB
+- `rosie-demo-schwab/` — the public Rosie demo linked from the site since 2026-11-22 (Schwab first):
+  a static, script-free snapshot of the Rosie Schwab dashboard (nrini49/schwab main d7e8633) with
+  invented **sample data**, built by the same method as `rosie-demo/`; checked by
+  `tests/rosie-demo-schwab.test.mjs`. The IB demo below stays in place, unlinked.
+- `rosie-demo/` — the earlier public Rosie demo (IB): a static, script-free snapshot of the current Rosie IB
   Operator Workstation layout filled with **sample data** (paper account, invented numbers). Every
   control is disabled, there are no forms or network calls, and `tests/rosie-demo.test.mjs`
   enforces that, the sample-data banner, `noindex`, and broker-held (never trailing) stops.
-  `assets/img/rosie-dashboard-preview.png` on the homepage is a 1200×750 screenshot of it.
+  `assets/img/rosie-schwab-dashboard-preview.png` (Home hero and How Rosie Works) is a 1200×750 screenshot of
+  the Rosie Schwab dashboard (nrini49/schwab main d7e8633, render_page.py) rendered offline with invented sample
+  data and a sample-data banner: no broker, no account, no network (2026-11-22, owner: early pages show Schwab).
 
 - `data/harbor/<date>.data.json` — Harbor Now editions, copied **unchanged** from
   `lime-web-public/harbor-now/archive/` (47 editions, 2026-07-13 to 2026-09-29)
@@ -71,14 +100,16 @@ asserts that none of their content reaches the page.
 
 ```bash
 npm install          # cheerio, playwright (dev only; no runtime deps)
-npm run build        # regenerate index.html from data/homepage.json + src/template.html
-npm test             # build, then run both suites
-npm run serve        # serve the repo root on http://localhost:4173
+npm run build           # regenerate the four pages, 404.html, and .htaccess
+npm test                # build, then run every suite in tests/
+npm run export          # copy the uploadable static site into dist/
+npm run package:godaddy # build, export, and zip dist/limesignalworks-public_html.zip
+npm run serve           # serve the repo root on http://localhost:4173
 ```
 
 ## Conventions for incremental edits
 
-1. **Never hand-edit `index.html`.** Edit `data/homepage.json` or `src/template.html`, then
+1. **Never hand-edit `index.html`, `404.html`, or `.htaccess`.** Edit `data/homepage.json` or `src/template.html`, then
    `npm run build`. The build throws on an unreplaced token, on section-order drift against the
    data file, on a duplicate element id, and on an in-page anchor with no target.
 2. **Canonical strings live in `data/homepage.json`.** The demo CTA label, its disclosure, the
@@ -103,7 +134,7 @@ npm run serve        # serve the repo root on http://localhost:4173
   declares light, and no `prefers-color-scheme: dark` rule exists. The dark toggle is optional,
   fully functional, and never persisted to any browser storage.
 - **Exactly one demo call to action**, labelled "Open the Rosie demo", pointing at the static
-  sample-data demo `/rosie-demo/` on this site, with its labelling rendered as the immediately
+  sample-data demo `/rosie-demo-schwab/` on this site (the IB `/rosie-demo/` until 2026-11-22), with its labelling rendered as the immediately
   following static element (never a tooltip, toast, modal, or collapsed content): sample data,
   a paper (practice) account, no broker connection, no real orders, not advice. The hosted demo
   and its sign-in line were retired from the home page on 2026-10-28; the full demo is offered on

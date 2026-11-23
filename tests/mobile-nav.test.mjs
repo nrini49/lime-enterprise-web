@@ -72,8 +72,8 @@ test('mobile nav: Harbor Now and the homepage collapse only the masthead links',
         });
         assert.equal(closed.hidden, true, `nav hidden at ${width}`);
         assert.equal(closed.display, 'none');
-        assert.equal(closed.links, 3);
-        assert.equal(closed.theme, 'light', 'Harbor Now keeps its light default');
+        assert.equal(closed.links, 4, 'the four site pages');
+        assert.equal(closed.theme, 'dark', 'Harbor Now opens dark, like Home (2026-11-22)');
         assert.ok(closed.headerH < (width === 390 ? 100 : 160), `header ${closed.headerH}px at ${width}`);
         assert.ok(closed.h1Top >= closed.headerBottom - 1, 'the title is not under the header');
         assert.ok(closed.h1Top < 800, 'the title is on the first screen');
@@ -85,7 +85,8 @@ test('mobile nav: Harbor Now and the homepage collapse only the masthead links',
         await page.keyboard.press('Enter');
         await page.waitForFunction(() => document.querySelector('[data-nav-toggle]').getAttribute('aria-expanded') === 'true');
         const labels = await page.locator('.masthead__nav a').allInnerTexts();
-        assert.deepEqual(labels.map((s) => s.trim()), ['Home', 'Daily market report', 'Archive']);
+        // 2026-11-22: the same four-page menu as every other page.
+        assert.deepEqual(labels.map((s) => s.trim()), ['Home', 'How Rosie Works', 'Harbor Now', 'Blog']);
         for (const link of await page.locator('.masthead__nav a').all()) {
           assert.ok(await link.isVisible());
           const linkBox = await link.boundingBox();
@@ -110,14 +111,15 @@ test('mobile nav: Harbor Now and the homepage collapse only the masthead links',
       }
     });
 
-    await t.test('homepage phones collapse the section links and can reach every one', async () => {
-      for (const width of [360, 390, 320]) {
+    await t.test('phones collapse the page menu on Home, How Rosie Works and Blog, and reach every page', async () => {
+      // 2026-11-22: the menu links the four pages instead of homepage sections.
+      for (const [pathName, width] of [['/', 360], ['/', 390], ['/', 320], ['/how-rosie-works/', 390], ['/blog/', 320]]) {
         const context = await browser.newContext({
           viewport: { width, height: 800 },
           colorScheme: 'light',
         });
         const page = await context.newPage();
-        await page.goto(`${ORIGIN}/`, { waitUntil: 'networkidle' });
+        await page.goto(`${ORIGIN}${pathName}`, { waitUntil: 'networkidle' });
         await page.evaluate(() => document.fonts.ready);
         assert.equal(await page.evaluate(() => document.documentElement.dataset.theme), 'dark');
         assert.equal(await page.locator('[data-nav-toggle]').getAttribute('aria-expanded'), 'false');
@@ -125,38 +127,33 @@ test('mobile nav: Harbor Now and the homepage collapse only the masthead links',
           await page.evaluate(() => getComputedStyle(document.querySelector('.masthead__nav')).display),
           'none',
         );
-        assert.ok((await overflow(page)) <= 1, `home overflow at ${width}`);
-        const intro = await page.locator('[data-rosie-intro]').boundingBox();
+        assert.ok((await overflow(page)) <= 1, `${pathName} overflow at ${width}`);
+        const first = await page.locator('main h1').boundingBox();
         const header = await page.locator('.masthead').boundingBox();
-        assert.ok(intro.y >= header.y + header.height - 1, 'the introduction is not covered');
+        assert.ok(first.y >= header.y + header.height - 1, `${pathName}: the page title is not covered`);
 
         await page.click('[data-nav-toggle]');
-        const hrefs = await page.locator('.masthead__nav a').evaluateAll((els) =>
-          els.map((el) => el.getAttribute('href')),
+        const links = await page.locator('.masthead__nav a').evaluateAll((els) =>
+          els.map((el) => [el.textContent.trim(), el.getAttribute('href')]),
         );
-        assert.ok(hrefs.length >= 11, 'every section link is still in the menu');
-        for (const href of hrefs) assert.ok(href.startsWith('#'), href);
-        assert.ok((await overflow(page)) <= 1, `home open overflow at ${width}`);
+        assert.deepEqual(links.map((l) => l[0]), ['Home', 'How Rosie Works', 'Harbor Now', 'Blog']);
+        for (const [, href] of links) assert.ok(href === '#main' || /^\/([a-z-]+\/)?$/.test(href), href);
+        for (const link of await page.locator('.masthead__nav a').all()) {
+          assert.ok(await link.isVisible());
+          assert.ok((await link.boundingBox()).height >= 44, 'open link target');
+        }
+        assert.ok((await overflow(page)) <= 1, `${pathName} open overflow at ${width}`);
 
         const last = page.locator('.masthead__nav a').last();
         await last.focus();
         const lastBox = await last.boundingBox();
         assert.ok(lastBox, 'the last link can be focused');
-        assert.ok(lastBox.y >= 0 && lastBox.y + lastBox.height <= 800, 'the last link scrolls into view');
+        assert.ok(lastBox.y >= 0 && lastBox.y + lastBox.height <= 800, 'the last link is in view');
 
-        await page.click('.masthead__nav a[href="#pricing"]');
-        await page.waitForFunction(() => location.hash === '#pricing');
+        // The current page's own entry closes the menu and stays on the page.
+        await page.click('.masthead__nav a[aria-current="page"]');
+        await page.waitForFunction(() => location.hash === '#main');
         await page.waitForFunction(() => document.querySelector('[data-nav-toggle]').getAttribute('aria-expanded') === 'false');
-        await page
-          .waitForFunction(() => {
-            const top = document.querySelector('#pricing').getBoundingClientRect().top;
-            const headerH = document.querySelector('.masthead').getBoundingClientRect().height;
-            const atEnd = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
-            return (top >= headerH - 8 && top < headerH + 140) || (atEnd && top < window.innerHeight);
-          })
-          .catch(() => {
-            throw new Error(`pricing did not clear the compact header at ${width}`);
-          });
         await context.close();
       }
     });
@@ -166,6 +163,8 @@ test('mobile nav: Harbor Now and the homepage collapse only the masthead links',
         ['/harbor-now/', 1280],
         ['/harbor-now/2026-09-29/', 1440],
         ['/', 1280],
+        ['/how-rosie-works/', 1440],
+        ['/blog/', 1280],
       ]) {
         const context = await browser.newContext({ viewport: { width, height: 900 } });
         const page = await context.newPage();
@@ -186,7 +185,7 @@ test('mobile nav: Harbor Now and the homepage collapse only the masthead links',
         });
         assert.equal(nav.hidden, false);
         assert.notEqual(nav.display, 'none');
-        assert.ok(nav.links >= 3);
+        assert.equal(nav.links, 4);
         assert.ok(nav.h > 20 && nav.h < 80, `desktop nav height ${nav.h}`);
         assert.ok(nav.w > 200, 'desktop nav stays in the header band');
         assert.ok((await overflow(page)) <= 1);
@@ -195,7 +194,7 @@ test('mobile nav: Harbor Now and the homepage collapse only the masthead links',
     });
 
     await t.test('without JavaScript the links stay visible and no button is shown', async () => {
-      for (const path of ['/harbor-now/', '/']) {
+      for (const path of ['/harbor-now/', '/', '/how-rosie-works/', '/blog/']) {
         const context = await browser.newContext({
           viewport: { width: 390, height: 800 },
           javaScriptEnabled: false,
@@ -206,7 +205,7 @@ test('mobile nav: Harbor Now and the homepage collapse only the masthead links',
         assert.equal(await page.locator('[data-nav-toggle]').count(), 0);
         const nav = page.locator('.masthead__nav');
         assert.ok(await nav.isVisible());
-        assert.ok((await nav.locator('a').count()) >= 3);
+        assert.equal(await nav.locator('a').count(), 4);
         await context.close();
       }
     });

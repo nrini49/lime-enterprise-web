@@ -1,8 +1,8 @@
 {
   "revision": "site2-claim-audit-2026-11-13",
   "canonical": {
-    "rosieIntro": "Hi, I'm Rosie Keelwise. I help you place trades under the risk rules you set, and I attach one broker-held stop to every buy. This guide walks you through your first days with me, in plain language. Nothing here is a recommendation to buy or sell anything, and I never promise a result.",
-    "demoUrl": "/rosie-demo/",
+    "rosieIntro": "Hi, I'm Rosie Keelwise, a rule-based trading assistant. I help you place trades under the risk rules you set, and I attach one broker-held stop to every buy. This guide walks you through your first days with me, in plain language. Nothing here is a recommendation to buy or sell anything.",
+    "demoUrl": "/rosie-demo-schwab/",
     "demoCtaLabel": "Open the Rosie demo",
     "demoDisclosure": "Sample data in a paper (practice) account. No broker connection, no real orders, and nothing here is advice.",
     "demoAsk": "If you'd like the full demo, just ask. We'll set you up with the whole thing, for free, no strings attached.",
@@ -15,8 +15,8 @@
     },
     "securitiesDisclaimer": "Lime Signalworks provides educational tools and analysis, not personalized investment advice. Securities trading involves risk of loss. Your decisions and results are your own. Nothing here is an offer to sell or a solicitation to buy any security.",
     "evaluationTerm": "one month",
-    "copyright": "\u00a9 2026 Lime Signalworks LLC.",
-    "riskDisclosure": "Trading involves risk of loss. Past performance, including paper-trading results, does not guarantee future results. Nothing on this site is investment advice.",
+    "copyright": "© 2026 Lime Signalworks LLC.",
+    "riskDisclosure": "Rosie is a tool for disciplined trading, not a promise of results. Trading involves risk, including loss of money.",
     "videos": {
       "_comment": "The ONE place for video links. channelUrl is the existing Lime Signalworks YouTube channel. Each video's url stays null until a real video is published; while it is null, the tour button links to the channel with fallbackLabel, and the Harbor Now how-to link is not rendered at all, so visitors never see a broken or invented link. To go live, paste the real watch URL into url.",
       "channelUrl": "https://www.youtube.com/@noelrini3882",
@@ -28,99 +28,270 @@
       "harborHowTo": {
         "url": null,
         "label": "Watch: how to use Harbor Now"
-      }
-    }
+      },
+      "library": [
+        {
+          "youtubeId": "5utNNpUwppA",
+          "title": "Stop Gambling — Start Guardrails",
+          "duration": "1:18",
+          "pages": [
+            "home",
+            "how-rosie-works"
+          ]
+        },
+        {
+          "youtubeId": "vv_kziBPwOI",
+          "title": "Stop Guessing the Market — Read the Weather",
+          "duration": "9:23",
+          "pages": [
+            "how-rosie-works"
+          ]
+        },
+        {
+          "youtubeId": "iuUHE499z1I",
+          "title": "Trade Calm — Master the Lime Pilot Board",
+          "duration": "5:57",
+          "pages": [
+            "how-rosie-works"
+          ]
+        },
+        {
+          "youtubeId": "Ml9IbfF0j5E",
+          "title": "Investing Without the Chaos",
+          "duration": "1:32",
+          "pages": [
+            "home-rules"
+          ]
+        },
+        {
+          "youtubeId": "TNlWIQySd8U",
+          "title": "Tame the Sharks Inside First",
+          "duration": "3:41",
+          "pages": [
+            "home-story"
+          ]
+        },
+        {
+          "youtubeId": "4O7ONwgFTP4",
+          "title": "Reality Is Code: 15 Principles You Were Not Taught",
+          "duration": "3:23",
+          "pages": [
+            "home-story"
+          ]
+        }
+      ],
+      "_libraryComment": "2026-11-22: videos from the old GoDaddy site that still play on YouTube (checked by oEmbed and the watch page). Titles are YouTube's own (the double space YouTube shows is the original dash). Shown as self-hosted thumbnails (assets/img/video/<id>.jpg) that link to YouTube in a new window: no embedded player, no autoplay, nothing loaded from YouTube until clicked. Dropped: 7obTu4_94_o 'Invest Calmly  Lime's Safety Suit for Everyone' (plays, but its title uses a retired Site 1 term the site's wording rules exclude), hL9z3sYCj4Y 'Stop Guessing  Start LIME Alerts Today' (promotes the old LIME alerts product), DGT_0Xje1ks 'Oil Squeeze, Clean Signals  Friday Harbor' (dated market commentary about the old daily email), Vimeo 1178552708 'grok logo video' (16-second logo loop). 2026-11-22 (owner t1998u): three more on Home. 'pages' may also name a Home slot: home-rules (beside Rosie's rules) or home-story (beside the story). Ml9IbfF0j5E is shown as 'Investing Without the Chaos' (YouTube title 'Investing Without the Chaos  Lime's Safety'; the tail is dropped, owner dislikes 'Safety Suit' wording). TNlWIQySd8U 'Tame the Sharks Inside First'. 4O7ONwgFTP4 'Reality Is Code: 15 Principles You Were Not Taught' (YouTube: 'Reality Is Code  15 Principles You Were not Taught'). All three checked playable and embeddable on 2026-11-22."
+    },
+    "_riskDisclosureComment": "2026-11-22 (owner, t1974u): the site relies on ONE statement about not promising results, shown beside the telephone number in the footer of every page. Other no-promise / no-guarantee lines were removed because repeating them broadcasts doubt; factual safety descriptions (stops can fill below their price, paper mode) stay.",
+    "_ruleBasedComment": "2026-11-22 (owner, t1983u): the phrase 'rule-based' appears exactly once on the site, in Rosie's introduction just below the Home opener. Less is more."
   },
+  "pages": [
+    {
+      "id": "home",
+      "nav": "Home",
+      "path": "/",
+      "file": "index.html",
+      "title": "LIME Enterprise — Rosie Keelwise, the automated trading operator who never blinks",
+      "description": "Rosie Keelwise is an automated trading operator from Lime Signalworks. She watches the markets while you live your life, holds to your rules and keeps a protective stop at your broker on every position, while you supervise. Try her free for one month in a paper (practice) account.",
+      "hero": {
+        "display": [
+          "I monitor your trades.",
+          "You enjoy your day."
+        ],
+        "ctas": [
+          {
+            "label": "Try me free for one month",
+            "href": "#evaluation",
+            "kind": "primary"
+          },
+          {
+            "label": "See how I work",
+            "href": "/how-rosie-works/",
+            "kind": "ghost"
+          }
+        ],
+        "chips": [
+          "A protective stop at your broker on every position",
+          "Free for one month in a paper (practice) account",
+          "Schwab and Interactive Brokers"
+        ]
+      }
+    },
+    {
+      "id": "how-rosie-works",
+      "nav": "How Rosie Works",
+      "path": "/how-rosie-works/",
+      "file": "how-rosie-works/index.html",
+      "title": "How Rosie Works — Lime Signalworks",
+      "description": "How Rosie Keelwise works: the three steps, the protective stop on every position, the risk limits she keeps, the markets she handles, and the five Lime Signalworks TradingView indicators.",
+      "eyebrow": "Lime Signalworks · How Rosie Works",
+      "heading": "How Rosie Works",
+      "lede": "The watching, the sizing, the order entry and the protection: that’s my side of the room. You set the rules, and you stay in charge.",
+      "ledeVoice": "rosie",
+      "ctas": [
+        {
+          "label": "See me in action",
+          "href": "#demo",
+          "kind": "primary"
+        },
+        {
+          "label": "Try me free for one month",
+          "href": "/#evaluation",
+          "kind": "ghost"
+        }
+      ],
+      "hooks": [
+        {
+          "label": "Three steps",
+          "title": "You set the rules. I watch, and I propose. You supervise.",
+          "href": "#how-it-works"
+        },
+        {
+          "label": "Protection",
+          "title": "A protective stop on every position",
+          "text": "It lives at your broker, so it keeps working even with your computer switched off.",
+          "href": "#protection"
+        },
+        {
+          "label": "Risk limits",
+          "title": "2% risk per trade · 6% total open-risk cap",
+          "text": "An order that would go over is refused, politely and absolutely.",
+          "href": "#evidence"
+        },
+        {
+          "label": "Always yours",
+          "title": "STOP ALL and FLATTEN ALL",
+          "text": "STOP ALL halts me and cancels pending buys, and leaves the protective stops in place.",
+          "href": "#protection"
+        },
+        {
+          "label": "Indicators",
+          "title": "Five TradingView indicators",
+          "text": "They work on their own, on your TradingView chart, no Rosie required.",
+          "href": "#indicators"
+        },
+        {
+          "label": "Try me first",
+          "title": "Practice first, so you can judge me",
+          "text": "Free for one month in a paper (practice) account.",
+          "href": "/#evaluation"
+        }
+      ]
+    },
+    {
+      "id": "harbor",
+      "nav": "Harbor Now",
+      "path": "/harbor-now/",
+      "file": "harbor-now/index.html",
+      "_comment": "Built by src/harbor.mjs from data/harbor/, with its own title and description."
+    },
+    {
+      "id": "blog",
+      "nav": "Blog",
+      "path": "/blog/",
+      "file": "blog/index.html",
+      "title": "Blog — Lime Signalworks",
+      "description": "The Lime Signalworks blog: experiences with Rosie, Tech Tips, and, later, comments from readers. The first posts are coming soon.",
+      "eyebrow": "Lime Signalworks · Blog",
+      "heading": "Blog",
+      "lede": "A place for experiences with Rosie, Tech Tips, and, later, your comments."
+    }
+  ],
   "sectionOrder": [
     {
       "id": "opening",
-      "eyebrow": "From Rosie",
-      "nav": null
-    },
-    {
-      "id": "life",
-      "eyebrow": "Your life with Rosie",
-      "nav": "Life with Rosie"
+      "page": "home",
+      "eyebrow": "From Rosie"
     },
     {
       "id": "will-wont",
-      "eyebrow": "What Rosie will and won't do",
-      "nav": null
-    },
-    {
-      "id": "pros",
-      "eyebrow": "Section 04",
-      "nav": null
-    },
-    {
-      "id": "evidence",
-      "eyebrow": "Rosie \u00b7 Evidence",
-      "nav": "Evidence"
-    },
-    {
-      "id": "indicators",
-      "eyebrow": "Section 06",
-      "nav": "Indicators"
-    },
-    {
-      "id": "demo",
-      "eyebrow": "Section 07",
-      "nav": "Demo"
-    },
-    {
-      "id": "what-we-do",
-      "eyebrow": "Section 08",
-      "nav": null
-    },
-    {
-      "id": "how-it-works",
-      "eyebrow": "Section 09",
-      "nav": "How it works"
-    },
-    {
-      "id": "protection",
-      "eyebrow": "Section 10",
-      "nav": "Protection"
-    },
-    {
-      "id": "phone",
-      "eyebrow": "Section 11",
-      "nav": null
-    },
-    {
-      "id": "markets",
-      "eyebrow": "Section 12",
-      "nav": "Markets"
+      "page": "home",
+      "eyebrow": "What Rosie will and won't do"
     },
     {
       "id": "evaluation",
-      "eyebrow": "Section 13",
-      "nav": "Evaluation"
+      "page": "home",
+      "eyebrow": "Section 03"
     },
     {
       "id": "pricing",
-      "eyebrow": "Section 14",
-      "nav": "Pricing"
-    },
-    {
-      "id": "market-report",
-      "eyebrow": "Section 15",
-      "nav": null
-    },
-    {
-      "id": "commitments",
-      "eyebrow": "Section 16",
-      "nav": null
-    },
-    {
-      "id": "partners",
-      "eyebrow": "Section 17",
-      "nav": "Partners"
+      "page": "home",
+      "eyebrow": "Section 04"
     },
     {
       "id": "how-to-begin",
-      "eyebrow": "Section 18",
-      "nav": "How to begin"
+      "page": "home",
+      "eyebrow": "Section 05"
+    },
+    {
+      "id": "life",
+      "page": "how-rosie-works",
+      "eyebrow": "Your life with Rosie"
+    },
+    {
+      "id": "rules",
+      "page": "how-rosie-works",
+      "eyebrow": "Rosie's rules"
+    },
+    {
+      "id": "what-we-do",
+      "page": "how-rosie-works",
+      "eyebrow": "Section 02"
+    },
+    {
+      "id": "how-it-works",
+      "page": "how-rosie-works",
+      "eyebrow": "Section 03"
+    },
+    {
+      "id": "demo",
+      "page": "how-rosie-works",
+      "eyebrow": "Section 04"
+    },
+    {
+      "id": "markets",
+      "page": "how-rosie-works",
+      "eyebrow": "Section 05"
+    },
+    {
+      "id": "phone",
+      "page": "how-rosie-works",
+      "eyebrow": "Section 06"
+    },
+    {
+      "id": "pros",
+      "page": "how-rosie-works",
+      "eyebrow": "Section 07"
+    },
+    {
+      "id": "protection",
+      "page": "how-rosie-works",
+      "eyebrow": "Section 08"
+    },
+    {
+      "id": "commitments",
+      "page": "how-rosie-works",
+      "eyebrow": "Section 09"
+    },
+    {
+      "id": "partners",
+      "page": "how-rosie-works",
+      "eyebrow": "Section 10"
+    },
+    {
+      "id": "evidence",
+      "page": "how-rosie-works",
+      "eyebrow": "Rosie · Evidence"
+    },
+    {
+      "id": "indicators",
+      "page": "how-rosie-works",
+      "eyebrow": "Section 12"
+    },
+    {
+      "id": "market-report",
+      "page": "harbor",
+      "eyebrow": "Harbor Now · About the report"
     }
   ],
   "pros": {
@@ -196,14 +367,13 @@
       }
     ],
     "includes": [
-      "Rosie, the rules-based trading operator, installed on your computer.",
+      "Rosie, the trading operator, installed on your computer.",
       "A broker-held protective stop on every position.",
       "Built-in risk limits: Conservative, Normal and Aggressive per-buy caps (2 shares / $500, 5 / $1,250, 10 / $2,500), automatic buys at the Conservative cap, 2% per trade, 6% total open risk, and a daily loss limit.",
       "The daily market situation report.",
       "Guided setup and support."
     ],
     "notThis": [
-      "Not a promise of profit.",
       "Not a signal service to copy.",
       "Not personalized investment advice.",
       "Not hands-off: you supervise Rosie and can stop her at any time."
@@ -215,22 +385,22 @@
       "name": "Lime Color Weather",
       "art": "weather",
       "problem": "You trade the same way whether the market is friendly or stormy, and only find out which it was afterwards.",
-      "answer": "Shows the market\u2019s current \u201cweather\u201d as colour bands, so you can see whether conditions favour buying, holding or staying small.",
-      "technical": "Conditions are drawn as colour bands with readings such as \u201cbull cooling\u201d or \u201cstrong bull rising\u201d. The same read appears in more than one pane, and the middle pane shows whether a tiring move is forming with or against the larger trend."
+      "answer": "Shows the market’s current “weather” as colour bands, so you can see whether conditions favour buying, holding or staying small.",
+      "technical": "Conditions are drawn as colour bands with readings such as “bull cooling” or “strong bull rising”. The same read appears in more than one pane, and the middle pane shows whether a tiring move is forming with or against the larger trend."
     },
     {
       "name": "Lime Notify",
       "art": "notify",
-      "problem": "There are so many signals on your screen that you can\u2019t tell what you\u2019re actually supposed to do.",
+      "problem": "There are so many signals on your screen that you can’t tell what you’re actually supposed to do.",
       "answer": "Reduces the noise to three readings only: Buy, Trim and Exit, each checked on the 1-day, 6-hour and 3-hour time frames.",
-      "technical": "The published reading is Alignment + Momentum \u2212 Exhaustion \u2212 Risk: Buy when it is strong, Trim when it softens, Exit when it breaks down. Tiredness and risk count against a Buy."
+      "technical": "The published reading is Alignment + Momentum − Exhaustion − Risk: Buy when it is strong, Trim when it softens, Exit when it breaks down. Tiredness and risk count against a Buy."
     },
     {
       "name": "Lime Exhaustion",
       "art": "exhaustion",
       "problem": "You keep getting in too late, buying right as the move runs out of steam.",
       "answer": "Shows whether a move is fresh, mid-journey or worn out, so you can avoid buying the last gasp of a move.",
-      "technical": "The published reading is Stretch from Trend + Momentum Extremes + Volatility Expansion \u2212 Fresh Support. The further price stretches from its trend, the more tired the move reads."
+      "technical": "The published reading is Stretch from Trend + Momentum Extremes + Volatility Expansion − Fresh Support. The further price stretches from its trend, the more tired the move reads."
     },
     {
       "name": "Lime StopWatcher",
@@ -242,7 +412,7 @@
     {
       "name": "Lime 8 Filter Stack",
       "art": "filters",
-      "problem": "When the signals are mixed, it\u2019s easy to talk yourself into the trade anyway.",
+      "problem": "When the signals are mixed, it’s easy to talk yourself into the trade anyway.",
       "answer": "Combines several safety checks into one pass or fail view, so you can stand aside when the signals are mixed.",
       "technical": null
     }

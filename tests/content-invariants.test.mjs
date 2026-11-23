@@ -4,7 +4,7 @@
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import * as cheerio from 'cheerio';
@@ -14,13 +14,32 @@ const readJson = (p) => JSON.parse(readFileSync(path.join(root, p), 'utf8'));
 
 const data = readJson('data/homepage.json');
 const { canonical, sectionOrder, marketReport, pricing, startCards } = data;
-const html = readFileSync(path.join(root, 'index.html'), 'utf8');
-const $ = cheerio.load(html);
+// 2026-11-22: the homepage is split into four pages (Home, How Rosie Works, Harbor Now,
+// Blog). The content checks below run over the whole site's wording at once: Home's
+// document, with the How Rosie Works sections and the Harbor Now market-report section
+// appended to its <main> in page order, so every section is checked exactly once and
+// the header, footer and contact block are still counted once. Per-page structure (menu,
+// headings, cross-page links) is checked in tests/site-pages.test.mjs.
+const readPage = (file) => readFileSync(path.join(root, file), 'utf8');
+const $ = cheerio.load(readPage('index.html'));
+{
+  const how = cheerio.load(readPage('how-rosie-works/index.html'));
+  how('main > section').each((_, el) => {
+    $('main').append(how.html(el));
+  });
+  const harbor = cheerio.load(readPage('harbor-now/index.html'));
+  for (const s of sectionOrder.filter((x) => x.page === 'harbor')) {
+    $('main').append(harbor.html(harbor(`section#${s.id}`)));
+  }
+}
+const html = $.html();
 
 // 2026-10-28: the hosted Perplexity demo is retired from the home page at the owner's
 // direction. The only demo link is the static sample-data demo at /rosie-demo/ (PR #15),
 // and the full demo is offered on request through the contact block.
-const DEMO_URL = '/rosie-demo/';
+// 2026-11-22 (owner, t1975u): Schwab first. The demo link opens the Schwab sample-data demo;
+// the IB demo at /rosie-demo/ stays in place but is no longer linked.
+const DEMO_URL = '/rosie-demo-schwab/';
 const RETIRED_DEMO_URL = 'https://limesignalworks.pplx.app/';
 const LEADERSHIP_URL = 'https://signals.limesignalworks.com';
 const LIBRARY_URL = 'https://leadership.limesignalworks.com';
@@ -249,35 +268,45 @@ test('data: canonical strings are the exact approved wording', () => {
   assert.equal(canonical.evaluationTerm, "one month");
 });
 
-test('data: the section order is the translated Site 1 order, with unique ids', () => {
+test('data: the section order and the page each section sits on', () => {
+  // 2026-11-22 (owner approval, t1954u): the homepage is split into four pages. Home is
+  // short and non-technical; How Rosie Works gets more technical toward the indicators;
+  // the market-report explainer sits on Harbor Now. Wording moved, not rewritten.
   assert.deepEqual(
-    sectionOrder.map((s) => s.id),
+    sectionOrder.map((s) => [s.page, s.id]),
     [
-      // 2026-10-28 (content/assembled-home): the personal opening, life with Rosie,
-      // will and won't, evidence tiles, indicators and demo lead the page, in the
-      // owner's order; the existing sections follow unchanged.
-      'opening',
-      'life',
-      'will-wont',
-      'pros', // 2026-10-28: "Trading the way the pros do", after will-and-won't
-      'evidence',
-      'indicators',
-      'demo',
-      'what-we-do',
-      'how-it-works',
-      'protection',
-      'phone',
-      'markets',
-      'evaluation',
-      'pricing',
-      'market-report',
-      'commitments',
-      'partners',
-      'how-to-begin',
+      ['home', 'opening'],
+      ['home', 'will-wont'],
+      ['home', 'evaluation'],
+      ['home', 'pricing'],
+      ['home', 'how-to-begin'],
+      ['how-rosie-works', 'life'],
+      ['how-rosie-works', 'rules'], // 2026-11-22 (owner t1985u): the full list of Rosie's rules
+      ['how-rosie-works', 'what-we-do'],
+      ['how-rosie-works', 'how-it-works'],
+      ['how-rosie-works', 'demo'],
+      ['how-rosie-works', 'markets'],
+      ['how-rosie-works', 'phone'],
+      ['how-rosie-works', 'pros'],
+      ['how-rosie-works', 'protection'],
+      ['how-rosie-works', 'commitments'],
+      ['how-rosie-works', 'partners'],
+      ['how-rosie-works', 'evidence'],
+      ['how-rosie-works', 'indicators'],
+      ['harbor', 'market-report'],
     ],
   );
   const ids = sectionOrder.map((s) => s.id);
   assert.equal(new Set(ids).size, ids.length, 'section ids must be unique');
+  assert.deepEqual(
+    data.pages.map((p) => [p.id, p.nav, p.path]),
+    [
+      ['home', 'Home', '/'],
+      ['how-rosie-works', 'How Rosie Works', '/how-rosie-works/'],
+      ['harbor', 'Harbor Now', '/harbor-now/'],
+      ['blog', 'Blog', '/blog/'],
+    ],
+  );
 });
 
 test('data: prices are the locked figures (2026-10-07)', () => {
@@ -351,14 +380,17 @@ test('dom: every section in the order is rendered and labelled', () => {
   }
 });
 
-test('dom: navigation links match the recorded nav labels and all resolve', () => {
+test('dom: the masthead menu links the four pages, Home marked as the current page', () => {
   const navLinks = $('.masthead__nav a');
-  const expected = sectionOrder.filter((s) => s.nav);
-  assert.equal(navLinks.length, expected.length);
-  navLinks.each((i, el) => {
-    assert.equal($(el).attr('href'), `#${expected[i].id}`);
-    assert.equal(norm($(el).text()), expected[i].nav);
-  });
+  assert.deepEqual(
+    navLinks.map((_, el) => [norm($(el).text()), $(el).attr('href'), $(el).attr('aria-current') || null]).get(),
+    [
+      ['Home', '#main', 'page'],
+      ['How Rosie Works', '/how-rosie-works/', null],
+      ['Harbor Now', '/harbor-now/', null],
+      ['Blog', '/blog/', null],
+    ].flat(),
+  );
 });
 
 test('dom: every in-page anchor resolves to an element that exists', () => {
@@ -397,7 +429,7 @@ test('dom: exactly one demo call to action, with the approved label and target',
   assert.equal(link.attr('target'), '_blank', 'the demo opens in a new window');
   assert.equal(link.attr('rel'), 'noopener noreferrer');
   $('a[href*="rosie-demo"]').each((_, el) => {
-    assert.equal($(el).attr('href'), DEMO_URL, 'every demo link points at /rosie-demo/');
+    assert.equal($(el).attr('href'), DEMO_URL, 'every demo link points at the Schwab demo');
   });
 });
 
@@ -603,7 +635,12 @@ test('dom: the only off-origin destination is YouTube (the demo is on this site)
   for (const href of hrefs) {
     assert.match(href, /^https:\/\/www\.youtube\.com\//, `off-origin link that is not YouTube: ${href}`);
   }
-  assert.ok(hrefs.length <= 3, 'only the channel link and the two tour buttons go off-site');
+  // 2026-11-22 (owner direction, t1970u): plus one link per video card, each to a real
+  // video in data/homepage.json canonical.videos.library and nowhere else.
+  const library = new Set((canonical.videos.library || []).map((v) => `https://www.youtube.com/watch?v=${v.youtubeId}`));
+  const cards = $('a.video-card').map((_, el) => $(el).attr('href')).get();
+  for (const href of cards) assert.ok(library.has(href), `video card for a listed video: ${href}`);
+  assert.ok(hrefs.length - cards.length <= 3, 'only the channel link, the two tour buttons and the video cards go off-site');
   links.each((_, el) => {
     assert.equal($(el).attr('target'), '_blank', 'off-site links open in a new window');
     assert.equal($(el).attr('rel'), 'noopener noreferrer');
@@ -670,9 +707,11 @@ test('dom: the header carries the lighthouse logo left and Rosie\'s portrait rig
 });
 
 const ROSIE_INTRO =
-  "Hi, I'm Rosie Keelwise. I help you place trades under the risk rules you set, and I attach one " +
+  "Hi, I'm Rosie Keelwise, a rule-based trading assistant. I help you place trades under the risk rules you set, and I attach one " +
   'broker-held stop to every buy. This guide walks you through your first days with me, in plain ' +
-  'language. Nothing here is a recommendation to buy or sell anything, and I never promise a result.';
+  'language. Nothing here is a recommendation to buy or sell anything.';
+// 2026-11-22 (owner, t1974u): ", and I never promise a result" was dropped from the intro; the
+// site's one statement about results sits beside the telephone number in the footer.
 
 test('naming: "Rosie Keelwise" introduces her once up top; "Rosie" after that', () => {
   assert.match($('title').text(), /Rosie Keelwise/);
@@ -685,7 +724,14 @@ test('naming: "Rosie Keelwise" introduces her once up top; "Rosie" after that', 
   assert.equal(intro.length, 1, 'one Rosie introduction');
   assert.equal(norm(intro.text()), ROSIE_INTRO, 'the introduction is word for word as approved');
   assert.equal($('main p').not('.label').first()[0], intro[0], 'the introduction is the first paragraph of the page body');
-  const body = norm($('main').clone().find('[data-rosie-intro]').remove().end().text());
+  // 2026-11-22 (owner, t1975u): the welcome line above the opening names her in full too, so
+  // visitors know which Rosie this is. It is set aside here like the introduction.
+  assert.equal(
+    norm($('[data-welcome]').text()),
+    'Welcome to Rosie Keelwise, the AI-powered stock trading assistant from Lime Signalworks LLC',
+  );
+  assert.doesNotMatch(norm($('main').text()), /Rosie Keelwise,? LLC|Keelwise LLC/, 'Rosie Keelwise is never called an LLC');
+  const body = norm($('main').clone().find('[data-rosie-intro], [data-welcome]').remove().end().text());
   assert.equal(body.split('Keelwise').length - 1, 1, 'Keelwise appears once in the page body, in the opening');
   assert.doesNotMatch(html, /Rosie \/ Keelwise|Rosie \(Keelwise\)|also called Keelwise/);
 });
@@ -709,9 +755,11 @@ test('dom: the footer carries the exact securities disclaimer', () => {
 
 /* ---------- risk disclosure and roadmap honesty (2026-10-26 rewrite) ---------- */
 
+// 2026-11-22 (owner, t1974u): ONE statement about results, beside the telephone number. Every
+// other no-promise / no-guarantee line was removed because repeating it broadcasts doubt.
 const RISK_DISCLOSURE =
-  'Trading involves risk of loss. Past performance, including paper-trading results, does not ' +
-  'guarantee future results. Nothing on this site is investment advice.';
+  'Rosie is a tool for disciplined trading, not a promise of results. Trading involves risk, ' +
+  'including loss of money.';
 
 test('dom: the footer carries the plain risk disclosure', () => {
   assert.equal(canonical.riskDisclosure, RISK_DISCLOSURE);
@@ -719,6 +767,11 @@ test('dom: the footer carries the plain risk disclosure', () => {
   assert.equal(el.length, 1);
   assert.equal(norm(el.text()), RISK_DISCLOSURE);
   assert.equal(el.closest('footer').length, 1, 'the risk disclosure sits in the footer');
+  assert.equal(el.closest('dd').find('[data-contact-phone]').length, 1, 'it sits beside the telephone number');
+  const text = visibleText().replace(RISK_DISCLOSURE, '');
+  for (const re of [/promise of (results|profit)/i, /never promise/i, /can't promise/i, /guarantee (profits|future)/i, /do not predict future/i]) {
+    assert.doesNotMatch(text, re, 'no other no-promise or no-guarantee line repeats it');
+  }
 });
 
 // 2026-10-29 (content/rosie-queen-voice): owner direction. Interactive Brokers and Schwab
@@ -789,11 +842,12 @@ test('dom: no forbidden Site 1 or scriptural terminology in rendered text or met
   }
 });
 
-test('dom: the pros block is the approved copy, right after will-and-won\'t, naming no one', () => {
+test('dom: the pros block is the approved copy, on How Rosie Works, naming no one', () => {
   const sec = $('section#pros');
   assert.equal(sec.length, 1);
-  assert.equal(sec.prev('section').attr('id'), 'will-wont', 'it follows What Rosie will and won\'t do');
-  assert.equal(sec.next('section').attr('id'), 'evidence', 'it comes before Evidence');
+  // 2026-11-22: on How Rosie Works, between the light sections and the rules.
+  assert.equal(sec.prev('section').attr('id'), 'phone', 'it follows Coming soon: me, in your pocket');
+  assert.equal(sec.next('section').attr('id'), 'protection', 'it comes before I count the cost');
   assert.equal(norm(sec.find('h2').text()), 'Trading the way the pros do.');
   assert.equal(norm(sec.find('.section__head > p:not(.label)').text()), data.pros.body);
   assert.equal(
@@ -871,8 +925,9 @@ test('dom: no unsupported commercial, security or superiority claim', () => {
 
 test('dom: the limits of the offer are stated, not softened', () => {
   const text = visibleText();
-  assert.ok(/do not guarantee profits/i.test(text), 'the no-guarantee statement is present');
-  assert.ok(/cannot eliminate risk/i.test(text), 'the risk statement is present');
+  // 2026-11-22 (owner, t1974u): the one statement about results sits beside the phone number.
+  assert.ok(/not a promise of results/i.test(text), 'the one no-promise statement is present');
+  assert.ok(/involves risk, including loss of money/i.test(text), 'the risk statement is present');
   assert.ok(/decisions/i.test(text) && /yours/i.test(text), 'decision ownership is stated');
 });
 
@@ -911,8 +966,21 @@ test('dom: accessibility scaffolding is present', () => {
   // attribute; this guards against silently proliferating raster images later.
   // 2026-11-01: plus Rosie's portrait in the header (the workstation header pair; the
   // lighthouse half is a <video> with an aria-label, checked in the header test).
-  const images = $('img');
-  assert.equal(images.length, 2, 'the product screenshot and the header portrait, nothing else');
+  // 2026-11-22: the same product screenshot also sits in the Home hero, and the video
+  // links carry self-hosted thumbnails. A thumbnail is decorative (alt="") because the
+  // link around it names the video in text.
+  const thumbs = $('a.video-card img');
+  thumbs.each((_, el) => {
+    assert.equal($(el).attr('alt'), '', 'video thumbnails are decorative');
+    assert.match($(el).attr('src'), /^\/assets\/img\/video\/[\w-]+\.jpg$/, 'thumbnails are self-hosted');
+    assert.ok(norm($(el).closest('a').text()).length > 10, 'the video link names the video');
+  });
+  const images = $('img').not('a.video-card img');
+  assert.deepEqual(
+    [...new Set(images.map((_, el) => $(el).attr('src')).get())].sort(),
+    ['/assets/img/rosie-schwab-dashboard-preview.png', '/assets/img/rosie-portrait.png'].sort(),
+    'the product screenshot and the header portrait, nothing else',
+  );
   images.each((_, el) => {
     const alt = $(el).attr('alt');
     assert.ok(alt && alt.length > 20, 'every raster image has a real, descriptive alt attribute');
@@ -1100,7 +1168,7 @@ test('voice: every first-person line belongs to a labelled voice, Noal or Rosie'
   // 2026-11-01 the opening is Rosie's, telling his story, with a "From Rosie" tag.
   assert.deepEqual(
     $('[data-voice="noal"]').map((_, el) => $(el).closest('section').attr('id')).get(),
-    ['life', 'will-wont'],
+    ['will-wont', 'life'], // 2026-11-22: will-wont on Home, life on How Rosie Works
   );
   assert.equal($('#opening [data-voice="noal"]').length, 0, 'the opening is no longer in Noal\'s voice');
   assert.equal($('#opening > .shell > .opening__col[data-voice="rosie"] > [data-voice-tag]').length, 1, 'the opening is labelled From Rosie');
@@ -1175,4 +1243,79 @@ test('dom: risk choices, approve flow, and STOP ALL match the current servers', 
   assert.match(text, /a thousand to ten thousand dollars/);
   assert.match(text, /does not give Rosie a paper-trading API/i);
   assert.match(text, /no self-serve download/i);
+});
+
+// 2026-11-22 (owner, t1983u): "use the phrase rule-based once, and that's it. Less is more."
+// Counted across every built page of the site (markup and metadata), in any spelling.
+test('wording: "rule-based" appears exactly once on the whole site, in Rosie\'s introduction', () => {
+  const files = ['index.html', 'how-rosie-works/index.html', 'blog/index.html', 'rosie-demo/index.html', 'rosie-demo-schwab/index.html'];
+  const harborDir = path.join(root, 'harbor-now');
+  files.push('harbor-now/index.html');
+  for (const d of readdirSync(harborDir)) {
+    if (existsSync(path.join(harborDir, d, 'index.html'))) files.push(`harbor-now/${d}/index.html`);
+  }
+  const RULE_BASED = /rules?[-\s]+based/gi;
+  const hits = files.flatMap((f) =>
+    [...readFileSync(path.join(root, f), 'utf8').replace(/<!--[\s\S]*?-->/g, '').matchAll(RULE_BASED)].map(() => f),
+  );
+  assert.deepEqual(hits, ['index.html'], `"rule-based" must appear exactly once: ${hits.join(', ')}`);
+  assert.match(norm($('main [data-rosie-intro] .rosie-intro__text').text()), /a rule-based trading assistant/);
+});
+
+// 2026-11-22 (owner, t1985u/t1986u): a short "Rosie's rules" list on Home, right after her
+// intro, linking to the full list on How Rosie Works. Every line was checked against the
+// code on both servers (Schwab main d7e8633, IB main b429892); guardrails only.
+test('rules: Home shows 5-6 one-line rules right after the intro, linking to the full list', () => {
+  const home = cheerio.load(readPage('index.html'));
+  const intro = home('#opening [data-rosie-intro]');
+  const card = intro.next();
+  assert.equal(card.attr('data-rules'), 'home', 'the rules card comes right after Rosie\'s intro');
+  assert.equal(card.attr('data-voice'), 'rosie');
+  const lines = card.find('.rules-list > li').map((_, el) => norm(home(el).text())).get();
+  assert.ok(lines.length >= 5 && lines.length <= 6, `5 or 6 rules on Home, got ${lines.length}`);
+  for (const l of lines) assert.ok(l.split(/\s+/).length <= 20, `one short line each: "${l}"`);
+  const more = card.find('a[href="/how-rosie-works/#rules"]');
+  assert.equal(more.length, 1, 'a "See all the rules" link to How Rosie Works');
+  // 2026-11-23 (owner t2029u): the link also says the full list shows which rules you can change.
+  assert.equal(norm(more.text()), 'See all the rules, and which ones you can change');
+  assert.equal(more.attr('target'), undefined, 'a link between the site\'s own pages opens in the same window');
+  const how = cheerio.load(readPage('how-rosie-works/index.html'));
+  const full = how('section#rules [data-rules="full"] > li');
+  assert.ok(full.length >= 8 && full.length <= 10, `8 to 10 rules on How Rosie Works, got ${full.length}`);
+  // Every Home rule also appears, word for word, in the full list.
+  const fullText = norm(how('section#rules').text());
+  // 2026-11-23 (owner t2029u): the full list says which rules the operator sets, which are set
+  // at install, and which are built in.
+  const who = how('section#rules [data-rules="who-sets"]');
+  assert.equal(who.length, 1, 'the "which rules you can change" block is on How Rosie Works');
+  assert.equal(who.find('.rules-who__col').length, 3, 'three groups: yours, set at install, built in');
+  assert.match(norm(who.text()), /never more than 7\.5%/);
+  for (const l of lines) {
+    if (/^Orders go only|^I start in practice|^No new buys|^If your account falls/.test(l)) {
+      assert.ok(fullText.includes(l.replace(/^I start in practice mode\. /, '')), `full list carries: "${l}"`);
+    }
+  }
+});
+
+test('rules: one short story paragraph in the opening', () => {
+  const home = cheerio.load(readPage('index.html'));
+  const paras = home('#opening .opening__text > p').not('.video-row');
+  assert.equal(paras.length, 1, 'the story is one paragraph');
+  assert.ok(norm(paras.text()).split(/\s+/).length <= 80, 'and a short one');
+});
+
+// 2026-11-22 (owner t1998u): one video beside Rosie's rules and two beside the story,
+// as the same click-to-play thumbnail cards. No "Safety" wording on the cards.
+test('videos: one card beside the rules, two beside the story', () => {
+  const home = cheerio.load(readPage('index.html'));
+  const rules = home('[data-rules="home"] a.video-card').map((_, el) => home(el).attr('data-video')).get();
+  assert.deepEqual(rules, ['Ml9IbfF0j5E']);
+  const story = home('#opening .opening__text a.video-card').map((_, el) => home(el).attr('data-video')).get();
+  assert.deepEqual(story, ['TNlWIQySd8U', '4O7ONwgFTP4']);
+  const titles = home('a.video-card .video-card__title').map((_, el) => norm(home(el).clone().find('.sr-only').remove().end().text())).get();
+  assert.ok(titles.includes('Investing Without the Chaos'));
+  assert.ok(titles.includes('Tame the Sharks Inside First'));
+  assert.ok(titles.includes('Reality Is Code: 15 Principles You Were Not Taught'));
+  for (const t of titles) assert.ok(!/safety/i.test(t), `no "Safety" wording on a card: ${t}`);
+  home('a.video-card').each((_, el) => assert.equal(home(el).attr('target'), '_blank', 'YouTube opens in a new window'));
 });

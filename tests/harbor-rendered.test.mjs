@@ -37,10 +37,11 @@ test('harbor rendered: no horizontal overflow, no failed requests, at 1366 and 3
           page.on('requestfailed', (r) => failed.push(`failed ${r.url()}`));
           await page.goto(ORIGIN + p, { waitUntil: 'networkidle' });
           await page.evaluate(() => document.fonts.ready);
-          for (const theme of ['light', 'dark']) {
-            if (theme === 'dark') {
+          // 2026-11-22: Harbor Now opens dark like Home; the toggle reaches light.
+          for (const theme of ['dark', 'light']) {
+            if (theme === 'light') {
               await page.click('[data-theme-toggle]');
-              await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
+              await page.waitForFunction(() => document.documentElement.dataset.theme === 'light');
             }
             const doc = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
             assert.ok(doc <= 1, `${theme}: horizontal overflow ${doc}px`);
