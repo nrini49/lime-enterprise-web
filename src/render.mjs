@@ -417,6 +417,9 @@ async function main() {
     .replaceAll('{{HERO_CTAS}}', renderButtons(home.hero.ctas))
     .replaceAll('{{HERO_CHIPS}}', home.hero.chips.map((c) => `<li>${CHECK}<span>${esc(c)}</span></li>`).join(''))
     .replaceAll('{{HOME_VIDEOS}}', renderVideoCards(videosFor('home'), 'video-cards--hero'))
+    // 2026-11-22 (owner t1998u): a video beside Rosie's rules and two beside the story.
+    .replaceAll('{{RULES_VIDEOS}}', renderVideoCards(videosFor('home-rules'), 'video-cards--hero video-cards--aside'))
+    .replaceAll('{{STORY_VIDEOS}}', renderVideoCards(videosFor('home-story'), 'video-cards--hero video-cards--aside'))
     .replaceAll('{{YOUTUBE_CHANNEL_URL}}', esc(canonical.videos.channelUrl))
     .replaceAll('{{DEMO_DISCLOSURE}}', esc(canonical.demoDisclosure))
     .replaceAll('{{DEMO_ASK}}', esc(canonical.demoAsk))

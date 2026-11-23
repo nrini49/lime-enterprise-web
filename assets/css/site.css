@@ -2838,3 +2838,9 @@ html {
 .blog-list .blog-post .blog-post__title { font-family: var(--font-display); font-size: clamp(1.35rem, 1.1rem + 1vw, 1.75rem); line-height: 1.25; margin: var(--space-2) 0 var(--space-3); }
 .blog-post p:not(.label):not(.btn-row) { line-height: 1.65; overflow-wrap: anywhere; }
 .blog-post__share { margin: var(--space-5) 0 0; }
+
+/* ---------- Video cards beside the rules and the story (2026-11-22, owner t1998u) ---------- */
+.video-cards--aside { margin-top: var(--space-5); margin-bottom: var(--space-4); }
+@media (max-width: 24rem) {
+  .video-cards--hero .video-card { grid-template-columns: 6.5rem minmax(0, 1fr); }
+}

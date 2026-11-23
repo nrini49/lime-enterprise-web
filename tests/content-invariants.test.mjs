@@ -1271,7 +1271,7 @@ test('rules: Home shows 5-6 one-line rules right after the intro, linking to the
   const card = intro.next();
   assert.equal(card.attr('data-rules'), 'home', 'the rules card comes right after Rosie\'s intro');
   assert.equal(card.attr('data-voice'), 'rosie');
-  const lines = card.find('li').map((_, el) => norm(home(el).text())).get();
+  const lines = card.find('.rules-list > li').map((_, el) => norm(home(el).text())).get();
   assert.ok(lines.length >= 5 && lines.length <= 6, `5 or 6 rules on Home, got ${lines.length}`);
   for (const l of lines) assert.ok(l.split(/\s+/).length <= 20, `one short line each: "${l}"`);
   const more = card.find('a[href="/how-rosie-works/#rules"]');
@@ -1295,4 +1295,20 @@ test('rules: one short story paragraph in the opening', () => {
   const paras = home('#opening .opening__text > p').not('.video-row');
   assert.equal(paras.length, 1, 'the story is one paragraph');
   assert.ok(norm(paras.text()).split(/\s+/).length <= 80, 'and a short one');
+});
+
+// 2026-11-22 (owner t1998u): one video beside Rosie's rules and two beside the story,
+// as the same click-to-play thumbnail cards. No "Safety" wording on the cards.
+test('videos: one card beside the rules, two beside the story', () => {
+  const home = cheerio.load(readPage('index.html'));
+  const rules = home('[data-rules="home"] a.video-card').map((_, el) => home(el).attr('data-video')).get();
+  assert.deepEqual(rules, ['Ml9IbfF0j5E']);
+  const story = home('#opening .opening__text a.video-card').map((_, el) => home(el).attr('data-video')).get();
+  assert.deepEqual(story, ['TNlWIQySd8U', '4O7ONwgFTP4']);
+  const titles = home('a.video-card .video-card__title').map((_, el) => norm(home(el).clone().find('.sr-only').remove().end().text())).get();
+  assert.ok(titles.includes('Investing Without the Chaos'));
+  assert.ok(titles.includes('Tame the Sharks Inside First'));
+  assert.ok(titles.includes('Reality Is Code: 15 Principles You Were Not Taught'));
+  for (const t of titles) assert.ok(!/safety/i.test(t), `no "Safety" wording on a card: ${t}`);
+  home('a.video-card').each((_, el) => assert.equal(home(el).attr('target'), '_blank', 'YouTube opens in a new window'));
 });
