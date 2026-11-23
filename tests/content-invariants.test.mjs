@@ -708,8 +708,8 @@ test('dom: the header carries the lighthouse logo left and Rosie\'s portrait rig
 
 const ROSIE_INTRO =
   "Hi, I'm Rosie Keelwise, a rule-based trading assistant. I help you place trades under the risk rules you set, and I attach one " +
-  'broker-held stop to every buy. This guide walks you through your first days with me, in plain ' +
-  'language. Nothing here is a recommendation to buy or sell anything.';
+  'broker-held stop to every buy. This guide walks you through your first days with me, in plain language.';
+// 2026-11-23 (owner, t2064u): "Nothing here is a recommendation to buy or sell anything." removed; no replacement.
 // 2026-11-22 (owner, t1974u): ", and I never promise a result" was dropped from the intro; the
 // site's one statement about results sits beside the telephone number in the footer.
 
