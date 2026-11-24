@@ -54,3 +54,12 @@ export function blogStrip(posts) {
         </div>
       </section>`;
 }
+
+/** Footer links to the Privacy Policy and Terms of Use. Same window; not in the main menu. */
+export function legalNav() {
+  return `<nav class="foot__legal" aria-label="Legal">
+            <a href="/privacy/">Privacy Policy</a>
+            <a href="/terms/">Terms of Use</a>
+          </nav>`;
+}
+

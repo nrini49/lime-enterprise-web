@@ -9,6 +9,8 @@ Static site for limesignalworks.com, in four pages (split from the single homepa
 | How Rosie Works | `/how-rosie-works/` | `how-rosie-works/index.html` | sections where `page` is `how-rosie-works` |
 | Harbor Now | `/harbor-now/` | `harbor-now/index.html` (+ dated editions) | `src/harbor.mjs`, plus sections where `page` is `harbor` and the blog strip |
 | Blog | `/blog/` | `blog/index.html` | `data/blog.json` (empty until the first real post) |
+| Privacy Policy | `/privacy/` | `privacy/index.html` | `data/legal.json` (not in the main menu; linked from the footer) |
+| Terms of Use | `/terms/` | `terms/index.html` | `data/legal.json` (not in the main menu; linked from the footer) |
 
 `data/homepage.json` lists the pages (`pages`) and places every section on one of them
 (`sectionOrder[].page`). `src/template.html` still holds each section's markup exactly once;

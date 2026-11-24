@@ -1,0 +1,96 @@
+{
+  "updated": "2026-11-24",
+  "pages": [
+    {
+      "id": "privacy",
+      "path": "/privacy/",
+      "file": "privacy/index.html",
+      "title": "Privacy Policy — Lime Signalworks",
+      "description": "How Lime Signalworks handles information on this website and in Rosie, the trading software that runs on your own Windows PC.",
+      "heading": "Privacy Policy",
+      "lede": "A short, plain-English account of what stays on your computer, and what this website does and does not collect.",
+      "sections": [
+        {
+          "heading": "Who we are",
+          "paragraphs": [
+            "Lime Signalworks LLC makes Rosie (Keelwise), trading software that runs on your own Windows PC, and this website, limesignalworks.com."
+          ]
+        },
+        {
+          "heading": "What stays on your computer",
+          "paragraphs": [
+            "Rosie runs on your computer. Your broker keys, Schwab and Interactive Brokers sign-in tokens, and account data stay on that PC. We do not receive them. We do not sell them.",
+            "Never send your key or secret to anyone, including us."
+          ]
+        },
+        {
+          "heading": "What this website collects",
+          "paragraphs": [
+            "This website has no accounts and no forms. We do not ask you to type personal information here. If you email or call us, we receive what you send, in the usual way.",
+            "We did not add advertising or analytics trackers to this site. Our web host, GoDaddy, may add a short performance-monitoring script to the pages it serves. That script is theirs. To opt out, contact GoDaddy web hosting support."
+          ]
+        },
+        {
+          "heading": "Remote help",
+          "paragraphs": [
+            "Optional remote help uses Google's Chrome Remote Desktop, and only when you start it and share a code. You can end the session at any time."
+          ]
+        },
+        {
+          "heading": "Questions",
+          "paragraphs": [
+            "Use the email, phone, or office address in the footer of this page."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "terms",
+      "path": "/terms/",
+      "file": "terms/index.html",
+      "title": "Terms of Use — Lime Signalworks",
+      "description": "Short terms for the Lime Signalworks website and for Rosie, the trading software that runs on your own Windows PC.",
+      "heading": "Terms of Use",
+      "lede": "A short, plain-English set of terms for this website and for Rosie.",
+      "sections": [
+        {
+          "heading": "Who we are",
+          "paragraphs": [
+            "These terms cover this website and Rosie (Keelwise), trading software from Lime Signalworks LLC that runs on your own Windows PC."
+          ]
+        },
+        {
+          "heading": "What Rosie is",
+          "paragraphs": [
+            "Rosie is an educational tool. She is not personalized investment advice. She is not a promise of results. Trading can lose money. You are responsible for your trades and your results."
+          ]
+        },
+        {
+          "heading": "How orders work",
+          "paragraphs": [
+            "By default, Rosie waits for your confirm click before placing an order. Auto mode is optional. Only you can turn it on, and you control it.",
+            "Your broker keys and sign-in tokens stay on your computer. Never send your key or secret to anyone, including us."
+          ]
+        },
+        {
+          "heading": "This website",
+          "paragraphs": [
+            "This site is for information. Nothing here is an offer to sell, or a solicitation to buy, any security."
+          ]
+        },
+        {
+          "heading": "Remote help",
+          "paragraphs": [
+            "Optional remote help uses Google's Chrome Remote Desktop, and only when you start it and share a code. You can end the session at any time."
+          ]
+        },
+        {
+          "heading": "Questions",
+          "paragraphs": [
+            "Use the email, phone, or office address in the footer of this page."
+          ]
+        }
+      ]
+    }
+  ]
+}
