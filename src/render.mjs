@@ -1,16 +1,16 @@
 #!/usr/bin/env node
 /**
  * Build step: render data/homepage.json into the static site (four menu pages, plus the
- * Get Rosie landing, 2026-11-23). data/homepage.json is the single source of truth for
+ * Buy Rosie landing, 2026-11-23). data/homepage.json is the single source of truth for
  * canonical strings, the pages, the section order (and which page each section sits on),
- * the market-report example, pricing, the indicators, the start cards, and the Get Rosie
+ * the market-report example, pricing, the indicators, the start cards, and the Buy Rosie
  * landing (offerPage). src/template.html holds every section's markup once; this script
  * places each section on its page:
  *   index.html                 Home
  *   how-rosie-works/index.html How Rosie Works
  *   harbor-now/                Harbor Now (via src/harbor.mjs, with the market-report section)
  *   blog/index.html            Blog (from data/blog.json)
- *   get-rosie/index.html       Get Rosie landing (not in the main menu)
+ *   buy-rosie/index.html       Buy Rosie landing (not in the main menu)
  *   404.html                   Branded not-found page (same shell; not in the menu)
  * All of these are generated output, committed so the site works with no build step.
  */

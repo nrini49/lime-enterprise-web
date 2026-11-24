@@ -15,12 +15,12 @@ const readJson = (p) => JSON.parse(readFileSync(path.join(root, p), 'utf8'));
 const data = readJson('data/homepage.json');
 const { canonical, sectionOrder, marketReport, pricing, startCards } = data;
 // 2026-11-22: the homepage is split into four menu pages (Home, How Rosie Works, Harbor Now,
-// Blog). 2026-11-23: the Get Rosie landing is a fifth page, not in the menu. The content
+// Blog). 2026-11-23: the Buy Rosie landing is a fifth page, not in the menu. The content
 // checks below run over the whole site's wording at once: Home's document, with the How
-// Rosie Works sections, the Harbor Now market-report section, and the Get Rosie sections
+// Rosie Works sections, the Harbor Now market-report section, and the Buy Rosie sections
 // appended to its <main> in page order, so every section is checked exactly once and
 // the header, footer and contact block are still counted once. Per-page structure (menu,
-// headings, cross-page links) is checked in tests/site-pages.test.mjs and tests/get-rosie.test.mjs.
+// headings, cross-page links) is checked in tests/site-pages.test.mjs and tests/buy-rosie.test.mjs.
 const readPage = (file) => readFileSync(path.join(root, file), 'utf8');
 const $ = cheerio.load(readPage('index.html'));
 {
@@ -32,8 +32,8 @@ const $ = cheerio.load(readPage('index.html'));
   for (const s of sectionOrder.filter((x) => x.page === 'harbor')) {
     $('main').append(harbor.html(harbor(`section#${s.id}`)));
   }
-  const offer = cheerio.load(readPage('get-rosie/index.html'));
-  for (const s of sectionOrder.filter((x) => x.page === 'get-rosie')) {
+  const offer = cheerio.load(readPage('buy-rosie/index.html'));
+  for (const s of sectionOrder.filter((x) => x.page === 'buy-rosie')) {
     $('main').append(offer.html(offer(`section#${s.id}`)));
   }
 }
@@ -135,7 +135,9 @@ const FORBIDDEN_TERMS = [
   'amber light',
   'renaissance',
   'cockpit',
-  'buy rosie',
+  // 2026-11-24 (owner, t2163): 'buy rosie' removed. Noal chose "Buy Rosie" as the
+  // public name of the enrollment landing at /buy-rosie/. The phrase was previously
+  // reserved as retired Site 1 vocabulary.
 ];
 
 /** Multi-word Site 1 phrases, substring matched. */
@@ -299,11 +301,11 @@ test('data: the section order and the page each section sits on', () => {
       ['how-rosie-works', 'evidence'],
       ['how-rosie-works', 'indicators'],
       ['harbor', 'market-report'],
-      ['get-rosie', 'get-rosie-price'],
-      ['get-rosie', 'get-rosie-need'],
-      ['get-rosie', 'get-rosie-path'],
-      ['get-rosie', 'get-rosie-begin'],
-      ['get-rosie', 'get-rosie-honest'],
+      ['buy-rosie', 'buy-rosie-price'],
+      ['buy-rosie', 'buy-rosie-need'],
+      ['buy-rosie', 'buy-rosie-path'],
+      ['buy-rosie', 'buy-rosie-begin'],
+      ['buy-rosie', 'buy-rosie-honest'],
     ],
   );
   const ids = sectionOrder.map((s) => s.id);
@@ -1293,7 +1295,7 @@ test('dom: risk choices, approve flow, and STOP ALL match the current servers', 
 // 2026-11-22 (owner, t1983u): "use the phrase rule-based once, and that's it. Less is more."
 // Counted across every built page of the site (markup and metadata), in any spelling.
 test('wording: "rule-based" appears exactly once on the whole site, in Rosie\'s introduction', () => {
-  const files = ['index.html', 'how-rosie-works/index.html', 'blog/index.html', 'get-rosie/index.html', 'rosie-demo/index.html', 'rosie-demo-schwab/index.html'];
+  const files = ['index.html', 'how-rosie-works/index.html', 'blog/index.html', 'buy-rosie/index.html', 'rosie-demo/index.html', 'rosie-demo-schwab/index.html'];
   const harborDir = path.join(root, 'harbor-now');
   files.push('harbor-now/index.html');
   for (const d of readdirSync(harborDir)) {

@@ -26,8 +26,8 @@ function htmlFiles(dir) {
 }
 
 // 2026-11-22 (owner default): links between the site's own pages (Home, How Rosie Works,
-// Harbor Now and its dated editions, Blog, and the Get Rosie landing) stay in the same window too.
-const EXEMPT = /^(#|mailto:|tel:|\/(how-rosie-works\/|get-rosie\/|harbor-now\/(\d{4}-\d\d-\d\d\/)?|blog\/)?(#[\w-]*)?$)/i;
+// Harbor Now and its dated editions, Blog, and the Buy Rosie landing) stay in the same window too.
+const EXEMPT = /^(#|mailto:|tel:|\/(how-rosie-works\/|buy-rosie\/|harbor-now\/(\d{4}-\d\d-\d\d\/)?|blog\/)?(#[\w-]*)?$)/i;
 const files = htmlFiles(root);
 
 test('links: the scan covers the home page, Harbor Now and the demo', () => {

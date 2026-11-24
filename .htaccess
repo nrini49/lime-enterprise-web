@@ -20,6 +20,7 @@ ErrorDocument 404 /404.html
 
   # Old paths, matching vercel.json (301 unless marked otherwise).
   # /data/harbor/* is a 302 to /harbor-now/, and must sit above the /data/ block.
+  RewriteRule ^get-rosie/?$ /buy-rosie/ [R=301,L]
   RewriteRule ^home/?$ / [R=301,L]
   RewriteRule ^about-lime/?$ / [R=301,L]
   RewriteRule ^how-lime-works/?$ /how-rosie-works/ [R=301,L]

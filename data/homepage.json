@@ -101,7 +101,7 @@
         "ctas": [
           {
             "label": "Try me free for one month",
-            "href": "/get-rosie/",
+            "href": "/buy-rosie/",
             "kind": "primary"
           },
           {
@@ -136,7 +136,7 @@
         },
         {
           "label": "Try me free for one month",
-          "href": "/get-rosie/",
+          "href": "/buy-rosie/",
           "kind": "ghost"
         }
       ],
@@ -174,7 +174,7 @@
           "label": "Try me first",
           "title": "Practice first, so you can judge me",
           "text": "Free for one month in a paper (practice) account.",
-          "href": "/get-rosie/"
+          "href": "/buy-rosie/"
         }
       ]
     },
@@ -294,28 +294,28 @@
       "eyebrow": "Harbor Now \u00b7 About the report"
     },
     {
-      "id": "get-rosie-price",
-      "page": "get-rosie",
+      "id": "buy-rosie-price",
+      "page": "buy-rosie",
       "eyebrow": "The offer"
     },
     {
-      "id": "get-rosie-need",
-      "page": "get-rosie",
+      "id": "buy-rosie-need",
+      "page": "buy-rosie",
       "eyebrow": "What you need"
     },
     {
-      "id": "get-rosie-path",
-      "page": "get-rosie",
+      "id": "buy-rosie-path",
+      "page": "buy-rosie",
       "eyebrow": "The path"
     },
     {
-      "id": "get-rosie-begin",
-      "page": "get-rosie",
+      "id": "buy-rosie-begin",
+      "page": "buy-rosie",
       "eyebrow": "How to begin"
     },
     {
-      "id": "get-rosie-honest",
-      "page": "get-rosie",
+      "id": "buy-rosie-honest",
+      "page": "buy-rosie",
       "eyebrow": "Straight talk"
     }
   ],
@@ -445,15 +445,15 @@
     }
   ],
   "offerPage": {
-    "id": "get-rosie",
+    "id": "buy-rosie",
     "inNav": false,
-    "_comment": "2026-11-23 draft landing (not in the main menu). A shareable page for the free month and the proposed price. Do not add a payment form, a Reach form, or a charge until Noal confirms.",
-    "path": "/get-rosie/",
-    "file": "get-rosie/index.html",
-    "title": "Get Rosie \u2014 Lime Signalworks",
+    "_comment": "2026-11-24: renamed Buy Rosie (owner t2163). Not in the main menu. A shareable page for the free month and the proposed price. Do not add a payment form, a Reach form, or a charge until Noal confirms.",
+    "path": "/buy-rosie/",
+    "file": "buy-rosie/index.html",
+    "title": "Buy Rosie \u2014 Lime Signalworks",
     "description": "Start a free one-month evaluation of Rosie Keelwise in a paper (practice) account. Proposed pricing, what you need on your Windows computer, and how to begin by email. Schwab or Interactive Brokers. Nothing is sold or charged on this page.",
-    "eyebrow": "Lime Signalworks \u00b7 Get Rosie",
-    "heading": "Get Rosie",
+    "eyebrow": "Lime Signalworks \u00b7 Buy Rosie",
+    "heading": "Buy Rosie",
     "lede": "Start with a free month in practice mode, so you can judge me on the record. If you continue, the proposed price is $183.33 a month for 18 months. Those figures are pending confirmation. Nothing is sold or charged on this page.",
     "ledeVoice": "rosie",
     "ctas": [
@@ -473,25 +473,25 @@
         "label": "The offer",
         "title": "A free month first, then a proposed price",
         "text": "The figures below are pending confirmation. Nothing is charged on this page.",
-        "href": "#get-rosie-price"
+        "href": "#buy-rosie-price"
       },
       {
         "label": "What you need",
         "title": "A Windows computer, and your own broker account",
         "text": "Schwab or Interactive Brokers. With Schwab, you also need your own developer app.",
-        "href": "#get-rosie-need"
+        "href": "#buy-rosie-need"
       },
       {
         "label": "The path",
         "title": "Install, practice, payment, then go-live",
         "text": "Each step is described honestly, including what is not built yet.",
-        "href": "#get-rosie-path"
+        "href": "#buy-rosie-path"
       },
       {
         "label": "How to begin",
         "title": "Write by email",
         "text": "A registration form is planned. Lime Signalworks does not begin by phone.",
-        "href": "#get-rosie-begin"
+        "href": "#buy-rosie-begin"
       }
     ]
   }
