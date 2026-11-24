@@ -1,14 +1,16 @@
 #!/usr/bin/env node
 /**
- * Build step: render data/homepage.json into the static four-page site (2026-11-22).
- * data/homepage.json is the single source of truth for canonical strings, the pages, the
- * section order (and which page each section sits on), the market-report example,
- * pricing, the indicators, and the start cards. src/template.html holds every section's
- * markup once; this script places each section on its page:
+ * Build step: render data/homepage.json into the static site (four menu pages, plus the
+ * Get Rosie landing, 2026-11-23). data/homepage.json is the single source of truth for
+ * canonical strings, the pages, the section order (and which page each section sits on),
+ * the market-report example, pricing, the indicators, the start cards, and the Get Rosie
+ * landing (offerPage). src/template.html holds every section's markup once; this script
+ * places each section on its page:
  *   index.html                 Home
  *   how-rosie-works/index.html How Rosie Works
  *   harbor-now/                Harbor Now (via src/harbor.mjs, with the market-report section)
  *   blog/index.html            Blog (from data/blog.json)
+ *   get-rosie/index.html       Get Rosie landing (not in the main menu)
  *   404.html                   Branded not-found page (same shell; not in the menu)
  * All of these are generated output, committed so the site works with no build step.
  */
@@ -102,7 +104,7 @@ function renderMarketTable(report) {
           </div>`;
 }
 
-function renderPricingTable(pricing) {
+function renderPricingTable(pricing, tableAttr = 'data-pricing-table') {
   const rows = pricing.rows
     .map(
       (r) => `
@@ -112,16 +114,19 @@ function renderPricingTable(pricing) {
               </tr>`,
     )
     .join('');
-  // Price block (2026-11-22, "snap and pop"): the first locked row shown large, the
+  // Price block (2026-11-22, "snap and pop"): the first row shown large, the
   // monthly row under it. Same figures as the table, nothing new.
   const [lead, monthly] = pricing.rows;
-  return `<div class="price-hero" data-price-hero>
+  const pending = pricing.pendingConfirmation
+    ? `<p class="flag" data-price-pending>${esc(pricing.pendingNote || 'Proposed figures — pending confirmation')}</p>`
+    : '';
+  return `${pending}<div class="price-hero" data-price-hero>
             <span class="price-hero__term">${esc(lead.term)}</span>
             <strong class="price-hero__amount">${esc(lead.price)}</strong>
             <span class="price-hero__sub">${esc(monthly.term)}: <strong>${esc(monthly.price)}</strong></span>
           </div>
           <div class="table-wrap">
-            <table class="data-table" data-pricing-table>
+            <table class="data-table" ${tableAttr}>
               <caption class="sr-only">${esc(pricing.heading)}</caption>
               <thead>
                 <tr>
@@ -428,7 +433,7 @@ async function main() {
   ]);
 
   const data = JSON.parse(dataRaw);
-  const { canonical, pages, sectionOrder, marketReport, pricing, startCards, indicators, pros } = data;
+  const { canonical, pages, sectionOrder, marketReport, pricing, startCards, indicators, pros, offerPage } = data;
   const blog = JSON.parse(await readFile(path.join(root, 'data', 'blog.json'), 'utf8'));
   const home = pages.find((p) => p.id === 'home');
   const videosFor = (pageId) => (canonical.videos.library || []).filter((v) => v.pages.includes(pageId));
@@ -460,6 +465,8 @@ async function main() {
     .replaceAll('{{MARKET_NOTICE}}', esc(marketReport.exampleNotice))
     .replaceAll('{{PRICING_HEADING}}', esc(pricing.heading))
     .replaceAll('{{PRICING_TABLE}}', renderPricingTable(pricing))
+    .replaceAll('{{OFFER_PRICING_TABLE}}', renderPricingTable(pricing, 'data-offer-pricing-table'))
+    .replaceAll('{{PRICING_PENDING}}', esc(pricing.pendingNote || 'Proposed figures — pending confirmation'))
     .replaceAll('{{PRICING_STATUS}}', esc(pricing.status))
     .replaceAll('{{PRICING_INCLUDES}}', renderList(pricing.includes))
     .replaceAll('{{PRICING_NOT}}', renderList(pricing.notThis))
@@ -486,12 +493,14 @@ async function main() {
   // Which page owns each id, so a link to a section on another page becomes a page link.
   const pageOf = new Map();
   for (const s of sectionOrder) {
-    if (!pages.some((p) => p.id === s.page)) throw new Error(`Section ${s.id} names unknown page ${s.page}`);
+    const knownPages = new Set([...(pages || []).map((p) => p.id), offerPage?.id].filter(Boolean));
+    if (!knownPages.has(s.page)) throw new Error(`Section ${s.id} names unknown page ${s.page}`);
     const chunk = chunks.get(s.id);
     if (!chunk) throw new Error(`Section ${s.id} is in sectionOrder but not in the template`);
     for (const m of chunk.matchAll(/\sid="([^"]+)"/g)) pageOf.set(m[1], s.page);
   }
   const pageById = new Map(pages.map((p) => [p.id, p]));
+  if (offerPage) pageById.set(offerPage.id, offerPage);
 
   const linkAcross = (body, pageId) =>
     body.replace(/href="#([^"]+)"([^>]*)>/g, (m, id, rest) => {
@@ -529,6 +538,33 @@ async function main() {
     await writeFile(path.join(root, pg.file), out, 'utf8');
     results.push(`${pg.file} (${ids.length} sections)`);
   }
+  if (offerPage) {
+    const ids = sectionOrder.filter((s) => s.page === offerPage.id).map((s) => s.id);
+    let body = ids
+      .map((id) => {
+        const eyebrow = sectionOrder.find((s) => s.id === id).eyebrow;
+        return chunks.get(id).replace(/<p class="label rule-after">Section \d\d<\/p>/, `<p class="label rule-after">${esc(eyebrow)}</p>`);
+      })
+      .join('');
+    if (offerPage.heading) body = renderPageHead(offerPage, videosFor(offerPage.id)) + body;
+    body = linkAcross(body, offerPage.id);
+
+    const out = (shellBefore + body + '\n    ' + shellAfter)
+      .replaceAll('{{PAGE_TITLE}}', esc(offerPage.title))
+      .replaceAll('{{PAGE_DESCRIPTION}}', esc(offerPage.description))
+      .replaceAll('{{BRAND_LINK}}', brandLink(offerPage.id))
+      .replaceAll('{{NAV}}', siteNav(pages, null));
+
+    assertSectionOrder(out, ids);
+    assertUniqueIds(out);
+    assertAnchorsResolve(out);
+    assertSingleH1(out, offerPage.file);
+
+    await mkdir(path.dirname(path.join(root, offerPage.file)), { recursive: true });
+    await writeFile(path.join(root, offerPage.file), out, 'utf8');
+    results.push(`${offerPage.file} (${ids.length} sections)`);
+  }
+
   console.log(
     `built ${results.join(', ')} — ${startCards.length} start cards, ` +
       `${pricing.rows.length} prices, ${marketReport.rows.length} example report rows, ${blog.posts.length} blog posts`,

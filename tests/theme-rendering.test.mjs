@@ -40,7 +40,7 @@ const COMMON_SURFACES = [
 ];
 
 /**
- * 2026-11-22: the homepage is split into four pages. The three that open dark (Home,
+ * 2026-11-22: the homepage is split into four menu pages. The surfaces that open dark (Home,
  * How Rosie Works, Blog) are checked here; Harbor Now (dark too since
  * 2026-11-22) is covered by tests/harbor-rendered.test.mjs and tests/mobile-nav.test.mjs.
  */
@@ -75,6 +75,19 @@ const DARK_PAGES = [
     path: 'blog/',
     label: 'Blog',
     surfaces: [...COMMON_SURFACES, ['.page-head', 'page heading'], ['[data-blog]', 'blog section'], ['.foot', 'footer']],
+  },
+  {
+    path: 'get-rosie/',
+    label: 'Get Rosie',
+    surfaces: [
+      ...COMMON_SURFACES,
+      ['.page-head', 'page heading'],
+      ['#get-rosie-price', 'offer section'],
+      ['#get-rosie-need', 'what you need section'],
+      ['#get-rosie-path', 'path section'],
+      ['#get-rosie-begin', 'how to begin section'],
+      ['.foot', 'footer'],
+    ],
   },
 ];
 const SURFACES = DARK_PAGES[0].surfaces;
@@ -677,8 +690,14 @@ test('rendered: the page menu and every anchor reach their target', async () => 
         // 2026-11-22: the site's own pages open in the same window.
         assert.equal(target, null, `${pg.label}: ${text} opens in the same window`);
       }
-      await page.click('.masthead__nav a[aria-current="page"]');
-      assert.equal(new URL(page.url()).hash, '#main', `${pg.label}: the current page entry stays put`);
+      // The Get Rosie landing uses the same four-link menu but is not in it, so no item
+      // is marked current. Menu pages still send their own entry to #main.
+      if (await page.locator('.masthead__nav a[aria-current="page"]').count()) {
+        await page.click('.masthead__nav a[aria-current="page"]');
+        assert.equal(new URL(page.url()).hash, '#main', `${pg.label}: the current page entry stays put`);
+      } else {
+        assert.equal(pg.path, 'get-rosie/', `${pg.label}: only the Get Rosie landing has no current menu item`);
+      }
 
       for (const href of await page.$$eval('main a[href^="#"]', (els) => els.map((el) => el.getAttribute('href')))) {
         const exists = await page.evaluate((sel) => Boolean(document.querySelector(sel)), href);

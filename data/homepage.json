@@ -15,7 +15,7 @@
     },
     "securitiesDisclaimer": "Lime Signalworks provides educational tools and analysis, not personalized investment advice. Securities trading involves risk of loss. Your decisions and results are your own. Nothing here is an offer to sell or a solicitation to buy any security.",
     "evaluationTerm": "one month",
-    "copyright": "© 2026 Lime Signalworks LLC.",
+    "copyright": "\u00a9 2026 Lime Signalworks LLC.",
     "riskDisclosure": "Rosie is a tool for disciplined trading, not a promise of results. Trading involves risk, including loss of money.",
     "videos": {
       "_comment": "The ONE place for video links. channelUrl is the existing Lime Signalworks YouTube channel. Each video's url stays null until a real video is published; while it is null, the tour button links to the channel with fallbackLabel, and the Harbor Now how-to link is not rendered at all, so visitors never see a broken or invented link. To go live, paste the real watch URL into url.",
@@ -32,7 +32,7 @@
       "library": [
         {
           "youtubeId": "5utNNpUwppA",
-          "title": "Stop Gambling — Start Guardrails",
+          "title": "Stop Gambling \u2014 Start Guardrails",
           "duration": "1:18",
           "pages": [
             "home",
@@ -41,7 +41,7 @@
         },
         {
           "youtubeId": "vv_kziBPwOI",
-          "title": "Stop Guessing the Market — Read the Weather",
+          "title": "Stop Guessing the Market \u2014 Read the Weather",
           "duration": "9:23",
           "pages": [
             "how-rosie-works"
@@ -49,7 +49,7 @@
         },
         {
           "youtubeId": "iuUHE499z1I",
-          "title": "Trade Calm — Master the Lime Pilot Board",
+          "title": "Trade Calm \u2014 Master the Lime Pilot Board",
           "duration": "5:57",
           "pages": [
             "how-rosie-works"
@@ -91,7 +91,7 @@
       "nav": "Home",
       "path": "/",
       "file": "index.html",
-      "title": "LIME Enterprise — Rosie Keelwise, the automated trading operator who never blinks",
+      "title": "LIME Enterprise \u2014 Rosie Keelwise, the automated trading operator who never blinks",
       "description": "Rosie Keelwise is an automated trading operator from Lime Signalworks. She watches the markets while you live your life, holds to your rules and keeps a protective stop at your broker on every position, while you supervise. Try her free for one month in a paper (practice) account.",
       "hero": {
         "display": [
@@ -101,7 +101,7 @@
         "ctas": [
           {
             "label": "Try me free for one month",
-            "href": "#evaluation",
+            "href": "/get-rosie/",
             "kind": "primary"
           },
           {
@@ -122,11 +122,11 @@
       "nav": "How Rosie Works",
       "path": "/how-rosie-works/",
       "file": "how-rosie-works/index.html",
-      "title": "How Rosie Works — Lime Signalworks",
+      "title": "How Rosie Works \u2014 Lime Signalworks",
       "description": "How Rosie Keelwise works: the three steps, the protective stop on every position, the risk limits she keeps, the markets she handles, and the five Lime Signalworks TradingView indicators.",
-      "eyebrow": "Lime Signalworks · How Rosie Works",
+      "eyebrow": "Lime Signalworks \u00b7 How Rosie Works",
       "heading": "How Rosie Works",
-      "lede": "The watching, the sizing, the order entry and the protection: that’s my side of the room. You set the rules, and you stay in charge.",
+      "lede": "The watching, the sizing, the order entry and the protection: that\u2019s my side of the room. You set the rules, and you stay in charge.",
       "ledeVoice": "rosie",
       "ctas": [
         {
@@ -136,7 +136,7 @@
         },
         {
           "label": "Try me free for one month",
-          "href": "/#evaluation",
+          "href": "/get-rosie/",
           "kind": "ghost"
         }
       ],
@@ -154,7 +154,7 @@
         },
         {
           "label": "Risk limits",
-          "title": "2% risk per trade · 6% total open-risk cap",
+          "title": "2% risk per trade \u00b7 6% total open-risk cap",
           "text": "An order that would go over is refused, politely and absolutely.",
           "href": "#evidence"
         },
@@ -174,7 +174,7 @@
           "label": "Try me first",
           "title": "Practice first, so you can judge me",
           "text": "Free for one month in a paper (practice) account.",
-          "href": "/#evaluation"
+          "href": "/get-rosie/"
         }
       ]
     },
@@ -190,9 +190,9 @@
       "nav": "Blog",
       "path": "/blog/",
       "file": "blog/index.html",
-      "title": "Blog — Lime Signalworks",
+      "title": "Blog \u2014 Lime Signalworks",
       "description": "The Lime Signalworks blog: experiences with Rosie, Tech Tips, and, later, comments from readers. The first posts are coming soon.",
-      "eyebrow": "Lime Signalworks · Blog",
+      "eyebrow": "Lime Signalworks \u00b7 Blog",
       "heading": "Blog",
       "lede": "A place for experiences with Rosie, Tech Tips, and, later, your comments."
     }
@@ -281,7 +281,7 @@
     {
       "id": "evidence",
       "page": "how-rosie-works",
-      "eyebrow": "Rosie · Evidence"
+      "eyebrow": "Rosie \u00b7 Evidence"
     },
     {
       "id": "indicators",
@@ -291,7 +291,32 @@
     {
       "id": "market-report",
       "page": "harbor",
-      "eyebrow": "Harbor Now · About the report"
+      "eyebrow": "Harbor Now \u00b7 About the report"
+    },
+    {
+      "id": "get-rosie-price",
+      "page": "get-rosie",
+      "eyebrow": "The offer"
+    },
+    {
+      "id": "get-rosie-need",
+      "page": "get-rosie",
+      "eyebrow": "What you need"
+    },
+    {
+      "id": "get-rosie-path",
+      "page": "get-rosie",
+      "eyebrow": "The path"
+    },
+    {
+      "id": "get-rosie-begin",
+      "page": "get-rosie",
+      "eyebrow": "How to begin"
+    },
+    {
+      "id": "get-rosie-honest",
+      "page": "get-rosie",
+      "eyebrow": "Straight talk"
     }
   ],
   "pros": {
@@ -351,18 +376,18 @@
   },
   "pricing": {
     "heading": "Rosie pricing",
-    "status": "Pay $183.33 a month for 18 months and Rosie is yours to keep. Cancel any time, no questions asked; if payments stop, Rosie pauses until they resume. From month 19, maintenance of $330 a year covers software updates and the daily market report. Enrollment is arranged directly with us, by phone or email, after your evaluation. Nothing is sold or charged on this site.",
+    "status": "The first month is free, in a paper (practice) account. After that, the proposed price is $183.33 a month for 18 months. The proposed paid total of $3,300 is pending confirmation. Cancel any time, no questions asked; if payments stop, Rosie pauses until they resume. After those 18 payments, maintenance of $330 a year covers software updates and the daily market report. You begin by email, or by a registration form once it is ready. Lime Signalworks does not begin by phone. Nothing is sold or charged on this site.",
     "rows": [
       {
-        "term": "Rosie, paid over 18 months",
+        "term": "Proposed paid total, after the free month",
         "price": "$3,300"
       },
       {
-        "term": "Monthly payment, months 1 to 18",
+        "term": "Proposed monthly payment, 18 months after the free month",
         "price": "$183.33"
       },
       {
-        "term": "Maintenance from month 19",
+        "term": "Maintenance after those 18 payments",
         "price": "$330/year"
       }
     ],
@@ -377,7 +402,9 @@
       "Not a signal service to copy.",
       "Not personalized investment advice.",
       "Not hands-off: you supervise Rosie and can stop her at any time."
-    ]
+    ],
+    "pendingConfirmation": true,
+    "pendingNote": "Proposed figures \u2014 pending confirmation"
   },
   "startCards": [],
   "indicators": [
@@ -385,22 +412,22 @@
       "name": "Lime Color Weather",
       "art": "weather",
       "problem": "You trade the same way whether the market is friendly or stormy, and only find out which it was afterwards.",
-      "answer": "Shows the market’s current “weather” as colour bands, so you can see whether conditions favour buying, holding or staying small.",
-      "technical": "Conditions are drawn as colour bands with readings such as “bull cooling” or “strong bull rising”. The same read appears in more than one pane, and the middle pane shows whether a tiring move is forming with or against the larger trend."
+      "answer": "Shows the market\u2019s current \u201cweather\u201d as colour bands, so you can see whether conditions favour buying, holding or staying small.",
+      "technical": "Conditions are drawn as colour bands with readings such as \u201cbull cooling\u201d or \u201cstrong bull rising\u201d. The same read appears in more than one pane, and the middle pane shows whether a tiring move is forming with or against the larger trend."
     },
     {
       "name": "Lime Notify",
       "art": "notify",
-      "problem": "There are so many signals on your screen that you can’t tell what you’re actually supposed to do.",
+      "problem": "There are so many signals on your screen that you can\u2019t tell what you\u2019re actually supposed to do.",
       "answer": "Reduces the noise to three readings only: Buy, Trim and Exit, each checked on the 1-day, 6-hour and 3-hour time frames.",
-      "technical": "The published reading is Alignment + Momentum − Exhaustion − Risk: Buy when it is strong, Trim when it softens, Exit when it breaks down. Tiredness and risk count against a Buy."
+      "technical": "The published reading is Alignment + Momentum \u2212 Exhaustion \u2212 Risk: Buy when it is strong, Trim when it softens, Exit when it breaks down. Tiredness and risk count against a Buy."
     },
     {
       "name": "Lime Exhaustion",
       "art": "exhaustion",
       "problem": "You keep getting in too late, buying right as the move runs out of steam.",
       "answer": "Shows whether a move is fresh, mid-journey or worn out, so you can avoid buying the last gasp of a move.",
-      "technical": "The published reading is Stretch from Trend + Momentum Extremes + Volatility Expansion − Fresh Support. The further price stretches from its trend, the more tired the move reads."
+      "technical": "The published reading is Stretch from Trend + Momentum Extremes + Volatility Expansion \u2212 Fresh Support. The further price stretches from its trend, the more tired the move reads."
     },
     {
       "name": "Lime StopWatcher",
@@ -412,9 +439,60 @@
     {
       "name": "Lime 8 Filter Stack",
       "art": "filters",
-      "problem": "When the signals are mixed, it’s easy to talk yourself into the trade anyway.",
+      "problem": "When the signals are mixed, it\u2019s easy to talk yourself into the trade anyway.",
       "answer": "Combines several safety checks into one pass or fail view, so you can stand aside when the signals are mixed.",
       "technical": null
     }
-  ]
+  ],
+  "offerPage": {
+    "id": "get-rosie",
+    "inNav": false,
+    "_comment": "2026-11-23 draft landing (not in the main menu). A shareable page for the free month and the proposed price. Do not add a payment form, a Reach form, or a charge until Noal confirms.",
+    "path": "/get-rosie/",
+    "file": "get-rosie/index.html",
+    "title": "Get Rosie \u2014 Lime Signalworks",
+    "description": "Start a free one-month evaluation of Rosie Keelwise in a paper (practice) account. Proposed pricing, what you need on your Windows computer, and how to begin by email. Schwab or Interactive Brokers. Nothing is sold or charged on this page.",
+    "eyebrow": "Lime Signalworks \u00b7 Get Rosie",
+    "heading": "Get Rosie",
+    "lede": "Start with a free month in practice mode, so you can judge me on the record. If you continue, the proposed price is $183.33 a month for 18 months. Those figures are pending confirmation. Nothing is sold or charged on this page.",
+    "ledeVoice": "rosie",
+    "ctas": [
+      {
+        "label": "Email Lime Signalworks",
+        "href": "#contact",
+        "kind": "primary"
+      },
+      {
+        "label": "See how I work",
+        "href": "/how-rosie-works/",
+        "kind": "ghost"
+      }
+    ],
+    "hooks": [
+      {
+        "label": "The offer",
+        "title": "A free month first, then a proposed price",
+        "text": "The figures below are pending confirmation. Nothing is charged on this page.",
+        "href": "#get-rosie-price"
+      },
+      {
+        "label": "What you need",
+        "title": "A Windows computer, and your own broker account",
+        "text": "Schwab or Interactive Brokers. With Schwab, you also need your own developer app.",
+        "href": "#get-rosie-need"
+      },
+      {
+        "label": "The path",
+        "title": "Install, practice, payment, then go-live",
+        "text": "Each step is described honestly, including what is not built yet.",
+        "href": "#get-rosie-path"
+      },
+      {
+        "label": "How to begin",
+        "title": "Write by email",
+        "text": "A registration form is planned. Lime Signalworks does not begin by phone.",
+        "href": "#get-rosie-begin"
+      }
+    ]
+  }
 }

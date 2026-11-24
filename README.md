@@ -1,6 +1,6 @@
 # Lime Signalworks — LIME Enterprise (Site 2)
 
-Static site for limesignalworks.com, in four pages (split from the single homepage on
+Static site for limesignalworks.com, in four menu pages plus a Get Rosie landing (split from the single homepage on
 2026-11-22) that share one masthead menu:
 
 | Page | URL | File | Built from |
@@ -9,6 +9,7 @@ Static site for limesignalworks.com, in four pages (split from the single homepa
 | How Rosie Works | `/how-rosie-works/` | `how-rosie-works/index.html` | sections where `page` is `how-rosie-works` |
 | Harbor Now | `/harbor-now/` | `harbor-now/index.html` (+ dated editions) | `src/harbor.mjs`, plus sections where `page` is `harbor` and the blog strip |
 | Blog | `/blog/` | `blog/index.html` | `data/blog.json` (empty until the first real post) |
+| Get Rosie | `/get-rosie/` | `get-rosie/index.html` | Landing for the free month and the proposed price. Not in the main menu. |
 
 `data/homepage.json` lists the pages (`pages`) and places every section on one of them
 (`sectionOrder[].page`). `src/template.html` still holds each section's markup exactly once;
@@ -40,7 +41,7 @@ Zero-framework static build. No bundler, no CSS preprocessor, no client framewor
 - `data/homepage.json` — **source of truth**: canonical strings, section order, market-report
   example, planned pricing, start cards
 - `src/template.html` — page skeleton with `{{TOKEN}}` placeholders
-- `src/render.mjs` — build script: JSON + template → the four pages and `404.html` (see the table above)
+- `src/render.mjs` — build script: JSON + template → the four menu pages, the Get Rosie landing, and `404.html` (see the table above)
 - `src/site.mjs` — the shared page menu, brand link and Harbor Now "Latest from the blog" strip
 - `data/blog.json` — blog posts, newest first; empty until a real post exists
 - `scripts/export-static.mjs` — `npm run export`: copies the uploadable site into `dist/`
@@ -100,7 +101,7 @@ asserts that none of their content reaches the page.
 
 ```bash
 npm install          # cheerio, playwright (dev only; no runtime deps)
-npm run build           # regenerate the four pages, 404.html, and .htaccess
+npm run build           # regenerate the four menu pages, the Get Rosie landing, 404.html, and .htaccess
 npm test                # build, then run every suite in tests/
 npm run export          # copy the uploadable static site into dist/
 npm run package:godaddy # build, export, and zip dist/limesignalworks-public_html.zip

@@ -1,6 +1,6 @@
 /**
- * The four-page site (2026-11-22): Home, How Rosie Works, Harbor Now and Blog share one
- * masthead menu. The pages and their order live in data/homepage.json (pages); this
+ * The four menu pages (2026-11-22): Home, How Rosie Works, Harbor Now and Blog share one
+ * masthead menu. The Get Rosie landing (2026-11-23) uses the same menu but is not in it. The pages and their order live in data/homepage.json (pages); this
  * module turns them into the same <nav> links on every page, including Harbor Now.
  *
  * Links are root-relative ("/how-rosie-works/"), folder + index.html, so the output runs

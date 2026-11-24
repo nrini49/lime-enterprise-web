@@ -2524,6 +2524,11 @@ html {
   padding: var(--space-6);
 }
 
+.flag[data-price-pending] {
+  display: inline-block;
+  margin: var(--space-3) 0 0;
+}
+
 .price-hero {
   display: grid;
   gap: var(--space-1);

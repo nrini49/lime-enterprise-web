@@ -14,12 +14,13 @@ const readJson = (p) => JSON.parse(readFileSync(path.join(root, p), 'utf8'));
 
 const data = readJson('data/homepage.json');
 const { canonical, sectionOrder, marketReport, pricing, startCards } = data;
-// 2026-11-22: the homepage is split into four pages (Home, How Rosie Works, Harbor Now,
-// Blog). The content checks below run over the whole site's wording at once: Home's
-// document, with the How Rosie Works sections and the Harbor Now market-report section
+// 2026-11-22: the homepage is split into four menu pages (Home, How Rosie Works, Harbor Now,
+// Blog). 2026-11-23: the Get Rosie landing is a fifth page, not in the menu. The content
+// checks below run over the whole site's wording at once: Home's document, with the How
+// Rosie Works sections, the Harbor Now market-report section, and the Get Rosie sections
 // appended to its <main> in page order, so every section is checked exactly once and
 // the header, footer and contact block are still counted once. Per-page structure (menu,
-// headings, cross-page links) is checked in tests/site-pages.test.mjs.
+// headings, cross-page links) is checked in tests/site-pages.test.mjs and tests/get-rosie.test.mjs.
 const readPage = (file) => readFileSync(path.join(root, file), 'utf8');
 const $ = cheerio.load(readPage('index.html'));
 {
@@ -30,6 +31,10 @@ const $ = cheerio.load(readPage('index.html'));
   const harbor = cheerio.load(readPage('harbor-now/index.html'));
   for (const s of sectionOrder.filter((x) => x.page === 'harbor')) {
     $('main').append(harbor.html(harbor(`section#${s.id}`)));
+  }
+  const offer = cheerio.load(readPage('get-rosie/index.html'));
+  for (const s of sectionOrder.filter((x) => x.page === 'get-rosie')) {
+    $('main').append(offer.html(offer(`section#${s.id}`)));
   }
 }
 const html = $.html();
@@ -294,6 +299,11 @@ test('data: the section order and the page each section sits on', () => {
       ['how-rosie-works', 'evidence'],
       ['how-rosie-works', 'indicators'],
       ['harbor', 'market-report'],
+      ['get-rosie', 'get-rosie-price'],
+      ['get-rosie', 'get-rosie-need'],
+      ['get-rosie', 'get-rosie-path'],
+      ['get-rosie', 'get-rosie-begin'],
+      ['get-rosie', 'get-rosie-honest'],
     ],
   );
   const ids = sectionOrder.map((s) => s.id);
@@ -309,15 +319,20 @@ test('data: the section order and the page each section sits on', () => {
   );
 });
 
-test('data: prices are the locked figures (2026-10-07)', () => {
+test('data: prices are the proposed figures, pending confirmation (2026-11-23)', () => {
+  assert.equal(pricing.pendingConfirmation, true);
+  assert.match(pricing.pendingNote, /pending confirmation/i);
   assert.deepEqual(
     pricing.rows.map((r) => [r.term, r.price]),
     [
-      ['Rosie, paid over 18 months', '$3,300'],
-      ['Monthly payment, months 1 to 18', '$183.33'],
-      ['Maintenance from month 19', '$330/year'],
+      ['Proposed paid total, after the free month', '$3,300'],
+      ['Proposed monthly payment, 18 months after the free month', '$183.33'],
+      ['Maintenance after those 18 payments', '$330/year'],
     ],
   );
+  assert.match(pricing.status, /pending confirmation/i);
+  assert.match(pricing.status, /does not begin by phone/i);
+  assert.match(pricing.status, /nothing is sold or charged on this site/i);
 });
 
 test('dom: no retired price appears anywhere', () => {
@@ -1278,7 +1293,7 @@ test('dom: risk choices, approve flow, and STOP ALL match the current servers', 
 // 2026-11-22 (owner, t1983u): "use the phrase rule-based once, and that's it. Less is more."
 // Counted across every built page of the site (markup and metadata), in any spelling.
 test('wording: "rule-based" appears exactly once on the whole site, in Rosie\'s introduction', () => {
-  const files = ['index.html', 'how-rosie-works/index.html', 'blog/index.html', 'rosie-demo/index.html', 'rosie-demo-schwab/index.html'];
+  const files = ['index.html', 'how-rosie-works/index.html', 'blog/index.html', 'get-rosie/index.html', 'rosie-demo/index.html', 'rosie-demo-schwab/index.html'];
   const harborDir = path.join(root, 'harbor-now');
   files.push('harbor-now/index.html');
   for (const d of readdirSync(harborDir)) {
