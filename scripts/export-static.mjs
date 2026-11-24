@@ -22,6 +22,8 @@ const SHIP = [
   'how-rosie-works',
   'harbor-now',
   'blog',
+  'privacy',
+  'terms',
   'rosie-demo',
   'rosie-demo-schwab',
   'assets',

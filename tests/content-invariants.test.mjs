@@ -1248,7 +1248,7 @@ test('dom: risk choices, approve flow, and STOP ALL match the current servers', 
 // 2026-11-22 (owner, t1983u): "use the phrase rule-based once, and that's it. Less is more."
 // Counted across every built page of the site (markup and metadata), in any spelling.
 test('wording: "rule-based" appears exactly once on the whole site, in Rosie\'s introduction', () => {
-  const files = ['index.html', 'how-rosie-works/index.html', 'blog/index.html', 'rosie-demo/index.html', 'rosie-demo-schwab/index.html'];
+  const files = ['index.html', 'how-rosie-works/index.html', 'blog/index.html', 'privacy/index.html', 'terms/index.html', '404.html', 'rosie-demo/index.html', 'rosie-demo-schwab/index.html'];
   const harborDir = path.join(root, 'harbor-now');
   files.push('harbor-now/index.html');
   for (const d of readdirSync(harborDir)) {

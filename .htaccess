@@ -26,7 +26,7 @@ ErrorDocument 404 /404.html
   RewriteRule ^blank/?$ / [R=301,L]
   RewriteRule ^life-changes/?$ / [R=301,L]
   RewriteRule ^lime-hammers-brain/?$ / [R=301,L]
-  RewriteRule ^privacy-policy/?$ / [R=301,L]
+  RewriteRule ^privacy-policy/?$ /privacy/ [R=301,L]
   RewriteRule ^unique-high-performance/?$ /how-rosie-works/ [R=301,L]
   RewriteRule ^preparing-to-be-wealthy/?$ / [R=301,L]
   RewriteRule ^daily-alerts/?$ /harbor-now/ [R=301,L]
@@ -41,7 +41,7 @@ ErrorDocument 404 /404.html
   RewriteRule ^still-skeptical/?$ / [R=301,L]
   RewriteRule ^testimonies/?$ / [R=301,L]
   RewriteRule ^lime-shop/?$ / [R=301,L]
-  RewriteRule ^terms-of-use/?$ / [R=301,L]
+  RewriteRule ^terms-of-use/?$ /terms/ [R=301,L]
   RewriteRule ^m(/.*)?$ / [R=301,L]
   RewriteRule ^data/harbor(/.*)?$ /harbor-now/ [R=302,L]
 

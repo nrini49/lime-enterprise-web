@@ -9,6 +9,8 @@
  *   how-rosie-works/index.html How Rosie Works
  *   harbor-now/                Harbor Now (via src/harbor.mjs, with the market-report section)
  *   blog/index.html            Blog (from data/blog.json)
+ *   privacy/index.html         Privacy Policy (from data/legal.json; not in the menu)
+ *   terms/index.html           Terms of Use (from data/legal.json; not in the menu)
  *   404.html                   Branded not-found page (same shell; not in the menu)
  * All of these are generated output, committed so the site works with no build step.
  */
@@ -16,7 +18,7 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { buildHarbor } from './harbor.mjs';
-import { siteNav, brandLink, NEW_WINDOW as SITE_NEW_WINDOW } from './site.mjs';
+import { siteNav, brandLink, legalNav, NEW_WINDOW as SITE_NEW_WINDOW } from './site.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -390,6 +392,43 @@ const CHECK =
   '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 
 
+
+const formatLongDate = (iso) =>
+  new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: 'UTC',
+  });
+
+/** Short Privacy Policy and Terms of Use pages: same shell and footer, not in the menu. */
+function renderLegal(page, updated) {
+  const sections = page.sections
+    .map(
+      (s) => `
+            <h2>${esc(s.heading)}</h2>
+            ${s.paragraphs.map((para) => `<p>${esc(para)}</p>`).join('\n            ')}`,
+    )
+    .join('');
+  return `
+      <div class="page-head" data-page-head="${esc(page.id)}">
+        <div class="shell">
+          <p class="label rule-after">Lime Signalworks</p>
+          <h1 class="page-head__title" id="page-title">${esc(page.heading)}</h1>
+          <p class="page-head__lede">${esc(page.lede)}</p>
+        </div>
+      </div>
+      <section class="section legal-page" aria-labelledby="page-title" data-legal="${esc(page.id)}">
+        <div class="shell">
+          <div class="prose">
+            <p class="legal-updated">Updated <time datetime="${esc(updated)}">${esc(formatLongDate(updated))}</time>.</p>
+            ${sections}
+          </div>
+        </div>
+      </section>
+`;
+}
+
 /** The branded 404 page: same masthead, footer and contact as the rest of the site. */
 function renderNotFound(pages) {
   const links = pages
@@ -468,7 +507,8 @@ async function main() {
     .replaceAll('{{INDICATORS}}', renderIndicators(indicators))
     .replaceAll('{{SECURITIES_DISCLAIMER}}', esc(canonical.securitiesDisclaimer))
     .replaceAll('{{RISK_DISCLOSURE}}', esc(canonical.riskDisclosure))
-    .replaceAll('{{COPYRIGHT}}', esc(canonical.copyright));
+    .replaceAll('{{COPYRIGHT}}', esc(canonical.copyright))
+    .replaceAll('{{LEGAL_NAV}}', legalNav());
 
   const leftover = html.match(/\{\{[A-Z_]+\}\}/g)?.filter((t) => !PAGE_TOKENS.includes(t));
   if (leftover?.length) throw new Error(`Unreplaced template tokens: ${leftover.join(', ')}`);
@@ -564,6 +604,22 @@ async function main() {
   assertAnchorsResolve(notFound);
   await writeFile(path.join(root, '404.html'), notFound, 'utf8');
   console.log('built 404.html');
+
+  const legal = JSON.parse(await readFile(path.join(root, 'data', 'legal.json'), 'utf8'));
+  for (const page of legal.pages) {
+    const body = renderLegal(page, legal.updated);
+    const out = (shellBefore + body + '\n    ' + shellAfter)
+      .replaceAll('{{PAGE_TITLE}}', esc(page.title))
+      .replaceAll('{{PAGE_DESCRIPTION}}', esc(page.description))
+      .replaceAll('{{BRAND_LINK}}', 'href="/"')
+      .replaceAll('{{NAV}}', siteNav(pages, null));
+    assertSingleH1(out, page.file);
+    assertUniqueIds(out);
+    assertAnchorsResolve(out);
+    await mkdir(path.dirname(path.join(root, page.file)), { recursive: true });
+    await writeFile(path.join(root, page.file), out, 'utf8');
+    console.log(`built ${page.file}`);
+  }
 }
 
 main().catch((err) => {

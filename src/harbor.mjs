@@ -11,7 +11,7 @@
  *   harbor-now/index.html          latest edition + archive list
  *   harbor-now/<date>/index.html   one page per edition
  */
-import { siteNav, brandLink, blogStrip } from './site.mjs';
+import { siteNav, brandLink, blogStrip, legalNav } from './site.mjs';
 import { readFile, writeFile, readdir, mkdir, rm } from 'node:fs/promises';
 import path from 'node:path';
 
@@ -530,6 +530,7 @@ ${after}
                (they must show no digit runs), so they link to that block instead. -->
           <p class="foot__phone"><a class="anchor-link" href="/#contact">Call or email Lime Signalworks</a></p>
           <p class="foot__copyright">${esc(canonical.copyright)}</p>
+          ${legalNav()}
         </div>
         <div>
           <p class="label">Disclaimer</p>

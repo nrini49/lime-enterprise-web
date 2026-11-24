@@ -35,7 +35,7 @@
     },
     {
       "source": "/privacy-policy",
-      "destination": "/",
+      "destination": "/privacy/",
       "permanent": true
     },
     {
@@ -110,7 +110,7 @@
     },
     {
       "source": "/terms-of-use",
-      "destination": "/",
+      "destination": "/terms/",
       "permanent": true
     },
     {
