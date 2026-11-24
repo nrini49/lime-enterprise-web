@@ -95,6 +95,7 @@ test('export: public_html set has the pages and .htaccess, not source or preview
       'how-rosie-works/index.html',
       'harbor-now/index.html',
       'blog/index.html',
+      'buy-rosie/index.html',
       'rosie-demo/index.html',
       'rosie-demo-schwab/index.html',
       'assets/css/site.css',

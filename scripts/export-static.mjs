@@ -4,7 +4,7 @@
  * into a host's public_html (GoDaddy cPanel). No Vercel runtime is required.
  *   npm run build && npm run export   →   dist/
  *   npm run package:godaddy           →   dist/ plus a zip
- * dist/ is gitignored. It holds the four pages, 404.html, the Harbor Now
+ * dist/ is gitignored. It holds the four menu pages, the Buy Rosie landing, 404.html, the Harbor Now
  * editions, the sample-data demos, the assets, and an .htaccess. It does not
  * include /preview/evidence/, source, tests, or data. Nothing here uploads
  * anything; the upload is a separate, manual step after Noal approves.
@@ -22,6 +22,7 @@ const SHIP = [
   'how-rosie-works',
   'harbor-now',
   'blog',
+  'buy-rosie',
   'rosie-demo',
   'rosie-demo-schwab',
   'assets',

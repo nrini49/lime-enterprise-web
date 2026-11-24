@@ -631,7 +631,7 @@
       </section>
 
       <!-- E6 — the one-month evaluation -->
-      <section class="section" id="evaluation" aria-labelledby="evaluation-title">
+      <section class="section" id="evaluation" aria-labelledby="evaluation-title" data-voice="rosie">
         <div class="shell">
           <div class="section__head" data-voice="rosie">
             <p class="label rule-after">Section 03</p>
@@ -674,7 +674,10 @@
             </li>
           </ol>
 
-          <a class="anchor-link" href="#pricing">What it takes to keep me</a>
+          <p class="anchor-row">
+            <a class="anchor-link" href="#pricing">What it takes to keep me</a>
+            <a class="anchor-link" href="/buy-rosie/">The path to begin</a>
+          </p>
         </div>
       </section>
 
@@ -687,7 +690,8 @@
             <h2 id="pricing-title">One price. Then I&rsquo;m yours.</h2>
             <p>
               It starts with the free one-month paper evaluation. If you&rsquo;d like to continue,
-              there is one price: $3,300 paid over 18 months, and then I&rsquo;m yours to keep. I
+              the proposed price is $183.33 a month for 18 months, a proposed total of $3,300,
+              and then I&rsquo;m yours to keep. Those figures are pending confirmation. I
               find surprises in pricing terribly vulgar.
             </p>
           </div>
@@ -804,8 +808,9 @@
             <p class="label voice-tag" data-voice-tag>From Rosie</p>
             <h2 id="how-to-begin-title">Put me to work</h2>
             <p>
-              Call or email Lime Signalworks today. They&rsquo;ll have me running on a paper account
-              with you and start your free one-month evaluation. I&rsquo;ll be ready when you are.
+              Open the Buy Rosie page, or email Lime Signalworks, to start your free one-month
+              evaluation in practice mode. I&rsquo;ll be ready when you are. Lime Signalworks does
+              not begin by phone; the number in the footer is for other contact, by appointment.
             </p>
           </div>
           <ol class="stages">
@@ -835,10 +840,213 @@
             </li>
           </ol>
           <p class="btn-row cta-final__row">
-            <a class="btn btn--primary" href="#contact">Call or email Lime Signalworks</a>
+            <a class="btn btn--primary" href="/buy-rosie/">The path to begin</a>
+            <a class="btn btn--ghost" href="#contact">Email Lime Signalworks</a>
             <a class="btn btn--ghost" href="#demo">See me in action</a>
             <a class="anchor-link" href="{{YOUTUBE_CHANNEL_URL}}" target="_blank" rel="noopener noreferrer">Watch on YouTube<span class="sr-only"> (opens in a new tab)</span></a>
           </p>
+        </div>
+      </section>
+
+      <!-- Buy Rosie landing (2026-11-23 draft). Not in the main menu. No payment form, no
+           registration form, no charge. Lawyer-review flags are HTML comments only. -->
+      <section class="section" id="buy-rosie-price" aria-labelledby="buy-rosie-price-title" data-voice="rosie">
+        <div class="shell">
+          <div class="section__head">
+            <p class="label rule-after">The offer</p>
+            <p class="label voice-tag" data-voice-tag>From Rosie</p>
+            <h2 id="buy-rosie-price-title">A free month first. Then a proposed price.</h2>
+            <!-- LAWYER REVIEW: offer terms, cancellation, pause, "yours to keep", maintenance, pending price. -->
+            <p>
+              Every new user starts with a free one-month evaluation in practice mode: the real
+              me, with no live capital and no real-money orders. If you decide I should stay,
+              the proposed price is $183.33 a month for 18 months. The proposed paid total of
+              $3,300 is pending confirmation. After those 18 payments I&rsquo;m yours to keep,
+              with maintenance of $330 a year for software updates and the daily market report.
+            </p>
+          </div>
+
+          <div class="split">
+            <div class="panel">
+              <div class="panel__head">
+                <p class="label">{{PRICING_HEADING}}</p>
+              </div>
+              {{OFFER_PRICING_TABLE}}
+              <p class="panel__note" data-offer-pricing-status>{{PRICING_STATUS}}</p>
+            </div>
+
+            <div class="stack">
+              <div data-voice="rosie">
+                <h3>What comes with me</h3>
+                <ul class="ticks">{{PRICING_INCLUDES}}</ul>
+              </div>
+              <div>
+                <h3>What this is not</h3>
+                <ul class="ticks ticks--neg">{{PRICING_NOT}}</ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="buy-rosie-need" aria-labelledby="buy-rosie-need-title" data-voice="rosie">
+        <div class="shell">
+          <div class="section__head">
+            <p class="label rule-after">What you need</p>
+            <p class="label voice-tag" data-voice-tag>From Rosie</p>
+            <h2 id="buy-rosie-need-title">What you need on your side</h2>
+            <!-- LAWYER REVIEW: Windows requirement; customer-owned Schwab/IB accounts; Schwab developer app and callback; commercial-approval status. -->
+            <p>
+              I run on your own computer, through your own broker account. These are the things
+              you need in place. Nothing here is a shortcut around your broker&rsquo;s own rules.
+            </p>
+          </div>
+          <ol class="stages">
+            <li>
+              <p class="label">01</p>
+              <h3>A Windows computer</h3>
+              <p>
+                I run on Windows, on your computer, not in a browser and not on a phone. Phone
+                and tablet access is being built and is not available yet. Lime Signalworks
+                currently installs me with you (there is no self-serve download yet). A written
+                &ldquo;what you&rsquo;ll see&rdquo; guide comes with the install. The production
+                installer is meant to be a double-click, with no administrator rights; that path
+                is still being smoothed.
+              </p>
+            </li>
+            <li>
+              <p class="label">02</p>
+              <h3>Your own Schwab or Interactive Brokers account</h3>
+              <p>
+                You use your own brokerage account. I do not replace your broker, and I do not
+                hold your broker password. During the free month I run in practice mode, with no
+                real-money orders. With Schwab, practice mode is a dry run on your computer: I go
+                through the same checks and keep a record, but orders are not sent to Schwab.
+                With Interactive Brokers, practice orders go to IB&rsquo;s paper account and use
+                real market prices.
+              </p>
+            </li>
+            <li>
+              <p class="label">03</p>
+              <h3>If you use Schwab: your own developer app</h3>
+              <p>
+                Each Schwab customer needs their own Schwab developer account and app. Approval
+                can take several days. The app&rsquo;s callback address must be set to
+                <code>https://127.0.0.1:8182</code>. Schwab&rsquo;s rules for a paid product that
+                uses the Schwab API are still being worked through; that review may affect when a
+                paid Schwab setup can go live. That fact will not be dressed up as settled.
+              </p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section" id="buy-rosie-path" aria-labelledby="buy-rosie-path-title" data-voice="rosie">
+        <div class="shell">
+          <div class="section__head">
+            <p class="label rule-after">The path</p>
+            <p class="label voice-tag" data-voice-tag>From Rosie</p>
+            <h2 id="buy-rosie-path-title">The path, step by step</h2>
+            <!-- LAWYER REVIEW: evaluation, payment timing, go-live, licensing-not-built, unlock-code language. -->
+            <p>
+              This is the path as it stands today, including the parts that are not finished.
+            </p>
+          </div>
+          <ol class="stages">
+            <li>
+              <p class="label">01</p>
+              <h3>See how I work</h3>
+              <p>
+                Read <a href="/how-rosie-works/">How Rosie Works</a>, and look at the sample-data
+                demo if you like. You stay in charge: you set the rules, and you supervise me.
+              </p>
+            </li>
+            <li>
+              <p class="label">02</p>
+              <h3>Write to Lime Signalworks</h3>
+              <p>
+                Email Lime Signalworks to begin. A registration form is planned so you are on the
+                customer list used for setup and later maintenance updates. That form is not on
+                this page yet.
+              </p>
+            </li>
+            <li>
+              <p class="label">03</p>
+              <h3>Install, with a guide</h3>
+              <p>
+                Lime Signalworks sets me up with you on your Windows computer and walks you
+                through a &ldquo;what you&rsquo;ll see&rdquo; guide. If anyone at Lime Signalworks
+                ever looks in to help, you stay in charge; any remote view is view-only.
+              </p>
+            </li>
+            <li>
+              <p class="label">04</p>
+              <h3>The free month</h3>
+              <p>
+                You watch me work in practice mode for one month. Every proposal, order, stop and
+                journal entry is there for you to see. Nothing is sent as a real-money order.
+                You weigh the month on the evidence, and you decide whether I stay.
+              </p>
+            </li>
+            <li>
+              <p class="label">05</p>
+              <h3>Payment, if you continue</h3>
+              <p>
+                If you choose to continue, payment is arranged after the free month. No payment
+                is taken on this site, and no payment processor is connected here yet.
+              </p>
+            </li>
+            <li>
+              <p class="label">06</p>
+              <h3>Go-live after payment</h3>
+              <p>
+                Going live with real-money orders, after payment, is still being designed. One
+                approach under consideration is a signed unlock code tied to your computer. That
+                licensing is not built yet, and this page is not a finished licensing product.
+                You remain the person who turns live trading on; I do not flip that switch for you.
+              </p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section section--cta" id="buy-rosie-begin" aria-labelledby="buy-rosie-begin-title" data-voice="rosie">
+        <div class="shell">
+          <div class="section__head">
+            <p class="label rule-after">How to begin</p>
+            <p class="label voice-tag" data-voice-tag>From Rosie</p>
+            <h2 id="buy-rosie-begin-title">Write to Lime Signalworks</h2>
+            <!-- LAWYER REVIEW: enrollment channel (email, planned registration form, not phone); customer list for maintenance updates. -->
+            <p>
+              Email is how you begin today. Use the address in the footer. A registration form
+              will be added to this page once it is ready; it is not here yet. Lime Signalworks
+              does not begin by phone. The telephone number in the footer is for other contact,
+              by appointment.
+            </p>
+          </div>
+          <p class="btn-row cta-final__row">
+            <a class="btn btn--primary" href="#contact">Email Lime Signalworks</a>
+            <a class="btn btn--ghost" href="/how-rosie-works/">See how I work</a>
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="buy-rosie-honest" aria-labelledby="buy-rosie-honest-title">
+        <div class="shell">
+          <div class="section__head">
+            <p class="label rule-after">Straight talk</p>
+            <h2 id="buy-rosie-honest-title">Straight talk, no theatrics</h2>
+          </div>
+          <div class="prose">
+            <!-- LAWYER REVIEW: "Nothing hidden, except the code"; supervision; not advice; risk of loss; results are the customer's. -->
+            <p data-voice="rosie">
+              <span>From me, Rosie: what I commit to is discipline you can see. I trade by
+              written rules, I keep hard risk limits, I keep a protective stop on every position, and I
+              keep a full record of every decision. Markets move in every direction; I don&rsquo;t
+              pretend to rule them. The rules I run, and the decisions about your account, stay yours.
+              Nothing hidden, except the code.</span>
+            </p>
+          </div>
         </div>
       </section>
     </main>

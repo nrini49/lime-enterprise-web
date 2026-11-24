@@ -1,0 +1,395 @@
+<!doctype html>
+<!-- data-theme is set in the markup so the dark palette is the default on first paint
+     (no flash of light), even with JavaScript disabled and whatever the operating
+     system prefers. The toggle switches to light for the current page view. -->
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Buy Rosie — Lime Signalworks</title>
+    <meta
+      name="description"
+      content="Start a free one-month evaluation of Rosie Keelwise in a paper (practice) account. Proposed pricing, what you need on your Windows computer, and how to begin by email. Schwab or Interactive Brokers. Nothing is sold or charged on this page."
+    />
+    <meta name="robots" content="index, follow" />
+    <!-- Declares dark as the default rendering scheme so a light operating system does
+         not paint the canvas or form controls light before the stylesheet applies. The
+         light palette is reached only through the toggle, via the color-scheme property. -->
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0b1416" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231f6b45'/%3E%3Cg stroke='%23f4f6f4' stroke-width='2.5' fill='none' stroke-linecap='square'%3E%3Cpath d='M6 21l7-7 5 5 8-8'/%3E%3Cpath d='M6 26h20'/%3E%3C/g%3E%3C/svg%3E"
+    />
+    <!-- Self-hosted OFL 1.1 typefaces. No external font service is contacted. -->
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/assets/fonts/inter-latin.woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/assets/fonts/archivo-latin.woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="/assets/css/fonts.css" />
+    <link rel="stylesheet" href="/assets/css/base.css" />
+    <link rel="stylesheet" href="/assets/css/site.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- E1 — header and primary call to action -->
+    <header class="masthead">
+      <div class="shell masthead__inner">
+        <!-- Header logos (2026-11-01), the same two as the Rosie Operator Workstation header:
+             the lighthouse mark on the left and Rosie's portrait on the right, equal squares
+             (92px wide screens, 56px tablets, 48px phones, as on the workstation). The
+             lighthouse is the workstation's own looping video; it shows its first frame as a
+             still poster and only plays when app.js starts it (never under reduced motion). -->
+        <video
+          class="masthead__logo masthead__lighthouse"
+          src="/assets/img/lighthouse-loop.mp4"
+          poster="/assets/img/lighthouse-poster.png"
+          width="92"
+          height="92"
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          role="img"
+          aria-label="Lime Signalworks logo: a lighthouse shining over the sea"
+          data-header-logo="lighthouse"
+        ></video>
+        <a class="brand" href="/">
+          <span class="brand__name"
+            >Lime Signalworks<span class="brand__unit" data-site-unit>LIME Enterprise</span></span
+          >
+        </a>
+
+        <nav class="masthead__nav" aria-label="Site pages"><a href="/" data-page-link="home">Home</a>
+          <a href="/how-rosie-works/" data-page-link="how-rosie-works">How Rosie Works</a>
+          <a href="/harbor-now/" data-page-link="harbor">Harbor Now</a>
+          <a href="/blog/" data-page-link="blog">Blog</a></nav>
+
+        <img
+          class="masthead__logo masthead__rosie"
+          src="/assets/img/rosie-portrait.png"
+          width="92"
+          height="92"
+          alt="Rosie: a line-art portrait of a woman beside a small multicolored bar chart"
+          data-header-logo="rosie"
+        />
+
+        <!-- The theme toggle is created by assets/js/app.js, the same script that makes it
+             work. It is deliberately absent from the served markup so that a visitor with
+             JavaScript disabled is never shown a control that cannot do anything. -->
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="page-head page-head--hero" data-page-head="buy-rosie">
+        <div class="shell">
+          <p class="label rule-after">Lime Signalworks · Buy Rosie</p>
+          <h1 class="page-head__title" id="page-title">Buy Rosie</h1>
+          <div class="page-head__voice" data-voice="rosie"><span class="label voice-tag" data-voice-tag>From Rosie</span><p class="page-head__lede">Start with a free month in practice mode, so you can judge me on the record. If you continue, the proposed price is $183.33 a month for 18 months. Those figures are pending confirmation. Nothing is sold or charged on this page.</p></div>
+          <div class="btn-row"><a class="btn btn--primary" href="#contact">Email Lime Signalworks</a>
+            <a class="btn btn--ghost" href="/how-rosie-works/">See how I work</a></div>
+          <ul class="hooks" data-hooks>
+            <li><a class="hook" href="#buy-rosie-price"><span class="hook__n">01 · The offer</span><strong class="hook__title">A free month first, then a proposed price</strong><span class="hook__text">The figures below are pending confirmation. Nothing is charged on this page.</span></a></li>
+            <li><a class="hook" href="#buy-rosie-need"><span class="hook__n">02 · What you need</span><strong class="hook__title">A Windows computer, and your own broker account</strong><span class="hook__text">Schwab or Interactive Brokers. With Schwab, you also need your own developer app.</span></a></li>
+            <li><a class="hook" href="#buy-rosie-path"><span class="hook__n">03 · The path</span><strong class="hook__title">Install, practice, payment, then go-live</strong><span class="hook__text">Each step is described honestly, including what is not built yet.</span></a></li>
+            <li><a class="hook" href="#buy-rosie-begin"><span class="hook__n">04 · How to begin</span><strong class="hook__title">Write by email</strong><span class="hook__text">A registration form is planned. Lime Signalworks does not begin by phone.</span></a></li>
+          </ul>
+        </div>
+      </div>
+
+
+      <!-- Buy Rosie landing (2026-11-23 draft). Not in the main menu. No payment form, no
+           registration form, no charge. Lawyer-review flags are HTML comments only. -->
+      <section class="section" id="buy-rosie-price" aria-labelledby="buy-rosie-price-title" data-voice="rosie">
+        <div class="shell">
+          <div class="section__head">
+            <p class="label rule-after">The offer</p>
+            <p class="label voice-tag" data-voice-tag>From Rosie</p>
+            <h2 id="buy-rosie-price-title">A free month first. Then a proposed price.</h2>
+            <!-- LAWYER REVIEW: offer terms, cancellation, pause, "yours to keep", maintenance, pending price. -->
+            <p>
+              Every new user starts with a free one-month evaluation in practice mode: the real
+              me, with no live capital and no real-money orders. If you decide I should stay,
+              the proposed price is $183.33 a month for 18 months. The proposed paid total of
+              $3,300 is pending confirmation. After those 18 payments I&rsquo;m yours to keep,
+              with maintenance of $330 a year for software updates and the daily market report.
+            </p>
+          </div>
+
+          <div class="split">
+            <div class="panel">
+              <div class="panel__head">
+                <p class="label">Rosie pricing</p>
+              </div>
+              <p class="flag" data-price-pending>Proposed figures — pending confirmation</p><div class="price-hero" data-price-hero>
+            <span class="price-hero__term">Proposed paid total, after the free month</span>
+            <strong class="price-hero__amount">$3,300</strong>
+            <span class="price-hero__sub">Proposed monthly payment, 18 months after the free month: <strong>$183.33</strong></span>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table" data-offer-pricing-table>
+              <caption class="sr-only">Rosie pricing</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Term</th>
+                  <th scope="col" class="num">Price</th>
+                </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <th scope="row">Proposed paid total, after the free month</th>
+                <td class="num">$3,300</td>
+              </tr>
+              <tr>
+                <th scope="row">Proposed monthly payment, 18 months after the free month</th>
+                <td class="num">$183.33</td>
+              </tr>
+              <tr>
+                <th scope="row">Maintenance after those 18 payments</th>
+                <td class="num">$330/year</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+              <p class="panel__note" data-offer-pricing-status>The first month is free, in a paper (practice) account. After that, the proposed price is $183.33 a month for 18 months. The proposed paid total of $3,300 is pending confirmation. Cancel any time, no questions asked; if payments stop, Rosie pauses until they resume. After those 18 payments, maintenance of $330 a year covers software updates and the daily market report. You begin by email, or by a registration form once it is ready. Lime Signalworks does not begin by phone. Nothing is sold or charged on this site.</p>
+            </div>
+
+            <div class="stack">
+              <div data-voice="rosie">
+                <h3>What comes with me</h3>
+                <ul class="ticks">
+                <li>Rosie, the trading operator, installed on your computer.</li>
+                <li>A broker-held protective stop on every position.</li>
+                <li>Built-in risk limits: Conservative, Normal and Aggressive per-buy caps (2 shares / $500, 5 / $1,250, 10 / $2,500), automatic buys at the Conservative cap, 2% per trade, 6% total open risk, and a daily loss limit.</li>
+                <li>The daily market situation report.</li>
+                <li>Guided setup and support.</li></ul>
+              </div>
+              <div>
+                <h3>What this is not</h3>
+                <ul class="ticks ticks--neg">
+                <li>Not a signal service to copy.</li>
+                <li>Not personalized investment advice.</li>
+                <li>Not hands-off: you supervise Rosie and can stop her at any time.</li></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="buy-rosie-need" aria-labelledby="buy-rosie-need-title" data-voice="rosie">
+        <div class="shell">
+          <div class="section__head">
+            <p class="label rule-after">What you need</p>
+            <p class="label voice-tag" data-voice-tag>From Rosie</p>
+            <h2 id="buy-rosie-need-title">What you need on your side</h2>
+            <!-- LAWYER REVIEW: Windows requirement; customer-owned Schwab/IB accounts; Schwab developer app and callback; commercial-approval status. -->
+            <p>
+              I run on your own computer, through your own broker account. These are the things
+              you need in place. Nothing here is a shortcut around your broker&rsquo;s own rules.
+            </p>
+          </div>
+          <ol class="stages">
+            <li>
+              <p class="label">01</p>
+              <h3>A Windows computer</h3>
+              <p>
+                I run on Windows, on your computer, not in a browser and not on a phone. Phone
+                and tablet access is being built and is not available yet. Lime Signalworks
+                currently installs me with you (there is no self-serve download yet). A written
+                &ldquo;what you&rsquo;ll see&rdquo; guide comes with the install. The production
+                installer is meant to be a double-click, with no administrator rights; that path
+                is still being smoothed.
+              </p>
+            </li>
+            <li>
+              <p class="label">02</p>
+              <h3>Your own Schwab or Interactive Brokers account</h3>
+              <p>
+                You use your own brokerage account. I do not replace your broker, and I do not
+                hold your broker password. During the free month I run in practice mode, with no
+                real-money orders. With Schwab, practice mode is a dry run on your computer: I go
+                through the same checks and keep a record, but orders are not sent to Schwab.
+                With Interactive Brokers, practice orders go to IB&rsquo;s paper account and use
+                real market prices.
+              </p>
+            </li>
+            <li>
+              <p class="label">03</p>
+              <h3>If you use Schwab: your own developer app</h3>
+              <p>
+                Each Schwab customer needs their own Schwab developer account and app. Approval
+                can take several days. The app&rsquo;s callback address must be set to
+                <code>https://127.0.0.1:8182</code>. Schwab&rsquo;s rules for a paid product that
+                uses the Schwab API are still being worked through; that review may affect when a
+                paid Schwab setup can go live. That fact will not be dressed up as settled.
+              </p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section" id="buy-rosie-path" aria-labelledby="buy-rosie-path-title" data-voice="rosie">
+        <div class="shell">
+          <div class="section__head">
+            <p class="label rule-after">The path</p>
+            <p class="label voice-tag" data-voice-tag>From Rosie</p>
+            <h2 id="buy-rosie-path-title">The path, step by step</h2>
+            <!-- LAWYER REVIEW: evaluation, payment timing, go-live, licensing-not-built, unlock-code language. -->
+            <p>
+              This is the path as it stands today, including the parts that are not finished.
+            </p>
+          </div>
+          <ol class="stages">
+            <li>
+              <p class="label">01</p>
+              <h3>See how I work</h3>
+              <p>
+                Read <a href="/how-rosie-works/">How Rosie Works</a>, and look at the sample-data
+                demo if you like. You stay in charge: you set the rules, and you supervise me.
+              </p>
+            </li>
+            <li>
+              <p class="label">02</p>
+              <h3>Write to Lime Signalworks</h3>
+              <p>
+                Email Lime Signalworks to begin. A registration form is planned so you are on the
+                customer list used for setup and later maintenance updates. That form is not on
+                this page yet.
+              </p>
+            </li>
+            <li>
+              <p class="label">03</p>
+              <h3>Install, with a guide</h3>
+              <p>
+                Lime Signalworks sets me up with you on your Windows computer and walks you
+                through a &ldquo;what you&rsquo;ll see&rdquo; guide. If anyone at Lime Signalworks
+                ever looks in to help, you stay in charge; any remote view is view-only.
+              </p>
+            </li>
+            <li>
+              <p class="label">04</p>
+              <h3>The free month</h3>
+              <p>
+                You watch me work in practice mode for one month. Every proposal, order, stop and
+                journal entry is there for you to see. Nothing is sent as a real-money order.
+                You weigh the month on the evidence, and you decide whether I stay.
+              </p>
+            </li>
+            <li>
+              <p class="label">05</p>
+              <h3>Payment, if you continue</h3>
+              <p>
+                If you choose to continue, payment is arranged after the free month. No payment
+                is taken on this site, and no payment processor is connected here yet.
+              </p>
+            </li>
+            <li>
+              <p class="label">06</p>
+              <h3>Go-live after payment</h3>
+              <p>
+                Going live with real-money orders, after payment, is still being designed. One
+                approach under consideration is a signed unlock code tied to your computer. That
+                licensing is not built yet, and this page is not a finished licensing product.
+                You remain the person who turns live trading on; I do not flip that switch for you.
+              </p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section section--cta" id="buy-rosie-begin" aria-labelledby="buy-rosie-begin-title" data-voice="rosie">
+        <div class="shell">
+          <div class="section__head">
+            <p class="label rule-after">How to begin</p>
+            <p class="label voice-tag" data-voice-tag>From Rosie</p>
+            <h2 id="buy-rosie-begin-title">Write to Lime Signalworks</h2>
+            <!-- LAWYER REVIEW: enrollment channel (email, planned registration form, not phone); customer list for maintenance updates. -->
+            <p>
+              Email is how you begin today. Use the address in the footer. A registration form
+              will be added to this page once it is ready; it is not here yet. Lime Signalworks
+              does not begin by phone. The telephone number in the footer is for other contact,
+              by appointment.
+            </p>
+          </div>
+          <p class="btn-row cta-final__row">
+            <a class="btn btn--primary" href="#contact">Email Lime Signalworks</a>
+            <a class="btn btn--ghost" href="/how-rosie-works/">See how I work</a>
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="buy-rosie-honest" aria-labelledby="buy-rosie-honest-title">
+        <div class="shell">
+          <div class="section__head">
+            <p class="label rule-after">Straight talk</p>
+            <h2 id="buy-rosie-honest-title">Straight talk, no theatrics</h2>
+          </div>
+          <div class="prose">
+            <!-- LAWYER REVIEW: "Nothing hidden, except the code"; supervision; not advice; risk of loss; results are the customer's. -->
+            <p data-voice="rosie">
+              <span>From me, Rosie: what I commit to is discipline you can see. I trade by
+              written rules, I keep hard risk limits, I keep a protective stop on every position, and I
+              keep a full record of every decision. Markets move in every direction; I don&rsquo;t
+              pretend to rule them. The rules I run, and the decisions about your account, stay yours.
+              Nothing hidden, except the code.</span>
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- E12 — footer -->
+    <footer class="foot">
+      <div class="shell foot__grid">
+        <div>
+          <p class="label">Lime Signalworks LLC · LIME Enterprise</p>
+          <p class="foot__note">
+            Rosie is a product of Lime Signalworks LLC. Lime Signalworks also offers five
+            TradingView indicators. The daily market report, Harbor Now, is published on this
+            site; the Leadership library is a separate site.
+          </p>
+          <p class="foot__harbor"><a class="anchor-link" href="/harbor-now/" data-harbor-link>Daily market report</a></p>
+          <!-- Contact is by real mailto: and tel: links; there is no form on this site. -->
+          <dl class="contact" id="contact" data-contact>
+            <div>
+              <dt>Email</dt>
+              <dd><a class="contact__link" href="mailto:contact@limesignalworks.com" data-contact-email>contact@limesignalworks.com</a></dd>
+            </div>
+            <div>
+              <dt>Telephone</dt>
+              <dd><a class="contact__link" href="tel:+13802000288" data-contact-phone>+1 380-200-0288</a>
+                <!-- 2026-11-22 (owner, t1974u): the site's one statement about results, beside the phone. -->
+                <p class="contact__risk" data-risk-disclosure>Rosie is a tool for disciplined trading, not a promise of results. Trading involves risk, including loss of money.</p></dd>
+            </div>
+            <div>
+              <dt>Office</dt>
+              <dd>2722 Erie Ave, Suite 219, Cincinnati, OH 45208</dd>
+            </div>
+            <div>
+              <dt>Availability</dt>
+              <dd>By appointment.</dd>
+            </div>
+          </dl>
+          <p class="foot__copyright">© 2026 Lime Signalworks LLC.</p>
+        </div>
+        <div>
+          <p class="label">Disclaimer</p>
+          <p class="foot__disclaimer" data-securities-disclaimer>Lime Signalworks provides educational tools and analysis, not personalized investment advice. Securities trading involves risk of loss. Your decisions and results are your own. Nothing here is an offer to sell or a solicitation to buy any security.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="/assets/js/app.js" defer></script>
+  </body>
+</html>

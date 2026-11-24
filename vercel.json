@@ -4,6 +4,11 @@
   "outputDirectory": ".",
   "redirects": [
     {
+      "source": "/get-rosie",
+      "destination": "/buy-rosie/",
+      "permanent": true
+    },
+    {
       "source": "/home",
       "destination": "/",
       "permanent": true
