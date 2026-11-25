@@ -105,7 +105,8 @@ test('legal: truthful product facts, no people, no profit promises, Schwab befor
   assert.match(privacy, /do not receive them/i);
   assert.match(privacy, /do not sell them/i);
   assert.match(privacy, /Never send your key or secret to anyone/);
-  assert.match(privacy, /no accounts and no forms/i);
+  assert.match(privacy, /has no accounts/i);
+  assert.match(privacy, /only form is the comment box on blog posts/i);
   assert.match(privacy, /did not add advertising or analytics/i);
   assert.match(privacy, /GoDaddy/);
   assert.match(privacy, /performance-monitoring script/);

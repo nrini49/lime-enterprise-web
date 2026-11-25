@@ -2,3 +2,5 @@ node_modules/
 .DS_Store
 screenshots/
 dist/
+comments-api/data/*
+!comments-api/data/.htaccess

@@ -101,6 +101,12 @@ test('export: public_html set has the pages and .htaccess, not source or preview
       'rosie-demo-schwab/index.html',
       'assets/css/site.css',
       'assets/js/app.js',
+      'assets/js/comments.js',
+      'blog/moderate/index.html',
+      'comments-api/index.php',
+      'comments-api/.htaccess',
+      'comments-api/posts.json',
+      'comments-api/data/.htaccess',
     ];
     for (const rel of must) {
       assert.ok(existsSync(path.join(dest, rel)), `export includes ${rel}`);

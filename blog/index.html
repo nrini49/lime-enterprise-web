@@ -9,7 +9,7 @@
     <title>Blog — Lime Signalworks</title>
     <meta
       name="description"
-      content="The Lime Signalworks blog: experiences with Rosie, Tech Tips, and, later, comments from readers. The first posts are coming soon."
+      content="The Lime Signalworks blog: experiences with Rosie, Tech Tips, and comments from readers."
     />
     <meta name="robots" content="index, follow" />
     <!-- Declares dark as the default rendering scheme so a light operating system does
@@ -96,7 +96,7 @@
         <div class="shell">
           <p class="label rule-after">Lime Signalworks · Blog</p>
           <h1 class="page-head__title" id="page-title">Blog</h1>
-          <p class="page-head__lede">A place for experiences with Rosie, Tech Tips, and, later, your comments.</p>
+          <p class="page-head__lede">A place for experiences with Rosie, Tech Tips, and your comments.</p>
         </div>
       </div>
 
@@ -112,6 +112,14 @@
                 <h3 id="who-judges-rosies-rules-title" class="blog-post__title">Who judges whether Rosie's rules work?</h3>
                 <p>Who judges whether a trading rule works? Not me, and not Rosie. Whether she follows the rules exactly can be checked today. Whether the rules are worth having only shows up over many trades, in real markets, in your own records. That's where you come in. Tell us what you saw: a stop that saved you, a rule that felt too tight, a day you didn't have to watch. Your experience is the test.</p>
                 <p class="btn-row blog-post__share"><a class="btn btn--ghost" href="#contact" data-share-experience>Share your experience</a></p>
+                <section class="comments" aria-labelledby="who-judges-rosies-rules-comments-title" data-comments="who-judges-rosies-rules">
+                  <h4 id="who-judges-rosies-rules-comments-title" class="comments__title">Comments</h4>
+                  <p class="comments__rules" data-comment-rules>Comment rules: be kind, stay on topic, no ads, and never post account numbers, keys or passwords. Comments are public, and the site owner may hide or remove any comment.</p>
+                  <p class="comments__notice" data-comment-notice>Comments are readers' own experiences and views. They are not advice from Lime Signalworks, which provides educational tools, not personalized investment advice.</p>
+                  <div class="comments__app" data-comments-app aria-live="polite">
+                    <p class="comment-empty">Comments need JavaScript turned on in your browser.</p>
+                  </div>
+                </section>
               </article>
             </li>
           </ul>
@@ -166,5 +174,6 @@
     </footer>
 
     <script src="/assets/js/app.js" defer></script>
+    <script src="/assets/js/comments.js" defer></script>
   </body>
 </html>

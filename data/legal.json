@@ -26,8 +26,16 @@
         {
           "heading": "What this website collects",
           "paragraphs": [
-            "This website has no accounts and no forms. We do not ask you to type personal information here. If you email or call us, we receive what you send, in the usual way.",
+            "This website has no accounts. The only form is the comment box on blog posts. If you email or call us, we receive what you send, in the usual way.",
             "We did not add advertising or analytics trackers to this site. Our web host, GoDaddy, may add a short performance-monitoring script to the pages it serves. That script is theirs. To opt out, contact GoDaddy web hosting support."
+          ]
+        },
+        {
+          "heading": "Blog comments",
+          "paragraphs": [
+            "If you post a comment, we store the name you choose, your comment, and when it was posted or edited. The name and comment are public. No email address is needed.",
+            "To limit spam, we briefly keep a scrambled code made from your internet address, for up to a day. Your browser keeps a private key so you can edit or delete your own comment from that browser. Comments are stored with our web host, GoDaddy, and are not sold.",
+            "To have a comment removed that you can no longer reach, contact us."
           ]
         },
         {

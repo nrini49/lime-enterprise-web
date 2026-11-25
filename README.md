@@ -24,6 +24,26 @@ GoDaddy `public_html`. Neither command uploads anything.
 This repository is **not** Site 1 (`lime-web-public`, `limesignalworks.com`). Nothing here deploys
 to, reads from, or links into Site 1; the sister-site link buttons were removed.
 
+## Blog comments (2026-11-24)
+
+Posts shown in full on `/blog/` take reader comments. A commenter types a name and a comment
+(no account, no email). Their browser keeps a private edit key, so they can edit (marked
+"edited") or delete their own comment later from that browser.
+
+- `assets/js/comments.js` builds the list and the form, and only when `/comments-api/` answers,
+  so the Vercel preview (no PHP; `.vercelignore` leaves the folder out) shows a short note instead.
+- `comments-api/index.php` is the whole backend: PHP 7.0+, no database. Comments are a JSON file
+  in a private folder beside `public_html` (`~/lime-comments-data/`, created on first use), or, if
+  that cannot be created, `comments-api/data/`, which its `.htaccess` refuses to serve.
+- Spam: hidden trap field, a 3-second minimum, 5 per 10 minutes and 20 per day per visitor (a
+  keyed hash of the IP, kept at most a day), 300 per day site-wide, length and link limits,
+  duplicates refused. Text only; nothing is rendered as HTML.
+- Moderation: `/blog/moderate/` (unlisted, noindex). The first visit asks the owner to create
+  the moderator password (stored hashed; no default). Then hide, show again, or delete any
+  comment. To reset the password, delete `lime-comments-data/moderator.json` in cPanel.
+- `comments-api/posts.json` is generated from `data/blog.json` by the build.
+- Tests: `tests/blog-comments.test.mjs` (the API part runs PHP's built-in server; skipped without php).
+
 ## What this surface is
 
 A plain-language enterprise translation of what Site 1 offers, in the same informational order:

@@ -1,0 +1,2 @@
+# PHP comments run only on the GoDaddy host; the Vercel preview does not serve them.
+comments-api/
