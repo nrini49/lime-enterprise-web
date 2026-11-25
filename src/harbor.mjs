@@ -138,6 +138,72 @@ export const adviceHits = (s) => ADVICE_BANNED.filter((r) => r.test(neutral(s)))
 
 export class HarborVoiceError extends Error {}
 
+/* ---------- "How to read Harbor Now" key (2026-11-25) ----------
+ * Owner: Harbor Now is a tour guide to how Rosie's rules read the day, and every metaphor
+ * needs a plain meaning. The key is fixed text plus the glossary in data/harbor-glossary.json
+ * (the same file the daily editions take their images from). It renders on every Harbor
+ * page and passes the same advice and voice gates as the editions.
+ */
+export const HARBOR_KEY = {
+  heading: 'How to read Harbor Now',
+  intro:
+    'Harbor Now is my plain-language tour of how my trading rules read the day. I use a few sea and ' +
+    'weather images because they are easier to picture than chart terms. Each one means exactly one ' +
+    'thing, listed below, and each edition explains an image in brackets the first time it appears.',
+  lightsHeading: 'The three lights I line up',
+  lights: [
+    ['The tide.', 'The four main index funds (SPY, QQQ, DIA, IWM). The tide is rising when all four close above rising trend lines.'],
+    ['The hot sector.', 'The sector fund strongest against SPY over recent sessions and today, and whether it is rising with the tide.'],
+    ['The strongest names inside it.', 'Names in that sector, from my Watchlist I first, that are rising and stronger than SPY.'],
+  ],
+  lightsClose:
+    'When all three point the same way, I say the lights line up. That is a description of the day, not a signal to trade.',
+  glossaryHeading: 'The images I use, and what they mean',
+};
+
+export async function loadGlossary() {
+  return JSON.parse(await readFile(new URL('../data/harbor-glossary.json', import.meta.url), 'utf8'));
+}
+
+export const keyText = (g, k = HARBOR_KEY) =>
+  [k.heading, k.intro, k.lightsHeading, ...k.lights.flat(), k.lightsClose, k.glossaryHeading,
+    ...g.entries.flatMap((e) => [e.image, e.inline, e.meaning, e.term])].join(' ');
+
+/** Fails the build if the key or the glossary ever reads as advice or slips into "we". */
+export function checkKey(g, k = HARBOR_KEY) {
+  const seen = new Set();
+  for (const e of g.entries) {
+    for (const f of ['id', 'image', 'inline', 'meaning', 'term']) {
+      if (!e[f] || typeof e[f] !== 'string') throw new HarborVoiceError(`glossary entry ${e.id || '?'} has no ${f}`);
+    }
+    if (seen.has(e.image.toLowerCase())) throw new HarborVoiceError(`glossary image "${e.image}" is used twice`);
+    seen.add(e.image.toLowerCase());
+  }
+  const text = keyText(g, k);
+  const hits = adviceHits(text);
+  if (hits.length) throw new HarborVoiceError(`Harbor key reads as advice: ${hits.join(', ')}`);
+  if (pluralVoice(text)) throw new HarborVoiceError('Harbor key says "we/our/us"; Rosie says "I"');
+}
+
+function renderKey(g, k = HARBOR_KEY) {
+  const lights = k.lights.map(([t, b]) => `
+              <li><strong>${esc(t)}</strong> ${esc(b)}</li>`).join('');
+  const entries = g.entries.map((e) => `
+              <div><dt>${esc(cap1(e.image))} <span class="hn-key__term">${esc(e.term)}</span></dt><dd>${esc(e.meaning)}</dd></div>`).join('');
+  return `<div class="hn-guide hn-key" id="how-to-read" data-harbor-key>
+            <h2 class="hn-h">${esc(k.heading)}</h2>
+            <p>${esc(k.intro)}</p>
+            <h3 class="hn-key__h">${esc(k.lightsHeading)}</h3>
+            <ol class="hn-guide__list">${lights}
+            </ol>
+            <p>${esc(k.lightsClose)}</p>
+            <h3 class="hn-key__h">${esc(k.glossaryHeading)}</h3>
+            <dl class="hn-wx hn-key__list" data-harbor-glossary>${entries}
+            </dl>
+          </div>`;
+}
+const cap1 = (t) => t.charAt(0).toUpperCase() + t.slice(1);
+
 /* ---------- "How to use Harbor Now well" (2026-11-01) ---------- */
 
 /**
@@ -310,6 +376,13 @@ export function publicEdition(date, raw, voice = EMPTY_VOICE) {
     volatility: speak('volatility', wx.volatility),
     tone: speak('tone', wx.tone),
     cluster: (raw.cluster || []).map((c) => speak('cluster', c, publicClusterLine)).filter(Boolean),
+    // The daily publisher's three-way line-up (tide, hot sector, strongest names).
+    convergence: raw.convergence
+      ? {
+          summary: speak('convergence summary', raw.convergence.summary),
+          items: (raw.convergence.items || []).map((c) => speak('convergence', c)),
+        }
+      : null,
   };
   finish();
   return ed;
@@ -459,13 +532,24 @@ function renderEditionBody(ed, headingLevel = 'h1') {
             <li>${esc(c)}</li>`).join('')}
           </ul>`
     : '';
+  const conv = ed.convergence
+    ? `
+          <div class="hn-conv" data-harbor-convergence>
+            <p class="label">Where my signals line up</p>
+            <p>${esc(ed.convergence.summary)}</p>
+            <ul class="ticks hn-list">${ed.convergence.items.map((c) => `
+              <li>${esc(c)}</li>`).join('')}
+            </ul>
+            <p class="hn-conv__key"><a class="anchor-link" href="#how-to-read">How to read Harbor Now</a></p>
+          </div>`
+    : '';
   return `<div class="panel hn-panel">
             <div class="panel__head">
               <p class="label" data-harbor-date>Close of <time datetime="${ed.date}">${esc(longDate(ed.date))}</time></p>
               <p class="flag">Dated report — not real-time data</p>
             </div>
             <${headingLevel} class="hn-title">${esc(ed.title)}</${headingLevel}>
-            <p class="hn-tag">${esc(ed.tag)}</p>
+            <p class="hn-tag">${esc(ed.tag)}</p>${conv}
             ${renderTable(ed)}
             <dl class="hn-wx">
               <div><dt>Sentiment</dt><dd><strong>${esc(ed.sentiment.label)}</strong> — ${esc(ed.sentiment.qualifier)}</dd></div>
@@ -619,6 +703,8 @@ export async function buildHarbor(root, canonical, { pages, harborSections = '',
   if (!pages) throw new Error('buildHarbor needs the site pages for the shared menu');
   checkCanon();
   checkGuide();
+  const glossary = await loadGlossary();
+  checkKey(glossary);
   const editions = await loadEditions(root);
   if (!editions.length) throw new Error('no Harbor Now editions in data/harbor/');
   const latest = editions[editions.length - 1];
@@ -651,6 +737,7 @@ export async function buildHarbor(root, canonical, { pages, harborSections = '',
           <p class="label hn-latest-label">Latest edition</p>
           ${renderEditionBody(latest, 'h2')}
           <p class="anchor-row"><a class="btn btn--primary" href="/harbor-now/${latest.date}/">Open the ${esc(prettyDate(latest.date))} edition</a></p>
+          ${renderKey(glossary)}
           ${renderGuide(canonical)}
           <h2 class="hn-h" id="archive">Archive</h2>
           <p class="hn-count">${editions.length} editions, ${esc(prettyDate(editions[0].date))} to ${esc(prettyDate(latest.date))}.</p>
@@ -690,6 +777,7 @@ export async function buildHarbor(root, canonical, { pages, harborSections = '',
           </div>
           ${notice()}
           ${renderEditionBody(ed, 'h1')}
+          ${renderKey(glossary)}
           <details class="hn-canon">
             <summary>Rosie Canon Rules (reference, unchanged day to day)</summary>
             <div class="hn-canon__inner">${renderCanon()}

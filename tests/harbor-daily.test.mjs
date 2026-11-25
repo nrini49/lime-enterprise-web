@@ -12,54 +12,133 @@ import vm from 'node:vm';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as cheerio from 'cheerio';
-import { compose, shareWord, moveWord, roughPct, SCHEMA } from '../src/harbor-compose.mjs';
+import { compose, analyze, shareWord, moveWord, roughPct, SCHEMA } from '../src/harbor-compose.mjs';
 import { isTradingDay, prevTradingDay, expectedEditionDate, tradingDaysLate } from '../src/harbor-calendar.mjs';
-import { publicEdition, buildHarbor, buildFreshScript, DROPPED_FIELDS, VOICE_DIR } from '../src/harbor.mjs';
+import { publicEdition, buildHarbor, buildFreshScript, checkKey, DROPPED_FIELDS, VOICE_DIR } from '../src/harbor.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const readJson = (rel) => JSON.parse(readFileSync(path.join(root, rel), 'utf8'));
 const config = readJson('data/harbor-config.json');
 const cal = readJson('data/market-calendar.json');
+const sectors = readJson('data/sector-members.json');
+const glossary = readJson('data/harbor-glossary.json');
 const fixture = (lvl) => readJson(`tests/fixtures/harbor-daily-2026-11-24.${lvl}.json`);
+const DATE = '2026-11-24';
 
-/** Deterministic pseudo-random closes so many different days are exercised. */
+/** Deterministic pseudo-random numbers so many different days are exercised. */
 function rng(seed) {
   let x = seed >>> 0 || 1;
   return () => ((x = (x * 1664525 + 1013904223) >>> 0) / 2 ** 32);
 }
-function syntheticDay(seed, spread = 3) {
-  const r = rng(seed);
-  const quotes = {};
-  const all = [...config.index_funds.map((f) => f.symbol), ...config.watchlist_i.symbols, ...config.watchlist_ii.symbols];
-  for (const s of all) {
-    const prev = 20 + r() * 500;
-    quotes[s] = { prev, close: prev * (1 + ((r() - 0.5) * 2 * spread) / 100) };
+const DAYS = (() => {
+  const out = [];
+  let d = DATE;
+  while (out.length < 130) {
+    if (isTradingDay(d, cal)) out.unshift(d);
+    d = new Date(Date.parse(`${d}T12:00:00Z`) - 86400000).toISOString().slice(0, 10);
   }
-  const vprev = 12 + r() * 20;
-  return { quotes, vix: { prev: vprev, close: vprev * (1 + (r() - 0.5) * 0.2) } };
+  return out;
+})();
+const allSymbols = () => [
+  ...new Set([
+    ...config.index_funds.map((f) => f.symbol), ...config.sector_funds, ...config.watchlist_i.symbols,
+    ...config.watchlist_ii.symbols, ...Object.values(sectors.sectors).flatMap((x) => x.members), '^VIX', 'XRP',
+  ]),
+];
+/** A random walk per symbol; `drift(sym)` (% per day) can force a direction. */
+function syntheticSeries(seed, { vol = 1.5, drift = () => 0 } = {}) {
+  const r = rng(seed);
+  const series = {};
+  for (const s of allSymbols()) {
+    let c = 20 + r() * 400;
+    const dr = drift(s) ?? (r() - 0.5) * 0.6;
+    series[s] = DAYS.map((d) => {
+      c *= 1 + (dr + (r() - 0.5) * 2 * vol) / 100;
+      return { d, c };
+    });
+  }
+  return series;
 }
+const make = (series, dataLevel = 'words') => compose({ date: DATE, series, config, sectors, glossary, dataLevel });
 const editionText = (ed) =>
-  [ed.title, ed.tag, ...ed.rows.flatMap((r) => [r.read, r.change, r.price, r.high52]), ed.sentiment.label, ed.sentiment.qualifier, ed.volatility, ed.tone, ...ed.cluster].join(' \n ');
+  [ed.title, ed.tag, ...(ed.convergence ? [ed.convergence.summary, ...ed.convergence.items] : []),
+    ...ed.rows.flatMap((r) => [r.read, r.change, r.price, r.high52]), ed.sentiment.label, ed.sentiment.qualifier,
+    ed.volatility, ed.tone, ...ed.cluster].join(' \n ');
 
 test('daily: every generated edition passes the Harbor voice gates with no voice file, in both data levels', () => {
-  for (let seed = 1; seed <= 400; seed++) {
-    const { quotes, vix } = syntheticDay(seed, seed % 4 === 0 ? 0.2 : 3);
+  for (let seed = 1; seed <= 300; seed++) {
+    const series = syntheticSeries(seed, { vol: seed % 5 === 0 ? 0.2 : 1.8 });
     for (const dataLevel of ['words', 'pct']) {
-      const raw = compose({ date: '2026-11-24', quotes, vix, config, dataLevel });
       // publicEdition throws HarborVoiceError on any directive, advice or "we/our/us" wording.
-      const ed = publicEdition('2026-11-24', raw);
+      const ed = publicEdition(DATE, make(series, dataLevel));
       assert.equal(ed.schema, SCHEMA);
-      assert.ok(ed.cluster.length >= 2, `seed ${seed}: watchlist lines present`);
+      assert.equal(ed.convergence.items.length, 3, `seed ${seed}: three legs`);
     }
   }
 });
 
+test('daily: the edition leads with whether the three lights line up, and the legs follow Rosie\'s rules', () => {
+  // Everything climbing steadily: tide rising, hot sector rising, names rising -> all three.
+  const up = make(syntheticSeries(11, { vol: 0.3, drift: (s) => (s === '^VIX' ? -0.5 : 0.4 + (s.length % 3) * 0.15) }));
+  assert.match(up.tag, /^All three of my lights line up today \(my three signals point the same way\)\./);
+  assert.match(up.title, /^All three line up: indexes rising, .+ leading, .+ strongest inside it$/);
+  assert.equal(up._sources.legs.tide, 'yes');
+  assert.match(up.convergence.items[0], /^Lined up: the tide\./);
+  // Indexes falling, one sector fund rising hard: a crosscurrent, nothing lines up.
+  const cross = make(syntheticSeries(12, { vol: 0.3, drift: (s) => (s === 'XLU' ? 0.8 : s === '^VIX' ? 0.5 : -0.5) }));
+  assert.equal(cross._sources.hot_sector, 'XLU');
+  assert.match(cross.title, /^No line-up: Utilities rising while the indexes are not$/);
+  assert.match(cross.tag, /a crosscurrent \(a sector moving against the tide\)/);
+  assert.match(cross.tag, /^None of my three lights line up today/);
+});
+
+test('daily: "rising" is Rosie\'s all-three-rising test on daily closes (above a rising trend average)', () => {
+  const rows = (f) => DAYS.map((d, i) => ({ d, c: f(i) }));
+  assert.equal(analyze(rows((i) => 100 + i), DATE).rising, true);
+  assert.equal(analyze(rows((i) => 300 - i), DATE).rising, false);
+  assert.equal(analyze(rows((i) => 100 + i), DATE).colour, 'green');
+  assert.equal(analyze(rows((i) => 300 - i), DATE).colour, 'red');
+  assert.equal(analyze(rows((i) => 100 + i).slice(0, -1), DATE), null, 'no close for the day itself: no read');
+});
+
+test('daily: every metaphor is defined in brackets the first time it appears, from the glossary, and only then', () => {
+  for (let seed = 1; seed <= 120; seed++) {
+    const ed = publicEdition(DATE, make(syntheticSeries(seed, { vol: seed % 3 ? 1.8 : 0.4 })));
+    const text = editionText(ed);
+    for (const e of glossary.entries) {
+      const n = text.split(`(${e.inline})`).length - 1;
+      assert.ok(n <= 1, `seed ${seed}: "${e.image}" defined ${n} times`);
+    }
+    for (const [id, word] of [['tide', 'tide'], ['weather', 'weather'], ['hot_sector', 'hot sector'], ['trend_line', 'trend line']]) {
+      const e = glossary.entries.find((x) => x.id === id);
+      const first = text.toLowerCase().indexOf(word);
+      assert.ok(first >= 0, `seed ${seed}: ${id} used`);
+      const def = text.indexOf(`(${e.inline})`);
+      assert.ok(def > first && def - first < word.length + 8, `seed ${seed}: "${word}" first appears without its meaning`);
+    }
+  }
+});
+
+test('glossary: one image per trading term, each with an inline meaning, a full meaning and the technical term', () => {
+  const images = glossary.entries.map((e) => e.image.toLowerCase());
+  assert.equal(new Set(images).size, images.length);
+  assert.equal(new Set(glossary.entries.map((e) => e.term)).size, glossary.entries.length);
+  const byTerm = Object.fromEntries(glossary.entries.map((e) => [e.term, e.image]));
+  assert.equal(byTerm['Volatility (VIX)'], 'the weather');
+  assert.equal(byTerm.Resistance, 'a headwind');
+  assert.equal(byTerm.Support, 'an anchorage');
+  assert.equal(byTerm['Market trend (broad indexes)'], 'the tide');
+  assert.equal(byTerm.Momentum, 'the wind picking up');
+  assert.equal(byTerm['Signal convergence'], 'the lights line up');
+  assert.doesNotThrow(() => checkKey(glossary));
+});
+
 test('daily: words mode prints no market numbers at all; pct mode prints only rounded % and counts, never prices', () => {
-  for (let seed = 1; seed <= 200; seed++) {
-    const { quotes, vix } = syntheticDay(seed);
-    const words = editionText(publicEdition('2026-11-24', compose({ date: '2026-11-24', quotes, vix, config, dataLevel: 'words' })));
+  for (let seed = 1; seed <= 150; seed++) {
+    const series = syntheticSeries(seed);
+    const words = editionText(publicEdition(DATE, make(series, 'words')));
     assert.doesNotMatch(words, /\d/, `seed ${seed}: words mode has a digit`);
-    const pct = editionText(publicEdition('2026-11-24', compose({ date: '2026-11-24', quotes, vix, config, dataLevel: 'pct' })));
+    const pct = editionText(publicEdition(DATE, make(series, 'pct')));
     const stripped = pct.replace(/[+-]?\d+\.\d%/g, '').replace(/\(\d+ of \d+\)/g, '');
     assert.doesNotMatch(stripped, /\d/, `seed ${seed}: pct mode has a number other than a rounded % or a count`);
   }
@@ -68,31 +147,31 @@ test('daily: words mode prints no market numbers at all; pct mode prints only ro
   assert.equal(roughPct(2.04), '+2.0%');
 });
 
-test('daily: only Rosie\'s watchlists and the four context funds; no news, no XRP, Watchlist II never named', () => {
+test('daily: only Rosie\'s lists and sector funds; no news, no XRP; Watchlist II named only via Rosie\'s own sector ranking', () => {
   for (let seed = 1; seed <= 100; seed++) {
-    const { quotes, vix } = syntheticDay(seed);
-    quotes.XRP = { prev: 1, close: 2 };
-    const raw = compose({ date: '2026-11-24', quotes, vix, config, dataLevel: 'pct' });
+    const raw = make(syntheticSeries(seed), 'pct');
     const text = JSON.stringify({ ...raw, _sources: undefined });
     assert.doesNotMatch(text, /\bXRP\b/);
-    const onlyII = config.watchlist_ii.symbols.filter((s) => !config.watchlist_i.symbols.includes(s));
-    for (const s of onlyII) assert.doesNotMatch(text, new RegExp(`\\b${s}\\b`), `seed ${seed}: Watchlist II name ${s} published`);
-    for (const line of raw.cluster) assert.match(line, /^(Watchlist I|Watchlist II|Strongest on my Watchlist I|Weakest on my Watchlist I)\b/);
-    assert.deepEqual(Object.keys(raw).sort(), ['_sources', 'cluster', 'data_level', 'schema', 'tag', 'title', 'weather']);
+    const hotMembers = new Set(sectors.sectors[raw._sources.hot_sector].members);
+    const onlyII = config.watchlist_ii.symbols.filter((s) => !config.watchlist_i.symbols.includes(s) && !config.sector_funds.includes(s));
+    for (const s of onlyII) {
+      if (new RegExp(`\\b${s}\\b`).test(text)) assert.ok(hotMembers.has(s), `seed ${seed}: Watchlist II name ${s} published outside the hot-sector ranking`);
+    }
+    for (const line of raw.cluster) assert.match(line, /^(Coolest sector|Watchlist I|Watchlist II)\b/);
+    assert.deepEqual(Object.keys(raw).sort(), ['_sources', 'cluster', 'convergence', 'data_level', 'schema', 'tag', 'title', 'weather']);
     for (const f of ['account', 'checklist', 'body_muted']) assert.ok(!(f in raw) && f in DROPPED_FIELDS);
     assert.doesNotMatch(text, /earnings|catalyst|headline|news|report(s|ed)? (today|tomorrow)/i);
   }
   assert.ok(!config.watchlist_i.symbols.includes('XRP') && !config.watchlist_ii.symbols.includes('XRP'));
-  assert.equal(config.watchlist_ii.name_symbols, false, 'Watchlist II stays unnamed (no re-posting of picks)');
+  assert.equal(config.watchlist_ii.name_symbols, false, 'Watchlist II stays unnamed as a list (no re-posting of picks)');
   assert.equal(config.data_level, 'words', 'words-only is the default until the lawyer clears percent changes');
 });
 
-test('daily: Rosie speaks in the first person and promises nothing', () => {
-  const ed = publicEdition('2026-11-24', fixture('words'));
-  assert.match(ed.tag, /\bI track\b/);
-  assert.match(editionText(ed), /\bmy Watchlist I\b/);
+test('daily: Rosie speaks in the first person, describes, and promises nothing', () => {
+  const ed = publicEdition(DATE, fixture('words'));
+  assert.match(ed.tag, /\bmy three lights\b/);
   const said = editionText(ed).replace('not a survey or a forecast', '');
-  assert.doesNotMatch(said, /\b(will|guarantee|expect|forecast(s|ed)?|predict|profit|win(s|ning)?)\b/i);
+  assert.doesNotMatch(said, /\b(will|guarantee|expect|forecast(s|ed)?|predict|profit|win(s|ning)?|benefit|promising)\b/i);
 });
 
 test('daily: the word scales read sensibly', () => {
@@ -107,10 +186,12 @@ test('daily: the word scales read sensibly', () => {
 });
 
 test('daily: missing index-fund or VIX data fails loudly instead of publishing a guess', () => {
-  const { quotes, vix } = syntheticDay(7);
-  delete quotes.SPY;
-  assert.throws(() => compose({ date: '2026-11-24', quotes, vix, config }), /index funds: SPY/);
-  assert.throws(() => compose({ date: '2026-11-24', quotes: syntheticDay(7).quotes, vix: null, config }), /VIX/);
+  const series = syntheticSeries(7);
+  delete series.SPY;
+  assert.throws(() => make(series), /SPY/);
+  const s2 = syntheticSeries(7);
+  delete s2['^VIX'];
+  assert.throws(() => make(s2), /VIX/);
 });
 
 test('calendar: the copy matches Rosie\'s NYSE table, and holidays, weekends and early closes behave', () => {
@@ -178,6 +259,11 @@ test('render: a words edition shows no price columns; a pct edition shows only t
     assert.deepEqual(heads, lvl === 'words' ? ['Fund and how it closed'] : ['Fund', 'Change']);
     assert.equal($('[data-harbor-table] tbody tr').length, 4);
     assert.equal($('h2.hn-h').filter((_, e) => $(e).text() === 'My watchlists').length, 1);
+    assert.equal($('[data-harbor-convergence] li').length, 3, 'the three lights');
+    assert.ok($('[data-harbor-convergence]').index() < $('[data-harbor-table]').closest('.table-wrap').index(), 'the line-up comes before the table');
+    assert.equal($('#how-to-read[data-harbor-key]').length, 1);
+    assert.equal($('[data-harbor-glossary] dt').length, glossary.entries.length);
+    for (const e of glossary.entries) assert.ok($('[data-harbor-glossary]').text().includes(e.meaning), `key shows ${e.id}`);
     if (lvl === 'words') assert.doesNotMatch($('.hn-panel').text() + $('[data-harbor-cluster]').text(), /\d{1,3}\.\d/);
     // The archive's own pages are unchanged in shape: still four columns.
     const old = cheerio.load(readFileSync(path.join(tmp, 'harbor-now', '2026-09-29', 'index.html'), 'utf8'));

@@ -122,6 +122,19 @@ Zero-framework static build. No bundler, no CSS preprocessor, no client framewor
   **Dry run is the default**: nothing is committed or uploaded until the repository variable
   `HARBOR_DRY_RUN` is `false`. Try it locally: `node scripts/harbor-daily.mjs --dry-run
   [--date=YYYY-MM-DD] [--data-level=pct]`.
+- **Three-way convergence.** Each daily edition leads with whether my three lights line up: (1) the
+  tide, the four index funds above rising trend lines; (2) the hot sector, the strongest of the 11
+  SPDR sector funds plus SMH against SPY (`data/sector-members.json`, copied from Rosie's
+  `lime_sniper_sector_members.json`), rising with the tide or against it (a crosscurrent); (3) the
+  strongest rising names inside it, Watchlist I first, then the sector's top holdings. This is the
+  daily-close, public-data form of Lime Sniper's "all three rising" filter and sector funnel;
+  spans and thresholds stay in code and are never printed. Add `--cache=FILE` to reuse fetched
+  closes while testing.
+- **Metaphor glossary.** `data/harbor-glossary.json` maps each image (tide, weather, wind, hot
+  sector, crosscurrent, headwind, anchorage…) to one plain meaning and one technical term. Editions
+  bracket the plain meaning the first time an image appears, and every page renders the fixed
+  "How to read Harbor Now" key (`#how-to-read`) from the same file. The build runs the voice gates
+  over the glossary too.
 - Freshness: `harbor-now/fresh.js` (generated from `src/harbor-calendar.mjs`) fills a hidden note
   in the browser: soft at 1–2 missed trading days, clear at 3+. Until the first daily edition, a
   calm "Daily editions resume soon" line shows instead.

@@ -1,40 +1,63 @@
 {
   "schema": "rosie-daily-v1",
   "data_level": "words",
-  "title": "Mixed close — DIA leads, QQQ lags as volatility eases",
-  "tag": "Of the four index funds I track for context, DIA and IWM closed higher, SPY and QQQ closed lower, and volatility eased. On my Watchlist I, fewer than half of the names closed higher.",
+  "title": "No line-up: Consumer Staples rising while the indexes are not",
+  "tag": "None of my three lights line up today (lining up means my three signals point the same way). The tide (the trend of the four main index funds) is going out: none of the four closed above a rising trend line (a smoothed average of recent closes). The hot sector (the sector fund strongest against SPY) is Consumer Staples, rising while the tide goes out: a crosscurrent (a sector moving against the tide). Inside Consumer Staples, the strongest rising names are TGT, WMT and KR.",
+  "convergence": {
+    "summary": "Today none of the three point the same way. My rules look for all three together.",
+    "items": [
+      "Not lined up: the tide. None of the four index funds closed above a rising trend line.",
+      "Not lined up: the hot sector. Consumer Staples (XLP) leads the sector funds against SPY, above a rising trend line, while the indexes are not rising.",
+      "Not lined up: the strongest names. TGT, WMT and KR are rising and stronger than SPY inside Consumer Staples, though the sector itself is not lined up."
+    ]
+  },
   "weather": {
     "spy": {
-      "read": "Slipped, the broad-market fund I measure the others against"
+      "read": "Slipped on the day, below my short, middle and long trend lines"
     },
     "qqq": {
-      "read": "Fell firmly, weaker than SPY"
+      "read": "Fell firmly on the day, below my short, middle and long trend lines"
     },
     "dia": {
-      "read": "Rose, stronger than SPY"
+      "read": "Rose on the day, below my short, middle and long trend lines"
     },
     "iwm": {
-      "read": "Rose, stronger than SPY"
+      "read": "Rose on the day, below my short, middle and long trend lines"
     },
-    "volatility": "Volatility eased: VIX closed below the day before",
-    "tone": "A split day: DIA and IWM higher, SPY and QQQ lower",
+    "volatility": "The weather (how calm or stormy prices are, read from VIX, the market's fear gauge) turned calmer",
+    "tone": "A split day: DIA and IWM higher, SPY and QQQ lower on the day",
     "sentiment": {
       "label": "Soft",
-      "qualifier": "my own read of how the names on my Watchlist I and Watchlist II closed, not a survey or a forecast"
+      "qualifier": "my own read of how many names on my Watchlist I and Watchlist II sit above rising trend lines, not a survey or a forecast"
     }
   },
   "cluster": [
-    "Watchlist I, the names my rules allow me to trade: fewer than half of the names closed higher, and about half did better than SPY",
-    "Strongest on my Watchlist I today: CRM, JNJ and TNA",
-    "Weakest on my Watchlist I today: MU, AMD and MSTR",
-    "Watchlist II, the candidates I am still measuring: only a few of the names closed higher, and fewer than half did better than SPY"
+    "Coolest sector: Semiconductors (SMH), weakest of the sector funds against SPY",
+    "Watchlist I, the names my rules allow me to trade: only a few sit above rising trend lines",
+    "Watchlist II, the candidates I am still measuring: only a few sit above rising trend lines"
   ],
   "_sources": {
     "generator": "scripts/harbor-daily.mjs (fixed templates, src/harbor-compose.mjs)",
     "data": "Yahoo Finance public chart data (end-of-day closes)",
-    "coverage": {
-      "watchlist_i": "34/34",
-      "watchlist_ii": "28/28"
+    "hot_sector": "XLP",
+    "sector_rank": [
+      "XLP",
+      "XLV",
+      "XLU",
+      "XLRE",
+      "XLE",
+      "XLY",
+      "XLC",
+      "XLF",
+      "XLB",
+      "XLI",
+      "XLK",
+      "SMH"
+    ],
+    "legs": {
+      "tide": "no",
+      "hot_sector": "no",
+      "names": "no"
     }
   }
 }

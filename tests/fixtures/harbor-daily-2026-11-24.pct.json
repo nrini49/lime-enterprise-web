@@ -1,44 +1,67 @@
 {
   "schema": "rosie-daily-v1",
   "data_level": "pct",
-  "title": "Mixed close — DIA leads, QQQ lags as volatility eases",
-  "tag": "Of the four index funds I track for context, DIA and IWM closed higher, SPY and QQQ closed lower, and volatility eased. On my Watchlist I, fewer than half of the names closed higher (11 of 34).",
+  "title": "No line-up: Consumer Staples rising while the indexes are not",
+  "tag": "None of my three lights line up today (lining up means my three signals point the same way). The tide (the trend of the four main index funds) is going out: none of the four closed above a rising trend line (a smoothed average of recent closes). The hot sector (the sector fund strongest against SPY) is Consumer Staples, rising while the tide goes out: a crosscurrent (a sector moving against the tide). Inside Consumer Staples, the strongest rising names are TGT (+4.7%), WMT (+2.1%) and KR (+4.4%).",
+  "convergence": {
+    "summary": "Today none of the three point the same way. My rules look for all three together.",
+    "items": [
+      "Not lined up: the tide. None of the four index funds closed above a rising trend line.",
+      "Not lined up: the hot sector. Consumer Staples (XLP) leads the sector funds against SPY and moved about 1.7% up, above a rising trend line, while the indexes are not rising.",
+      "Not lined up: the strongest names. TGT (+4.7%), WMT (+2.1%) and KR (+4.4%) are rising and stronger than SPY inside Consumer Staples, though the sector itself is not lined up."
+    ]
+  },
   "weather": {
     "spy": {
-      "read": "Slipped, about 0.5%, the broad-market fund I measure the others against",
+      "read": "Slipped, about 0.5% on the day, below my short, middle and long trend lines",
       "change": "-0.5%"
     },
     "qqq": {
-      "read": "Fell firmly, about 2.0%, weaker than SPY",
+      "read": "Fell firmly, about 2.0% on the day, below my short, middle and long trend lines",
       "change": "-2.0%"
     },
     "dia": {
-      "read": "Rose, about 0.8%, stronger than SPY",
+      "read": "Rose, about 0.8% on the day, below my short, middle and long trend lines",
       "change": "+0.8%"
     },
     "iwm": {
-      "read": "Rose, about 0.5%, stronger than SPY",
+      "read": "Rose, about 0.5% on the day, below my short, middle and long trend lines",
       "change": "+0.5%"
     },
-    "volatility": "Volatility eased: VIX closed below the day before (about 1.0% lower)",
-    "tone": "A split day: DIA and IWM higher, SPY and QQQ lower",
+    "volatility": "The weather (how calm or stormy prices are, read from VIX, the market's fear gauge) turned calmer: VIX moved about 1.0% lower",
+    "tone": "A split day: DIA and IWM higher, SPY and QQQ lower on the day",
     "sentiment": {
       "label": "Soft",
-      "qualifier": "my own read of how the names on my Watchlist I and Watchlist II closed, not a survey or a forecast"
+      "qualifier": "my own read of how many names on my Watchlist I and Watchlist II sit above rising trend lines, not a survey or a forecast"
     }
   },
   "cluster": [
-    "Watchlist I, the names my rules allow me to trade: fewer than half of the names closed higher (11 of 34), and about half did better than SPY (16 of 34)",
-    "Strongest on my Watchlist I today: CRM (+4.2%), JNJ (+2.4%) and TNA (+1.8%)",
-    "Weakest on my Watchlist I today: MU (-11.0%), AMD (-8.9%) and MSTR (-8.1%)",
-    "Watchlist II, the candidates I am still measuring: only a few of the names closed higher (7 of 28), and fewer than half did better than SPY (8 of 28)"
+    "Coolest sector: Semiconductors (SMH), weakest of the sector funds against SPY, -7.3% on the day",
+    "Watchlist I, the names my rules allow me to trade: only a few sit above rising trend lines (4 of 34)",
+    "Watchlist II, the candidates I am still measuring: only a few sit above rising trend lines (3 of 28)"
   ],
   "_sources": {
     "generator": "scripts/harbor-daily.mjs (fixed templates, src/harbor-compose.mjs)",
     "data": "Yahoo Finance public chart data (end-of-day closes)",
-    "coverage": {
-      "watchlist_i": "34/34",
-      "watchlist_ii": "28/28"
+    "hot_sector": "XLP",
+    "sector_rank": [
+      "XLP",
+      "XLV",
+      "XLU",
+      "XLRE",
+      "XLE",
+      "XLY",
+      "XLC",
+      "XLF",
+      "XLB",
+      "XLI",
+      "XLK",
+      "SMH"
+    ],
+    "legs": {
+      "tide": "no",
+      "hot_sector": "no",
+      "names": "no"
     }
   }
 }
