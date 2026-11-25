@@ -647,7 +647,8 @@ async function main() {
   const harbor = await buildHarbor(root, canonical, { pages, harborSections, blogPosts: blog.posts });
   console.log(
     `built harbor-now/ — ${harbor.count} editions, latest ${harbor.latest}` +
-      (harbor.stale ? ' (stale: restart note shown)' : ''),
+      (harbor.resume ? ' (no daily edition yet: "resume soon" line shown)' : '') +
+      (harbor.tradingDaysLate ? `, ${harbor.tradingDaysLate} trading day(s) since` : ''),
   );
 
   const notFoundBody = renderNotFound(pages);

@@ -1,0 +1,144 @@
+# Harbor Now: one edition per NYSE trading day, written from fixed Rosie templates.
+#
+# What it does (scripts/harbor-daily.mjs, src/harbor-compose.mjs):
+#   1. skips weekends and NYSE holidays (data/market-calendar.json, copied from Rosie)
+#   2. fetches the day's closes for Rosie's watchlists + SPY/QQQ/DIA/IWM + VIX
+#   3. writes data/harbor/<date>.data.json in Rosie's voice (words only by default)
+#   4. builds the site and runs the Harbor tests: the voice gates fail the run on any
+#      advice wording, so nothing advice-like can be committed or uploaded
+#   5. commits the edition and the rebuilt harbor-now/ folder
+#   6. uploads ONLY harbor-now/ over FTPS to the GoDaddy host
+#
+# Safety switch: dry run is the default. Until the repository variable HARBOR_DRY_RUN is set
+# to "false" (Settings > Secrets and variables > Actions > Variables), scheduled runs only
+# preview the edition in the run summary and as an artifact: no commit, no upload.
+# A manual run (Actions > Harbor Now daily edition > Run workflow) also defaults to dry run.
+#
+# Upload secrets (Settings > Secrets and variables > Actions > Secrets):
+#   HARBOR_FTP_HOST, HARBOR_FTP_USER, HARBOR_FTP_PASSWORD, and optional HARBOR_FTP_DIR
+#   (default "/", for an FTP account whose home is public_html/harbor-now).
+#   If any required secret is missing the upload step is skipped cleanly.
+# Optional: TIINGO_API_TOKEN (official end-of-day data; otherwise Yahoo chart data).
+#
+# Failure alerts: GitHub emails the repository owner when a scheduled run fails.
+# Note: GitHub pauses scheduled workflows in a public repository after 60 days with no
+# commits. Live daily commits keep it running; during a long dry-run period, re-enable it
+# from the Actions tab if GitHub pauses it.
+name: Harbor Now daily edition
+
+on:
+  schedule:
+    # 5:30 PM New York time on weekdays. Two crons cover EST and EDT; the script skips
+    # the early one (before 5:15 PM ET) and the late one when the edition already exists.
+    - cron: '30 21 * * 1-5'
+    - cron: '30 22 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      date:
+        description: 'Close to describe (YYYY-MM-DD). Empty = today in New York.'
+        required: false
+        default: ''
+      dry_run:
+        description: 'Dry run: preview only, no commit and no upload'
+        type: boolean
+        default: true
+      data_level:
+        description: 'words (no numbers) or pct (rounded % changes). Empty = data/harbor-config.json'
+        required: false
+        default: ''
+      force:
+        description: 'Rewrite the edition if it already exists'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: harbor-daily
+  cancel-in-progress: false
+
+jobs:
+  edition:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      # Manual runs use the checkbox; scheduled runs use the repo variable, dry unless "false".
+      HARBOR_DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && (inputs.dry_run && 'true' || 'false') || (vars.HARBOR_DRY_RUN == 'false' && 'false' || 'true') }}
+      HARBOR_DATA_LEVEL: ${{ inputs.data_level }}
+      TIINGO_API_TOKEN: ${{ secrets.TIINGO_API_TOKEN }}
+      TZ: America/New_York
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install (no browsers needed)
+        run: npm ci
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+
+      - name: Write the edition
+        id: gen
+        env:
+          INPUT_DATE: ${{ inputs.date }}
+          INPUT_FORCE: ${{ inputs.force }}
+          EVENT: ${{ github.event_name }}
+        run: |
+          args=()
+          if [ -n "$INPUT_DATE" ]; then args+=("--date=$INPUT_DATE"); fi
+          if [ "$EVENT" = "schedule" ]; then args+=("--scheduled"); fi
+          if [ "$INPUT_FORCE" = "true" ]; then args+=("--force"); fi
+          if [ "$HARBOR_DRY_RUN" != "false" ]; then args+=("--dry-run"); fi
+          node scripts/harbor-daily.mjs "${args[@]}"
+
+      - name: Keep the dry-run edition as an artifact
+        if: steps.gen.outputs.status == 'dry-run'
+        uses: actions/upload-artifact@v4
+        with:
+          name: harbor-dry-run-${{ steps.gen.outputs.date }}
+          path: dist/harbor-dry-run/
+          retention-days: 14
+
+      - name: Build and run the Harbor gates
+        if: steps.gen.outputs.status == 'written'
+        run: |
+          npm run build
+          node --test tests/harbor-now.test.mjs tests/harbor-daily.test.mjs
+
+      - name: Commit the edition
+        if: steps.gen.outputs.status == 'written'
+        run: |
+          git config user.name "Rosie (Harbor Now publisher)"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/harbor harbor-now
+          if git diff --cached --quiet; then echo "nothing to commit"; exit 0; fi
+          git commit -m "Harbor Now: edition for ${{ steps.gen.outputs.date }}"
+          git pull --rebase --quiet origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+      - name: Upload harbor-now/ to the website (FTPS)
+        if: steps.gen.outputs.status == 'written'
+        env:
+          FTP_HOST: ${{ secrets.HARBOR_FTP_HOST }}
+          FTP_USER: ${{ secrets.HARBOR_FTP_USER }}
+          FTP_DIR: ${{ secrets.HARBOR_FTP_DIR }}
+          # Set the repo variable HARBOR_FTP_VERIFY_CERT to "no" only if GoDaddy's shared
+          # certificate does not match the FTP host name (the link is still encrypted).
+          FTP_VERIFY_CERT: ${{ vars.HARBOR_FTP_VERIFY_CERT || 'yes' }}
+          LFTP_PASSWORD: ${{ secrets.HARBOR_FTP_PASSWORD }} # read by lftp --env-password
+        run: |
+          if [ -z "$FTP_HOST" ] || [ -z "$FTP_USER" ] || [ -z "$LFTP_PASSWORD" ]; then
+            echo "::notice::Upload skipped: HARBOR_FTP_HOST, HARBOR_FTP_USER and HARBOR_FTP_PASSWORD are not all set. The edition is committed; the website is unchanged."
+            echo "Upload skipped (FTP secrets not set)." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+          # FTPS (TLS) only: the password never crosses the internet in clear text.
+          # Uploads only the harbor-now/ folder, newer files only, never deletes anything remote.
+          lftp -e "set ftp:ssl-force true; set ftp:ssl-protect-data true; set ssl:verify-certificate $FTP_VERIFY_CERT; set net:max-retries 3; set net:timeout 30; mirror --reverse --only-newer --verbose harbor-now ${FTP_DIR:-/}; bye" \
+            -u "$FTP_USER" --env-password "$FTP_HOST"
+          echo "Uploaded harbor-now/ for ${{ steps.gen.outputs.date }}." >> "$GITHUB_STEP_SUMMARY"

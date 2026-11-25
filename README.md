@@ -99,10 +99,8 @@ Zero-framework static build. No bundler, no CSS preprocessor, no client framewor
 - `src/harbor.mjs` — called by `src/render.mjs`; renders `harbor-now/index.html` (latest edition +
   archive) and `harbor-now/<date>/index.html`. Public pages are built from an **allowlist** of
   fields; account/broker/mission/checklist material is dropped here (see `DROPPED_FIELDS`), never
-  by editing the source JSON. Every page carries the educational-commentary notice; when the
-  latest edition is more than 3 days old (checked at build time, New York date, or
-  `HARBOR_NOW_TODAY=YYYY-MM-DD`) a neutral "Latest edition: … Publishing is being restarted." note
-  is shown. `vercel.json` redirects `/data/harbor/*` so the unfiltered source is not served here.
+  by editing the source JSON. Every page carries the educational-commentary notice; freshness is checked in the
+  browser (see "Freshness" below), because a static page is not rebuilt when publishing stops. `vercel.json` redirects `/data/harbor/*` so the unfiltered source is not served here.
 - `data/harbor-voice/<date>.json` — the voice layer for Harbor Now. `"rewrites"` maps exact source
   text to the descriptive, first-person wording that renders (no advice: no "protect first", "size
   down", "wait", "no chase", "discipline first"); `"descriptive"` lists text that contains a
@@ -111,6 +109,22 @@ Zero-framework static build. No bundler, no CSS preprocessor, no client framewor
   chase, stay, hold, trim, buy, sell, add, keep, let, treat, …) with no entry, when advice wording
   would render, or when a voice entry no longer matches its edition. Add the rewrite, then rebuild.
 - `harbor-now/` — **generated artifact**, committed like `index.html`
+- **Daily editions (2026-11-25).** `.github/workflows/harbor-daily.yml` runs weekdays at 5:30 PM
+  New York time (two crons for EST/EDT), skips NYSE holidays (`data/market-calendar.json`, copied
+  from Rosie's `market_calendar.py`), and runs `scripts/harbor-daily.mjs`: closes from
+  `scripts/harbor-data.mjs` (Tiingo when `TIINGO_API_TOKEN` is set, else Yahoo Finance chart data;
+  VIX from Yahoo), sentences from the fixed Rosie templates in `src/harbor-compose.mjs`, symbols
+  from `data/harbor-config.json` (Rosie's Watchlist I named, Watchlist II as a group only, the
+  four index funds as context, no news, no XRP). `data_level` is `words` (no numbers) until the
+  lawyer clears `pct` (rounded % changes); prices are never published. A live run builds, runs
+  the Harbor tests (the voice gates are the advice filter), commits, and uploads **only**
+  `harbor-now/` over FTPS with the `HARBOR_FTP_*` secrets (skipped cleanly when unset).
+  **Dry run is the default**: nothing is committed or uploaded until the repository variable
+  `HARBOR_DRY_RUN` is `false`. Try it locally: `node scripts/harbor-daily.mjs --dry-run
+  [--date=YYYY-MM-DD] [--data-level=pct]`.
+- Freshness: `harbor-now/fresh.js` (generated from `src/harbor-calendar.mjs`) fills a hidden note
+  in the browser: soft at 1–2 missed trading days, clear at 3+. Until the first daily edition, a
+  calm "Daily editions resume soon" line shows instead.
 - `tests/harbor-now.test.mjs`, `tests/harbor-rendered.test.mjs` — Harbor Now build, notice,
   dropped-field, link and overflow checks
 
