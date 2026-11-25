@@ -13,7 +13,7 @@ import {
   HARBOR_NOTICE,
   DROPPED_FIELDS,
   buildHarbor,
-  staleNote,
+  RESUME_NOTE,
   prettyDate,
   longDate,
   publicClusterLine,
@@ -56,10 +56,15 @@ const visible = ($) => {
   return norm(c('body').text());
 };
 
-test('harbor: the data files are the copied lime-web-public archive, 47 editions', () => {
-  assert.equal(dates.length, 47);
-  assert.equal(dates[0], '2026-07-13');
-  assert.equal(dates.at(-1), '2026-09-29');
+test('harbor: the copied lime-web-public archive is 47 editions; anything newer comes from the daily publisher', () => {
+  const legacy = dates.filter((d) => !raw(d).schema);
+  assert.equal(legacy.length, 47);
+  assert.equal(legacy[0], '2026-07-13');
+  assert.equal(legacy.at(-1), '2026-09-29');
+  for (const d of dates.filter((x) => raw(x).schema)) {
+    assert.equal(raw(d).schema, 'rosie-daily-v1', `${d}: unknown schema`);
+    assert.ok(d > '2026-09-29', `${d}: a generated edition must be newer than the archive`);
+  }
 });
 
 test('harbor: the index and every archive date have a built page', () => {
@@ -176,35 +181,45 @@ test('harbor: cluster lines keep the description and lose directives', () => {
   assert.equal(scrub('Account U1234567 and DU7654321'), 'Account [redacted] and [redacted]');
 });
 
-test('harbor: the restart note appears only when the latest edition is more than 3 days old', async () => {
-  const latest = dates.at(-1);
-  const plus = (n) => new Date(Date.parse(`${latest}T00:00:00Z`) + n * 86400000).toISOString().slice(0, 10);
+test('harbor: the calm "resume soon" line shows until the first daily edition, then the browser freshness note takes over', async () => {
   const { canonical, pages: sitePages } = JSON.parse(readFileSync(path.join(root, 'data/homepage.json'), 'utf8'));
   const tmp = mkdtempSync(path.join(tmpdir(), 'harbor-'));
   mkdirSync(path.join(tmp, 'data'), { recursive: true });
+  cpSync(path.join(root, 'data', 'market-calendar.json'), path.join(tmp, 'data', 'market-calendar.json'));
   cpSync(dataDir, path.join(tmp, 'data', 'harbor'), { recursive: true });
   cpSync(voiceDir, path.join(tmp, VOICE_DIR), { recursive: true });
-  const prev = process.env.HARBOR_NOW_TODAY;
-  try {
-    for (const [days, expected] of [[0, false], [3, false], [4, true], [29, true]]) {
-      process.env.HARBOR_NOW_TODAY = plus(days);
-      const res = await buildHarbor(tmp, canonical, { pages: sitePages });
-      assert.equal(res.stale, expected, `${days} days old`);
-      for (const rel of ['harbor-now/index.html', `harbor-now/${latest}/index.html`, `harbor-now/${dates[0]}/index.html`]) {
-        const $ = cheerio.load(readFileSync(path.join(tmp, rel), 'utf8'));
-        const note = $('[data-harbor-stale]');
-        assert.equal(note.length, expected ? 1 : 0, `${rel} at ${days} days`);
-        if (expected) {
-          assert.equal(norm(note.text()), staleNote(latest));
-          assert.equal(norm(note.text()), `Latest edition: ${prettyDate(latest)}. Publishing is being restarted.`);
-        }
-        assert.equal($('[data-harbor-notice]').length, 1);
+  const legacyLatest = dates.filter((d) => !raw(d).schema).at(-1);
+  const check = (rels, resume) => {
+    for (const rel of rels) {
+      const $ = cheerio.load(readFileSync(path.join(tmp, rel), 'utf8'));
+      assert.equal($('[data-harbor-resume]').length, resume ? 1 : 0, `${rel}: resume line`);
+      assert.equal($('[data-harbor-fresh]').length, resume ? 0 : 1, `${rel}: freshness slot`);
+      if (resume) assert.equal(norm($('[data-harbor-resume]').text()), 'Daily editions resume soon; the archive below is from July–September.');
+      else {
+        const f = $('[data-harbor-fresh]');
+        assert.ok(f.is('[hidden]'), `${rel}: the freshness slot starts hidden (no-JS readers see the dated edition)`);
+        assert.equal(norm(f.text()), '', `${rel}: the slot is filled only in the browser`);
       }
+      assert.equal($('script[src="/harbor-now/fresh.js"]').length, 1, `${rel}: freshness script`);
+      assert.equal($('[data-harbor-stale]').length, 0, `${rel}: no build-time stale note any more`);
+      assert.equal($('[data-harbor-notice]').length, 1);
     }
-  } finally {
-    if (prev === undefined) delete process.env.HARBOR_NOW_TODAY;
-    else process.env.HARBOR_NOW_TODAY = prev;
-  }
+  };
+  const res1 = await buildHarbor(tmp, canonical, { pages: sitePages });
+  assert.equal(res1.resume, !dates.some((d) => raw(d).schema));
+  if (res1.resume) check(['harbor-now/index.html', `harbor-now/${legacyLatest}/index.html`], true);
+  assert.ok(existsSync(path.join(tmp, 'harbor-now', 'fresh.js')));
+  assert.equal(RESUME_NOTE, 'Daily editions resume soon; the archive below is from July–September.');
+
+  // A generated edition ends the resume line on every page.
+  const sample = JSON.parse(readFileSync(path.join(root, 'tests', 'fixtures', 'harbor-daily-2026-11-24.words.json'), 'utf8'));
+  writeFileSync(path.join(tmp, 'data', 'harbor', '2026-11-24.data.json'), JSON.stringify(sample));
+  const res2 = await buildHarbor(tmp, canonical, { pages: sitePages });
+  assert.equal(res2.resume, false);
+  assert.equal(res2.latest, '2026-11-24');
+  check(['harbor-now/index.html', 'harbor-now/2026-11-24/index.html', `harbor-now/${legacyLatest}/index.html`], false);
+  const $ = cheerio.load(readFileSync(path.join(tmp, 'harbor-now/index.html'), 'utf8'));
+  assert.equal($('[data-harbor-fresh]').attr('data-latest'), '2026-11-24');
 });
 
 test('harbor: no signup, form, capture or alerts promise on any page', () => {

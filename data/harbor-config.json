@@ -1,0 +1,124 @@
+{
+  "_about": "Harbor Now daily publisher settings (scripts/harbor-daily.mjs). Owner decision 2026-11-25: Harbor Now covers only the symbols on Rosie's own watchlists, no outside news. The four index funds are context only.",
+  "data_level": "words",
+  "_data_level": "\"words\" (default): no market numbers on the page, only words (rose, slipped, most, a few). \"pct\": adds rounded percent changes (about 0.5%). Switch to \"pct\" only after the lawyer clears it. Prices are never published in either mode.",
+  "provider": "auto",
+  "_provider": "\"auto\": Tiingo end-of-day prices when the TIINGO_API_TOKEN secret is set, otherwise Yahoo Finance's public chart endpoint. VIX always comes from Yahoo (^VIX). Neither source licenses public display of raw prices, which is why the page shows words (or rounded % in pct mode) and never prices.",
+  "index_funds": [
+    {
+      "symbol": "SPY",
+      "key": "spy",
+      "name": "S&P 500 ETF"
+    },
+    {
+      "symbol": "QQQ",
+      "key": "qqq",
+      "name": "Nasdaq 100 ETF"
+    },
+    {
+      "symbol": "DIA",
+      "key": "dia",
+      "name": "Dow 30 ETF"
+    },
+    {
+      "symbol": "IWM",
+      "key": "iwm",
+      "name": "Russell 2000 ETF"
+    }
+  ],
+  "watchlist_i": {
+    "_source": "Rosie's Watchlist I panel: SEED_ORDER in nrini49/schwab trade_universe.py = PERMITTED_ORDER in nrini49/interactive (main, read 2026-11-25). Index funds are left out here (context only), and so are crypto (BTC, ETH, XRP: 24-hour markets with no NYSE close; XRP stays off everything public) and SQQQ (tradable, never on the panel). Re-sync when Rosie's list changes.",
+    "name_symbols": true,
+    "symbols": [
+      "HYG",
+      "XLF",
+      "TLT",
+      "BAC",
+      "XLE",
+      "TNA",
+      "SLV",
+      "SMCI",
+      "NVDA",
+      "ETN",
+      "PWR",
+      "GEV",
+      "AAPL",
+      "MSFT",
+      "TSLA",
+      "AMZN",
+      "GOOGL",
+      "META",
+      "AMD",
+      "AVGO",
+      "QCOM",
+      "MU",
+      "JPM",
+      "GS",
+      "XLK",
+      "XLI",
+      "GLD",
+      "ORCL",
+      "CRM",
+      "SNOW",
+      "PLTR",
+      "UNH",
+      "JNJ",
+      "MSTR"
+    ]
+  },
+  "watchlist_ii": {
+    "_source": "Rosie's Watchlist II seed: candidates.json in nrini49/interactive and nrini49/schwab (main, read 2026-11-25), minus the index funds. Watchlist II is seeded partly from outside mentions, so it is described as a group only (name_symbols false): Harbor Now never re-posts anyone's picks. Re-sync when candidates.json changes.",
+    "name_symbols": false,
+    "symbols": [
+      "AMAT",
+      "ASML",
+      "CBRS",
+      "CRCL",
+      "DELL",
+      "EWZ",
+      "FROG",
+      "GLD",
+      "IBM",
+      "IGV",
+      "IOT",
+      "LITE",
+      "LRCX",
+      "MRVL",
+      "MU",
+      "NBIS",
+      "NU",
+      "NVDA",
+      "PBR",
+      "RBRK",
+      "SHOP",
+      "SMH",
+      "SPCX",
+      "XBI",
+      "XLI",
+      "XLV",
+      "XP",
+      "ZETA"
+    ]
+  },
+  "never_publish": [
+    "XRP"
+  ],
+  "min_coverage": 0.8,
+  "_min_coverage": "The run fails (and GitHub emails the owner) if fewer than this share of a list's symbols have both closes, or if any index fund or VIX is missing.",
+  "sector_funds": [
+    "XLK",
+    "XLF",
+    "XLE",
+    "XLV",
+    "XLY",
+    "XLP",
+    "XLI",
+    "XLB",
+    "XLU",
+    "XLRE",
+    "XLC",
+    "SMH"
+  ],
+  "_sector_funds": "The eleven SPDR sector ETFs (Rosie's Lime Sniper SECTOR_ETFS) plus SMH for semiconductors. The hot sector is ranked the way Rosie's sector funnel ranks it: strength against SPY over recent sessions plus today's. Member lists: data/sector-members.json.",
+  "_convergence": "Three legs, from Rosie's own rules on daily closes: (1) the four index funds rising, (2) the hot sector rising with them, (3) the strongest rising names inside the hot sector, Watchlist I names first, then Rosie's sector member list. 'Rising' is the daily form of Lime Sniper's all-three-rising filter: close above its trend average and that average pointing up. Trend colours use Rosie's regime averages. The page describes these in plain words and never prints the periods or weights."
+}

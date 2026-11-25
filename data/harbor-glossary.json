@@ -1,0 +1,75 @@
+{
+  "_about": "Harbor Now's metaphor key (owner, 2026-11-25): one sea or weather image per trading term, used the same way every time, each with a plain meaning. The daily editions take their images from this file and add the short meaning in brackets the first time an image appears in an edition; the 'How to read Harbor Now' key on every Harbor page renders the full list. Educational only: an image describes the market, it never says what to do.",
+  "entries": [
+    {
+      "id": "harbor",
+      "image": "the harbor",
+      "inline": "my written trading rules",
+      "meaning": "Where I start every day: my written trading rules and protective stops. Harbor Now is my daily report from there.",
+      "term": "Trading plan and risk rules"
+    },
+    {
+      "id": "tide",
+      "image": "the tide",
+      "inline": "the trend of the four main index funds",
+      "meaning": "The direction the whole market is moving, read from the four main index funds (SPY, QQQ, DIA, IWM). The tide is rising when all four close above rising trend lines, mixed when only some do, and going out when none do.",
+      "term": "Market trend (broad indexes)"
+    },
+    {
+      "id": "trend_line",
+      "image": "the trend line",
+      "inline": "a smoothed average of recent closes",
+      "meaning": "A smoothed average of recent closing prices. A name is rising, in my reading, when it closes above its trend line and that line is pointing up.",
+      "term": "Moving average (exponential)"
+    },
+    {
+      "id": "weather",
+      "image": "the weather",
+      "inline": "how calm or stormy prices are, read from VIX, the market's fear gauge",
+      "meaning": "How calm or stormy price swings are. Calm means VIX, the market's fear gauge, eased. Choppy means it rose. Stormy means it jumped. The weather describes the mood of the day; it predicts nothing.",
+      "term": "Volatility (VIX)"
+    },
+    {
+      "id": "wind",
+      "image": "the wind picking up",
+      "inline": "a large move in the same direction as the tide",
+      "meaning": "Momentum: a day when the broad market moved strongly in the same direction as the tide. A wind against the tide is a strong move the other way.",
+      "term": "Momentum"
+    },
+    {
+      "id": "hot_sector",
+      "image": "the hot sector",
+      "inline": "the sector fund strongest against SPY",
+      "meaning": "The one of the eleven sector funds (plus semiconductors) that has been strongest against SPY over recent sessions and today. The coolest sector is the weakest one.",
+      "term": "Sector relative strength leader"
+    },
+    {
+      "id": "crosscurrent",
+      "image": "a crosscurrent",
+      "inline": "a sector moving against the tide",
+      "meaning": "The hot sector rising while the tide is not, or the other way round: the two point in different directions.",
+      "term": "Divergence"
+    },
+    {
+      "id": "line_up",
+      "image": "the lights line up",
+      "inline": "my three signals point the same way",
+      "meaning": "Sailors enter a harbor by lining up two lights on shore. My three lights are the tide rising, the hot sector rising with it, and the strongest names inside that sector rising too. When all three point the same way, I say they line up.",
+      "term": "Signal convergence"
+    },
+    {
+      "id": "headwind",
+      "image": "a headwind",
+      "inline": "a price level where rises have stalled before",
+      "meaning": "A price level above the market where earlier rises ran out of steam. Prices meeting a headwind often slow down; sometimes they push through.",
+      "term": "Resistance"
+    },
+    {
+      "id": "anchorage",
+      "image": "an anchorage",
+      "inline": "a price level where falls have stopped before",
+      "meaning": "A price level below the market where earlier declines came to rest. It describes the past; it is no promise the next decline stops there.",
+      "term": "Support"
+    }
+  ]
+}
