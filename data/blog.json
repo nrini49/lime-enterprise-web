@@ -1,5 +1,5 @@
 {
-  "_comment": "Blog posts, newest first (a pinned post stays on top). Never add an invented post. Each post: { \"id\": \"slug\", \"date\": \"YYYY-MM-DD\", \"title\": \"...\", \"author\": \"...\", \"summary\": \"...\", \"url\": \"/blog/#slug\", \"pinned\": true|false, \"body\": [\"paragraph\", ...] }. A post with a body is shown in full on the Blog page. Comments are not built yet: posts end with a 'Share your experience' link to the contact section, never a fake comment box.",
+  "_comment": "Blog posts, newest first (a pinned post stays on top). Never add an invented post. Each post: { \"id\": \"slug\", \"date\": \"YYYY-MM-DD\", \"title\": \"...\", \"author\": \"...\", \"summary\": \"...\", \"url\": \"/blog/#slug\", \"pinned\": true|false, \"body\": [\"paragraph\", ...] }. A post with a body is shown in full on the Blog page. A post with a body ends with a 'Share your experience' link to the contact section and takes reader comments (assets/js/comments.js + comments-api/index.php on the GoDaddy host; the list of posts that take comments is generated into comments-api/posts.json).",
   "posts": [
     {
       "id": "who-judges-rosies-rules",

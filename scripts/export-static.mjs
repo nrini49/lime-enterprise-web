@@ -6,7 +6,8 @@
  *   npm run package:godaddy           →   dist/ plus a zip
  * dist/ is gitignored. It holds the four pages, 404.html, the Harbor Now
  * editions, the sample-data demos, the assets, and an .htaccess. It does not
- * include /preview/evidence/, source, tests, or data. Nothing here uploads
+ * include /preview/evidence/, source, tests, or data. comments-api/ is the blog
+ * comments endpoint (PHP); its stored comments live outside public_html. Nothing here uploads
  * anything; the upload is a separate, manual step after Noal approves.
  */
 import { cp, rm, mkdir, access } from 'node:fs/promises';
@@ -27,6 +28,7 @@ const SHIP = [
   'rosie-demo',
   'rosie-demo-schwab',
   'assets',
+  'comments-api',
 ];
 
 async function mustExist(rel) {
@@ -41,6 +43,9 @@ for (const item of SHIP) await mustExist(item);
 
 await rm(out, { recursive: true, force: true });
 await mkdir(out, { recursive: true });
-for (const item of SHIP) await cp(path.join(root, item), path.join(out, item), { recursive: true });
+// Never ship stored comments from a local test run: only the folder's own .htaccess.
+const commentData = path.join(root, 'comments-api', 'data') + path.sep;
+const shipIt = (src) => !src.startsWith(commentData) || path.basename(src) === '.htaccess';
+for (const item of SHIP) await cp(path.join(root, item), path.join(out, item), { recursive: true, filter: shipIt });
 const { redirects } = await writeHtaccess(out, root);
 console.log(`exported ${SHIP.join(', ')} and .htaccess (${redirects} redirects) to dist/`);

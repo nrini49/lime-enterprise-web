@@ -191,10 +191,10 @@
       "path": "/blog/",
       "file": "blog/index.html",
       "title": "Blog — Lime Signalworks",
-      "description": "The Lime Signalworks blog: experiences with Rosie, Tech Tips, and, later, comments from readers. The first posts are coming soon.",
+      "description": "The Lime Signalworks blog: experiences with Rosie, Tech Tips, and comments from readers.",
       "eyebrow": "Lime Signalworks · Blog",
       "heading": "Blog",
-      "lede": "A place for experiences with Rosie, Tech Tips, and, later, your comments."
+      "lede": "A place for experiences with Rosie, Tech Tips, and your comments."
     }
   ],
   "sectionOrder": [

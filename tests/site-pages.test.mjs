@@ -91,7 +91,7 @@ test('site: assets are root-relative files that exist, with no host-specific pat
   }
 });
 
-test('blog: an honest empty state until a real post exists, and no comment form', () => {
+test('blog: an honest empty state until a real post exists, and no comment box in the served markup', () => {
   const $ = load('blog/index.html');
   assert.equal(norm($('h1').text()), 'Blog');
   if (blog.posts.length === 0) {
@@ -101,7 +101,7 @@ test('blog: an honest empty state until a real post exists, and no comment form'
   } else {
     assert.equal($('[data-blog-posts] li').length, blog.posts.length);
   }
-  assert.equal($('form, input, textarea, select').length, 0, 'no comment backend or form yet');
+  assert.equal($('form, input, textarea, select').length, 0, 'the comment box is built by comments.js only where the endpoint answers');
 });
 
 test('harbor: the "Latest from the blog" strip closes the Harbor Now page', () => {
@@ -124,7 +124,8 @@ test('site: no page names anyone outside the approved credits', () => {
 });
 
 // 2026-11-22 (owner t1991u): the first, pinned post anchors the blog. Shown in full, by Noal,
-// ending with a "Share your experience" link to the contact section (no comment box yet).
+// ending with a "Share your experience" link to the contact section. Comments (2026-11-24) are
+// built by assets/js/comments.js, so the served markup still has no box (tests/blog-comments.test.mjs).
 test('blog: the pinned first post is shown in full, by Noal, with a link to share an experience', () => {
   const $ = load('blog/index.html');
   const first = $('[data-blog-posts] > li').first();
@@ -144,5 +145,5 @@ test('blog: the pinned first post is shown in full, by Noal, with a link to shar
   assert.equal(share.attr('href'), '#contact');
   assert.equal(share.attr('target'), undefined);
   assert.equal($('#contact').length, 1, 'the contact section is on the page');
-  assert.equal($('form, input, textarea, select, button').length, 0, 'no fake comment box');
+  assert.equal($('form, input, textarea, select, button').length, 0, 'no box in the served markup');
 });
