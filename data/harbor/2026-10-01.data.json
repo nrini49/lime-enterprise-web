@@ -1,0 +1,69 @@
+{
+  "schema": "rosie-daily-v1",
+  "data_level": "words",
+  "title": "No line-up: Semiconductors rising while the indexes are not",
+  "tag": "Line-up: none of my three lights today (lining up: my three signals agree).",
+  "lead": [
+    "Line-up: none of my three lights today (lining up: my three signals agree)",
+    "Tide (index trend): mixed, only QQQ above rising trend lines (a smoothed average)",
+    "Hot sector (strongest vs SPY): Semiconductors, rising while the tide goes out, a crosscurrent (a sector moving against the tide)",
+    "Top names inside: MU, AMD and NVDA, rising and stronger than SPY"
+  ],
+  "convergence": {
+    "summary": "Today none of the three point the same way. My rules look for all three together.",
+    "items": [
+      "Not lined up: the tide. QQQ closed above rising trend lines, SPY, DIA and IWM did not.",
+      "Not lined up: the hot sector. Semiconductors (SMH) leads the sector funds against SPY, above a rising trend line, while the indexes are not rising.",
+      "Not lined up: the strongest names. MU, AMD and NVDA are rising and stronger than SPY inside Semiconductors, though the sector itself is not lined up."
+    ]
+  },
+  "weather": {
+    "spy": {
+      "read": "Edged up on the day, below my middle trend line, above the long one"
+    },
+    "qqq": {
+      "read": "Edged up on the day, above a rising trend line"
+    },
+    "dia": {
+      "read": "Closed flat on the day, below my short, middle and long trend lines"
+    },
+    "iwm": {
+      "read": "Rose on the day, below my short, middle and long trend lines"
+    },
+    "volatility": "The weather (calm or stormy, per VIX) stayed steady",
+    "tone": "A split day: SPY, QQQ and IWM higher, none lower on the day",
+    "sentiment": {
+      "label": "Mixed",
+      "qualifier": "my own read of how many names on my Watchlist I and Watchlist II sit above rising trend lines, not a survey or a forecast"
+    }
+  },
+  "cluster": [
+    "Coolest sector: Real Estate (XLRE), weakest of the sector funds against SPY",
+    "Watchlist I, the names my rules allow me to trade: fewer than half sit above rising trend lines",
+    "Watchlist II, the candidates I am still measuring: more than half sit above rising trend lines"
+  ],
+  "_sources": {
+    "generator": "scripts/harbor-daily.mjs (fixed templates, src/harbor-compose.mjs)",
+    "data": "Yahoo Finance public chart data (end-of-day closes)",
+    "hot_sector": "SMH",
+    "sector_rank": [
+      "SMH",
+      "XLK",
+      "XLI",
+      "XLE",
+      "XLY",
+      "XLV",
+      "XLC",
+      "XLP",
+      "XLU",
+      "XLF",
+      "XLB",
+      "XLRE"
+    ],
+    "legs": {
+      "tide": "no",
+      "hot_sector": "no",
+      "names": "no"
+    }
+  }
+}

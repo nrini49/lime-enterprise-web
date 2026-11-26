@@ -61,7 +61,7 @@ function syntheticSeries(seed, { vol = 1.5, drift = () => 0 } = {}) {
 }
 const make = (series, dataLevel = 'words') => compose({ date: DATE, series, config, sectors, glossary, dataLevel });
 const editionText = (ed) =>
-  [ed.title, ed.tag, ...(ed.convergence ? [ed.convergence.summary, ...ed.convergence.items] : []),
+  [ed.title, ...(ed.lead || [ed.tag]), ...(ed.convergence ? [ed.convergence.summary, ...ed.convergence.items] : []),
     ...ed.rows.flatMap((r) => [r.read, r.change, r.price, r.high52]), ed.sentiment.label, ed.sentiment.qualifier,
     ed.volatility, ed.tone, ...ed.cluster].join(' \n ');
 
@@ -80,7 +80,11 @@ test('daily: every generated edition passes the Harbor voice gates with no voice
 test('daily: the edition leads with whether the three lights line up, and the legs follow Rosie\'s rules', () => {
   // Everything climbing steadily: tide rising, hot sector rising, names rising -> all three.
   const up = make(syntheticSeries(11, { vol: 0.3, drift: (s) => (s === '^VIX' ? -0.5 : 0.4 + (s.length % 3) * 0.15) }));
-  assert.match(up.tag, /^All three of my lights line up today \(my three signals point the same way\)\./);
+  assert.equal(up.lead.length, 4, 'four opening bullets');
+  assert.match(up.lead[0], /^Line-up: all three of my lights today \(lining up: my three signals agree\)$/);
+  assert.match(up.lead[1], /^Tide \(index trend\): rising, /);
+  assert.match(up.lead[2], /^Hot sector \(strongest vs SPY\): .+, rising with the tide$/);
+  assert.match(up.lead[3], /^Top names inside: .+, rising and stronger than SPY$/);
   assert.match(up.title, /^All three line up: indexes rising, .+ leading, .+ strongest inside it$/);
   assert.equal(up._sources.legs.tide, 'yes');
   assert.match(up.convergence.items[0], /^Lined up: the tide\./);
@@ -88,8 +92,9 @@ test('daily: the edition leads with whether the three lights line up, and the le
   const cross = make(syntheticSeries(12, { vol: 0.3, drift: (s) => (s === 'XLU' ? 0.8 : s === '^VIX' ? 0.5 : -0.5) }));
   assert.equal(cross._sources.hot_sector, 'XLU');
   assert.match(cross.title, /^No line-up: Utilities rising while the indexes are not$/);
-  assert.match(cross.tag, /a crosscurrent \(a sector moving against the tide\)/);
-  assert.match(cross.tag, /^None of my three lights line up today/);
+  assert.match(cross.lead[2], /^Hot sector \(strongest vs SPY\): Utilities, rising while the tide goes out, a crosscurrent \(a sector moving against the tide\)$/);
+  assert.match(cross.lead[0], /^Line-up: none of my three lights today/);
+  assert.match(cross.lead[1], /^Tide \(index trend\): going out, /);
 });
 
 test('daily: "rising" is Rosie\'s all-three-rising test on daily closes (above a rising trend average)', () => {
@@ -111,7 +116,7 @@ test('daily: every metaphor is defined in brackets the first time it appears, fr
     }
     for (const [id, word] of [['tide', 'tide'], ['weather', 'weather'], ['hot_sector', 'hot sector'], ['trend_line', 'trend line']]) {
       const e = glossary.entries.find((x) => x.id === id);
-      const first = text.toLowerCase().indexOf(word);
+      const first = text.search(new RegExp(`\\b${word}`, 'i'));
       assert.ok(first >= 0, `seed ${seed}: ${id} used`);
       const def = text.indexOf(`(${e.inline})`);
       assert.ok(def > first && def - first < word.length + 8, `seed ${seed}: "${word}" first appears without its meaning`);
@@ -158,7 +163,7 @@ test('daily: only Rosie\'s lists and sector funds; no news, no XRP; Watchlist II
       if (new RegExp(`\\b${s}\\b`).test(text)) assert.ok(hotMembers.has(s), `seed ${seed}: Watchlist II name ${s} published outside the hot-sector ranking`);
     }
     for (const line of raw.cluster) assert.match(line, /^(Coolest sector|Watchlist I|Watchlist II)\b/);
-    assert.deepEqual(Object.keys(raw).sort(), ['_sources', 'cluster', 'convergence', 'data_level', 'schema', 'tag', 'title', 'weather']);
+    assert.deepEqual(Object.keys(raw).sort(), ['_sources', 'cluster', 'convergence', 'data_level', 'lead', 'schema', 'tag', 'title', 'weather']);
     for (const f of ['account', 'checklist', 'body_muted']) assert.ok(!(f in raw) && f in DROPPED_FIELDS);
     assert.doesNotMatch(text, /earnings|catalyst|headline|news|report(s|ed)? (today|tomorrow)/i);
   }
@@ -169,7 +174,7 @@ test('daily: only Rosie\'s lists and sector funds; no news, no XRP; Watchlist II
 
 test('daily: Rosie speaks in the first person, describes, and promises nothing', () => {
   const ed = publicEdition(DATE, fixture('words'));
-  assert.match(ed.tag, /\bmy three lights\b/);
+  assert.match(ed.lead[0], /\bmy three lights\b/);
   const said = editionText(ed).replace('not a survey or a forecast', '');
   assert.doesNotMatch(said, /\b(will|guarantee|expect|forecast(s|ed)?|predict|profit|win(s|ning)?|benefit|promising)\b/i);
 });
@@ -259,6 +264,8 @@ test('render: a words edition shows no price columns; a pct edition shows only t
     assert.deepEqual(heads, lvl === 'words' ? ['Fund and how it closed'] : ['Fund', 'Change']);
     assert.equal($('[data-harbor-table] tbody tr').length, 4);
     assert.equal($('h2.hn-h').filter((_, e) => $(e).text() === 'My watchlists').length, 1);
+    assert.equal($('[data-harbor-lead] li').length, 4, 'the opening is four bullets');
+    assert.equal($('.hn-panel .hn-tag').length, 0, 'no run-on paragraph above the bullets');
     assert.equal($('[data-harbor-convergence] li').length, 3, 'the three lights');
     assert.ok($('[data-harbor-convergence]').index() < $('[data-harbor-table]').closest('.table-wrap').index(), 'the line-up comes before the table');
     assert.equal($('#how-to-read[data-harbor-key]').length, 1);
@@ -295,4 +302,33 @@ test('workflow: weekday 5:30 PM ET crons, manual trigger, dry run by default, FT
   assert.match(wf, /--env-password/, 'the password goes by environment, never on the command line');
   assert.doesNotMatch(wf, /echo[^\n]*\$\{?\{?\s*(secrets\.|\w*PASSWORD)/, 'no step prints a secret');
   assert.match(wf, /node --test tests\/harbor-now\.test\.mjs tests\/harbor-daily\.test\.mjs/);
+});
+
+test('daily: the opening is four short bullets, each one idea, never a run-on', () => {
+  for (let seed = 1; seed <= 150; seed++) {
+    for (const dataLevel of ['words', 'pct']) {
+      const ed = publicEdition(DATE, make(syntheticSeries(seed, { vol: seed % 4 ? 1.8 : 0.3 }), dataLevel));
+      assert.equal(ed.lead.length, 4, `seed ${seed}: four bullets`);
+      ['Line-up: ', 'Tide', 'Hot sector', 'Top names inside: '].forEach((p, i) => assert.ok(ed.lead[i].startsWith(p), `seed ${seed}: bullet ${i + 1} is "${p}"`));
+      for (const b of ed.lead) {
+        assert.ok(!/\. [A-Z]/.test(b), `seed ${seed}: one sentence per bullet: ${b}`);
+        assert.ok(b.split(/\s+/).length <= 22, `seed ${seed}: bullet too long: ${b}`);
+      }
+    }
+  }
+});
+
+test('daily: the title, the verdict bullet and the three lights always agree', () => {
+  const words = ['none', 'one', 'two', 'all three'];
+  for (let seed = 1; seed <= 300; seed++) {
+    const raw = make(syntheticSeries(seed, { vol: seed % 3 ? 1.8 : 0.4 }));
+    const legs = Object.values(raw._sources.legs);
+    const n = legs.filter((l) => l === 'yes').length;
+    assert.ok(raw.lead[0].includes(`${words[n]} of my three lights`) || (n === 3 && raw.lead[0].includes('all three of my lights')), `seed ${seed}: verdict ${raw.lead[0]} vs ${legs}`);
+    const lead = { 3: /^All three/, 2: /^Two of three/, 1: /^One of three/, 0: /^No line-up/ }[n];
+    assert.match(raw.title, lead, `seed ${seed}: title "${raw.title}" vs legs ${legs}`);
+    if (raw._sources.legs.names === 'yes') assert.doesNotMatch(raw.title, /no name in it/, `seed ${seed}`);
+    const named = /^Top names inside: (?!none)/.test(raw.lead[3]);
+    if (/no name in it/.test(raw.title)) assert.ok(!named, `seed ${seed}: title says no name but bullet names some`);
+  }
 });

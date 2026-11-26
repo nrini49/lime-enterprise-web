@@ -364,6 +364,8 @@ export function publicEdition(date, raw, voice = EMPTY_VOICE) {
     schema: typeof raw.schema === 'string' ? raw.schema : null,
     title: speak('title', raw.title),
     tag: speak('tag', raw.tag),
+    // Daily editions open with short bullets; legacy editions keep their one-paragraph tag.
+    lead: Array.isArray(raw.lead) ? raw.lead.map((l, i) => speak(`lead ${i + 1}`, l)) : null,
     rows: SYMBOLS.filter(([k]) => wx[k]).map(([k, symbol, name]) => ({
       symbol,
       name,
@@ -549,7 +551,9 @@ function renderEditionBody(ed, headingLevel = 'h1') {
               <p class="flag">Dated report — not real-time data</p>
             </div>
             <${headingLevel} class="hn-title">${esc(ed.title)}</${headingLevel}>
-            <p class="hn-tag">${esc(ed.tag)}</p>${conv}
+            ${ed.lead ? `<ul class="ticks hn-list hn-lead" data-harbor-lead>${ed.lead.map((l) => `
+              <li>${esc(l)}</li>`).join('')}
+            </ul>` : `<p class="hn-tag">${esc(ed.tag)}</p>`}${conv}
             ${renderTable(ed)}
             <dl class="hn-wx">
               <div><dt>Sentiment</dt><dd><strong>${esc(ed.sentiment.label)}</strong> — ${esc(ed.sentiment.qualifier)}</dd></div>

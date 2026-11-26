@@ -4,42 +4,42 @@
     {
       "id": "harbor",
       "image": "the harbor",
-      "inline": "my written trading rules",
+      "inline": "my written rules",
       "meaning": "Where I start every day: my written trading rules and protective stops. Harbor Now is my daily report from there.",
       "term": "Trading plan and risk rules"
     },
     {
       "id": "tide",
       "image": "the tide",
-      "inline": "the trend of the four main index funds",
+      "inline": "index trend",
       "meaning": "The direction the whole market is moving, read from the four main index funds (SPY, QQQ, DIA, IWM). The tide is rising when all four close above rising trend lines, mixed when only some do, and going out when none do.",
       "term": "Market trend (broad indexes)"
     },
     {
       "id": "trend_line",
       "image": "the trend line",
-      "inline": "a smoothed average of recent closes",
+      "inline": "a smoothed average",
       "meaning": "A smoothed average of recent closing prices. A name is rising, in my reading, when it closes above its trend line and that line is pointing up.",
       "term": "Moving average (exponential)"
     },
     {
       "id": "weather",
       "image": "the weather",
-      "inline": "how calm or stormy prices are, read from VIX, the market's fear gauge",
+      "inline": "calm or stormy, per VIX",
       "meaning": "How calm or stormy price swings are. Calm means VIX, the market's fear gauge, eased. Choppy means it rose. Stormy means it jumped. The weather describes the mood of the day; it predicts nothing.",
       "term": "Volatility (VIX)"
     },
     {
       "id": "wind",
       "image": "the wind picking up",
-      "inline": "a large move in the same direction as the tide",
+      "inline": "a big move with the tide",
       "meaning": "Momentum: a day when the broad market moved strongly in the same direction as the tide. A wind against the tide is a strong move the other way.",
       "term": "Momentum"
     },
     {
       "id": "hot_sector",
       "image": "the hot sector",
-      "inline": "the sector fund strongest against SPY",
+      "inline": "strongest vs SPY",
       "meaning": "The one of the eleven sector funds (plus semiconductors) that has been strongest against SPY over recent sessions and today. The coolest sector is the weakest one.",
       "term": "Sector relative strength leader"
     },
@@ -53,21 +53,21 @@
     {
       "id": "line_up",
       "image": "the lights line up",
-      "inline": "my three signals point the same way",
+      "inline": "my three signals agree",
       "meaning": "Sailors enter a harbor by lining up two lights on shore. My three lights are the tide rising, the hot sector rising with it, and the strongest names inside that sector rising too. When all three point the same way, I say they line up.",
       "term": "Signal convergence"
     },
     {
       "id": "headwind",
       "image": "a headwind",
-      "inline": "a price level where rises have stalled before",
+      "inline": "where rises stalled before",
       "meaning": "A price level above the market where earlier rises ran out of steam. Prices meeting a headwind often slow down; sometimes they push through.",
       "term": "Resistance"
     },
     {
       "id": "anchorage",
       "image": "an anchorage",
-      "inline": "a price level where falls have stopped before",
+      "inline": "where falls stopped before",
       "meaning": "A price level below the market where earlier declines came to rest. It describes the past; it is no promise the next decline stops there.",
       "term": "Support"
     }

@@ -1,0 +1,69 @@
+{
+  "schema": "rosie-daily-v1",
+  "data_level": "words",
+  "title": "No line-up: Materials rising while the indexes are not",
+  "tag": "Line-up: none of my three lights today (lining up: my three signals agree).",
+  "lead": [
+    "Line-up: none of my three lights today (lining up: my three signals agree)",
+    "Tide (index trend): mixed, only IWM above rising trend lines (a smoothed average)",
+    "Hot sector (strongest vs SPY): Materials, rising while the tide goes out, a crosscurrent (a sector moving against the tide)",
+    "Top names inside: VMC, MLM and SHW, rising and stronger than SPY"
+  ],
+  "convergence": {
+    "summary": "Today none of the three point the same way. My rules look for all three together.",
+    "items": [
+      "Not lined up: the tide. IWM closed above rising trend lines, SPY, QQQ and DIA did not.",
+      "Not lined up: the hot sector. Materials (XLB) leads the sector funds against SPY, above a rising trend line, while the indexes are not rising.",
+      "Not lined up: the strongest names. VMC, MLM and SHW are rising and stronger than SPY inside Materials, though the sector itself is not lined up."
+    ]
+  },
+  "weather": {
+    "spy": {
+      "read": "Slipped on the day, below my short, middle and long trend lines"
+    },
+    "qqq": {
+      "read": "Fell firmly on the day, below my short, middle and long trend lines"
+    },
+    "dia": {
+      "read": "Rose on the day, below my short, middle and long trend lines"
+    },
+    "iwm": {
+      "read": "Closed flat on the day, above a rising trend line"
+    },
+    "volatility": "The weather (calm or stormy, per VIX) turned stormy",
+    "tone": "A split day: DIA higher, SPY and QQQ lower on the day",
+    "sentiment": {
+      "label": "Soft",
+      "qualifier": "my own read of how many names on my Watchlist I and Watchlist II sit above rising trend lines, not a survey or a forecast"
+    }
+  },
+  "cluster": [
+    "Coolest sector: Semiconductors (SMH), weakest of the sector funds against SPY",
+    "Watchlist I, the names my rules allow me to trade: only a few sit above rising trend lines",
+    "Watchlist II, the candidates I am still measuring: only a few sit above rising trend lines"
+  ],
+  "_sources": {
+    "generator": "scripts/harbor-daily.mjs (fixed templates, src/harbor-compose.mjs)",
+    "data": "Yahoo Finance public chart data (end-of-day closes)",
+    "hot_sector": "XLB",
+    "sector_rank": [
+      "XLB",
+      "XLF",
+      "XLU",
+      "XLRE",
+      "XLP",
+      "XLY",
+      "XLV",
+      "XLI",
+      "XLE",
+      "XLC",
+      "XLK",
+      "SMH"
+    ],
+    "legs": {
+      "tide": "no",
+      "hot_sector": "no",
+      "names": "no"
+    }
+  }
+}

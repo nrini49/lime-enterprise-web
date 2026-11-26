@@ -1,0 +1,69 @@
+{
+  "schema": "rosie-daily-v1",
+  "data_level": "words",
+  "title": "Two of three line up: Communication Services and CHTR, TTWO and SIRI rising, the indexes only partly",
+  "tag": "Line-up: two of my three lights today (lining up: my three signals agree).",
+  "lead": [
+    "Line-up: two of my three lights today (lining up: my three signals agree)",
+    "Tide (index trend): mixed, only SPY, DIA and IWM above rising trend lines (a smoothed average)",
+    "Hot sector (strongest vs SPY): Communication Services, rising with the tide",
+    "Top names inside: CHTR, TTWO and SIRI, rising and stronger than SPY"
+  ],
+  "convergence": {
+    "summary": "Today two of the three point the same way. My rules look for all three together.",
+    "items": [
+      "Partly lined up: the tide. SPY, DIA and IWM closed above rising trend lines, QQQ did not.",
+      "Lined up: the hot sector. Communication Services (XLC) leads the sector funds against SPY, above a rising trend line.",
+      "Lined up: the strongest names. CHTR, TTWO and SIRI are rising and stronger than SPY inside Communication Services."
+    ]
+  },
+  "weather": {
+    "spy": {
+      "read": "Rose firmly on the day, above a rising trend line"
+    },
+    "qqq": {
+      "read": "Jumped on the day, below my long trend line"
+    },
+    "dia": {
+      "read": "Rose on the day, above a rising trend line"
+    },
+    "iwm": {
+      "read": "Rose on the day, above a rising trend line"
+    },
+    "volatility": "The weather (calm or stormy, per VIX) turned much calmer",
+    "tone": "Gains were broad: all four index funds closed higher on the day",
+    "sentiment": {
+      "label": "Mixed",
+      "qualifier": "my own read of how many names on my Watchlist I and Watchlist II sit above rising trend lines, not a survey or a forecast"
+    }
+  },
+  "cluster": [
+    "Coolest sector: Semiconductors (SMH), weakest of the sector funds against SPY",
+    "Watchlist I, the names my rules allow me to trade: about half sit above rising trend lines",
+    "Watchlist II, the candidates I am still measuring: only a few sit above rising trend lines"
+  ],
+  "_sources": {
+    "generator": "scripts/harbor-daily.mjs (fixed templates, src/harbor-compose.mjs)",
+    "data": "Yahoo Finance public chart data (end-of-day closes)",
+    "hot_sector": "XLC",
+    "sector_rank": [
+      "XLC",
+      "XLRE",
+      "XLP",
+      "XLV",
+      "XLF",
+      "XLY",
+      "XLU",
+      "XLI",
+      "XLB",
+      "XLK",
+      "XLE",
+      "SMH"
+    ],
+    "legs": {
+      "tide": "partly",
+      "hot_sector": "yes",
+      "names": "yes"
+    }
+  }
+}

@@ -130,6 +130,10 @@ Zero-framework static build. No bundler, no CSS preprocessor, no client framewor
   daily-close, public-data form of Lime Sniper's "all three rising" filter and sector funnel;
   spans and thresholds stay in code and are never printed. Add `--cache=FILE` to reuse fetched
   closes while testing.
+- **Opening bullets (2026-11-26).** Daily editions open with four short bullets (line-up verdict,
+  tide, hot sector, top names) instead of a paragraph; each image's short meaning sits in brackets
+  the first time it appears. Editions 2026-09-30 to 2026-11-25 were backfilled through the same
+  generator and voice gates from Yahoo end-of-day closes.
 - **Metaphor glossary.** `data/harbor-glossary.json` maps each image (tide, weather, wind, hot
   sector, crosscurrent, headwind, anchorage…) to one plain meaning and one technical term. Editions
   bracket the plain meaning the first time an image appears, and every page renders the fixed

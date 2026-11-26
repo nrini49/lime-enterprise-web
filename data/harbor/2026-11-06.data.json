@@ -1,0 +1,69 @@
+{
+  "schema": "rosie-daily-v1",
+  "data_level": "words",
+  "title": "No line-up: Consumer Discretionary rising while the indexes are not",
+  "tag": "Line-up: none of my three lights today (lining up: my three signals agree).",
+  "lead": [
+    "Line-up: none of my three lights today (lining up: my three signals agree)",
+    "Tide (index trend): going out, none of the four index funds above a rising trend line (a smoothed average)",
+    "Hot sector (strongest vs SPY): Consumer Discretionary, rising while the tide goes out, a crosscurrent (a sector moving against the tide)",
+    "Top names inside: AMZN, CMG and ABNB, rising and stronger than SPY"
+  ],
+  "convergence": {
+    "summary": "Today none of the three point the same way. My rules look for all three together.",
+    "items": [
+      "Not lined up: the tide. None of the four index funds closed above a rising trend line.",
+      "Not lined up: the hot sector. Consumer Discretionary (XLY) leads the sector funds against SPY, above a rising trend line, while the indexes are not rising.",
+      "Not lined up: the strongest names. AMZN, CMG and ABNB are rising and stronger than SPY inside Consumer Discretionary, though the sector itself is not lined up."
+    ]
+  },
+  "weather": {
+    "spy": {
+      "read": "Edged up on the day, below my short, middle and long trend lines"
+    },
+    "qqq": {
+      "read": "Rose firmly on the day, below my short, middle and long trend lines"
+    },
+    "dia": {
+      "read": "Edged lower on the day, below my short, middle and long trend lines"
+    },
+    "iwm": {
+      "read": "Rose on the day, below my short, middle and long trend lines"
+    },
+    "volatility": "The weather (calm or stormy, per VIX) turned much calmer",
+    "tone": "A split day: SPY, QQQ and IWM higher, DIA lower on the day",
+    "sentiment": {
+      "label": "Soft",
+      "qualifier": "my own read of how many names on my Watchlist I and Watchlist II sit above rising trend lines, not a survey or a forecast"
+    }
+  },
+  "cluster": [
+    "Coolest sector: Energy (XLE), weakest of the sector funds against SPY",
+    "Watchlist I, the names my rules allow me to trade: only a few sit above rising trend lines",
+    "Watchlist II, the candidates I am still measuring: only a few sit above rising trend lines"
+  ],
+  "_sources": {
+    "generator": "scripts/harbor-daily.mjs (fixed templates, src/harbor-compose.mjs)",
+    "data": "Yahoo Finance public chart data (end-of-day closes)",
+    "hot_sector": "XLY",
+    "sector_rank": [
+      "XLY",
+      "XLV",
+      "XLRE",
+      "XLF",
+      "XLU",
+      "XLP",
+      "XLB",
+      "XLC",
+      "XLI",
+      "SMH",
+      "XLK",
+      "XLE"
+    ],
+    "legs": {
+      "tide": "no",
+      "hot_sector": "no",
+      "names": "no"
+    }
+  }
+}
