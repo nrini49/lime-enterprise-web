@@ -127,8 +127,9 @@ test('harbor: each edition page shows its own date and its market table', () => 
     assert.deepEqual(syms, ['SPY', 'QQQ', 'DIA', 'IWM'], `${d}: market table`);
     const r = raw(d);
     const text = visible($);
+    // Legacy editions carry prices; daily editions in words mode carry none.
     for (const k of ['spy', 'qqq', 'dia', 'iwm']) {
-      assert.ok(text.includes(r.weather[k].price), `${d}: ${k} price`);
+      if (r.weather[k].price) assert.ok(text.includes(r.weather[k].price), `${d}: ${k} price`);
     }
     assert.ok(text.includes(r.weather.sentiment.label), `${d}: sentiment`);
     const ed = voiced(d);
@@ -215,11 +216,13 @@ test('harbor: the calm "resume soon" line shows until the first daily edition, t
   const sample = JSON.parse(readFileSync(path.join(root, 'tests', 'fixtures', 'harbor-daily-2026-11-24.words.json'), 'utf8'));
   writeFileSync(path.join(tmp, 'data', 'harbor', '2026-11-24.data.json'), JSON.stringify(sample));
   const res2 = await buildHarbor(tmp, canonical, { pages: sitePages });
+  // Once real daily editions are committed, the newest of them is the latest.
+  const expectLatest = [...dates, '2026-11-24'].sort().at(-1);
   assert.equal(res2.resume, false);
-  assert.equal(res2.latest, '2026-11-24');
+  assert.equal(res2.latest, expectLatest);
   check(['harbor-now/index.html', 'harbor-now/2026-11-24/index.html', `harbor-now/${legacyLatest}/index.html`], false);
   const $ = cheerio.load(readFileSync(path.join(tmp, 'harbor-now/index.html'), 'utf8'));
-  assert.equal($('[data-harbor-fresh]').attr('data-latest'), '2026-11-24');
+  assert.equal($('[data-harbor-fresh]').attr('data-latest'), expectLatest);
 });
 
 test('harbor: no signup, form, capture or alerts promise on any page', () => {
