@@ -318,6 +318,7 @@ test('data: prices are the locked figures (2026-11-26)', () => {
       ['Maintenance from month 19', '$330/year'],
       ['Options and futures add-on', '+$660'],
       ['Cryptocurrency and forex add-on', '+$660'],
+      ['Both add-ons together (save $330)', '+$990'],
     ],
   );
 });
@@ -776,8 +777,9 @@ test('dom: the footer carries the plain risk disclosure', () => {
   }
 });
 
-// 2026-11-26 (owner t2476u–t2478u): stocks and ETFs are the standard offering, included;
-// options and futures, and cryptocurrency and forex, are optional add-ons at +$660 each.
+// 2026-11-26 (owner t2476u–t2479u): stocks and ETFs are the standard offering, included;
+// options and futures, and cryptocurrency and forex, are optional add-ons at +$660 each;
+// both add-ons together are +$990, which saves $330.
 // Do not label those modules "Coming" or "Not live yet" (no "in development" wording either).
 test('dom: stocks and ETFs are the standard offering; other modules are optional add-ons at +$660', () => {
   const items = $('section#markets .roadmap li');
@@ -798,11 +800,13 @@ test('dom: stocks and ETFs are the standard offering; other modules are optional
     const text = norm(item.text());
     assert.match(text, /optional add-on/i, `${later} body names the optional add-on`);
     assert.match(text, /\+\$660/, `${later} body shows +$660`);
+    assert.match(text, /both add-ons together are \+\$990, which saves \$330/i, `${later} names the bundle and the $330 save`);
     assert.doesNotMatch(text, /not live/i, `${later} must not say not live yet`);
   }
   const intro = norm($('section#markets .section__head').text());
   assert.match(intro, /standard offering/i);
   assert.match(intro, /optional add-ons, each \+\$660/);
+  assert.match(intro, /both add-ons together are \+\$990, which saves \$330/i);
 });
 
 test('voice: no beta or in-development wording for the brokers, and a clean hero', () => {
