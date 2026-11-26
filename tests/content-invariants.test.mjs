@@ -309,13 +309,15 @@ test('data: the section order and the page each section sits on', () => {
   );
 });
 
-test('data: prices are the locked figures (2026-10-07)', () => {
+test('data: prices are the locked figures (2026-11-26)', () => {
   assert.deepEqual(
     pricing.rows.map((r) => [r.term, r.price]),
     [
       ['Rosie, paid over 18 months', '$3,300'],
       ['Monthly payment, months 1 to 18', '$183.33'],
       ['Maintenance from month 19', '$330/year'],
+      ['Options and futures add-on', '+$660'],
+      ['Cryptocurrency and forex add-on', '+$660'],
     ],
   );
 });
@@ -774,25 +776,33 @@ test('dom: the footer carries the plain risk disclosure', () => {
   }
 });
 
-// 2026-10-29 (content/rosie-queen-voice): owner direction. Interactive Brokers and Schwab
-// are both presented as working for stocks and ETFs; markets that are not live are
-// labelled "Coming" (no "in development" wording) and say plainly that they are not live.
-test('dom: markets not yet supported are labelled as coming, never as available', () => {
+// 2026-11-26 (owner t2476u–t2478u): stocks and ETFs are the standard offering, included;
+// options and futures, and cryptocurrency and forex, are optional add-ons at +$660 each.
+// Do not label those modules "Coming" or "Not live yet" (no "in development" wording either).
+test('dom: stocks and ETFs are the standard offering; other modules are optional add-ons at +$660', () => {
   const items = $('section#markets .roadmap li');
   assert.equal(items.length, 3);
   const byTitle = Object.fromEntries(
     items.map((_, el) => [[norm($(el).find('h3').text()), norm($(el).find('.flag').text())]]).get(),
   );
-  assert.match(byTitle['Stocks and ETFs'], /available today/i);
-  for (const later of ['Options and futures', 'Cryptocurrency and forex']) {
-    assert.match(byTitle[later], /coming/i, `${later} must be labelled coming`);
-    assert.doesNotMatch(byTitle[later], /available|live/i, `${later} must not read as available`);
-    const item = items.filter((_, el) => norm($(el).find('h3').text()) === later);
-    assert.match(norm(item.text()), /not live/i, `${later} says plainly it is not live`);
-  }
+  assert.match(byTitle['Stocks and ETFs'], /standard offering/i);
   const live = norm(items.first().text());
+  assert.match(live, /included/i, 'stocks and ETFs are included');
   assert.ok(/paper \(practice\) account/i.test(live), 'the evaluation paper status is stated');
   assert.doesNotMatch(live, /schwab/i, 'the paper line does not tie the paper account to Schwab');
+  for (const later of ['Options and futures', 'Cryptocurrency and forex']) {
+    assert.match(byTitle[later], /optional add-on/i, `${later} must be labelled an optional add-on`);
+    assert.match(byTitle[later], /\+\$660/, `${later} flag shows +$660`);
+    assert.doesNotMatch(byTitle[later], /coming|available today|not live/i, `${later} must not read as coming or not live`);
+    const item = items.filter((_, el) => norm($(el).find('h3').text()) === later);
+    const text = norm(item.text());
+    assert.match(text, /optional add-on/i, `${later} body names the optional add-on`);
+    assert.match(text, /\+\$660/, `${later} body shows +$660`);
+    assert.doesNotMatch(text, /not live/i, `${later} must not say not live yet`);
+  }
+  const intro = norm($('section#markets .section__head').text());
+  assert.match(intro, /standard offering/i);
+  assert.match(intro, /optional add-ons, each \+\$660/);
 });
 
 test('voice: no beta or in-development wording for the brokers, and a clean hero', () => {

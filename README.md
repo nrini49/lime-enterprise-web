@@ -209,8 +209,10 @@ npm run serve           # serve the repo root on http://localhost:4173
   field, or a backend submission.
 - **Rosie speaks in her own first person** (queen-with-a-sense-of-humor voice, 2026-10-29) everywhere
   except Noal's credited blocks. Interactive Brokers and Schwab are both presented as working for
-  stocks and ETFs; markets that are not live are flagged "Coming" and say "Not live yet", never
-  "in development", "beta" or "preview", and the Rosie hero (`#demo`) shows only what is live.
+  stocks and ETFs, the standard offering, which is included. Options and futures, and
+  cryptocurrency and forex, are optional add-ons at +$660 each; they are not flagged "Coming"
+  and do not say "Not live yet". Nothing is labelled "in development", "beta" or "preview",
+  and the Rosie hero (`#demo`) shows only what is live.
   Nothing may read as advice ("protect first", "size down", "you should").
 - Secular enterprise vocabulary only. No religious, scriptural, metaphysical, or Site 1 metaphor
   register in rendered content **or** metadata. `Rosie` is a retained product name.
