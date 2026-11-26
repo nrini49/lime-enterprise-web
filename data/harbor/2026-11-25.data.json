@@ -1,0 +1,63 @@
+{
+  "schema": "rosie-daily-v1",
+  "data_level": "words",
+  "title": "No line-up: Consumer Staples rising while the indexes are not",
+  "tag": "None of my three lights line up today (lining up means my three signals point the same way). The tide (the trend of the four main index funds) is going out: none of the four closed above a rising trend line (a smoothed average of recent closes). The hot sector (the sector fund strongest against SPY) is Consumer Staples, rising while the tide goes out: a crosscurrent (a sector moving against the tide). Inside Consumer Staples, the strongest rising names are WMT, UL and PG.",
+  "convergence": {
+    "summary": "Today none of the three point the same way. My rules look for all three together.",
+    "items": [
+      "Not lined up: the tide. None of the four index funds closed above a rising trend line.",
+      "Not lined up: the hot sector. Consumer Staples (XLP) leads the sector funds against SPY, above a rising trend line, while the indexes are not rising.",
+      "Not lined up: the strongest names. WMT, UL and PG are rising and stronger than SPY inside Consumer Staples, though the sector itself is not lined up."
+    ]
+  },
+  "weather": {
+    "spy": {
+      "read": "Edged lower on the day, below my short, middle and long trend lines"
+    },
+    "qqq": {
+      "read": "Slipped on the day, below my short, middle and long trend lines"
+    },
+    "dia": {
+      "read": "Edged up on the day, below my long trend line"
+    },
+    "iwm": {
+      "read": "Rose on the day, below my long trend line"
+    },
+    "volatility": "The weather (how calm or stormy prices are, read from VIX, the market's fear gauge) turned stormy",
+    "tone": "A split day: DIA and IWM higher, SPY and QQQ lower on the day",
+    "sentiment": {
+      "label": "Soft",
+      "qualifier": "my own read of how many names on my Watchlist I and Watchlist II sit above rising trend lines, not a survey or a forecast"
+    }
+  },
+  "cluster": [
+    "Coolest sector: Semiconductors (SMH), weakest of the sector funds against SPY",
+    "Watchlist I, the names my rules allow me to trade: only a few sit above rising trend lines",
+    "Watchlist II, the candidates I am still measuring: only a few sit above rising trend lines"
+  ],
+  "_sources": {
+    "generator": "scripts/harbor-daily.mjs (fixed templates, src/harbor-compose.mjs)",
+    "data": "Yahoo Finance public chart data (end-of-day closes)",
+    "hot_sector": "XLP",
+    "sector_rank": [
+      "XLP",
+      "XLU",
+      "XLRE",
+      "XLB",
+      "XLC",
+      "XLF",
+      "XLY",
+      "XLE",
+      "XLV",
+      "XLI",
+      "XLK",
+      "SMH"
+    ],
+    "legs": {
+      "tide": "no",
+      "hot_sector": "no",
+      "names": "no"
+    }
+  }
+}
