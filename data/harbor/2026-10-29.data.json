@@ -1,0 +1,69 @@
+{
+  "schema": "rosie-daily-v1",
+  "data_level": "words",
+  "title": "Two of three line up: Health Care and JNJ, UNH and LLY rising, the indexes only partly",
+  "tag": "Line-up: two of my three lights today (lining up: my three signals agree).",
+  "lead": [
+    "Line-up: two of my three lights today (lining up: my three signals agree)",
+    "Tide (index trend): mixed, only SPY, DIA and IWM above rising trend lines (a smoothed average)",
+    "Hot sector (strongest vs SPY): Health Care, rising with the tide",
+    "Top names inside: JNJ, UNH and LLY, rising and stronger than SPY"
+  ],
+  "convergence": {
+    "summary": "Today two of the three point the same way. My rules look for all three together.",
+    "items": [
+      "Partly lined up: the tide. SPY, DIA and IWM closed above rising trend lines, QQQ did not.",
+      "Lined up: the hot sector. Health Care (XLV) leads the sector funds against SPY, above a rising trend line.",
+      "Lined up: the strongest names. JNJ, UNH and LLY are rising and stronger than SPY inside Health Care."
+    ]
+  },
+  "weather": {
+    "spy": {
+      "read": "Edged lower on the day, above a rising trend line"
+    },
+    "qqq": {
+      "read": "Fell firmly on the day, below my short, middle and long trend lines"
+    },
+    "dia": {
+      "read": "Edged lower on the day, above a rising trend line"
+    },
+    "iwm": {
+      "read": "Rose on the day, above a rising trend line"
+    },
+    "volatility": "The weather (calm or stormy, per VIX) turned choppy",
+    "tone": "A split day: IWM higher, SPY, QQQ and DIA lower on the day",
+    "sentiment": {
+      "label": "Mixed",
+      "qualifier": "my own read of how many names on my Watchlist I and Watchlist II sit above rising trend lines, not a survey or a forecast"
+    }
+  },
+  "cluster": [
+    "Coolest sector: Communication Services (XLC), weakest of the sector funds against SPY",
+    "Watchlist I, the names my rules allow me to trade: more than half sit above rising trend lines",
+    "Watchlist II, the candidates I am still measuring: fewer than half sit above rising trend lines"
+  ],
+  "_sources": {
+    "generator": "scripts/harbor-daily.mjs (fixed templates, src/harbor-compose.mjs)",
+    "data": "Yahoo Finance public chart data (end-of-day closes)",
+    "hot_sector": "XLV",
+    "sector_rank": [
+      "XLV",
+      "XLB",
+      "XLU",
+      "XLRE",
+      "XLF",
+      "XLE",
+      "XLP",
+      "XLY",
+      "XLI",
+      "SMH",
+      "XLK",
+      "XLC"
+    ],
+    "legs": {
+      "tide": "partly",
+      "hot_sector": "yes",
+      "names": "yes"
+    }
+  }
+}

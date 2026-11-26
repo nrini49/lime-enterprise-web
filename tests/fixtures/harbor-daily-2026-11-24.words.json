@@ -2,7 +2,13 @@
   "schema": "rosie-daily-v1",
   "data_level": "words",
   "title": "No line-up: Consumer Staples rising while the indexes are not",
-  "tag": "None of my three lights line up today (lining up means my three signals point the same way). The tide (the trend of the four main index funds) is going out: none of the four closed above a rising trend line (a smoothed average of recent closes). The hot sector (the sector fund strongest against SPY) is Consumer Staples, rising while the tide goes out: a crosscurrent (a sector moving against the tide). Inside Consumer Staples, the strongest rising names are TGT, WMT and KR.",
+  "tag": "Line-up: none of my three lights today (lining up: my three signals agree).",
+  "lead": [
+    "Line-up: none of my three lights today (lining up: my three signals agree)",
+    "Tide (index trend): going out, none of the four index funds above a rising trend line (a smoothed average)",
+    "Hot sector (strongest vs SPY): Consumer Staples, rising while the tide goes out, a crosscurrent (a sector moving against the tide)",
+    "Top names inside: TGT, WMT and KR, rising and stronger than SPY"
+  ],
   "convergence": {
     "summary": "Today none of the three point the same way. My rules look for all three together.",
     "items": [
@@ -24,7 +30,7 @@
     "iwm": {
       "read": "Rose on the day, below my short, middle and long trend lines"
     },
-    "volatility": "The weather (how calm or stormy prices are, read from VIX, the market's fear gauge) turned calmer",
+    "volatility": "The weather (calm or stormy, per VIX) turned calmer",
     "tone": "A split day: DIA and IWM higher, SPY and QQQ lower on the day",
     "sentiment": {
       "label": "Soft",

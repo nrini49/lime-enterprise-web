@@ -209,33 +209,38 @@ export function compose({ date, series, config, sectors, glossary, dataLevel = c
 
   // ---- title (plain words; metaphors are introduced with meanings in the tag) ----
   let title;
-  if (legsYes === 3) title = `All three line up: indexes rising, ${hotName} leading, ${listWords(top.map((x) => x.s))} strongest inside it`;
-  else if (leg1 !== 'no' && leg2 === 'yes') title = `Two of three line up: indexes and ${hotName} rising, no name in it stronger than SPY`;
+  const names = listWords(top.map((x) => x.s));
+  if (legsYes === 3) title = `All three line up: indexes rising, ${hotName} leading, ${names} strongest inside it`;
   else if (divergence) title = `No line-up: ${hotName} rising while the indexes are not`;
+  else if (leg1 === 'yes' && leg2 === 'yes') title = `Two of three line up: indexes and ${hotName} rising, no name in it stronger than SPY`;
+  else if (leg1 === 'partly' && leg3 === 'yes') title = `Two of three line up: ${hotName} and ${names} rising, the indexes only partly`;
+  else if (leg1 === 'partly' && leg2 === 'yes') title = `One of three lines up: ${hotName} rising, the indexes only partly, no name in it stronger than SPY`;
   else if (leg1 === 'yes') title = `One of three lines up: indexes rising, but ${hotName}, the leading sector, is not`;
   else title = `No line-up today: the indexes are not rising together, ${hotName} leads the sectors`;
 
-  // ---- tag: lead with whether all three line up, metaphors explained on first use ----
+  // ---- lead: four short bullets (verdict, tide, hot sector, top names), meanings on first use ----
   const nWord = ['none', 'one', 'two', 'all three'][legsYes];
-  used.add('line_up'); // the line-up image is defined right here, in the edition's first sentence
-  const lineUp = legsYes === 3
-    ? `All three of my lights line up today (${gl.line_up.inline}).`
-    : `${cap(nWord === 'none' ? 'none' : `only ${nWord}`)} of my three lights ${legsYes === 1 ? 'lines' : 'line'} up today (lining up means ${gl.line_up.inline}).`;
-  // Functions, so only the chosen sentence spends the first-use definitions.
-  const tideLine = {
-    rising: () => `${cap(img('tide'))} is rising: all four closed above rising ${img('trend_line', 'trend lines')}`,
-    mixed: () => `${cap(img('tide'))} is mixed: ${listWords(risingFunds.map((f) => f.symbol)) || 'none'} closed above rising ${img('trend_line', 'trend lines')}${risingFunds.length ? ', the rest did not' : ''}`,
-    falling: () => `${cap(img('tide'))} is going out: none of the four closed above a rising ${img('trend_line', 'trend line')}`,
+  used.add('line_up'); // the line-up image is defined right here, in the first bullet
+  const verdict = legsYes === 3
+    ? `Line-up: all three of my lights today (lining up: ${gl.line_up.inline})`
+    : `Line-up: ${nWord} of my three lights today (lining up: ${gl.line_up.inline})`;
+  // Functions, so only the chosen bullet spends the first-use definitions.
+  const tideBullet = {
+    rising: () => `${img('tide', 'Tide')}: rising, all four index funds above rising ${img('trend_line', 'trend lines')}`,
+    mixed: () => `${img('tide', 'Tide')}: mixed, only ${listWords(risingFunds.map((f) => f.symbol)) || 'none'} above rising ${img('trend_line', 'trend lines')}`,
+    falling: () => `${img('tide', 'Tide')}: going out, none of the four index funds above a rising ${img('trend_line', 'trend line')}`,
   }[tide]();
-  const sectorLine = divergence
-    ? `${img('hot_sector')} is ${hotName}, rising while the tide goes out: ${img('crosscurrent')}`
+  const sectorBullet = divergence
+    ? `${img('hot_sector', 'Hot sector')}: ${hotName}, rising while the tide goes out, ${img('crosscurrent')}`
     : hot.a.rising
-      ? `${img('hot_sector')} is ${hotName}, rising with it`
-      : `${img('hot_sector')} is ${hotName}, though it is not above a rising trend line`;
-  const namesLine = top.length
-    ? `Inside ${hotName}, the strongest rising names are ${topWords}.`
-    : `Inside ${hotName}, no name on my lists is both rising and stronger than SPY.`;
-  const tag = `${lineUp} ${tideLine}. ${cap(sectorLine)}. ${namesLine}`;
+      ? `${img('hot_sector', 'Hot sector')}: ${hotName}, rising with the tide`
+      : `${img('hot_sector', 'Hot sector')}: ${hotName}, not above a rising trend line`;
+  const namesBullet = top.length
+    ? `Top names inside: ${topWords}, rising and stronger than SPY`
+    : `Top names inside: none on my lists both rising and stronger than SPY`;
+  const lead = [verdict, tideBullet, sectorBullet, namesBullet];
+  // tag stays a one-line summary for anything that reads a single string.
+  const tag = `${verdict}.`;
 
   // ---- convergence block ----
   const status = (l) => (l === 'yes' ? 'Lined up' : l === 'partly' ? 'Partly lined up' : 'Not lined up');
@@ -302,6 +307,7 @@ export function compose({ date, series, config, sectors, glossary, dataLevel = c
     data_level: dataLevel,
     title,
     tag,
+    lead,
     convergence,
     weather,
     cluster,

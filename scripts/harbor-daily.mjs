@@ -51,7 +51,7 @@ export function previewText(date, raw) {
     `(${HARBOR_NOTICE})`,
     '',
     ed.title,
-    ed.tag,
+    ...(ed.lead ? ed.lead.map((l) => `- ${l}`) : [ed.tag]),
     '',
     ...(ed.convergence ? ['Where my signals line up', ed.convergence.summary, ...ed.convergence.items.map((i) => `- ${i}`), ''] : []),
     ...ed.rows.map((r) => `${r.symbol} (${r.name})${r.change ? ` ${r.change}` : ''}: ${r.read}`),

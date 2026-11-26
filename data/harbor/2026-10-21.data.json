@@ -1,0 +1,69 @@
+{
+  "schema": "rosie-daily-v1",
+  "data_level": "words",
+  "title": "Two of three line up: Energy and SU, CNQ and APA rising, the indexes only partly",
+  "tag": "Line-up: two of my three lights today (lining up: my three signals agree).",
+  "lead": [
+    "Line-up: two of my three lights today (lining up: my three signals agree)",
+    "Tide (index trend): mixed, only SPY and DIA above rising trend lines (a smoothed average)",
+    "Hot sector (strongest vs SPY): Energy, rising with the tide",
+    "Top names inside: SU, CNQ and APA, rising and stronger than SPY"
+  ],
+  "convergence": {
+    "summary": "Today two of the three point the same way. My rules look for all three together.",
+    "items": [
+      "Partly lined up: the tide. SPY and DIA closed above rising trend lines, QQQ and IWM did not.",
+      "Lined up: the hot sector. Energy (XLE) leads the sector funds against SPY, above a rising trend line.",
+      "Lined up: the strongest names. SU, CNQ and APA are rising and stronger than SPY inside Energy."
+    ]
+  },
+  "weather": {
+    "spy": {
+      "read": "Rose on the day, above a rising trend line"
+    },
+    "qqq": {
+      "read": "Rose firmly on the day, below my short, middle and long trend lines"
+    },
+    "dia": {
+      "read": "Rose on the day, above a rising trend line"
+    },
+    "iwm": {
+      "read": "Edged up on the day, below my long trend line"
+    },
+    "volatility": "The weather (calm or stormy, per VIX) turned much calmer",
+    "tone": "Gains were broad: all four index funds closed higher on the day",
+    "sentiment": {
+      "label": "Mixed",
+      "qualifier": "my own read of how many names on my Watchlist I and Watchlist II sit above rising trend lines, not a survey or a forecast"
+    }
+  },
+  "cluster": [
+    "Coolest sector: Semiconductors (SMH), weakest of the sector funds against SPY",
+    "Watchlist I, the names my rules allow me to trade: fewer than half sit above rising trend lines",
+    "Watchlist II, the candidates I am still measuring: about half sit above rising trend lines"
+  ],
+  "_sources": {
+    "generator": "scripts/harbor-daily.mjs (fixed templates, src/harbor-compose.mjs)",
+    "data": "Yahoo Finance public chart data (end-of-day closes)",
+    "hot_sector": "XLE",
+    "sector_rank": [
+      "XLE",
+      "XLP",
+      "XLV",
+      "XLB",
+      "XLF",
+      "XLY",
+      "XLRE",
+      "XLU",
+      "XLI",
+      "XLC",
+      "XLK",
+      "SMH"
+    ],
+    "legs": {
+      "tide": "partly",
+      "hot_sector": "yes",
+      "names": "yes"
+    }
+  }
+}

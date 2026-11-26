@@ -1,0 +1,69 @@
+{
+  "schema": "rosie-daily-v1",
+  "data_level": "words",
+  "title": "No line-up: Energy rising while the indexes are not",
+  "tag": "Line-up: none of my three lights today (lining up: my three signals agree).",
+  "lead": [
+    "Line-up: none of my three lights today (lining up: my three signals agree)",
+    "Tide (index trend): going out, none of the four index funds above a rising trend line (a smoothed average)",
+    "Hot sector (strongest vs SPY): Energy, rising while the tide goes out, a crosscurrent (a sector moving against the tide)",
+    "Top names inside: MPC, VLO and PSX, rising and stronger than SPY"
+  ],
+  "convergence": {
+    "summary": "Today none of the three point the same way. My rules look for all three together.",
+    "items": [
+      "Not lined up: the tide. None of the four index funds closed above a rising trend line.",
+      "Not lined up: the hot sector. Energy (XLE) leads the sector funds against SPY, above a rising trend line, while the indexes are not rising.",
+      "Not lined up: the strongest names. MPC, VLO and PSX are rising and stronger than SPY inside Energy, though the sector itself is not lined up."
+    ]
+  },
+  "weather": {
+    "spy": {
+      "read": "Fell firmly on the day, below my middle trend line, above the long one"
+    },
+    "qqq": {
+      "read": "Fell firmly on the day, below my short, middle and long trend lines"
+    },
+    "dia": {
+      "read": "Edged lower on the day, below my long trend line"
+    },
+    "iwm": {
+      "read": "Fell firmly on the day, below my short, middle and long trend lines"
+    },
+    "volatility": "The weather (calm or stormy, per VIX) turned stormy",
+    "tone": "Declines were broad: all four index funds closed lower on the day. The wind picked up (a big move with the tide)",
+    "sentiment": {
+      "label": "Soft",
+      "qualifier": "my own read of how many names on my Watchlist I and Watchlist II sit above rising trend lines, not a survey or a forecast"
+    }
+  },
+  "cluster": [
+    "Coolest sector: Semiconductors (SMH), weakest of the sector funds against SPY",
+    "Watchlist I, the names my rules allow me to trade: only a few sit above rising trend lines",
+    "Watchlist II, the candidates I am still measuring: fewer than half sit above rising trend lines"
+  ],
+  "_sources": {
+    "generator": "scripts/harbor-daily.mjs (fixed templates, src/harbor-compose.mjs)",
+    "data": "Yahoo Finance public chart data (end-of-day closes)",
+    "hot_sector": "XLE",
+    "sector_rank": [
+      "XLE",
+      "XLP",
+      "XLV",
+      "XLU",
+      "XLB",
+      "XLY",
+      "XLF",
+      "XLRE",
+      "XLI",
+      "XLC",
+      "XLK",
+      "SMH"
+    ],
+    "legs": {
+      "tide": "no",
+      "hot_sector": "no",
+      "names": "no"
+    }
+  }
+}
